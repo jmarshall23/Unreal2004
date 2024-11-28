@@ -1,0 +1,18 @@
+#######################################################################
+# $Id: Make.defs.linux.sa1100,v 1.4.2.1 2002/04/11 03:45:34 jamesg Exp $
+# $Name: t-stevet-RWSpre-030110 $
+#######################################################################
+#
+# Strong Arm specific stuff for the linux os
+
+gccprefix:=/skiff/local/bin/arm-linux-
+
+AR:=$(addprefix ${gccprefix},${AR})
+CC:=$(addprefix ${gccprefix},${CC})
+CPP:=${CC}
+CXX:=$(addprefix ${gccprefix},${CXX})
+LD:=$(addprefix ${gccprefix},${LD})
+
+# Is the next line right? Who knows? What's it for?
+CCPLATFORM+=-I/fs/ipaq/armlinux/linux/kernel/include
+CCPLATFORM+=-mcpu=strongarm1100 -mapcs-32 -mfpe=3

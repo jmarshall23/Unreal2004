@@ -1,0 +1,102 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Classes">
+      <UniqueIdentifier>{2a8fc11e-395a-4a17-a40e-c6928cb6d8ed}</UniqueIdentifier>
+      <Extensions>uc</Extensions>
+    </Filter>
+    <Filter Include="Models">
+      <UniqueIdentifier>{1670d65f-99b0-4358-aaad-975c8f3a0f22}</UniqueIdentifier>
+      <Extensions>*.lwo</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Classes\Ball_rc.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\BombDelivery_rc.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\BombSpawn_rc.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\CTF_rc.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\DominationPoint_rc.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\Monitor_rc.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\TeamBanner_rc.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\WildcardCharger_rc.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Models\A.lwo">
+      <Filter>Models</Filter>
+    </None>
+    <None Include="Models\AmmoCharger.lwo">
+      <Filter>Models</Filter>
+    </None>
+    <None Include="Models\B.lwo">
+      <Filter>Models</Filter>
+    </None>
+    <None Include="Models\Ball.lwo">
+      <Filter>Models</Filter>
+    </None>
+    <None Include="Models\BombDelivery.lwo">
+      <Filter>Models</Filter>
+    </None>
+    <None Include="Models\BombSpawn.lwo">
+      <Filter>Models</Filter>
+    </None>
+    <None Include="Models\DominationPoint.lwo">
+      <Filter>Models</Filter>
+    </None>
+    <None Include="Models\flag_a.3d">
+      <Filter>Models</Filter>
+    </None>
+    <None Include="Models\flag_d.3d">
+      <Filter>Models</Filter>
+    </None>
+    <None Include="Models\FlagBase.lwo">
+      <Filter>Models</Filter>
+    </None>
+    <None Include="Models\HealthCharger.lwo">
+      <Filter>Models</Filter>
+    </None>
+    <None Include="Models\MonitorA.lwo">
+      <Filter>Models</Filter>
+    </None>
+    <None Include="Models\MonitorB.lwo">
+      <Filter>Models</Filter>
+    </None>
+    <None Include="Models\MonitorC.lwo">
+      <Filter>Models</Filter>
+    </None>
+    <None Include="Models\MonitorD.lwo">
+      <Filter>Models</Filter>
+    </None>
+    <None Include="Models\Ring.lwo">
+      <Filter>Models</Filter>
+    </None>
+    <None Include="Models\ShieldCharger.lwo">
+      <Filter>Models</Filter>
+    </None>
+    <None Include="Models\teambanner_a.3d">
+      <Filter>Models</Filter>
+    </None>
+    <None Include="Models\teambanner_d.3d">
+      <Filter>Models</Filter>
+    </None>
+    <None Include="Models\vehiclebase.lwo">
+      <Filter>Models</Filter>
+    </None>
+    <None Include="Models\WildCardCharger.lwo">
+      <Filter>Models</Filter>
+    </None>
+  </ItemGroup>
+</Project>

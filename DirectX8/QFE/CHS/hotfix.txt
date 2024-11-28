@@ -1,0 +1,36 @@
+Hot Fix for Microsoft Knowledge Base article number q321178
+
+Knowledge Base Article 
+====================== 
+To view the contents of the knowledge base article for this update, visit  
+http://support.microsoft.com/support/kb/articles/%KBAspPage% directly, or 
+visit http://search.support.microsoft.com/kb/ and query the Knowledge base 
+for the product and the Q number of this update. 
+
+Installation Instructions 
+========================= 
+1. If this hotfix was delivered with hfx.exe then it can be installed by running  
+hfx.exe from the appropriate platform directory. 
+
+Additional Information 
+====================== 
+The disk and software contained on it, including any 
+accompanying documentation ("the Software"), are provided to 
+you at no additional charge.  Microsoft Corporation owns all 
+right, title and interest to the Software.  TO THE MAXIMUM 
+EXTENT PERMITTED BY APPLICABLE LAW, MICROSOFT AND ITS SUPPLIERS 
+DISCLAIM ALL WARRANTIES, EITHER EXPRESS OR IMPLIED, INCLUDING, 
+BUT NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTBILITY AND 
+FITNESS FOR A PARTICULAR PURPOSE, WITH REGARD TO THE SOFTWARE. 
+The Software is provided with RESTRICTED RIGHTS.  Use, 
+duplication, or disclosure by the Government is subject to 
+restrictions set forth in subparagraph (c)(1)(ii) of the 
+Rights in Technical Data and Computer Software clause at DFARS 
+252.227-7013 or subparagraphs (c)(1) and (2) of the Commercial 
+Computer Software--Restricted Rights at 48 CFR 52.227-19, as 
+applicable.   Manufacturer is Microsoft Corporation, One 
+Microsoft Way, Redmond, WA 98052-6399.  Any transfer of this 
+Software must be accompanied by this statement and may only be 
+transferred if first approved by Microsoft. 
+
+(c) 1995-1997 Microsoft Corporation, All Rights Reserved.

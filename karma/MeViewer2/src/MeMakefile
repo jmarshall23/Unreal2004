@@ -1,0 +1,85 @@
+# Assuming GNU make (>v3.76)
+# $Header: /proj/Toolkits/MeViewer2/src/MeMakefile,v 1.17 2001/05/21 15:58:30 williamg Exp $
+# ($Name: t-stevet-RWSpre-030110 $)
+
+# vim:syntax=make:
+
+#------------------------------
+#Platform independent Makefile
+#------------------------------
+
+# What's to be built
+targetname:=MeViewer2
+targettype:=library
+
+SOURCES:= frame/MeViewer.c \
+	frame/RMouseCam.c \
+	frame/RMenu.c \
+	frame/RGeometryUtils.c \
+	backends/Init_ogl.c \
+	backends/Render_ogl.c \
+	backends/Render_benchmark.c \
+	backends/Render_null.c
+
+SOURCES_ps2:=\
+	backends/Render_ps2.c\
+	backends/Render_ps2hig.c\
+	backends/camera.c\
+	backends/light.c\
+	backends/micro.dsm\
+	backends/micro/vu1cullVo.vsm\
+	backends/micro/vu1cullLo.vsm\
+	backends/micro/vu1cullSo.vsm\
+	backends/micro/vu1pointVo.vsm\
+	backends/micro/vu1pointLo.vsm\
+	backends/micro/vu1pointSo.vsm\
+	backends/micro/vu1spotVo.vsm\
+	backends/micro/vu1spotLo.vsm\
+	backends/micro/vu1spotSo.vsm\
+	backends/micro/vu1fogVo.vsm\
+	backends/micro/vu1antiVo.vsm\
+
+#	backends/util.c
+
+# Here and elsewhere we assume only platform with d3d is win32.
+SOURCES_win32:=\
+	backends/Init_d3d.c \
+	backends/Render_d3d.c
+
+# Convenient user override: ${renderwith} (e.g., make "renderwith=NULL")
+makerulesdir:=../../build/makerules/
+
+renderwith?=NULL BENCHMARK
+
+ifeq "${PLATFORM}" 'ps2'
+	renderwith+=PS2 PS2HIG
+else
+# win32 <-> d3d mapping assumed here as well.
+	ifeq "${PLATFORM}" 'win32'
+		renderwith+=OPENGL D3D
+	else
+		ifeq "${PLATFORM}" 'trimedia'
+		else
+		renderwith+=OPENGL
+		endif
+	endif
+endif
+
+EXTRACPPFLAGS:=$(addprefix -DWITH_,${renderwith}) -D_ME_OGL_DELAYLOAD -D_ME_D3D_DELAYLOAD
+
+# Standard cowpat include path append, I do mean = not :=
+incpath${MAKELEVEL}=\
+	../../tools/glut \
+	frame \
+	backends \
+	${xincdir}\
+
+ifeq "${PLATFORM}" 'ps2'
+	extralibs+=hig hip
+incpath${MAKELEVEL}+=\
+	backends/micro\
+
+endif
+
+# Standard incantation
+include ${makerulesdir}Make.rules

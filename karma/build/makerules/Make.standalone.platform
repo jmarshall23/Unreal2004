@@ -1,0 +1,71 @@
+# $Id: Make.standalone.platform,v 1.5.2.1 2002/04/11 03:45:34 jamesg Exp $
+# $Name: t-stevet-RWSpre-030110 $
+
+# vim:syntax=make:isk+=&,-,.
+
+# Assuming GNU make (>=v3.79)
+#
+#######################################################################
+#
+# This file is part of Cowpat make, but is marked as "standalone" -- i.e., you
+# may include it willy-nilly into other makefiles as you see fit.
+#
+# * Validates ${PLATFORM}
+# * Sets ${&os} and ${&cpu} as appropriate
+
+&Make.standalone.platform.seen:=yes# Standard Cowpat include notifier
+
+# The 'development' platforms, on which developer releases may appear.
+_dev-platforms:= \
+	win32 \
+	elate \
+	linux-sa1100 linux-i686 \
+	macosx \
+
+# The 'target' platforms, on which zenon is to be deployed.
+_tgt-platforms:= \
+	intent-e3tb-native \
+	intent-ipaq-native \
+	intent-ipaq-wince \
+
+_platforms:=$(strip ${_dev-platforms} ${_tgt-platforms})
+_null:=# Empty
+_sp:=${_null} # A single space
+
+ifeq (,$(filter ${PLATFORM},${_platforms}))
+$(error $$PLATFORM must be one of [$(subst ${_sp},|,${_platforms})])
+endif
+
+_cpu-linux-sa1100:=sa1100
+_cpu-linux-i686:=i686
+_cpu-win32:=i686
+_cpu-elate:=vp
+_cpu-macosx:=ppc
+_cpu-intent-e3tb-native:=sa1100
+_cpu-intent-ipaq-native:=sa1100
+_cpu-intent-ipaq-wince:=sa1100
+
+&os:=$(firstword $(subst -, ,${PLATFORM}))
+# KCAH KCAH KCAH CKAHCKAKKC
+ifeq (${&os},intent)
+&os:=elate
+endif
+
+ifneq (,$(filter ${PLATFORM},${_tgt-platforms}))
+#ToDo: automatically generate the -D from the ${PLATFORM}
+ifeq (${PLATFORM},intent-e3tb-native)
+cdefs${MAKELEVEL}+=INTENT_E3TB_NATIVE
+endif
+ifeq (${PLATFORM},intent-ipaq-native)
+cdefs${MAKELEVEL}+=INTENT_IPAQ_NATIVE
+endif
+ifeq (${PLATFORM},intent-ipaq-wince)
+cdefs${MAKELEVEL}+=INTENT_IPAQ_WINCE
+endif
+endif
+
+&cpu:=$(_cpu-${PLATFORM})
+
+ifndef &cpu
+$(error Internal error: No cpu for $${PLATFORM}=[${PLATFORM}])
+endif

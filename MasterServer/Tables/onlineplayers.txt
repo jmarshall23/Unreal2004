@@ -1,0 +1,22 @@
+create table onlineplayers
+(
+	id int auto_increment not null,
+
+	serverid int not null,					/* server */
+	clientip varchar(21) not null,
+
+	cdkeyid int,							/* client cd key */
+	challenge varchar(10),
+
+	challengetime datetime not null,		/* when we challenged this client */
+	challengecount int default '0' not null,
+
+	disconnectcount int default '0' not null,
+
+	primary key(id),
+	index idx_onlineplayers_clientip (clientip),
+	index idx_onlineplayers_serverid (serverid),
+	index idx_cdkeyid (cdkeyid)
+);
+
+create index idx_onlineplayers_challengetime on onlineplayers (challengetime);

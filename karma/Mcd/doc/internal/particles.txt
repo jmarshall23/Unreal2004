@@ -1,0 +1,100 @@
+Integrating a particle system geometry.
+
+Proposed API:
+
+As far as collision is concerned, the particle system is a set of
+spheres at given positions. I call the sphere centers "vertices" below.
+The assumption below is that vertices (particle positions) are in an
+array, 
+possibly with other data interspersed, each with a radius or all having
+the same radius.
+The stride parameters below are used for allowing this extra data
+between the vertices/radii and represents the number of extra bytes
+between the vertices. Use radiiStride=-sizeof(MeReal) to have one radius
+for all particles.
+
+The McdPSBridge, the bridge between collision and the physical
+particle sytem, would call the functions indicated below by (B).
+Function starting with ParticleSystem are assumed to be provided by
+the physical side of the ps system, i.e. the solver.
+
+The PS collision geometry:
+struct McdParticleSystem {
+  MeReal* vertexBase; int vertexStride;
+  MeReal *radiiBase;  int radiiStride; 
+  int vertexcount;
+  ...
+  void *yourPhysicalPSdata;
+}
+
+McdParticleSystem*
+McdParticleSystemCreate(MeReal *vertexBase, int vertexStride,
+			MeReal *radiiBase, int radiiStride, 
+			int vertexcount)
+
+We need a way to have varying number of particles. This assumes they
+stay contiguous in memory:
+(B)
+McdParticleSystemSetVertexCount(McdParticleSystem*, int newVertexCount);
+This information is obtained from the physical PS system, for example
+(B) ParticleSystemGetParticleCount(ParticleSystem*);
+
+(B)
+McdCollide_PS_PS(McdParticleSystem* , McdParticleSystem*,
+		 McdParticlePS_PS_ContactInfo *outCollisionInfo);
+This reads the new vertex positions and produces collision info.
+
+The next 2 functions are provided by collision and compute
+collision data. This will need to be tailored to the needs of all
+particle system-like geometries. It would be nice if all of the
+particle applications could be served by the same functions.
+Your input is needed here!
+
+struct McdParticlePS_PS_ContactInfo {
+	int *collidingParticlePairCount;   // array provided by caller
+        int maxCollidingParticlePairCount; // how much space in above array
+        struct {
+                int particle1;
+                int particle2;
+                MeVector3 direction; // optional, but probably already computed
+        } *collidingParticlePairArray; 
+}
+
+(B)
+McdCollide_PS_RigidModel(McdParticleSystem* inPS, McdModelID  inGeom,
+			McdParticlePS_RM_ContactInfo *outCollisionInfo);
+
+struct McdParticlePS_RM_ContactInfo {
+	int *collidingParticleCount;       // array provided by caller
+	int maxCollidingParticlePairCount; // how much space in above array
+	struct McdParticle_PS_RM_Contact {
+		int collidingParticleIndex;
+		MdtModelID model;
+		MeVector3 impactDirectionOnParticle;
+		MeVector3 contactPoint; // forming a plane with above
+		// or anything else needed such as penetration.
+		// What exactly is needed? Please fill in!
+	} * collidingParticleContactArray;
+}
+
+
+I am assuming that the ParticleSystem has functions to specify collision
+info, as in:
+(B)
+ParticleSystemSetCollisionInfo(ParticleSystem*,
+		McdParticlePS_PS_ContactInfo *inCollisionPSPSInfo,
+		McdParticlePS_RM_ContactInfo *inCollisionPSRMInfo);
+
+
+So the main loop would be:
+
+  1- update collision for Rigid models and Particles.
+     This generates contacts for Karma, and PS_PS and PS_RM contact data
+     in the collision-karma and collision-ps bridges.
+
+  2- update Rigid body physics and Particle physics.
+     How the two interact is up to the physics.
+
+Another possibility would be call CBs from collision in step 1.
+
+

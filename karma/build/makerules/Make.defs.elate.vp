@@ -1,0 +1,6 @@
+# $Id: Make.defs.elate.vp,v 1.1.2.1 2002/04/11 03:45:34 jamesg Exp $
+# ($Name: t-stevet-RWSpre-030110 $)
+#
+# vim:syntax=make:
+
+# Cowpat macro definitions for elate

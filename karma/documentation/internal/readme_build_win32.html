@@ -1,0 +1,127 @@
+<html>
+
+<head>
+<title>Windows NT/2000 Build Environment for CVS Repository 'projects'</title>
+</head>
+
+<body bgcolor="#ffffff">
+
+<h1>Windows NT/2000 Build Environment for CVS Repository 'projects'</h1>
+
+<ul>
+
+<li>Microsoft's Visual C++ Developement environment should be installed.
+<li>Cygwin Version 1.0 (or higher) should be installed. These tools can be retrieved from mathengine's internal <a href="ftp://ftp.ox.mathengine.com/pub/freew/cygwin">ftp</a> site.
+<li>You should customise the Cygwin tools by creating a batch file and adding the following lines:
+
+<pre>
+set MAKE_MODE=UNIX
+set HOME=&lt;PATH TO A FILE CALLED '.bashrc'>
+set PATH=&lt;PATH_TO_CYGWIN_BIN_DIR>;%PATH%
+call &lt;MICROSOFT_VISUAL_C++_DIR>\vc98\bin\vcvars32.bat
+bash
+</pre>
+
+<li>The above 'PATH' statement is not strictly necessary but does resolves issues where Microsoft and UNIX commands (ex. 'find') have the same name.
+<li>The text file '.bashrc' must contain the following text at least:
+
+<pre>
+#!/bin/sh
+
+# build environment variables needed (sometimes)
+export CVSROOT=:pserver:anoncvs@cvs.mtl.mathengine.com:/proj/projects
+</pre>
+
+<li>Start Cygwin using the batch file you just created
+
+</ul>
+
+<h4>Notes</h4>
+
+<ul>
+<li>When refering to a 'PATH' in your batch file ensure you use the '8.3' equilvalent i.e.
+
+<ul>
+<li>'...\Program Files\MyApplication\bin' <b>becomes</b> '...\Progra~1\MyAppl~1\bin' <b>or possibly</b> '...\Progra~1\MyAppl~2\bin', check using the native command shell.
+</ul>
+
+<li>The space and the '\' characters have special meaning in Cygwin. This means that when specifying a PATH in your '.bashrc' file:
+
+<ul>
+<li>'...\Program Files\MyApplication\bin' <b>becomes</b> '...\\Program\ Files\\MyApplication\\bin'
+</ul>
+
+<li>Basically the '\' character 'escapes' any special characters.
+</ul>
+
+<h3>Notes on using Windows 9x</h3>
+
+<p>The Makefile's probably won't work due to the generally dumbness of this OS but here are some pointers anyway:
+
+<ul>
+
+<li>GNU Cygwin <strong>Beta</strong> tools should be installed. These tools can be retrieved from mathengine's internal <a href="ftp://ftp.ox.mathengine.com/pub/freew/CygWin-B20">ftp</a> site.
+<li>Microsoft's Visual C++ Developement environment should be installed.
+<li>Perl should be installed. Perl can be retrieved from <a href="http://www.perl.com">here</a>.
+<li>You should customise the GNU Cygwin tools by adding the following lines to '&lt;CYGWIN_DIR>/cygwin-&lt;VERSION>/cygnus.bat':
+
+<pre>
+set MAKE_MODE=UNIX
+set HOME=&lt;PATH TO A FILE CALLED '.bashrc'>
+set PATH=&lt;PATH_TO_CYGWIN_BIN_DIR>;%PATH%
+call &lt;MICROSOFT_VISUAL_C++_DIR>\vc98\bin\vcvars32.bat
+bash
+</pre>
+
+<li>The text file '.bashrc' must contain the following text at least:
+
+<pre>
+# build environment variables needed (sometimes)
+PERL=&lt;PERL_DIR>
+CVS=&lt;CVS_DIR>
+CVSROOT=:pserver:anoncvs@mtlcvs.mtl.mathengine.com:/proj/projects
+
+export CVSROOT
+export PATH=${PATH}:${CVS}:${PERL}
+</pre>
+
+<li>Start the Cygwin tools and type:
+
+<pre>
+cd /
+mkdir tmp
+mkdir bin
+cp `find -name sh.exe` /bin
+</pre>
+
+<ul>
+<li>If the previous command fails to copy 'sh.exe' to /bin try executing it again in '//c', '//d', '//e' etc.
+<li>Notice the use of 'back quotes' in this command.
+</ul>
+
+
+<li>If you get a message like 'out of environment space' add the following line to your '<strong>config.sys</strong>':
+
+<pre>
+shell=&lt;SYSTEM_ROOT>command.com /e:2048 /p
+</pre>
+
+<li>When refering to a 'PATH' in a batch file (ex. cygnus.bat) ensure you use the '8.3' equilvalent i.e.
+
+<ul>
+<li>'...\Program Files\MyApplication\bin' <b>becomes</b> '...\Progra~1\MyAppl~1\bin' <b>or possibly</b> '...\Progra~1\MyAppl~2\bin', check using the native command shell.
+</ul>
+
+<li>The space and the '\' characters have special meaning in Cygwin. This means that when specifying a PATH in your '.bashrc' file:
+
+<ul>
+<li>'...\Program Files\MyApplication\bin' <b>becomes</b> '...\\Program\ Files\\MyApplication\\bin'
+</ul>
+
+<li>Basically the '\' character 'escapes' any special characters.
+
+</ul>
+
+</body>
+
+</html>

@@ -1,0 +1,630 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Classes">
+      <UniqueIdentifier>{228d44f8-a6d3-44df-a8be-e10306157ed4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\Settings Tabs">
+      <UniqueIdentifier>{84c334d3-f2ff-4ad4-a2d6-a899f2315ff0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\Pages">
+      <UniqueIdentifier>{66e24ef9-73e0-4d23-a692-7e19e00f1b47}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\Styles">
+      <UniqueIdentifier>{a93ffa53-01f5-4856-817d-fe3f9e1e8575}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\Fonts">
+      <UniqueIdentifier>{6dfcb339-b274-4b62-9161-25fc01a838da}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\Server Browser">
+      <UniqueIdentifier>{dbc3f24e-ff06-44b8-a41f-ec5477c19c6b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\Server Browser\Filters">
+      <UniqueIdentifier>{0e1dc83e-be59-4bc7-8029-72c172b9e30d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\Single Player">
+      <UniqueIdentifier>{2bd84944-1609-4d1f-8421-53f11afe4856}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\InGame Menus">
+      <UniqueIdentifier>{ff26ef83-882c-4395-a476-419eab298c93}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\Instant Action">
+      <UniqueIdentifier>{fdc43003-8d36-4fe7-b311-a5dba43f4040}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\Test Pages">
+      <UniqueIdentifier>{b06d0eca-32f3-482b-9300-5a3109c87526}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\Components">
+      <UniqueIdentifier>{6bb209fb-0788-4e2b-b7eb-2df3df549455}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src">
+      <UniqueIdentifier>{202a68c9-deb6-4e29-821c-7ab922488f20}</UniqueIdentifier>
+      <Extensions>cpp</Extensions>
+    </Filter>
+    <Filter Include="Inc">
+      <UniqueIdentifier>{29567230-2533-408a-b9fd-a7f2a65f9eb1}</UniqueIdentifier>
+      <Extensions>h</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Classes\UT2K4GUIController.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\CustomHUDMenuAssault.uc">
+      <Filter>Classes\Settings Tabs</Filter>
+    </None>
+    <None Include="Classes\CustomHUDMenuOnslaught.uc">
+      <Filter>Classes\Settings Tabs</Filter>
+    </None>
+    <None Include="Classes\Settings_Tabs.uc">
+      <Filter>Classes\Settings Tabs</Filter>
+    </None>
+    <None Include="Classes\UT2K4CustomHUDMenu.uc">
+      <Filter>Classes\Settings Tabs</Filter>
+    </None>
+    <None Include="Classes\UT2K4Tab_AudioSettings.uc">
+      <Filter>Classes\Settings Tabs</Filter>
+    </None>
+    <None Include="Classes\UT2K4Tab_ControlSettings.uc">
+      <Filter>Classes\Settings Tabs</Filter>
+    </None>
+    <None Include="Classes\UT2K4Tab_DetailSettings.uc">
+      <Filter>Classes\Settings Tabs</Filter>
+    </None>
+    <None Include="Classes\UT2K4Tab_GameSettings.uc">
+      <Filter>Classes\Settings Tabs</Filter>
+    </None>
+    <None Include="Classes\UT2K4Tab_HudSettings.uc">
+      <Filter>Classes\Settings Tabs</Filter>
+    </None>
+    <None Include="Classes\UT2K4Tab_IForceSettings.uc">
+      <Filter>Classes\Settings Tabs</Filter>
+    </None>
+    <None Include="Classes\UT2K4Tab_NetworkSettings.uc">
+      <Filter>Classes\Settings Tabs</Filter>
+    </None>
+    <None Include="Classes\UT2K4Tab_PlayerSettings.uc">
+      <Filter>Classes\Settings Tabs</Filter>
+    </None>
+    <None Include="Classes\UT2K4Tab_SpeechBinder.uc">
+      <Filter>Classes\Settings Tabs</Filter>
+    </None>
+    <None Include="Classes\UT2K4Tab_WeaponPref.uc">
+      <Filter>Classes\Settings Tabs</Filter>
+    </None>
+    <None Include="Classes\FilterPageBase.uc">
+      <Filter>Classes\Pages</Filter>
+    </None>
+    <None Include="Classes\GameTypesPage.uc">
+      <Filter>Classes\Pages</Filter>
+    </None>
+    <None Include="Classes\NewFilterPage.uc">
+      <Filter>Classes\Pages</Filter>
+    </None>
+    <None Include="Classes\UT2K4ArenaConfig.uc">
+      <Filter>Classes\Pages</Filter>
+    </None>
+    <None Include="Classes\UT2k4Browser_AddBuddy.uc">
+      <Filter>Classes\Pages</Filter>
+    </None>
+    <None Include="Classes\UT2k4Browser_OpenIP.uc">
+      <Filter>Classes\Pages</Filter>
+    </None>
+    <None Include="Classes\UT2K4InstantActionPage.uc">
+      <Filter>Classes\Pages</Filter>
+    </None>
+    <None Include="Classes\UT2k4IRC_NewNick.uc">
+      <Filter>Classes\Pages</Filter>
+    </None>
+    <None Include="Classes\UT2K4LoadingPageBase.uc">
+      <Filter>Classes\Pages</Filter>
+    </None>
+    <None Include="Classes\UT2K4LoadingWeapons.uc">
+      <Filter>Classes\Pages</Filter>
+    </None>
+    <None Include="Classes\UT2K4LoadingWeaponsArena.uc">
+      <Filter>Classes\Pages</Filter>
+    </None>
+    <None Include="Classes\UT2k4MainMenu.uc">
+      <Filter>Classes\Pages</Filter>
+    </None>
+    <None Include="Classes\UT2k4MainPage.uc">
+      <Filter>Classes\Pages</Filter>
+    </None>
+    <None Include="Classes\UT2K4MultiplayerHostPage.uc">
+      <Filter>Classes\Pages</Filter>
+    </None>
+    <None Include="Classes\UT2K4NetworkStatusMsg.uc">
+      <Filter>Classes\Pages</Filter>
+    </None>
+    <None Include="Classes\UT2K4QuitPage.uc">
+      <Filter>Classes\Pages</Filter>
+    </None>
+    <None Include="Classes\UT2k4ServerBrowser.uc">
+      <Filter>Classes\Pages</Filter>
+    </None>
+    <None Include="Classes\UT2K4ServerLoading.uc">
+      <Filter>Classes\Pages</Filter>
+    </None>
+    <None Include="Classes\UT2K4SettingsPage.uc">
+      <Filter>Classes\Pages</Filter>
+    </None>
+    <None Include="Classes\UT2K4SP_DraftEventPage.uc">
+      <Filter>Classes\Pages</Filter>
+    </None>
+    <None Include="Classes\UT2K4SP_LadderEventPage.uc">
+      <Filter>Classes\Pages</Filter>
+    </None>
+    <None Include="Classes\UT2K4SP_LadderLoading.uc">
+      <Filter>Classes\Pages</Filter>
+    </None>
+    <None Include="Classes\UT2K4SP_PlayerTradePage.uc">
+      <Filter>Classes\Pages</Filter>
+    </None>
+    <None Include="Classes\STY2ArrowLeft.uc">
+      <Filter>Classes\Styles</Filter>
+    </None>
+    <None Include="Classes\STY2ArrowRight.uc">
+      <Filter>Classes\Styles</Filter>
+    </None>
+    <None Include="Classes\STY2BindBox.uc">
+      <Filter>Classes\Styles</Filter>
+    </None>
+    <None Include="Classes\STY2BottomTabButton.uc">
+      <Filter>Classes\Styles</Filter>
+    </None>
+    <None Include="Classes\STY2BrowserButton.uc">
+      <Filter>Classes\Styles</Filter>
+    </None>
+    <None Include="Classes\STY2BrowserListSel.uc">
+      <Filter>Classes\Styles</Filter>
+    </None>
+    <None Include="Classes\STY2CharButton.uc">
+      <Filter>Classes\Styles</Filter>
+    </None>
+    <None Include="Classes\STY2CheckBox.uc">
+      <Filter>Classes\Styles</Filter>
+    </None>
+    <None Include="Classes\STY2CheckBoxCheck.uc">
+      <Filter>Classes\Styles</Filter>
+    </None>
+    <None Include="Classes\STY2ComboListBox.uc">
+      <Filter>Classes\Styles</Filter>
+    </None>
+    <None Include="Classes\STY2ContextMenu.uc">
+      <Filter>Classes\Styles</Filter>
+    </None>
+    <None Include="Classes\STY2EditBox.uc">
+      <Filter>Classes\Styles</Filter>
+    </None>
+    <None Include="Classes\STY2Footer.uc">
+      <Filter>Classes\Styles</Filter>
+    </None>
+    <None Include="Classes\STY2GraphicTextButton.uc">
+      <Filter>Classes\Styles</Filter>
+    </None>
+    <None Include="Classes\STY2Header.uc">
+      <Filter>Classes\Styles</Filter>
+    </None>
+    <None Include="Classes\STY2IRCEntry.uc">
+      <Filter>Classes\Styles</Filter>
+    </None>
+    <None Include="Classes\STY2IRCText.uc">
+      <Filter>Classes\Styles</Filter>
+    </None>
+    <None Include="Classes\STY2ItemOutline.uc">
+      <Filter>Classes\Styles</Filter>
+    </None>
+    <None Include="Classes\STY2LadderButton.uc">
+      <Filter>Classes\Styles</Filter>
+    </None>
+    <None Include="Classes\STY2LadderButtonActive.uc">
+      <Filter>Classes\Styles</Filter>
+    </None>
+    <None Include="Classes\STY2LadderButtonHi.uc">
+      <Filter>Classes\Styles</Filter>
+    </None>
+    <None Include="Classes\STY2ListBox.uc">
+      <Filter>Classes\Styles</Filter>
+    </None>
+    <None Include="Classes\STY2ListHighlight.uc">
+      <Filter>Classes\Styles</Filter>
+    </None>
+    <None Include="Classes\STY2ListSectionHeader.uc">
+      <Filter>Classes\Styles</Filter>
+    </None>
+    <None Include="Classes\STY2ListSelection.uc">
+      <Filter>Classes\Styles</Filter>
+    </None>
+    <None Include="Classes\STY2MidGameButton.uc">
+      <Filter>Classes\Styles</Filter>
+    </None>
+    <None Include="Classes\STY2MouseOverLabel.uc">
+      <Filter>Classes\Styles</Filter>
+    </None>
+    <None Include="Classes\STY2NoBackground.uc">
+      <Filter>Classes\Styles</Filter>
+    </None>
+    <None Include="Classes\STY2Page.uc">
+      <Filter>Classes\Styles</Filter>
+    </None>
+    <None Include="Classes\STY2RosterButton.uc">
+      <Filter>Classes\Styles</Filter>
+    </None>
+    <None Include="Classes\STY2RoundButton.uc">
+      <Filter>Classes\Styles</Filter>
+    </None>
+    <None Include="Classes\STY2RoundScaledButton.uc">
+      <Filter>Classes\Styles</Filter>
+    </None>
+    <None Include="Classes\STY2ScrollZone.uc">
+      <Filter>Classes\Styles</Filter>
+    </None>
+    <None Include="Classes\STY2ServerBrowserGrid.uc">
+      <Filter>Classes\Styles</Filter>
+    </None>
+    <None Include="Classes\STY2ServerBrowserGridHeader.uc">
+      <Filter>Classes\Styles</Filter>
+    </None>
+    <None Include="Classes\STY2ServerListContextMenu.uc">
+      <Filter>Classes\Styles</Filter>
+    </None>
+    <None Include="Classes\STY2SliderCaption.uc">
+      <Filter>Classes\Styles</Filter>
+    </None>
+    <None Include="Classes\STY2SliderKnob.uc">
+      <Filter>Classes\Styles</Filter>
+    </None>
+    <None Include="Classes\STY2SquareBar.uc">
+      <Filter>Classes\Styles</Filter>
+    </None>
+    <None Include="Classes\STY2SquareButton.uc">
+      <Filter>Classes\Styles</Filter>
+    </None>
+    <None Include="Classes\STY2SquareMenuButton.uc">
+      <Filter>Classes\Styles</Filter>
+    </None>
+    <None Include="Classes\STY2TabBackground.uc">
+      <Filter>Classes\Styles</Filter>
+    </None>
+    <None Include="Classes\STY2TabButton.uc">
+      <Filter>Classes\Styles</Filter>
+    </None>
+    <None Include="Classes\STY2TextButton.uc">
+      <Filter>Classes\Styles</Filter>
+    </None>
+    <None Include="Classes\STY2TextLabel.uc">
+      <Filter>Classes\Styles</Filter>
+    </None>
+    <None Include="Classes\STY2UT2K4MMClose.uc">
+      <Filter>Classes\Styles</Filter>
+    </None>
+    <None Include="Classes\STY2UT2K4MMConfig.uc">
+      <Filter>Classes\Styles</Filter>
+    </None>
+    <None Include="Classes\STY2UT2K4MMHost.uc">
+      <Filter>Classes\Styles</Filter>
+    </None>
+    <None Include="Classes\STY2UT2K4MMInstantAction.uc">
+      <Filter>Classes\Styles</Filter>
+    </None>
+    <None Include="Classes\STY2UT2K4MMJoin.uc">
+      <Filter>Classes\Styles</Filter>
+    </None>
+    <None Include="Classes\STY2UT2K4MMTournament.uc">
+      <Filter>Classes\Styles</Filter>
+    </None>
+    <None Include="Classes\fntUT2k4Default.uc">
+      <Filter>Classes\Fonts</Filter>
+    </None>
+    <None Include="Classes\fntUT2k4Header.uc">
+      <Filter>Classes\Fonts</Filter>
+    </None>
+    <None Include="Classes\fntUT2k4IRC.uc">
+      <Filter>Classes\Fonts</Filter>
+    </None>
+    <None Include="Classes\fntUT2k4Large.uc">
+      <Filter>Classes\Fonts</Filter>
+    </None>
+    <None Include="Classes\fntUT2k4Menu.uc">
+      <Filter>Classes\Fonts</Filter>
+    </None>
+    <None Include="Classes\fntUT2k4MidGame.uc">
+      <Filter>Classes\Fonts</Filter>
+    </None>
+    <None Include="Classes\fntUT2k4ServerList.uc">
+      <Filter>Classes\Fonts</Filter>
+    </None>
+    <None Include="Classes\fntUT2k4Small.uc">
+      <Filter>Classes\Fonts</Filter>
+    </None>
+    <None Include="Classes\fntUT2k4SmallHeader.uc">
+      <Filter>Classes\Fonts</Filter>
+    </None>
+    <None Include="Classes\UT2k4Browser_IRC.uc">
+      <Filter>Classes\Server Browser</Filter>
+    </None>
+    <None Include="Classes\UT2k4Browser_MOTD.uc">
+      <Filter>Classes\Server Browser</Filter>
+    </None>
+    <None Include="Classes\UT2k4Browser_Page.uc">
+      <Filter>Classes\Server Browser</Filter>
+    </None>
+    <None Include="Classes\UT2k4Browser_ServerListPageBase.uc">
+      <Filter>Classes\Server Browser</Filter>
+    </None>
+    <None Include="Classes\UT2k4Browser_ServerListPageBuddy.uc">
+      <Filter>Classes\Server Browser</Filter>
+    </None>
+    <None Include="Classes\UT2k4Browser_ServerListPageFavorites.uc">
+      <Filter>Classes\Server Browser</Filter>
+    </None>
+    <None Include="Classes\UT2k4Browser_ServerListPageInternet.uc">
+      <Filter>Classes\Server Browser</Filter>
+    </None>
+    <None Include="Classes\UT2k4Browser_ServerListPageLAN.uc">
+      <Filter>Classes\Server Browser</Filter>
+    </None>
+    <None Include="Classes\UT2k4Browser_ServerListPageMS.uc">
+      <Filter>Classes\Server Browser</Filter>
+    </None>
+    <None Include="Classes\UT2k4IRC_Channel.uc">
+      <Filter>Classes\Server Browser</Filter>
+    </None>
+    <None Include="Classes\UT2k4IRC_Page.uc">
+      <Filter>Classes\Server Browser</Filter>
+    </None>
+    <None Include="Classes\UT2k4IRC_Panel.uc">
+      <Filter>Classes\Server Browser</Filter>
+    </None>
+    <None Include="Classes\UT2k4IRC_Private.uc">
+      <Filter>Classes\Server Browser</Filter>
+    </None>
+    <None Include="Classes\UT2k4IRC_System.uc">
+      <Filter>Classes\Server Browser</Filter>
+    </None>
+    <None Include="Classes\BrowserFilters.uc">
+      <Filter>Classes\Server Browser\Filters</Filter>
+    </None>
+    <None Include="Classes\CustomFilter.uc">
+      <Filter>Classes\Server Browser\Filters</Filter>
+    </None>
+    <None Include="Classes\FilterSetNamePage.uc">
+      <Filter>Classes\Server Browser\Filters</Filter>
+    </None>
+    <None Include="Classes\GUIFilterPanel.uc">
+      <Filter>Classes\Server Browser\Filters</Filter>
+    </None>
+    <None Include="Classes\PlayInfoFilter.uc">
+      <Filter>Classes\Server Browser\Filters</Filter>
+    </None>
+    <None Include="Classes\SimpleFilterPage.uc">
+      <Filter>Classes\Server Browser\Filters</Filter>
+    </None>
+    <None Include="Classes\SimpleFilterPanel.uc">
+      <Filter>Classes\Server Browser\Filters</Filter>
+    </None>
+    <None Include="Classes\UT2k4Browser_Filter.uc">
+      <Filter>Classes\Server Browser\Filters</Filter>
+    </None>
+    <None Include="Classes\UT2K4CustomFilterPage.uc">
+      <Filter>Classes\Server Browser\Filters</Filter>
+    </None>
+    <None Include="Classes\UT2K4CustomRulesPanel.uc">
+      <Filter>Classes\Server Browser\Filters</Filter>
+    </None>
+    <None Include="Classes\UT2K4FilterControlPanel.uc">
+      <Filter>Classes\Server Browser\Filters</Filter>
+    </None>
+    <None Include="Classes\UT2K4FilterRulesPanel.uc">
+      <Filter>Classes\Server Browser\Filters</Filter>
+    </None>
+    <None Include="Classes\UT2K4FilterSummaryPanel.uc">
+      <Filter>Classes\Server Browser\Filters</Filter>
+    </None>
+    <None Include="Classes\UT2K4SinglePlayerMain.uc">
+      <Filter>Classes\Single Player</Filter>
+    </None>
+    <None Include="Classes\UT2K4SP_Main.uc">
+      <Filter>Classes\Single Player</Filter>
+    </None>
+    <None Include="Classes\UT2K4SPTab_Base.uc">
+      <Filter>Classes\Single Player</Filter>
+    </None>
+    <None Include="Classes\UT2K4SPTab_Ladder.uc">
+      <Filter>Classes\Single Player</Filter>
+    </None>
+    <None Include="Classes\UT2K4SPTab_LadderBase.uc">
+      <Filter>Classes\Single Player</Filter>
+    </None>
+    <None Include="Classes\UT2K4SPTab_Profile.uc">
+      <Filter>Classes\Single Player</Filter>
+    </None>
+    <None Include="Classes\UT2K4SPTab_ProfileNew.uc">
+      <Filter>Classes\Single Player</Filter>
+    </None>
+    <None Include="Classes\UT2K4SPTab_Qualification.uc">
+      <Filter>Classes\Single Player</Filter>
+    </None>
+    <None Include="Classes\UT2K4SPTab_SingleLadder.uc">
+      <Filter>Classes\Single Player</Filter>
+    </None>
+    <None Include="Classes\UT2K4SPTab_TeamQualification.uc">
+      <Filter>Classes\Single Player</Filter>
+    </None>
+    <None Include="Classes\UT2K4SPTab_Tutorials.uc">
+      <Filter>Classes\Single Player</Filter>
+    </None>
+    <None Include="Classes\UT2K4Tab_SPLadderBase.uc">
+      <Filter>Classes\Single Player</Filter>
+    </None>
+    <None Include="Classes\UT2K4Tab_SPLadderQualify.uc">
+      <Filter>Classes\Single Player</Filter>
+    </None>
+    <None Include="Classes\UT2K4Tab_SPLadderTeam.uc">
+      <Filter>Classes\Single Player</Filter>
+    </None>
+    <None Include="Classes\UT2K4Tab_SPPanelBase.uc">
+      <Filter>Classes\Single Player</Filter>
+    </None>
+    <None Include="Classes\UT2K4Tab_SPProfileLoad.uc">
+      <Filter>Classes\Single Player</Filter>
+    </None>
+    <None Include="Classes\UT2K4Tab_SPProfileNew.uc">
+      <Filter>Classes\Single Player</Filter>
+    </None>
+    <None Include="Classes\UT2K4Tab_SPRoster.uc">
+      <Filter>Classes\Single Player</Filter>
+    </None>
+    <None Include="Classes\UT2K4Tab_SPTutorials.uc">
+      <Filter>Classes\Single Player</Filter>
+    </None>
+    <None Include="Classes\UT2K4MidGameMenu.uc">
+      <Filter>Classes\InGame Menus</Filter>
+    </None>
+    <None Include="Classes\UT2K4OnslaughtLoginMenu.uc">
+      <Filter>Classes\InGame Menus</Filter>
+    </None>
+    <None Include="Classes\UT2K4PlayerLoginMenu.uc">
+      <Filter>Classes\InGame Menus</Filter>
+    </None>
+    <None Include="Classes\UT2K4PlayerLoginMenuOnslaught.uc">
+      <Filter>Classes\InGame Menus</Filter>
+    </None>
+    <None Include="Classes\UT2K4Tab_InstantActionGameType.uc">
+      <Filter>Classes\InGame Menus</Filter>
+    </None>
+    <None Include="Classes\UT2K4Tab_OnslaughtMap.uc">
+      <Filter>Classes\InGame Menus</Filter>
+    </None>
+    <None Include="Classes\UT2K4Tab_PlayerLoginControls.uc">
+      <Filter>Classes\InGame Menus</Filter>
+    </None>
+    <None Include="Classes\UT2K4Tab_PlayerLoginControlsOnslaught.uc">
+      <Filter>Classes\InGame Menus</Filter>
+    </None>
+    <None Include="Classes\UT2K4Tab_ServerInfo.uc">
+      <Filter>Classes\InGame Menus</Filter>
+    </None>
+    <None Include="Classes\UT2K4Tab_ServerMOTD.uc">
+      <Filter>Classes\InGame Menus</Filter>
+    </None>
+    <None Include="Classes\IAMultiColumnRulesPanel.uc">
+      <Filter>Classes\Instant Action</Filter>
+    </None>
+    <None Include="Classes\InstantAction_Tabs.uc">
+      <Filter>Classes\Instant Action</Filter>
+    </None>
+    <None Include="Classes\InstantActionRulesPanel.uc">
+      <Filter>Classes\Instant Action</Filter>
+    </None>
+    <None Include="Classes\UT2K4BotInfoPage.uc">
+      <Filter>Classes\Instant Action</Filter>
+    </None>
+    <None Include="Classes\UT2K4Tab_InstantActionBotConfig.uc">
+      <Filter>Classes\Instant Action</Filter>
+    </None>
+    <None Include="Classes\UT2K4Tab_InstantActionMain.uc">
+      <Filter>Classes\Instant Action</Filter>
+    </None>
+    <None Include="Classes\UT2K4Tab_InstantActionMapList.uc">
+      <Filter>Classes\Instant Action</Filter>
+    </None>
+    <None Include="Classes\UT2K4Tab_InstantActionMutators.uc">
+      <Filter>Classes\Instant Action</Filter>
+    </None>
+    <None Include="Classes\UT2K4Tab_InstantActionRules.uc">
+      <Filter>Classes\Instant Action</Filter>
+    </None>
+    <None Include="Classes\UT2K4Tab_ServerRulesPanel.uc">
+      <Filter>Classes\Instant Action</Filter>
+    </None>
+    <None Include="Classes\MySubTestPanelA.uc">
+      <Filter>Classes\Test Pages</Filter>
+    </None>
+    <None Include="Classes\MySubTestPanelB.uc">
+      <Filter>Classes\Test Pages</Filter>
+    </None>
+    <None Include="Classes\MyTest2Page.uc">
+      <Filter>Classes\Test Pages</Filter>
+    </None>
+    <None Include="Classes\MyTestMultiColumnList.uc">
+      <Filter>Classes\Test Pages</Filter>
+    </None>
+    <None Include="Classes\MyTestPage.uc">
+      <Filter>Classes\Test Pages</Filter>
+    </None>
+    <None Include="Classes\MyTestPanelA.uc">
+      <Filter>Classes\Test Pages</Filter>
+    </None>
+    <None Include="Classes\MyTestPanelB.uc">
+      <Filter>Classes\Test Pages</Filter>
+    </None>
+    <None Include="Classes\MyTestPanelC.uc">
+      <Filter>Classes\Test Pages</Filter>
+    </None>
+    <None Include="Classes\GUIMapList.uc">
+      <Filter>Classes\Components</Filter>
+    </None>
+    <None Include="Classes\MapListBox.uc">
+      <Filter>Classes\Components</Filter>
+    </None>
+    <None Include="Classes\PlayInfoList.uc">
+      <Filter>Classes\Components</Filter>
+    </None>
+    <None Include="Classes\PlayInfoListBox.uc">
+      <Filter>Classes\Components</Filter>
+    </None>
+    <None Include="Classes\ServerBrowserMCList.uc">
+      <Filter>Classes\Components</Filter>
+    </None>
+    <None Include="Classes\ServerBrowserMCListBox.uc">
+      <Filter>Classes\Components</Filter>
+    </None>
+    <None Include="Classes\UT2k4Browser_BuddyList.uc">
+      <Filter>Classes\Components</Filter>
+    </None>
+    <None Include="Classes\UT2k4Browser_BuddyListBox.uc">
+      <Filter>Classes\Components</Filter>
+    </None>
+    <None Include="Classes\UT2k4Browser_Footer.uc">
+      <Filter>Classes\Components</Filter>
+    </None>
+    <None Include="Classes\UT2k4Browser_PlayersList.uc">
+      <Filter>Classes\Components</Filter>
+    </None>
+    <None Include="Classes\UT2k4Browser_PlayersListBox.uc">
+      <Filter>Classes\Components</Filter>
+    </None>
+    <None Include="Classes\UT2k4Browser_RulesList.uc">
+      <Filter>Classes\Components</Filter>
+    </None>
+    <None Include="Classes\UT2k4Browser_RulesListBox.uc">
+      <Filter>Classes\Components</Filter>
+    </None>
+    <None Include="Classes\UT2k4Browser_ServerListBox.uc">
+      <Filter>Classes\Components</Filter>
+    </None>
+    <None Include="Classes\UT2k4Browser_ServersList.uc">
+      <Filter>Classes\Components</Filter>
+    </None>
+    <None Include="Classes\UT2K4FilterSummaryList.uc">
+      <Filter>Classes\Components</Filter>
+    </None>
+    <None Include="Classes\UT2K4FilterSummaryListBox.uc">
+      <Filter>Classes\Components</Filter>
+    </None>
+    <None Include="Classes\UT2K4IRCLink.uc">
+      <Filter>Classes\Components</Filter>
+    </None>
+    <None Include="Classes\UT2K4LadderButton.uc">
+      <Filter>Classes\Components</Filter>
+    </None>
+    <None Include="Classes\UT2K4PlayInfoPanel.uc">
+      <Filter>Classes\Components</Filter>
+    </None>
+    <None Include="Classes\UT2K4Tab_AdminPlayerList.uc">
+      <Filter>Classes\Components</Filter>
+    </None>
+  </ItemGroup>
+</Project>

@@ -1,0 +1,1272 @@
+ \documentclass[11pt]{article}
+%\usepackage[light]{draftcopy}
+\pagestyle{myheadings}
+\usepackage{verbatim}
+\usepackage{eepic}
+\usepackage{epsfig}
+\usepackage{float}
+\usepackage{epic}
+\usepackage{times}
+
+%\newcommand{\CC}[1]{\begin{verbatim} {#1} \\ end{verbatim}}
+%\newcommand{\omit}[1]{}
+\newcommand{\minisection}[1]{\noindent{\bf{#1}}}
+
+\usepackage{rcs}
+\RCSdate $Date: 2000/05/16 12:03:26 $
+\RCS $Revision: 1.3 $
+%\markboth{\fbox{DRAFT Revision: \RCSRevision\ \RCSDate }}%
+%{\fbox{DRAFT Revision: \RCSRevision\ \RCSDate }}
+
+%\RCS $Id: userManual.tex,v 1.3 2000/05/16 12:03:26 williamg Exp $
+%\RCSID $Id: userManual.tex,v 1.3 2000/05/16 12:03:26 williamg Exp $
+
+\setlength{\voffset}{-0.8in}
+\setlength{\textwidth}{6.0in}
+\setlength{\textheight}{9in}
+\setlength{\oddsidemargin}{0pt}
+\setlength{\parskip}{5pt}
+\setlength{\parindent}{0pt}
+
+
+\title{ Collision Toolkit\\
+ user guide\\ }
+
+
+\begin{document}
+
+\thispagestyle{myheadings}
+\maketitle
+
+\tableofcontents
+
+\pagebreak
+
+\section{ Preface}
+
+   Copy from DynamicsToolkit, with minor replacements by ChrisL.
+
+
+\section{ What can the Collision Toolkit do ? }
+
+\subsection{ Overview }
+
+You can use the Collision Toolkit to take care of your collision-detection-related
+computations. Most of the underlying algorithms are designed
+specifically to produce the information needed for geometrically realistic
+simulations of bodies bouncing, sliding, rolling or coming to rest against each other.
+
+The Collision Toolkit provides an interface between your simulation's collision needs and
+computational geometry algorithms, allowing you to write your application
+at the level of what you want to \emph{do} with the geometrical information you
+need, instead of \emph{how} you are going to compute it.
+
+With the Collision Toolkit, your the collision-related code will consist
+primarily of: 
+\begin{itemize}
+\item selecting a geometrical shape for each collision model
+\item selecting the types of information to be computed for each pair of
+ collision models
+\end{itemize}
+
+Collision detection is well-known to be critical both in terms of
+performance and geometric accuracy.  Writing competitive applications
+requires the ability to experiment with implementations that reflect a
+variety of different performance-accuracy tradeoffs.
+To address these issues, some additional ``tuning'' activities may become important for you:
+
+\begin{itemize} 
+\item optimizing among a choice of alternative representations for each
+individual collision model
+\item optimizing among a choice of alternative algorithms for each
+pair of collision models
+\end{itemize}
+
+Your own low-level code can also appear as one of these alternatives.
+The Collision Toolkit's implementation-transparent design allows you to experiment with these
+variations without disturbing the rest of your Collision Toolkit code:
+ Matching to your specific application needs is simple, making it easy to benefit from future optimizations and alternatives as they come available.
+
+You can also use the Collision Toolkit for non-collision-related problems, such as
+line-of-sight determination and sensor-like functionality. 
+Collision detection is only one aspect of the more general problem of
+obtaining fast and accurate knowledge of spatial and geometrical 
+relationships.
+The Collision Toolkit design is based on this broader vision, and anticipates the
+introduction of additional non-collision-related functionality in the future.
+
+
+
+\subsection{ How your game uses the Collision Toolkit }
+\label{sec:design}
+
+You use the Collision Toolkit Toolkit by defining collision models, one for each 3D model for which
+you need collision information computed.
+You do this by selecting a ``collision geometry'' which is distinct from,
+but 
+should correspond closely (but not necessarily exactly) to
+the visually-rendered geometry you have created via your 3D graphics package.
+You must ensure that the collision model's coordinate system is kept
+up-to-date so that it always matches what is seen in the rendered display.
+You then perform intersection queries on pairs of collision models, and use the
+resulting contact data to compute the desired response. 
+
+Fig. \ref{fig:arch} shows the organization of the Collision Toolkit.
+The kernel is a small core element defining a component
+model for 3D geometry. 
+It defines collision models, 
+how they communicate with each other,
+and how they communicate with the
+farfield, and defines 
+the plug-in architecture for geometry types and
+algorithms. 
+
+The nearfield module provides a vocabulary of concrete geometrical types for
+characterising collision models, and pairwise intersection algorithms for
+each pair-combination of geometry types.
+The farfield module keeps track of which pairs of collision models are
+nearby to each other.
+The simulation support layer 
+supports the integration of
+multiple distinct response/behaviour solutions for different groups of
+collision models within the same application. 
+It allows product
+integrations to be written independently of specific nearfield definitions.
+The system as a whole is highly modular, allowing you to re-use
+lower-level elements independently of the higher-level ones. This
+modularity also helps you to introduce CT functionality incrementally into
+your existing projects.
+
+%later a section on modularity, code size and submodular independent
+%re-use.
+
+\begin{figure}
+\centerline{\epsfig{file=fig/cd_arch.eps,width=\textwidth}}
+\caption{ Collision Toolkit architecture. 
+} 
+\label{fig:arch}
+\end{figure}
+
+
+
+It is important to point out that the Collision Toolkit provides only collision
+\emph{detection}, it does not perform any collision \emph{response}.  It is
+strictly a detector, a purely passive element that does not modify the
+coordinates of any models in the system.  Collision response is any type of
+action that is performed as a result of collision detection information.
+You are responsible for this ``active'' response code that actually moves or modifies the motion of your models.
+
+The response to a collision event is typically a change in motion, or a change in the allowable
+motions of the elements in your scene. The response could be something
+simple ( eg. the character cannot advance in a given direction ; a projectile
+sticks to the surface it hit ), or very sophisticated ( an articulated toy
+falls down a staircase ). 
+The response behaviour could be handled
+by application-specific code you have written yourself,
+by a more general module developed by yourself or within your company, 
+or by a seperate software package provided by a 3rd party.
+
+The Dynamics Toolkit is an example of a sophisticated behaviour module that can produce
+physically realistic responses based on the information provided by the Collision Toolkit.
+
+Fig. \ref{fig:cd_dt} 
+shows how you can integrate this product into the Collision Toolkit's system.
+A bridge component obtains contact information from Collision Toolkit and sends this
+information to the Dynamics Toolkit in an appropriate format. This bridge is responsible
+for keeping the two packages in sync, ensuring, for example, that the
+coordinate system updates for the collision models are correctly obtained
+from the Dynamics Toolkit.
+
+\begin{figure}[h!]
+\centerline{\epsfig{file=fig/cd_dt_simpleArch.eps,width=\textwidth}}
+\caption{ The Dynamics Toolkit product integration.
+} 
+\label{fig:cd_dt}
+\end{figure}
+
+The bridge relies on the Collision Toolkit's simulation support layer,
+which defines a control flow ensuring that the bridge's operations are
+performed at the right times, and allows the bridge itself to be written
+and to operate independently of the details of the Collision Toolkit's system.
+
+You can use this bridge to handle those collision models for which the Dynamics Toolkit
+is an appropriate behavioural solution, and at the same time you can access
+the Collision Toolkit directly to obtain intersection results concerning other collision
+models for which another type of
+response is desired.
+
+
+You can integrate your own response code in the same way that the Dynamics
+Toolkit is,
+by attaching it to the simulation support layer. 
+The Collision Toolkit anticipates that you will be applying a variety of
+different response models and techniques to different groups of models
+within your application. 
+By
+treating in-house efforts as ``products'' on an equal footing with 3rd
+party solutions, you will build up an arsenal of tools that can
+be applied and experimented with in various combinations as your project
+evolves.
+
+Fig. \ref{fig:cd_dt_others} is a high-level usage scenario in which you have at your disposal the
+Dynamics Toolkit and two other behaviour-related toolkits, each attached to the Collision Toolkit via
+product integration ``bridges''. You also have a
+specialized module within your own code base which uses the Collision Toolkit to implement
+the sensor functionality needed in your application. The operation of each
+of these occurs automatically each time step, triggered via the simulation support
+layer. In this scenario, your only responsibility is to initialize each
+depicted module, and to tweak the parameters controlling how each
+operates. While this is happening,
+you can also access the Collision Toolkit directly to perform any
+other application-optimized operations that you have not put under the control of the simulation support layer.
+
+\begin{figure}[h!]
+\centerline{\epsfig{file=fig/cd_dt_others.2.eps,width=\textwidth}}
+\caption{ Collision Toolkit supporting multiple product integrations.
+} 
+\label{fig:cd_dt_others} 
+\end{figure}
+
+
+
+
+
+\subsection{ geometrical primitives and the nearfield module }
+
+You specify the shape of your collision models by choosing from among the
+CT's library of geometrical types.
+Currently available types (Alpha version) are:
+
+\begin{description}
+\item[sphere] ball, particle, planet, head..  
+\item[box] box, cube, wall, rod,..
+\item[cylinder] wheel, vase, cup, barrel, hockey puck, log, baseball bat,.. 
+\item[plane] wall,floor, infinite table-top..
+\end{description}
+
+Later versions will provide you with non-primitive geometrical types
+including triangle meshes and terrain surface models. Such types will allow
+you to create shapes of arbitrary complexity, and provide an opportunity
+for finer control over the balance between 
+the degree geometrical detail and the resulting performance.
+
+For the current library of primitives, there is a
+a complete set of intersection functions available.
+``Complete'' means that for every possible pair combination of geometrical
+types ( eg. sphere-box, cylinder-cylinder..) there is at least one
+algorithm available for computing their intersection.
+
+The geometry library, together with the intersection algorithms that
+operate on them, form the nearfield module.
+
+The nearfield module also offers you
+additional 
+alternative algorithms 
+that reflect different tradeoff choices
+between performance, robustness and accuracy.
+
+\subsection{ contact generation and physical simulation }
+
+You use 
+intersection algorithms to produce intersection data, which, in turn, is
+used to compute some type of collision response. 
+Exactly what is meant by ``intersection data'' 
+depends on the needs of the response model you intend to apply to it.
+Useful intersection data could be:
+
+\begin{itemize}
+\item simple ``yes/no'' disjointness test
+\item intersection surface
+\item boundary of intersection surface
+\item depth of penetration
+\item intersection volume
+\item contact points
+\item list of edges/corners affected
+\end{itemize}
+
+The determination of a response that is both physically-based and geometrically realistic is best supported by characterising an intersection condition in terms of contact points.
+For this reason,
+the current set of intersection algorithms available in the CT are devoted
+to the generation of contact points, and to the building-up of a library of
+distinct contact ``strategies'' reflecting different performance-accuracy
+tradeoffs.  
+
+A contact is a point of contact between the surfaces of two colliding
+models, a direction along which penetration is to be prevented. Other
+properties associate with a contact include an estimate of penetration depth.
+The number and location of contacts used to characterise a given intersection depends on a number of factors, including
+
+\begin{itemize}
+\item surface geometry
+\item type of contact behaviour 
+\item required accuracy 
+\item computation time available
+\end{itemize}
+
+A ``bouncing'' contact behaviour, for example, can often be acheived with
+a single contact and using a relatively crude estimate, while a 
+plausible surface-to-surface coming-to-rest behaviour usually requires three or four contacts, and can be very sensitive to geometric accuracy.
+
+
+Our current set of contact generation algorithms have
+evolved and matured through their use in rigid-body dynamics packages such
+as the Dynamics Toolkit. 
+Such uses have been invaluable, serving as thorough and demanding testbeds
+for accuracy and robustness, as well as revealing
+optimization opportunities that specifically benefit the
+types of situations commonly encountered in physical simulation.
+You can rely on the CT's contact generation algorithms for use with any type of physically-based
+response system, and you can also use them effectively for other types of
+response behaviour as well.
+
+\subsection{ Non-collision functionality }
+
+To handle collision and other contact situations, you will
+have set up the Collision Toolkit so that, among other things, it knows about the geometrical shape and movement of the models in your game. Once this is in place, you can
+treat the Collision Toolkit as a high-performance geometrical database, which can be
+simultaneously re-used to perform other geometric calculations at the same
+that it handles your collision detection needs.
+
+\subsubsection{ sensors and event handling }
+
+Many game events and game level-transitions are triggered by some type of
+geometric condition. Since the Collision Toolkit is already keeping track of proximity
+conditions between your game's models, it is a very small cost to have it
+function as an event detector for you at the same time.
+
+You do this by
+inserting additional models into the Collision Toolkit that do not correspond to
+visually-rendered elements in your game, but define rather a spatial
+location.
+These ``collision'' models then function as sensors which you can use to
+detect which of your moving models are:
+
+\begin{itemize}
+\item inside a given room
+\item inside a ``danger zone''
+\item close to a bomb.
+\item within hearing distance of an enemy.
+\end{itemize}
+
+These sensor collision models define regions of space, and detect what
+other collision models are inside of or touching it. The region can be defined by any of the available geometrical types.
+
+You can use the simulation support layer 
+to ``filter'' all sensor-related
+events directly to your event handler,
+ensuring that all semantic
+processing occurs in one place.
+
+\subsubsection{ rays }
+
+Using the Collision Toolkit's ray functionality can help you with many types of operations,
+including:
+
+\begin{itemize}
+\item see
+\item occlude
+\item draw/shadow
+\item shoot
+\end{itemize}
+ 
+In contrast with the other intersection algorithms, the intersection data
+produced by intersection algorithms
+involving rays is not a list of contacts but a ray-specific data structure
+that describes the surface where the ray has hit. 
+
+You can use the global ray query which intersects a ray with the entire
+collision space, in which the space's internal representation is used to carry out an efficient determination of the ``first hit''.
+
+\subsection{ farfield functionality } 
+
+\subsubsection{ Pairwise proximity culling } 
+
+As the number \emph{n} of collision models you use in your system
+increases, you will find a new problem emerging: how to efficiently
+determine which of the \(n^{2}\)
+possible pairs of collision models are actually near enough to each other
+to warrant calling an intersection function for them.
+
+Such pairwise proximity culling is the principal function of the
+farfield module. 
+The farfield module is 
+a representation of the structure of 3D space and of the region of space occupied by each model present in it.
+It keeps track of nearby pairs efficiently by exploiting frame-to-frame
+coherence. 
+
+You use the farfield by creating a collision space and then populating it
+with the collision models in your scene. When you modify the coordinate
+systems of the collision models, you inform the collision space so that it
+can update its internal state. At any point you can request for the current
+list of nearby pairs.
+
+%This automation of
+%key element for the automation goal of the sim support layer
+
+\subsubsection{ other spatial-global queries }
+
+The data structures and updating mechanisms used to handle fast
+determination of nearby pairs can be re-used to provide fast determination
+of other properties involving spatial relationships.
+
+It can be used to quickly 
+locate which models satisfy a particular spatial condition, such as being
+near to a particular region ( eg. sensors ) or lying along a particular
+path through space ( eg. rays ). 
+
+It is useful to think of a collision space as container holding your
+collision models. There are two properties that makes this container so
+interesting:
+\begin{description}
+\item[it is an \emph{ordered} container], which means it supports efficient
+update-sorting and fast global searches.
+\item[its ordering is keyed on location in 3D space]
+\end{description}
+A collision space can be thought of as a 3D container, a 3D environment or a high-performance 3D database specialized for large-scale global queries and searches based on spatial conditions.
+
+It is within this broader vision that the farfield module has been
+designed: You can expect other relevant features to appear in future releases.
+
+\subsubsection{ alternative implementations }
+
+The farfield module offers 
+a number of distinct representations for the
+structure of 3D space, allowing you to choose the one that is optimal for
+keeping track of the type of activity particular to your scene.
+The choice depends on the pattern of spatial distribution of your models,
+and the known contraints on how they can move about in your scene.
+For example, one of the farfield's representations specializes for
+scenarios in which all your models stay close to a relatively
+flat plane.
+
+\subsubsection{ nearfield vs. farfield }
+
+The term \emph{far} refers to the fact that the farfield is only a rough,
+large-scale global view of the 3D scene
+that does not take into account
+the geometric details of
+individual models. 
+This contrasts with, and is complementary to the nearfield module, so named
+because it provides a purely local view, dealing only with the detailed geometrical properties
+of individual and individual pairs of models. 
+
+
+%\subsubsection{ pestGDC: collision space vs. scene graph }
+%
+%Is the collision equivalent of a 3D graphics ``scene graph''. But contrasts
+%with it, as based on fluid changing relationships, based on spatial
+%location, not on fixed structure reflecting semantic relationship which
+%only sometimes corresponds to geometric proximity.
+%
+%synchronised ``shadow'' providing query.
+%collison space makes the CT a fully queriable 3D environment.
+%
+%Both 3D environments. One is database organization optimal for drawing onto
+%screen and controlling what and how thigns are drawn. Lighting
+%conditions. Visual and optical properties.
+
+\subsection{ simulation support layer }
+
+The role of the CT is to provide you with the collision detection
+information you need. 
+The CT's simulation support layer addresses the problem
+what your are going to do with it.
+
+More precisely, it provides high-level support for 
+integrating response solutions with the CT.
+
+This makes it easy to plug the CT's intersection data ``output'' into
+powerful products like MathEngine's DT.
+It also makes it easy for you to attach your own solutions. 
+
+Fig \ref{fig:cd_dt} in section \ref{sec:design} shows how the simulation
+support layer is supporting one such response solution, the DT.
+Fig \ref{fig:cd_dt_others} in the same section is a sketch of how multiple
+products can all be integrated simultaneously. 
+Other MathEngine
+behavioural solutions will be integrated with the CT in the same manner.
+
+The SSL
+defines a control flow ensuring that operations are
+performed at the right times, and allows ``bridges'' to be written
+independently of the details of the CT.
+
+\subsection{ specific product integrations }
+
+%..rough section..
+%
+%The importance of having an explicit simulation support layer to support
+%product integrations has been discussed above.
+%
+%Here we give you a quick look at the ones currently available, and what
+%they can do for you.
+%
+%The use of the 
+%The value of the CT for your development is increased by its by itself is not a
+%As described earlier, a primary property of the CT's design is to 
+%
+%the basis of the design is that
+%Cd is ubiquitous to 3D apps. regardless of type of behaviour.
+%
+%To be of practical value to real game development situations, need flexible
+%incremental approach.
+% other ME products coming soon. all share geometric basis. nice to have
+% all geometry in one place, and ``one way'' of fitting them all together
+% without clashing
+%
+%CT aquires much value by serving other products. 
+%Common basis for multiple products, saving lots of complexity development
+%time.
+
+
+\subsubsection{ DynamicsToolkit }
+
+MathEngine's DT is a fast and robust rigid-body dynamics package
+enabling you to create physically realistic simulations.
+
+With the CT's DTBridge, you have at your disposal a 
+sophisticated collision response solution
+that takes full advantage of the CT and the CT's contact generation
+algorithms.
+
+%You can use this product integration
+%for those elements of your game that require
+%physical realism. At the same time, other colison models can be present in
+%the CT used for other purposes.
+
+Fig \ref{fig:cd_dt} introduced in section \ref{sec:design} 
+shows how the two products fit together via the CT's DTBridge.
+
+The bridge will ensure that all necessary operations are carried out at the right
+times, and manage all memory needed to carry them out efficiently.
+These operations include:
+
+\begin{itemize}
+
+\item identifying which collision models and collision events the bridge is responsible for
+
+\item updating the coordinate system of each collision model from
+its corresponding rigid body 
+
+\item obtaining contact intersection data
+for each collision event
+
+\item preparing and sending contact data to the DT
+
+\item ensuring that the dynamical properties of each DT contact 
+are set to the values appropriate for the given pair of models
+
+\end{itemize}
+
+The bridge automates the entire process, and provides you with high-level
+control over each aspect of its activity.
+Use of the bridge ensures that your combined use of
+the two packages is efficient and takes full advantage of the features available in both.
+
+You can continue to ``tweak'' the CT's low-level state without affecting
+how the bridge operates:
+
+\begin{itemize}
+\item change the geometrical types of individual collision models
+\item change which intersection algorithms are used for individual pairs of
+  collision models.
+\item insert and remove models from spaces
+\item freeze/unfreeze models
+\end{itemize}
+
+%you can also bypass, manipualte DTcontacts directly. You could attach
+% this to suport as well, effectively writing your own bridge,
+% or modiffy exsitng one; use both original and modified.
+
+%The CT's contact generation algorithms are particularly well suited for use
+%with the DT, since the two packages have evolved together. The value that
+%this co-evolution brings to you is discussed at greater length in the
+%previous section on contact generation.
+
+Using the bridge does not 
+prevent you from handling other pair of colliison models using
+other techniques, nor from using the CT 
+CT for other purposes at
+the same time. You can attach other product integrations, write your own,
+or access the CT's functionality directly.
+You can also re-use the results obtained by the DT bridge for additional
+processing, such as changing visual properties, adding sound effects or
+applying state transitions to your game's event handler.
+
+%You tell the bridge that a particular collision model is associated with a
+%particular rigid body. The bridge assigns the collison model a tag that it
+%has reserved for itself, a tag issued by the the simsupport layer.
+%simsupport and bridge have a ``contract''..
+%simsupport will collect events for the bridge.
+
+%doesn't see geometric surfaces. you have to tell it about it indirectly,
+%through geometric constraints or contacts.
+%Is in some sense ``blind'' on its own; bodies will pass right through 
+%each other and the DT won't even notice.
+%Ct provide that missing information.
+
+\subsubsection{  RenderWare }
+
+This integrates RenderWare models directly
+into the CT, allowing you to treat them the same way as the CT's ``native''
+geometry types. This also means that they can
+interact transparently with other collision
+models present in the system.
+
+%\subsection{ -- left-overs notes -- }
+
+%collision detection info's valuable only in terms of how well it matches
+%the needs/parameters of the response.
+%different response modules will set-up different types of intersection
+%algo's depending on what they need. --> dispatcher flexibility.
+%
+%In this manner, you can incrementally introduce the functionality of the CT
+%into your existing applications.
+%
+% section on bounding volumes..
+%
+%You will end up / Long term the design is:
+%it is intended to become a
+%foundation element for any 3D graphics application in which geometric
+%information is needed.
+%
+%As more sophisticated technology becomes available for game development,
+%the CT will become a foundation element serving many of them. 
+%
+%-- philosphical --
+%
+%The CT, as well as being hacker-friendly, is also forward-looking towards
+%evolving of technology available for games.
+%
+%how to make these technologies accessible to the real-world game applications.
+%make use of these technologies practical and realistic in terms of
+%the realities of present-day game development.
+%
+%abstraction = more room to discover optimal solution.
+%abstraction (not=) slower. 
+%
+%\subsection{ postGDC: plugIn architecture }
+%
+%\subsubsection{ intersection algorithms }
+%\subsubsection{ geometrical types }
+%\subsubsection{ farfield representations }
+%\subsubsection{ plugging into the simulation support layer }
+%\subsubsection{ new product integration modules }
+%
+%\subsection{ postGDC: triangle-mesh collision models }
+%
+%\subsubsection{ vertex sharing }
+%\subsubsection{ geometry loaders }
+%\subsubsection{ contact region identification }
+%\subsubsection{ multiple contact strategies }
+%\subsubsection{ general non-convex implementation }
+%  general non-concave, robust against modeling glitches.
+%\subsubsection{ convex implementation }
+%
+%\subsection{ postGDC: terrain collision models }
+%
+%\subsection{ postGDC: intersection algorithms: lowlevel API
+%  vs. Implementation-transparent API }
+% 
+%  diagram..
+%
+% ii Multiple implementations / specialized / information specification
+% iii impl transparency
+% iv defaults
+%
+
+\section{Installation}
+
+\section{ Getting Started }
+
+**** this section is hacked up now; real version availabel only in Manny's work
+     ( Manny, use my ``diff'' file I sent you for this section, + the
+     sample programs Ron sent you ***
+
+If you are already using the DynamicsToolkit and want to integrate the CT
+with it, skip ahead to the next subsection.
+
+\subsection{ basic steps }
+
+create space (anticipating why.. )
+creat models
+insert in space
+running simulation/going live/ on the air / tick / main loop activity
+  ``principal actiivty you do in main loop i..... ``
+``tick'' funciton.
+
+
+%\minisection{Begin:}
+%
+%The CT reserves space at initialization time to store various bits of
+%information. Because all re-allocation is avoided throughout the API,
+%various parameter values must be anticipated and set at the beginning.
+%
+%\begin{verbatim}
+%int maxNumSpaces = 1;
+%int maxNumGeoTypes = McdGetNumPrimitiveTypes();
+%McdInit(maxNumSpaces, maxNumGeoTypes);
+%\end{verbatim}
+
+\minisection{Collision space:}
+
+You can create a collision space to keep track of which of the \(n^{2}\)
+possible pairs of collision models are nearby to each other:
+
+%*B*
+
+\begin{verbatim}
+int maxNumModels = 15;
+int maxNumNearbyPairs = 5;
+McdSpace *space = McdSpaceAxisSortCreate( McdAllAxes, 
+                                  maxNumModels, 
+                                  maxNumNearbyPairs );
+
+McdSpaceInsert( cm_ball );
+McdSpaceInsert( cm_wall );
+
+McdSpaceUpdate(space);
+McdSpaceGetNearbyPairs( space, McdPairList* );
+
+\end{verbatim}
+
+\minisection{Collision models:}
+
+First you define the geometrical shapes our collision model will represent:
+
+\begin{verbatim}
+MeReal radius = 1;
+MeReal xdim = 1, ydim = 5, zdim = 10;
+McdGeometry *g_ball = McdSphereCreate( radius );
+McdGeometry *g_wall = McdBoxCreate( xdim,ydim,zdim );
+\end{verbatim}
+
+and then you create collision models from these shapes:
+
+\begin{verbatim}
+McdModel *m1,*m2;
+cm_ball = McdModelCreate( g_ball );
+cm_wall = McdModelCreate( g_wall );
+\end{verbatim}
+
+Collision models are the principal objects in the CT.
+Their position and orientation in 3D space can be updated using:
+
+\begin{verbatim}
+McdModelGetGeometryTransformPtr(McdModel*);
+\end{verbatim}
+
+\minisection{Intersect:}
+
+You can test for potential collisions between a pair of collision models by 
+The CT's dispatcher will find an appropriate algorithm for the given pair
+of collision models, and compute the desired intersection data:
+
+\begin{verbatim}
+%int maxNumContacts = 3;
+McdInteractionResult result;
+McdDispatchPair(spacePair, &result);
+\end{verbatim}
+
+%\minisection{using contact data..}
+%
+%\minisection{getting pairs from space:}
+%see example..
+
+We will illustrate below how to access and use the information in the
+McdContactData struct.
+
+%*E*
+
+// put this later:
+Messenger:
+
+When you are using product integration modules such as the bridge to the
+Dynamics Toolkit, you will need to initialize McdMessenger, which takes
+care of distributing the nearby pairs detected in each Space to the
+appropriate integration module.
+\begin{verbatim}
+int maxNumSpaces = 2;
+int maxNumReceivers = 3;
+McdMessengerInit( maxNumSpaces, maxNumReceivers );
+
+**   McdPairHandlerRegisterSpace(space);
+\end{verbatim}
+
+
+\subsection{ ``ball hits wall'': a sample program }
+
+Here we will put together the above bits and pieces into a complete
+program. The scenario is the following:
+
+a ball is thrown, it bounces
+of a wall, and then bounces off the floor.
+
+The motion of the ball is handled by the user, in a move() function. When
+collisions are detected, a simple (but of limited use) response algorithm
+is employed to produce the ``bounce'' change in motion.
+
+Note that code for the visual rendering the scene has been omitted.
+
+Among other things, this demonstrates how to extract and use info from a McdContactData struct.
+
+The floor is an example of a specialized geometrical type. Allows
+a simpler and hence faster intersection algorithm to be applied.
+
+\begin{verbatim}
+
+.. program code  goes here ..
+
+\end{verbatim}
+
+\subsection{ using the CollisionToolkit to support the DynamicsToolkit }
+
+You can use the CT to define the geometrical
+shape of MdtBody's, and to generate appropriate MdtContact's 
+characterising the contact condition between the surfaces of two MdtBody's.  
+This informs the Dynamics Toolkit's solver so that it can respond to the contact
+condition, computing a motion..
+allows them to ``come into contact'' with each other; to ``touch'' (rather
+than pass through) each other..
+
+A dedicated bridge object will manage all control flow and data exchange
+between the two packages for you, including keeping the McdModel and MdtBody
+coordinate systems in sync with each other. 
+
+The following sample program shows you how to use it. 
+
+The scenario is
+identical to the previous one, only now the ball's motion is
+being computed by the Dynamics Toolkit instead of in user code. To
+support this, the Dynamics Toolkit bridge (McdDtBridge), computes the
+appropriate contact information for you, and communicates it automatically to the
+DynamicsToolkit.
+
+\subsubsection{ ``ball hits wall'' revisited: a sample program }
+
+This example will acheive the same result as the previous example. One big 
+difference is that all user code for motion is replaced by a dynamical
+specification that will generate the same behaviour. In addition, there is
+no need for you to create or manipulate McdContactData objects at all. 
+
+
+You will need the following key ``bridging'' operations:
+
+\minisection{Begin:}
+
+
+You have to initialize both the CT and Dynamics Toolkit packages, of course, but now you
+must also create the bridge object connecting them together:
+
+\begin{verbatim}
+int maxNumPairs = 10;
+McdDtBridge *bridge;
+bridge = McdDtBridgeCreate( maxNumPairs );
+\end{verbatim}
+
+\minisection{Giving shape to MdtBody's:}
+
+Specify the collision model that will represent the geometrical shape of
+each MdtBody: 
+
+\begin{verbatim}
+McdDtBridgeSetBody( m_ball, b_ball );
+\end{verbatim}
+
+Here's the complete code:
+
+\begin{verbatim}
+
+.. program code  goes here ..
+
+\end{verbatim}
+
+
+\subsubsection{ ``ball hits wall'': the fun begins }
+
+You have now written a 3D simulation involving physics and geometry
+without any code involving physical nor geometrical computations!
+
+Although the previous example produces very simple behaviour, it is written
+at a very high level of generality: There is little of your code that
+depends on the actual geometries you chose, and very little that is
+specific to the kind of behaviour you wanted to acheive.  Programming at
+this level of abstraction opens up many new opportunities.  Trivial changes
+to your code can result in very rich and complex changes in
+behaviour. Dynamical and geometrical properties can also be varied and
+``tuned'' without disturbing the rest of your code.
+
+This is in contrast with the first example in which the user wrote
+specialized code that handled only the specific collision conditions. Such
+code must often be rewritten as the scenario changes, and must be
+constantly re-checked for special boundary conditions. For example, the
+above userMove() function does not anticipate the ``corner'' condition in
+which the ball hits the wall and the floor at the same time.
+
+Here we will demonstrate a variety of complex behaviours ( which you
+wouldn't want to hand-program each time) that can be produced and experimented with by
+single-line-of-code changes to the Collision Toolkit-Dynamics Toolkit program.
+We will look individually at changing properties that are controlled by the
+CT, and by properties that are controlled by the DT.
+
+\minisection{changing geometrical properties}
+
+Replace
+\begin{verbatim}
+m_ball = McdModelCreate( McdSphereCreate(3) );
+\end{verbatim}
+with
+\begin{verbatim}
+m_ball = McdModelCreate( McdCylinderCreate(1,5) );
+\end{verbatim}
+
+The ball has become a flying log, complete with realistic spinning and toppling
+motions. Note how rounded-edge-on-wall-edge, end-surface-on-flat-surface
+and all other contact combinations are automatically handled with geometric
+and physical realism. 
+
+\begin{verbatim}
+..snapshot..
+\end{verbatim}
+
+
+You can edit the geometry of any of the MdtBody's in this manner, or add
+new bodies.
+
+Try replacing
+\begin{verbatim}
+m_wall = McdModelCreate( McdBoxCreate(2,4,10) );
+\end{verbatim}
+with
+\begin{verbatim}
+m_wall = McdModelCreate( McdCylinderCreate(1,2) );
+\end{verbatim}
+and throw in another flying body for good measure:
+\begin{verbatim}
+McdModel *m_bar = McdModelCreate( McdBoxCreate(1,1,8);
+McdSpaceInsert(m_bar);
+MdtBody *b_bar = MdtBodyCreate();
+MdtWorldAddBody( world, b_bar );
+McdDtBridgeSetBody( m_bar, b_bar );
+\end{verbatim}
+
+You've now got a log and a long bar interacting with each other at the same
+time that they ricochet off a giant hockey puck. 
+
+\begin{verbatim}
+..snapshot..
+\end{verbatim}
+
+Note that you might also want to adjust the moment of inertia as you switch
+geometries, to capture the effect of preferred-axis spinning.
+
+\minisection{changing dynamical properties}
+
+Let's leave the geometrical specification in its original state, and try
+instead playing with some of the dynamical properties.
+
+Try making the ball into a building-destroyer-thing (word?). Much heavier than
+the wall, and it doesn't bounce much ( metal against concrete ):
+\begin{verbatim}
+MdtBodySetMass( b_ball, 100 );
+MdtBodySetMass( b_wall, 10 );
+MdtBodySetRestitution( b_ball, 0.1);// wrong call for now..
+\end{verbatim}
+
+Now the ball knocks over the wall, which comes tumbling down onto the ball,
+coming to rest at some small angle, trapping the ball. Try coding that by
+hand!
+
+\begin{verbatim}
+..snapshot..
+\end{verbatim}
+
+Let's try a different metaphor. We'll add a floor hinge at one end of the
+wall, so it won't fall over:
+\begin{verbatim}
+MdtWorldAttach( MdtHingeCreate( b_body, b_floor, .. );
+\end{verbatim}
+
+Now when the ball hits, the wall acts like a door, swinging on its
+hinge. It is an unconstrained hinge, so it swings a full 360 degrees,
+coming around to smack the ball back again!
+
+\begin{verbatim}
+..snapshot..
+\end{verbatim}
+
+%\subsection{ postGDC: integrating the CollisionToolkit with multiple
+%  products }
+
+\section{ Using the Collision Toolkit }
+
+\subsection{ collision models and the geometry library }
+
+%\subsubsection{ geometry library, types}
+
+\subsubsection{ the transform and synchronisation with the graphics }
+
+You need to ensure that the collision model's coordinate system remains
+up-to-date with that of the 3D graphics model that is being displayed. This
+often involves a 3-way synchronization between the behaviour module
+determining the new positions and orientations, the graphics model and the
+collision model. 
+
+Collision model's transforms must be explicitly allocated.
+You can also allocate an additional ``relative transform'' to help with
+alignment.
+
+\subsubsection{ optimizations }
+
+Obvious optimization here is using a sphere shape instead of, say, a box
+shape, if you can afford the reduced accuracy.
+
+Another one is if, for example, you use a box to model a table-top, and all
+the collisio models that collide with it never go near the edges ( perhaps
+game constraints guarantee that?), then you can speed up by replacing the
+collision model's geometry from a box to a z-plane.
+
+\subsection{ culling management and culling optimizations }
+
+\subsubsection{ the ``freeze'' feature }
+
+Collision models which you know are not going to move for a while can be
+``frozen'' in the collision space. This reduces the redundant updating work
+the collision space would otherwise have to perform.
+
+\begin{verbatim}
+McdFreeze( McdModel* );
+\end{verbatim}
+
+There is a small overhead associated with changing a collision model's
+state from frozen to unfrozen. It is not appropriate if you are changing from frozen to unfrozen
+state every time step: you might even degrade performance instead of
+improving it!
+ 
+\subsubsection{ alternative implementations and specializations }
+
+The farfield module offers a coordinate sorting implementation.
+You can vary the number of axes that are used for sorting.
+
+For example, if all your models stay close to a z-plane, then you can
+benefit from sorting on only the x- and y-axes.
+
+\section{ integrating with the DynamicsToolkit }
+
+\subsection{ relative transforms }
+
+When you associate a collision model with a rigid body, the default update
+operation carried out by the bridge is to copy the rigid body's transform
+into the collision model's.
+ Sometimes, there is a spatial offset needed between the rigid body's
+ coordinate system and that of the collision model. 
+
+This could be, for
+ example, because contraints involving the rigid body have already been
+ specified, implicitly defining a coordinate system that may be different
+ from what the collision model's geometry assumes.
+
+
+You can take care of this by setting a relative transform that is
+compounded with the rigid body's before being set for the collision model:
+\begin{verbatim}
+McdMdtSetRelativeTransform( McdModel*, MeMatrix* );
+\end{verbatim}
+
+\subsection{ composite geometries }
+
+Currently, the CT offers only single primitive geometry types. you can
+nevertheless create a composite geometry for a rigid body by associating
+multiple collision models with it:
+\begin{verbatim}
+McdModel *m1 = McdModelCreate( McdSphereCreate(1) );
+McdModel *m2 = McdModelCreate( McdSphereCreate(2) );
+MeMatrix *shiftSecondSphere;
+//.. set shiftSecondSphere..
+MdtBody *b;
+McdMdtSetBody( m1, b );
+McdMdtSetBody( m2, b );
+\end{verbatim}
+
+\subsection{ material properties }
+
+A DT contact contains both geometrical and dynamical properties.
+The geometrical properties are obtained from the CT's computations. 
+
+The DT bridge offers a material ``id'' for individual bodies, and a
+material table where you can specify the values of the dynamical properties
+for each pair of id values. There is also a callback for addditional
+modifications.
+
+\subsection{ inertia matrix }
+
+The values in the rigid body's inertia matrix also imply a certain
+orientation of its coordinate system. Make sure this aligns properly with
+that of the collision model.
+ Be careful when you change the geometrical shape of a collision model that
+ the corresponding rigid body's inertia matrix reflects this. For some
+ situations this effect is minor, for others it is crucial.
+
+The effect is most important when you create a box with one axis
+significantly longer or shorter than the other ones, or a cylinder with its
+length significantly longer or shorter than its radius.
+
+\subsection{ optimizations }
+
+
+Try to choose intersection algorithms that generate the least number of
+contacts. Using sphere geometries is good for this, but not always
+appropriate.
+
+Avoid relative transforms if you can.
+
+
+%\section{ postGDC: building on the simulation support layer }
+%
+%\subsection{ ``hello'', ``staying'' and ``goodbye'' }
+
+\section{ demonstration programs }
+
+1. ball\_hits\_wall\
+
+This is a simple example of using the CT without the DT.
+
+The scenario: a ball approaches a wall, bounces off the wall, bounces off
+the floor and then exits the scene.
+
+Motion is controlled by a very simple ``hacked'' physics algorithm.
+
+The program how to use the CT to perform some basic tasks:
+
+obtaining collision events
+identifying them ( ``ball-wall'' collision vs. ``ball-floor'' collision)
+calling the intersection function
+reading the contact data structures
+
+The code for the motion algorithm shows you how to extract information
+from the contact data structures and how to use this information to produce 
+appropriate changes in the motion of the rendered models.
+
+The program also show how the new positions computed from the motion
+algorithm are used to update both the collision model and the rendered
+model.
+
+2. ball\_hits\_wall2
+
+This example reproduces the identical behaviour of the previous example,
+only using the DT to control the motion.
+No motion code appears anywhere in the program.
+A ``bridge'' component handles all communication and synchronisation
+between the CT and the DT. The only responsibility of the user is to
+specify the geometrical and dynamical properties of the simulation ( via
+the CT and the DT, respectively). 
+
+3. ball\_hits\_wall_fun
+
+This example illustrates how dramatically different different behavioural
+scenarios can be acheived by applying minor changes to the code of example
+2.
+
+The first sub-example is the pre-compiled one that is ready to execute. The
+other variations are obtained by small macro replacements directly in the
+program code. You are invited to perform these trivial edits and recompile
+in order to obtain an executable.
+
+i) By changing one line of code, the bouncing ball becomes a
+spinning-and-tumbling log undergoing realistic collisions with the wall and
+floor. 
+
+ii) Now a second projectile, a long ``2x4'' bar, is added to the mix.
+The bar and the log spin, tumble and collide with the wall, the floor, and
+  each other. This demonstrates the ability of multiple pair-combinations of
+  collisions to be handled correctly, efficiently and automatically. The
+  complexity of program code will increase only linearly with each
+  additional projectile ( just duplicate the code that created the first
+  ``ball'' ) although the number of collision interactions
+  to handle increases quadratically.
+
+The above two sub-examples demonstrate the ease with which
+geometrical properties can be modified to produce dramatically different
+results. This involves simple changes to the code that uses the CT.
+
+The following two sub-examples also begin with the code of example 2, but
+produce dramatically different results by applying
+small changes to the \emph{dynamical} specification. This time, the simple
+changes involve code that uses the DT.
+
+iii) heavy ball : a single-line code change replaces ball-bounces-off-ball
+  with ball-\emph{knocks-over}-wall! Another single line ``turns on''
+  gravity, making the wall fall \emph{down} instead of floating away!
+  The wall traps the ball, demonstrating a stable coming-to-rest
+  transition, involving the
+  collision-geometry configuration of box(wall) on sphere( ball ), sphere
+  on z-plane ( floor ), and box on z-plane.
+
+iv) door swing: stop the wall from falling over by fixing it the floor with
+a hinge joint. Now when the heavy ball hits, the wall acts like a door,
+swinging around. Since there's no other contraints, it swings \emph{all}
+the way around, coming to hit the ball back!
+
+
+4. Dominoes
+
+A heavy ball is thrown at a a circular arrangement of dominoes.
+The dominoes topple over. This demonstrates a very simple interactive
+``game'' scenario: The user can continue shooting, at any time and from any
+angle.
+It also demonstrates stacking,sliding and surface-to-surface resting
+    conditions involving large numbers of
+    blocks. 
+
+5. Bridge
+
+A sequence of ``planks'' forms a bridge. Balls fall onto it, and the bridge
+ responds to the shock in a realistic way.
+The planks are attached to each other using constraints, a feature of the
+ DT.
+This illustrates how collision detection is selectively ``turned off'' for
+ pairs of models that are close or touching, but whose interaction is being
+ modeled by other means.
+
+**** hide this for now: i don't what it does ! ***
+6. Dice
+  uses RenderWare product integration.
+ 
+%\section{ developing games for the PS2 }
+
+
+%\section{ postGDC: memory management }
+
+
+
+
+
+
+\section{ glossary }
+
+any terms I think of..
+collision model has already been ``submitted'' to cheryl.
+
+\begin{description}
+\item[collision detection]
+\item[response,collision response, response model]
+\item[behaviour module]
+\item[intersection]
+\item[intersection, characterisation of]
+\item[contact,contacts,contact points]
+\item[(geometrical) contact] Closely related to but distinct from dynamical
+  contact..
+\item[contact strategy]
+\item[pairwise culling]
+\item[coherence]
+\item[``nearby'' state transitions ]
+\item[near and nearby]
+
+\item[collision model]
+\item[collision space]
+\item[\(n^{2}\), the \(n^{2}\) problem]
+\item[frame-to-frame coherence]
+\item[pairwise proximity culling]
+\end{description}
+
+\end{document}

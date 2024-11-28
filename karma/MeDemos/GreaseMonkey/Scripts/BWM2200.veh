@@ -1,0 +1,9 @@
+#BMW02.veh
+SHAPE_DIR ./Models/BWM2200
+TEXTURE_DIR ./Models/BWM2200/textures
+INTERNAL_SHAPE interiorview.dff
+CMPT_SHAPES wheelbwmR.dff wheelbwmR.dff wheelbwmR.dff wheelbwmR.dff BWM2200.dff
+EXTERNAL_TEXTURE beemer
+STEERING_GAINS 0.6 5.0 -1.0 0.5
+THROTTLE_GAINS 0.00063
+CAR_DATA_FILE BWM2200D.txt

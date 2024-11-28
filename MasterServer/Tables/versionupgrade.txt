@@ -1,0 +1,19 @@
+create table versionupgrade
+(
+	id				int not null auto_increment,
+
+	version			int not null,
+	minplatform		int not null,
+	maxplatform		int not null,
+	
+	forceupgradeclientto	int,
+	forceupgradeserverto	int,
+	optionalupgradeclientto	int,
+	optionalupgradeserverto	int,
+	upgradesavail			int,
+	
+	message			text,
+	upgrademessage	text,
+	
+	primary key(id)
+);

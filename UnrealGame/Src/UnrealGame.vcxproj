@@ -1,0 +1,153 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug_AMD64|Win32">
+      <Configuration>Debug_AMD64</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="UnrealScript|Win32">
+      <Configuration>UnrealScript</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{A4835CC9-4192-4E8D-8701-CF0F5C56D76D}</ProjectGuid>
+    <Keyword>MakeFileProj</Keyword>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug_AMD64|Win32'" Label="Configuration">
+    <ConfigurationType>Utility</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='UnrealScript|Win32'" Label="Configuration">
+    <ConfigurationType>Utility</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug_AMD64|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='UnrealScript|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.40219.1</_ProjectFileVersion>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='UnrealScript|Win32'">.\.\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='UnrealScript|Win32'">.\.\</IntDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug_AMD64|Win32'">$(Configuration)\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug_AMD64|Win32'">$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <None Include="..\Classes\ACTION_DisableObjective.uc" />
+    <None Include="..\Classes\ACTION_DisableThisScript.uc" />
+    <None Include="..\Classes\ACTION_GotoMenu.uc" />
+    <None Include="..\Classes\ACTION_SetObjectiveActiveStatus.uc" />
+    <None Include="..\Classes\AnnounceAdrenaline.uc" />
+    <None Include="..\Classes\AssaultPath.uc" />
+    <None Include="..\Classes\BigHeadRules.uc" />
+    <None Include="..\Classes\BlueShootSpot.uc" />
+    <None Include="..\Classes\BombingRunSquadAI.uc" />
+    <None Include="..\Classes\BombingRunTeamAI.uc" />
+    <None Include="..\Classes\BombTargetMessage.uc" />
+    <None Include="..\Classes\Bot.uc" />
+    <None Include="..\Classes\CinematicGame.uc" />
+    <None Include="..\Classes\CinematicHud.uc" />
+    <None Include="..\Classes\CinematicPlayer.uc" />
+    <None Include="..\Classes\ClassicAnnouncer.uc" />
+    <None Include="..\Classes\ConvoyGibbed.uc" />
+    <None Include="..\Classes\ConvoyPhysicsVolume.uc" />
+    <None Include="..\Classes\CTFBase.uc" />
+    <None Include="..\Classes\CTFFlag.uc" />
+    <None Include="..\Classes\CTFGame.uc" />
+    <None Include="..\Classes\CTFHUDMessage.uc" />
+    <None Include="..\Classes\CTFMessage.uc" />
+    <None Include="..\Classes\CTFSquadAI.uc" />
+    <None Include="..\Classes\CTFTeamAI.uc" />
+    <None Include="..\Classes\CustomBotConfig.uc" />
+    <None Include="..\Classes\DeathMatch.uc" />
+    <None Include="..\Classes\DemoRecSpectator.uc" />
+    <None Include="..\Classes\DestroyableObjective.uc" />
+    <None Include="..\Classes\DestroyableObjective_SM.uc" />
+    <None Include="..\Classes\DMMutator.uc" />
+    <None Include="..\Classes\DMRoster.uc" />
+    <None Include="..\Classes\DMSquad.uc" />
+    <None Include="..\Classes\DMStatsScreen.uc" />
+    <None Include="..\Classes\DominationPoint.uc" />
+    <None Include="..\Classes\DOMSquadAI.uc" />
+    <None Include="..\Classes\DOMTeamAI.uc" />
+    <None Include="..\Classes\DynamicPhysicsVolume.uc" />
+    <None Include="..\Classes\FemaleAnnouncer.uc" />
+    <None Include="..\Classes\FirstBloodMessage.uc" />
+    <None Include="..\Classes\FX_HoldObjective.uc" />
+    <None Include="..\Classes\GameObject.uc" />
+    <None Include="..\Classes\GameObjective.uc" />
+    <None Include="..\Classes\GravityTrigger.uc" />
+    <None Include="..\Classes\HoldObjective.uc" />
+    <None Include="..\Classes\HoldSpot.uc" />
+    <None Include="..\Classes\IdleKickWarningMessage.uc" />
+    <None Include="..\Classes\JumpSpot.uc" />
+    <None Include="..\Classes\KeyInventory.uc" />
+    <None Include="..\Classes\KeyPickup.uc" />
+    <None Include="..\Classes\KillingSpreeMessage.uc" />
+    <None Include="..\Classes\LastSecondMessage.uc" />
+    <None Include="..\Classes\LevelGameRules.uc" />
+    <None Include="..\Classes\LockedObjective.uc" />
+    <None Include="..\Classes\MaleAnnouncer.uc" />
+    <None Include="..\Classes\MessageTrigger.uc" />
+    <None Include="..\Classes\MutBerserk.uc" />
+    <None Include="..\Classes\MutBigHead.uc" />
+    <None Include="..\Classes\MutGameSpeed.uc" />
+    <None Include="..\Classes\MutLowGrav.uc" />
+    <None Include="..\Classes\MutMovementModifier.uc" />
+    <None Include="..\Classes\NetworkEmitter.uc" />
+    <None Include="..\Classes\NetworkTrigger.uc" />
+    <None Include="..\Classes\PickupMessagePlus.uc" />
+    <None Include="..\Classes\PlayerNameMessage.uc" />
+    <None Include="..\Classes\ProximityObjective.uc" />
+    <None Include="..\Classes\RedShootSpot.uc" />
+    <None Include="..\Classes\RestingFormation.uc" />
+    <None Include="..\Classes\RosterEntry.uc" />
+    <None Include="..\Classes\SayMessagePlus.uc" />
+    <None Include="..\Classes\SentinelController.uc" />
+    <None Include="..\Classes\SexyFemaleAnnouncer.uc" />
+    <None Include="..\Classes\ShootSpot.uc" />
+    <None Include="..\Classes\SnipingVolume.uc" />
+    <None Include="..\Classes\SquadAI.uc" />
+    <None Include="..\Classes\StartupMessage.uc" />
+    <None Include="..\Classes\StringMessagePlus.uc" />
+    <None Include="..\Classes\TeamAI.uc" />
+    <None Include="..\Classes\TeamGame.uc" />
+    <None Include="..\Classes\TeamPlayerReplicationInfo.uc" />
+    <None Include="..\Classes\TeamSayMessagePlus.uc" />
+    <None Include="..\Classes\TeamVoicePack.uc" />
+    <None Include="..\Classes\TeamVoiceReplicationInfo.uc" />
+    <None Include="..\Classes\tempvoice.uc" />
+    <None Include="..\Classes\TimerMessage.uc" />
+    <None Include="..\Classes\TranslocatorBeacon.uc" />
+    <None Include="..\Classes\TriggeredObjective.uc" />
+    <None Include="..\Classes\TurretController.uc" />
+    <None Include="..\Classes\UnrealChatRoom.uc" />
+    <None Include="..\Classes\UnrealMPGameInfo.uc" />
+    <None Include="..\Classes\UnrealPawn.uc" />
+    <None Include="..\Classes\UnrealPlayer.uc" />
+    <None Include="..\Classes\UnrealScriptedSequence.uc" />
+    <None Include="..\Classes\UnrealSecurity.uc" />
+    <None Include="..\Classes\UnrealTeamInfo.uc" />
+    <None Include="..\Classes\UnrealVoiceReplicationInfo.uc" />
+    <None Include="..\Classes\UseObjective.uc" />
+    <None Include="..\Classes\UTJumppad.uc" />
+    <None Include="..\Classes\VehicleDamageType.uc" />
+    <None Include="..\Classes\WeaponDamageType.uc" />
+    <None Include="..\Classes\WillowWhisp.uc" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

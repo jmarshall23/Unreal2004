@@ -1,0 +1,26 @@
+create table servers
+(
+	serverid int not null auto_increment,
+	
+	/* server ip and gameport uniquely identify the server */
+	ip varchar(15) not null,				/* server IP */
+	port int not null,						/* remote game port number */
+
+	lastseen datetime,						/* when we last saw the server */
+	cdkeyid int not null,					/* last seen server cdkey */
+	servername varchar(66),					/* last seen server name */
+	adminname varchar(66),					/* last seen admin name */
+	adminemail varchar(66),					/* last seen admin email */
+	version int,
+	matchid int,
+	platform int,
+	banned char(1),
+	tempbantil datetime,
+	
+	primary key(serverid),
+	unique index idx_servers_ip_port (ip, port),
+	index idx_servers_cdkeyid (cdkeyid)
+);
+
+CREATE INDEX idx_onlineservers_version ON onlineservers (version);
+CREATE INDEX idx_servers_banned ON servers (banned);

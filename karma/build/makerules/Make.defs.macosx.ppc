@@ -1,0 +1,10 @@
+#######################################################################
+# $Id: Make.defs.macosx.ppc,v 1.2.8.1 2002/04/11 03:45:34 jamesg Exp $
+# $Name: t-stevet-RWSpre-030110 $
+#######################################################################
+#
+# i686 specific stuff for the linux os
+#
+# This is read just _after_ Make.defs.macosx
+
+CCPLATFORM+=-arch ppc

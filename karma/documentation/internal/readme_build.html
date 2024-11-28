@@ -1,0 +1,70 @@
+<html>
+
+<head>
+<title>Building Modules in CVS Repository 'projects'</title>
+</head>
+
+<body bgcolor="#ffffff">
+
+<h1>Building Modules in CVS Repository 'projects'</h1>
+
+<h4>Tool Chain</h4>
+<ul>
+
+<li>UNIX
+<ul>
+<li>bash
+<li>CVS
+<li>C++ Compiler
+<li>GNU Make > version 3.77
+<li>GNU Autoconf > version 2.13
+<li>doxygen > version 1.0.0
+<li>Perl > build 5.005_03
+</ul>
+
+<li>Win32
+<ul>
+<li>Cygwin > version 1.0
+<li>CVS (comes with Cygwin 1.0)
+<li>Microsoft Visual C++ Compiler
+<li>GNU Make > version 3.77 (comes with Cygwin 1.0)
+<li>GNU Autoconf > version 2.13 (remove 'autoconf.m4f' if 'autoconf' returns and error when you try and run it)
+<li>doxygen > version 1.0.0
+<li>Perl > build 5.005_03 (comes with Cygwin 1.0)
+</ul>
+
+</ul>
+
+<h4>For 'WindowsNT/2000' you will need to setup your <a href="./readme_build_win32.html">environment</a> first.</h4>
+
+
+<h4>Developers</h4>
+
+<ul>
+<li>export CVSROOT=:pserver:anoncvs@cvs.mtl.mathengine.com:/proj/projects
+<li>cvs login
+<li>cvs checkout metoolkit
+<li>cd metoolkit/build/internal
+<li>make -f makefile_metoolkit_autoconf all
+</ul>
+
+<p>Alternatively, if you develop with Microsoft's Visual Studio you can use the '.dsw' file:</p>
+
+<ul>
+<li>metoolkit/build/internal/metoolkit.dsw
+</ul>
+
+
+<h4>Release</h4>
+<ul>
+<li>export CVSROOT=:pserver:anoncvs@cvs.mtl.mathengine.com:/proj/projects
+<li>cvs login
+<li>cvs checkout release
+<li>cd release/installers/metoolkit/build
+<li>make full
+</ul>
+
+
+</body>
+
+</html>

@@ -1,0 +1,3 @@
+# -*- makefile -*- vim:noet:ts=8:sw=4:ft=make:
+
+# Additional rules required for this platform

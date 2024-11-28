@@ -1,0 +1,116 @@
+# $Id: Make.defs.win32,v 1.28.2.1 2002/04/11 03:45:34 jamesg Exp $
+# $Name: t-stevet-RWSpre-030110 $
+#
+# vim:syntax=make:
+
+# Cowpat macro definitions for win32 toolchain
+
+# THINK CAREFULLY BEFORE EDITING THIS FILE
+# This file is included late on in Make.rules.
+#
+# It should _only_ contain compiler definitions and _not_ be dependent on any
+# variables. Make.rules expects many of these macros to be set.
+#
+#######################################################################
+#
+# VC++ Note:
+# Interestingly uSoft's "Maximize speed" optimisations include /Oy- with
+# /Ox -- i.e., the frame pointer is *included*. You have to do "Customize"
+# and select _both_ "Full Optimisation" and "Frame-Pointer Omission" to
+# avoid the /Oy-
+#
+# -Ox = /Og /Oi /Ot /Oy /Ob1 /Gs
+# -O2 = /Og /Oi /Ot /Oy /Ob1 /Gs /Gf /Gy
+#
+# -Ow: assume aliasing across function calls:
+# -Oa: assumes no aliasing. Possibly dodgy: Both these not included in -Ox
+# -Gz: stdcall
+# -Gy: function level linking
+# -Gf: Eliminate Duplicate Strings
+# -GF: As -Gf, but place in read-only memory
+# -ML[d]: single threaded lib (LIBC)
+# -MT[d]: multi-threaded lib (LIBCMT)
+# -MD[d]: multi-threaded dll (MSVCRT)
+# -Fm: map file
+# -Fo: object file
+# -F[Rr]: browser files
+# -GZ: catch release errors in debug build
+# -GX: enable exception handling
+# -Gi: enable incremental compilation (uses .idb, can't use with -Z7)
+# -Zi: debug symbols in PDB
+# -Fd: name pdb file
+#
+
+ifneq (win32,${&os})
+$(error Make.defs.win32: Only for win32 builds)
+endif
+
+CC:=cl.exe -nologo -DWIN32_LEAN_AND_MEAN
+CPP:=${CC}
+CXX:=${CC}
+CCINTEL:=${CC} -D_USE_INTEL_COMPILER
+CCPLATFORM:=-DWIN32
+CPPMAKEDEPS:=-E
+o:=obj
+CCOBJ=-Fo# no trailing space
+# CC_OPTS_${OPTS}
+ccwarn?=-W3# overridable
+CC_OPTS_none:=${ccwarn} -G6 -GF -Od -GZ# GZ: Catch release errors in debug builds
+CC_OPTS_full:=${ccwarn} -G6 -GF -O2 -Oa# -Oa: Could be dodgy
+CC_inline_none:=-Ob0
+CC_inline_specified:=-Ob1
+CC_inline_any:=-Ob2
+# CC_codegoing_${codegoing}
+CC_codegoing_intodll:=
+CC_codegoing_intoexe:=
+# CC_browse_${browse}
+CC_browse_none:=
+CC_browse_nonlocal=-Fr${browsedir}
+CC_browse_complete=-FR${browsedir}
+CCINTEL_OPTS_none:=-Qrestrict
+CCINTEL_OPTS_full:=-Qsox- -QxK -Qunroll0 -Qvec- -Qrestrict
+# CC_CRT_${CRT}
+CC_CRT_static:=-ML
+CC_CRT_mthread:=-MT
+CC_CRT_dll:=-MD
+CC_CRT_staticd:=-MLd
+CC_CRT_mthreadd:=-MTd
+CC_CRT_dlld:=-MDd
+targetpdbname:=${builddir}${&targetname}.pdb
+# CC_SYMB_${SYMBOLS}
+CC_SYMB_none:=
+CC_SYMB_all:=-Z7
+
+# Simultaneous cl.exe sessions tend to step on each others' toes as they
+# try to access the same .pdb. .NOTPARALLEL forces serial execution (but
+# other sub-makes may still run in parallel (wow)).
+# [Solved by putting debug info into the .obj rather than .pdb during
+# compilation -- Can still use .pdb after linking.]
+#ifeq (all,${SYMBOLS})
+#&parallel:=.NOTPARALLEL:
+#endif
+
+AR:=lib -nologo
+ARFLAGS:=-OUT:# no trailing space
+_systemlibs:=kernel32.lib user32.lib gdi32.lib advapi32.lib winmm.lib
+LDFLAGS_SYMB_none:=${_systemlibs} -OUT:# no trailing space
+LDFLAGS_SYMB_all:=${_systemlibs} /DEBUG /PDB:${targetpdbname} -OUT:# no trailing space
+#ifeq '1' "$(words $(filter ${noise},($(wordlist 3,64,${noises}))))" 
+#LD:=link -nologo -verbose
+#else
+LD:=link -nologo -warn:3
+#endif
+# pre/post for link libs ("Link with this lib")
+# Patterns used in $(patsubst %,${mklibname},png) --> png.lib
+#LDLIBPATH:=$(addprefix -libpath:,${libpath})
+mkldlibpath:=-libpath:%
+mklibname:=%.lib
+mkdllname:=%.dll
+mkdllimportlibname:=%.lib
+mkldlinksystemlibs=%.lib
+mkexename:=%.exe
+#exesuffix:=.exe
+andthen:=&&
+# Strong quoting. Don't use " here.
+&lq:='
+&rq:='

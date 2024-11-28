@@ -1,0 +1,371 @@
+<html xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:w="urn:schemas-microsoft-com:office:word"
+xmlns="http://www.w3.org/TR/REC-html40">
+
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=windows-1252">
+<meta name=ProgId content=Word.Document>
+<meta name=Generator content="Microsoft Word 9">
+<meta name=Originator content="Microsoft Word 9">
+<link rel=File-List href="./Karma_Toolkit_Architecture_v2_files/filelist.xml">
+<title>Karma Toolkit Architecture</title>
+<!--[if gte mso 9]><xml>
+ <o:DocumentProperties>
+  <o:Author>philf</o:Author>
+  <o:LastAuthor>philf</o:LastAuthor>
+  <o:Revision>2</o:Revision>
+  <o:TotalTime>465</o:TotalTime>
+  <o:LastPrinted>2001-09-12T17:00:00Z</o:LastPrinted>
+  <o:Created>2001-10-01T16:08:00Z</o:Created>
+  <o:LastSaved>2001-10-01T16:08:00Z</o:LastSaved>
+  <o:Pages>3</o:Pages>
+  <o:Words>643</o:Words>
+  <o:Characters>3666</o:Characters>
+  <o:Company>MathEngine PLC</o:Company>
+  <o:Lines>30</o:Lines>
+  <o:Paragraphs>7</o:Paragraphs>
+  <o:CharactersWithSpaces>4502</o:CharactersWithSpaces>
+  <o:Version>9.3821</o:Version>
+ </o:DocumentProperties>
+</xml><![endif]-->
+<style>
+<!--
+ /* Font Definitions */
+@font-face
+	{font-family:ZapfDingbats;
+	panose-1:0 0 0 0 0 0 0 0 0 0;
+	mso-font-charset:2;
+	mso-generic-font-family:decorative;
+	mso-font-format:other;
+	mso-font-pitch:variable;
+	mso-font-signature:0 268435456 0 0 -2147483648 0;}
+ /* Style Definitions */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{mso-style-parent:"";
+	margin:0cm;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";}
+h1
+	{mso-style-next:Normal;
+	margin:0cm;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	page-break-after:avoid;
+	mso-outline-level:1;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-font-kerning:0pt;
+	font-weight:normal;
+	text-decoration:underline;
+	text-underline:single;}
+h2
+	{mso-style-next:Normal;
+	margin:0cm;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	page-break-after:avoid;
+	mso-outline-level:2;
+	font-size:12.0pt;
+	font-family:"Times New Roman";}
+p.MsoTitle, li.MsoTitle, div.MsoTitle
+	{margin:0cm;
+	margin-bottom:.0001pt;
+	text-align:center;
+	mso-pagination:widow-orphan;
+	font-size:16.0pt;
+	mso-bidi-font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";
+	font-weight:bold;
+	text-decoration:underline;
+	text-underline:single;}
+p.MsoSubtitle, li.MsoSubtitle, div.MsoSubtitle
+	{margin:0cm;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";
+	text-decoration:underline;
+	text-underline:single;}
+@page Section1
+	{size:595.3pt 841.9pt;
+	margin:72.0pt 90.0pt 72.0pt 90.0pt;
+	mso-header-margin:35.4pt;
+	mso-footer-margin:35.4pt;
+	mso-paper-source:0;}
+div.Section1
+	{page:Section1;}
+ /* List Definitions */
+@list l0
+	{mso-list-id:390272242;
+	mso-list-type:hybrid;
+	mso-list-template-ids:99242754 67698705 67698713 67698715 67698703 67698713 67698715 67698703 67698713 67698715;}
+@list l0:level1
+	{mso-level-text:"%1\)";
+	mso-level-tab-stop:36.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;}
+@list l1
+	{mso-list-id:400105632;
+	mso-list-type:hybrid;
+	mso-list-template-ids:560525794 67698705 67698713 67698715 67698703 67698713 67698715 67698703 67698713 67698715;}
+@list l1:level1
+	{mso-level-text:"%1\)";
+	mso-level-tab-stop:18.0pt;
+	mso-level-number-position:left;
+	margin-left:18.0pt;
+	text-indent:-18.0pt;}
+@list l1:level2
+	{mso-level-number-format:alpha-lower;
+	mso-level-tab-stop:54.0pt;
+	mso-level-number-position:left;
+	margin-left:54.0pt;
+	text-indent:-18.0pt;}
+@list l2
+	{mso-list-id:647052163;
+	mso-list-type:hybrid;
+	mso-list-template-ids:600705764 67698705 67698713 67698715 67698703 67698713 67698715 67698703 67698713 67698715;}
+@list l2:level1
+	{mso-level-text:"%1\)";
+	mso-level-tab-stop:36.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;}
+@list l3
+	{mso-list-id:2135706719;
+	mso-list-type:hybrid;
+	mso-list-template-ids:-941983490 67698705 67698713 67698715 67698703 67698713 67698715 67698703 67698713 67698715;}
+@list l3:level1
+	{mso-level-text:"%1\)";
+	mso-level-tab-stop:36.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;}
+ol
+	{margin-bottom:0cm;}
+ul
+	{margin-bottom:0cm;}
+-->
+</style>
+</head>
+
+<body lang=EN-GB style='tab-interval:36.0pt'>
+
+<div class=Section1>
+
+<p class=MsoTitle>Karma Toolkit Architecture</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoSubtitle><b><span style='text-decoration:none;text-underline:none'>Rendering
+and User Interaction</span></b><span style='text-decoration:none;text-underline:
+none'> is where external inputs to the system are entered, for example, turning
+motors on and off. Also the scene can be drawn to the screen by the renderer.<o:p></o:p></span></p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal><b>McdModels</b> is the set of all of the models, each of
+which references a geometry. Each model contains its AABB (axis aligned
+bounding box).</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal><b>McdGeometries</b> are the actual collision geometry and
+may be aggregates of simple shapes. Each geometry can be used by many models </p>
+
+<p class=MsoNormal><b><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></b></p>
+
+<p class=MsoNormal><b>McdSpace</b> contains all of the models, including a list
+of ModelPairs that might be touching.</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<h1><b><span style='text-decoration:none;text-underline:none'>McdSpaceUpdateAll</span></b><span
+style='text-decoration:none;text-underline:none'> is the <b>far field phase</b>.
+First, each models AABB is updated. This is to find pairs of boxes that overlap
+and hence pairs of objects that might overlap. These are called ModelPairs.
+[Frozen models (flagged), for example the ground, do not get updated].<o:p></o:p></span></h1>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal><b>McdSpaceGetPairs</b> is a part of collision called by the
+Bridge. It takes the list of pairs that might be touching and puts them into
+the correct categories of the McdModelPairContainer.</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal><b>McdModelPairContainer</b> is a temporary data store
+containing three main groups:</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal style='margin-left:18.0pt;text-indent:-18.0pt;mso-list:l1 level1 lfo1;
+tab-stops:list 18.0pt'><![if !supportLists]>1)<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span><![endif]>Hello pairs<span style="mso-spacerun: yes">      </span>–<span
+style="mso-spacerun: yes">  </span>are pairs whose bounding boxes are in the
+first frame of </p>
+
+<p class=MsoNormal style='margin-left:36.0pt;text-indent:36.0pt'><span
+style="mso-spacerun: yes">        </span>overlapping.</p>
+
+<p class=MsoNormal style='margin-left:18.0pt;text-indent:-18.0pt;mso-list:l1 level1 lfo1;
+tab-stops:list 18.0pt'><![if !supportLists]>2)<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span><![endif]>Staying pairs<span style="mso-spacerun: yes">   </span>–<span
+style="mso-spacerun: yes">  </span>are pairs that have overlapped for more than
+one frame.</p>
+
+<p class=MsoNormal style='margin-left:18.0pt;text-indent:-18.0pt;mso-list:l1 level1 lfo1;
+tab-stops:list 18.0pt left 90.0pt'><![if !supportLists]>3)<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><![endif]>Goodbye
+pairs – are pairs that used to overlap, but no longer do.</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal><b>MstHandleTransitions</b> is a section that looks at the
+Hello and Goodbye pairs only. For Hello pairs, MstHandleTransitions looks up
+the corresponding element in the McdInteractionTable. Each element has three
+function pointers:</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal style='margin-left:36.0pt;text-indent:-18.0pt;mso-list:l2 level1 lfo3;
+tab-stops:list 36.0pt'><![if !supportLists]>1)<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span><![endif]>The pointer to the Hello function for that pair of objects,
+this allocates data for the intersection test if necessary. </p>
+
+<p class=MsoNormal style='margin-left:36.0pt;text-indent:-18.0pt;mso-list:l2 level1 lfo3;
+tab-stops:list 36.0pt'><![if !supportLists]>2)<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span><![endif]>The pointer to the intersection test itself. Given a pair of
+geometries, it will deduce whether the objects are touching or not, and if they
+are it will calculate the collision contacts for that ModelPair.</p>
+
+<p class=MsoNormal style='margin-left:36.0pt;text-indent:-18.0pt;mso-list:l2 level1 lfo3;
+tab-stops:list 36.0pt'><![if !supportLists]>3)<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span><![endif]>The pointer to the Goodbye function which deallocates anything
+the hello function allocates.</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>The group of three function pointers are an McdInteraction
+structure. For each Hello pair, the pointer to the correct McdInteraction
+structure is stored in the Modelpair.</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>For Hello pairs, MstHandleTransitions calls the Hello
+function.</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>For Goodbye pairs, MstHandleTransitions calls the goodbye
+function. Also it looks for any contact groups and if they are present it
+destroys them.</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<h2>MstMaterialTable <span style='font-weight:normal'>has an element for every
+pair of materials. Each element contains two things:<o:p></o:p></span></h2>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal style='margin-left:36.0pt;text-indent:-18.0pt;mso-list:l0 level1 lfo4;
+tab-stops:list 36.0pt'><![if !supportLists]>1)<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span><![endif]>MdtContactParams – which contains friction, restitution etc.</p>
+
+<p class=MsoNormal style='margin-left:36.0pt;text-indent:-18.0pt;mso-list:l0 level1 lfo4;
+tab-stops:list 36.0pt'><![if !supportLists]>2)<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span><![endif]>Callbacks – these are intersect, per pair and contact
+callbacks for manually tweaking contact parameters.</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal><b>MstHandleCollisions</b> uses the Hello and Staying lists,
+it takes each ModelPair in turn, calls <b>McdIntersect</b> for the particular
+model pair in question. This function is used to generate a set of collision
+contacts (McdContact) containing:</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal style='margin-left:36.0pt;text-indent:-18.0pt;mso-list:l3 level1 lfo2;
+tab-stops:list 36.0pt'><![if !supportLists]>1)<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span><![endif]>Position</p>
+
+<p class=MsoNormal style='margin-left:36.0pt;text-indent:-18.0pt;mso-list:l3 level1 lfo2;
+tab-stops:list 36.0pt'><![if !supportLists]>2)<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span><![endif]>Normal</p>
+
+<p class=MsoNormal style='margin-left:36.0pt;text-indent:-18.0pt;mso-list:l3 level1 lfo2;
+tab-stops:list 36.0pt'><![if !supportLists]>3)<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span><![endif]>Penetration</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>The collision contacts are then turned into dynamics
+contacts (MdtContact), which have parameters like friction, restitution etc.
+This done with reference to the MstMaterialTable which also includes optional
+call backs for manual tweaking.</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal><b>MdtWorldUpdatePartitions</b> takes all of the bodies and
+constraints and puts them into sets that can be simulated as a group without
+affecting any of the other sets. These sets get stored in <b>MdtPartitionOutput.</b></p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal><b>MdtAutoDisable</b> looks at each partition in turn and if
+its velocity and acceleration is less than a threshold value it is disabled.
+The partition is then removed from the output as it is not required to be
+simulated. Also the corresponding collision model is frozen.</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal><b>MdtPack</b> changes the list of bodies and constraints;
+it uses the correct basic constraint library (<b>MdtBcl</b>) function for each
+constraint and turns it into constraint rows (MdtKeaConstraints) to input into
+Kea [note: different constraint types in <span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:ZapfDingbats;mso-ascii-font-family:"Times New Roman";
+mso-hansi-font-family:"Times New Roman";mso-char-type:symbol;mso-symbol-font-family:
+ZapfDingbats'><span style='mso-char-type:symbol;mso-symbol-font-family:ZapfDingbats'>à</span></span>
+same format out].</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal><b>MdtKeaSolve</b> takes in bodies and constraint rows from
+MdtKeaBodies/MdtKeaConstraints and calculates the correct forces to satisfy the
+constraints rows. (Using velocities, masses of bodies etc).</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal><b>MdtKeaIntegrate</b> moves the bodies after the forces
+have been determined by MdtKeaSolve. I.e. given the total force, mass, time
+step, initial velocity and initial position of the body it updates the body’s
+position.</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<h2>MdtUnpackForces <span style='font-weight:normal'>puts the resulting forces
+from Kea constrains equations into MdtConstraints (joints, contacts etc) for
+user information.<o:p></o:p></span></h2>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+</div>
+
+</body>
+
+</html>

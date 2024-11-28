@@ -1,0 +1,86 @@
+<KARMA>
+    <ASSET id="car" graphic="car.ase" scale="0.01">
+        <GEOMETRY id="wheel" graphic="wheel.ase" scale="0.01">
+            <PRIMITIVE id="MCDSP_sphere01" type="sphere">
+                <RADIUS>0.5</RADIUS>
+                <TM>1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1</TM>
+            </PRIMITIVE>
+        </GEOMETRY>
+        <GEOMETRY id="chassis" graphic="chassis.ase" scale="0.01">
+            <PRIMITIVE id="chassis" type="box">
+                <DIMS>2,1,3</DIMS>
+                <TM>1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1</TM>
+            </PRIMITIVE>
+        </GEOMETRY>
+        <MODEL id="wheel" geometry="wheel" graphic="wheel.ase" scale="0.01">
+            <DYNAMICS>
+                <MASS>1</MASS>
+                <MASS_OFFSET>0,0,0</MASS_OFFSET>
+                <INERTIA>0.4,0,0,0.4,0,0.4</INERTIA>
+			    <LIN_DAMP>0</LIN_DAMP>
+			    <ANG_DAMP>0</ANG_DAMP>
+			    <FAST_SPIN>0,0,0</FAST_SPIN>
+            </DYNAMICS>
+        </MODEL>            
+        <MODEL id="chassis" geometry="chassis" graphic="chassis.ase" scale="0.01">
+            <DYNAMICS>
+                <MASS>1</MASS>
+                <MASS_OFFSET>0,0,0</MASS_OFFSET>
+                <INERTIA>0.4,0,0,0.4,0,0.4</INERTIA>
+			    <LIN_DAMP>0</LIN_DAMP>
+			    <ANG_DAMP>0</ANG_DAMP>
+			    <FAST_SPIN>0,0,0</FAST_SPIN>
+            </DYNAMICS>
+        </MODEL>           
+        <PART id="left_back_wheel" model="wheel" graphic="wheel.ase" scale="0.01">
+            <TM>1,0,0,0,0,1,0,0,0,0,1,0,-1.6,0,-0.75,1</TM>
+        </PART>
+        <PART id="left_front_wheel" model="wheel" graphic="wheel.ase" scale="0.01">
+            <TM>1,0,0,0,0,1,0,0,0,0,1,0,-1.6,0,0.75,1</TM>
+        </PART>
+        <PART id="right_back_wheel" model="wheel" graphic="wheel.ase" scale="0.01">
+            <TM>1,0,0,0,0,1,0,0,0,0,1,0,1.6,0,-0.75,1</TM>
+        </PART>
+        <PART id="right_front_wheel" model="wheel" graphic="wheel.ase" scale="0.01">
+            <TM>1,0,0,0,0,1,0,0,0,0,1,0,1.6,0,0.75,1</TM>
+        </PART>
+        <PART id="chassis" model="chassis" graphic="chassis.ase" scale="0.01">
+            <TM>1,0,0,0,0,1,0,0,0,0,1,0,0,0.5,0,1</TM>
+        </PART>
+        <NO_INTERACTION>
+            <PARTS>left_back_wheel,chassis</PARTS>
+        </NO_INTERACTION>
+        <JOINT id="left_back_wheel" type="ballandsocket" part1="left_back_wheel" part2="chassis">
+            <POS1>0,0,0</POS1>
+            <POS2>-1.6,-0.5,-0.75</POS2>
+            <PRIMARY_AXIS1>1,0,0</PRIMARY_AXIS1>
+            <PRIMARY_AXIS2>1,0,0</PRIMARY_AXIS2>
+            <ORTHOGONAL_AXIS1>0,1,0</ORTHOGONAL_AXIS1>
+            <ORTHOGONAL_AXIS2>0,1,0</ORTHOGONAL_AXIS2>
+        </JOINT>
+        <JOINT id="left_front_wheel" type="ballandsocket" part1="left_front_wheel" part2="chassis">
+            <POS1>0,0,0</POS1>
+            <POS2>-1.6,-0.5,0.75</POS2>
+            <PRIMARY_AXIS1>1,0,0</PRIMARY_AXIS1>
+            <PRIMARY_AXIS2>1,0,0</PRIMARY_AXIS2>
+            <ORTHOGONAL_AXIS1>0,1,0</ORTHOGONAL_AXIS1>
+            <ORTHOGONAL_AXIS2>0,1,0</ORTHOGONAL_AXIS2>
+        </JOINT>
+        <JOINT id="right_back_wheel" type="ballandsocket" part1="right_back_wheel" part2="chassis">
+            <POS1>0,0,0</POS1>
+            <POS2>1.6,-0.5,-0.75</POS2>
+            <PRIMARY_AXIS1>1,0,0</PRIMARY_AXIS1>
+            <PRIMARY_AXIS2>1,0,0</PRIMARY_AXIS2>
+            <ORTHOGONAL_AXIS1>0,1,0</ORTHOGONAL_AXIS1>
+            <ORTHOGONAL_AXIS2>0,1,0</ORTHOGONAL_AXIS2>
+        </JOINT>
+        <JOINT id="right_front_wheel" type="ballandsocket" part1="right_front_wheel" part2="chassis">
+            <POS1>0,0,0</POS1>
+            <POS2>1.6,-0.5,0.75</POS2>
+            <PRIMARY_AXIS1>1,0,0</PRIMARY_AXIS1>
+            <PRIMARY_AXIS2>1,0,0</PRIMARY_AXIS2>
+            <ORTHOGONAL_AXIS1>0,1,0</ORTHOGONAL_AXIS1>
+            <ORTHOGONAL_AXIS2>0,1,0</ORTHOGONAL_AXIS2>
+        </JOINT>   
+    </ASSET>
+</KARMA>        

@@ -1,0 +1,81 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug_AMD64|Win32">
+      <Configuration>Debug_AMD64</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="UnrealScript|Win32">
+      <Configuration>UnrealScript</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{B3878A99-0F64-489C-A3FB-9C95CF995138}</ProjectGuid>
+    <Keyword>MakeFileProj</Keyword>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug_AMD64|Win32'" Label="Configuration">
+    <ConfigurationType>Utility</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='UnrealScript|Win32'" Label="Configuration">
+    <ConfigurationType>Utility</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug_AMD64|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='UnrealScript|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.40219.1</_ProjectFileVersion>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='UnrealScript|Win32'">.\.\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='UnrealScript|Win32'">.\.\</IntDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug_AMD64|Win32'">$(Configuration)\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug_AMD64|Win32'">$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <None Include="Classes\Ball_rc.uc" />
+    <None Include="Classes\BombDelivery_rc.uc" />
+    <None Include="Classes\BombSpawn_rc.uc" />
+    <None Include="Classes\CTF_rc.uc" />
+    <None Include="Classes\DominationPoint_rc.uc" />
+    <None Include="Classes\Monitor_rc.uc" />
+    <None Include="Classes\TeamBanner_rc.uc" />
+    <None Include="Classes\WildcardCharger_rc.uc" />
+    <None Include="Models\A.lwo" />
+    <None Include="Models\AmmoCharger.lwo" />
+    <None Include="Models\B.lwo" />
+    <None Include="Models\Ball.lwo" />
+    <None Include="Models\BombDelivery.lwo" />
+    <None Include="Models\BombSpawn.lwo" />
+    <None Include="Models\DominationPoint.lwo" />
+    <None Include="Models\flag_a.3d" />
+    <None Include="Models\flag_d.3d" />
+    <None Include="Models\FlagBase.lwo" />
+    <None Include="Models\HealthCharger.lwo" />
+    <None Include="Models\MonitorA.lwo" />
+    <None Include="Models\MonitorB.lwo" />
+    <None Include="Models\MonitorC.lwo" />
+    <None Include="Models\MonitorD.lwo" />
+    <None Include="Models\Ring.lwo" />
+    <None Include="Models\ShieldCharger.lwo" />
+    <None Include="Models\teambanner_a.3d" />
+    <None Include="Models\teambanner_d.3d" />
+    <None Include="Models\vehiclebase.lwo" />
+    <None Include="Models\WildCardCharger.lwo" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

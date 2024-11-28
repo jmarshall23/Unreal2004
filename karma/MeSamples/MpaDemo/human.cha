@@ -1,0 +1,147 @@
+character Human 21 50
+
+begin_segment BIP01
+    meathook rpro
+end_segment
+
+begin_segment PELVIS
+    joint rpro
+    model sphere 0.1
+    parent BIP01
+    mass 1.0
+end_segment
+
+begin_segment ABDOMEN
+    joint rpro
+    model sphere 0.1
+    parent PELVIS
+    mass 1.0
+end_segment
+
+begin_segment MID-TORSO
+    joint rpro
+    model sphere 0.1
+    parent ABDOMEN
+    mass 1.0
+end_segment
+
+begin_segment CHEST
+    joint rpro
+    model sphere 0.1
+    parent MID-TORSO
+    mass 1.0
+end_segment
+
+begin_segment NECK
+    joint rpro
+    model sphere 0.1
+    parent CHEST
+    mass 1.0
+end_segment
+
+begin_segment HEAD
+    joint rpro
+    model sphere 0.1
+    parent NECK
+    mass 1.0
+end_segment
+
+begin_segment L_SHOULDER
+    joint rpro
+    model sphere 0.1
+    parent NECK
+    mass 1.0
+end_segment
+
+begin_segment L_BICEP
+    joint rpro
+    model sphere 0.1
+    parent L_SHOULDER
+    mass 1.0
+end_segment
+
+begin_segment L_FOREARM
+    joint rpro
+    model sphere 0.1
+    parent L_BICEP
+    mass 1.0
+end_segment
+
+begin_segment L_HAND
+    joint rpro
+    model sphere 0.1
+    parent L_FOREARM
+    mass 1.0
+end_segment
+
+begin_segment R_SHOULDER
+    joint rpro
+    model sphere 0.1
+    parent NECK
+    mass 1.0
+end_segment
+
+begin_segment R_BICEP
+    joint rpro
+    model sphere 0.1
+    parent R_SHOULDER
+    mass 1.0
+end_segment
+
+begin_segment R_FOREARM
+    joint rpro
+    model sphere 0.1
+    parent R_BICEP
+    mass 1.0
+end_segment
+
+begin_segment R_HAND
+    meathook rpro   
+    joint rpro
+    model sphere 0.1
+    parent R_FOREARM
+    mass 1.0
+end_segment
+
+begin_segment R_THIGH
+    joint rpro
+    model sphere 0.1
+    parent PELVIS
+    mass 1.0
+end_segment
+
+begin_segment R_CALF
+    joint rpro
+    model sphere 0.1
+    parent R_THIGH
+    mass 1.0
+end_segment
+
+begin_segment R_FOOT
+    joint rpro
+    model sphere 0.1
+    parent R_CALF
+    mass 1.0
+end_segment
+
+begin_segment L_THIGH
+    joint rpro
+    model sphere 0.1
+    parent PELVIS
+    mass 1.0
+end_segment
+
+begin_segment L_CALF
+    joint rpro
+    model sphere 0.1
+    parent L_THIGH
+    mass 1.0
+end_segment
+
+begin_segment L_FOOT
+    joint rpro
+    model sphere 0.1
+    parent L_CALF
+    mass 1.0
+end_segment
+

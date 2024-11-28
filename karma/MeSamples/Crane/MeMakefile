@@ -1,0 +1,20 @@
+
+# Assuming GNU make (>v3.76)
+# $Header: /proj/Toolkits/MeSamples/Crane/MeMakefile,v 1.1 2002/05/20 09:53:16 williamg Exp $
+# ($Name: t-stevet-RWSpre-030110 $)
+
+# vim:syntax=make:
+
+#------------------------------
+# ConvexStairs
+#------------------------------
+
+# What's to be built
+targetname:=Crane
+targettype:=executable
+
+SOURCES:=Crane.c
+
+# Standard incantation
+makerulesdir:=../../build/makerules/
+include ${makerulesdir}/Make.rules

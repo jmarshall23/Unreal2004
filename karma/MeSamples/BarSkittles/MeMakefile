@@ -1,0 +1,25 @@
+# Assuming GNU make (>v3.76)
+# $Header: /proj/Toolkits/MeSamples/BarSkittles/MeMakefile,v 1.1 2001/11/08 14:54:35 harveyt Exp $
+# ($Name: t-stevet-RWSpre-030110 $)
+
+# vim:syntax=make:
+
+#------------------------------
+# Mdt
+#------------------------------
+
+# What's to be built
+targetname:=BarSkittles
+targettype:=executeable
+
+SOURCES	:= BarSkittles.c \
+	Universe.c \
+	Viewer.c \
+	Game.c \
+	Object.c \
+	Rope.c \
+	Cursor.c
+
+# Standard incantation
+makerulesdir:=../../build/makerules/
+include ${makerulesdir}Make.rules

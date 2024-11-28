@@ -1,0 +1,697 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Src">
+      <UniqueIdentifier>{9b8f65eb-36b3-4f0a-a895-c53b536a124b}</UniqueIdentifier>
+      <Extensions>*.cpp;*.h</Extensions>
+    </Filter>
+    <Filter Include="Classes">
+      <UniqueIdentifier>{adbf15a7-29b7-4607-b575-0b34ad886b02}</UniqueIdentifier>
+      <Extensions>*.uc</Extensions>
+    </Filter>
+    <Filter Include="Inc">
+      <UniqueIdentifier>{fbc51b1e-5c01-400f-85c2-9fcf638b3a7e}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Src\ONSChopperCraft.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\ONSHoverCraft.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Onslaught.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\ONSPlaneCraft.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\ONSTreadCraft.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\ONSVehicle.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\ONSWeapon.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\ONSWheeledCraft.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Classes\BigWheelsRules.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\DamTypeAttackCraftMissle.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\DamTypeAttackCraftPlasma.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\DamTypeChargingBeam.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\DamTypeHoverBikeHeadshot.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\DamTypeHoverBikePlasma.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\DamTypeONSAVRiLRocket.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\DamTypeONSChainGun.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\DamTypeONSGrenade.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\DamTypeONSMine.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\DamTypeONSRocket.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\DamTypeONSRVBlade.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\DamTypeONSVehicle.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\DamTypeONSVehicleExplosion.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\DamTypeONSWeb.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\DamTypePancake.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\DamTypePRVCombo.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\DamTypePRVLaser.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\DamTypePRVPlasma.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\DamTypeRoadkill.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\DamTypeSkyMine.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\DamTypeTankShell.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\DamTypeTurretBeam.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\MutBigWheels.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\MutLightweightVehicles.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\MutOnslaughtWeapons.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\MutWheeledVehicleStunts.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSAttackCraft.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSAttackCraftBlue.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSAttackCraftExhaust.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSAttackCraftExplosionEffect.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSAttackCraftFactory.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSAttackCraftGun.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSAttackCraftMissle.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSAttackCraftPlasmaProjectileBlue.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSAttackCraftPlasmaProjectileRed.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSAttackCraftRed.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSAttackCraftStreamer.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSAttackCraftTrailEffect.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSAutoPlasmaGun.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSAutoPlasmaGunPawn.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSAutoRocketBattery.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSAutoRocketBatteryPawn.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSAVRiL.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSAVRiLAltFire.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSAVRiLAmmo.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSAVRiLAmmoPickup.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSAVRiLAttachment.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSAVRiLFire.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSAVRiLPickup.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSAVRiLRocket.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSAVRiLRocketExplosion.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSAvrilSmokeTrail.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSBlueEnergyEffect.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSBluePlasmaFireEffect.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSBluePlasmaSmallFireEffect.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSBomberBlue.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSBomberRed.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSBrakelightCorona.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSChainGunFire.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSChargeBeamEffect.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSChopperCraft.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSDamagedEffect.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSDaredevilMessage.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSDefaultMut.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSDestroyedAttackCraft.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSDestroyedHoverBike.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSDestroyedPRV.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSDestroyedRV.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSDestroyedTank.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSDestroyedVehicle.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSDirtSlipEffect.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSFreeRoamingEnergyEffect.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSGreenPlasmaFireEffect.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSGreenPlasmaSmallFireEffect.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSGrenadeAltFire.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSGrenadeAmmo.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSGrenadeAmmoPickup.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSGrenadeAttachment.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSGrenadeBeaconBlue.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSGrenadeBeaconRed.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSGrenadeExplosionEffect.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSGrenadeFire.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSGrenadeLauncher.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSGrenadePickup.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSGrenadeProjectile.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSHeadlightCorona.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSHeadlightProjector.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSHoverBike.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSHoverBikeBurstDust.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSHoverBikeDuckEffect.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSHoverBikeHoverDust.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSHoverBikeJumpEffect.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSHoverBikePlasmaFire.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSHoverBikePlasmaGun.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSHoverBikePlasmaProjectile.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSHoverCraft.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSHoverCraftFactory.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSHoverTank.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSHoverTankCannon.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSHUDOnslaught.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSImpactSparks.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSInstantFire.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSIonTank.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSLinkDesignMessage.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSManualGun.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSManualGunBlue.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSManualGunPawn.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSManualGunPlasmaProjectile.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSManualGunRed.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSMapListOnslaught.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSMineAmmo.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSMineAmmoPickup.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSMineLayer.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSMineLayerAltFire.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSMineLayerAttachment.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSMineLayerPickup.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSMineLayerTargetBeamEffect.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSMineProjectile.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSMineProjectileBLUE.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSMineProjectileRED.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSMineThrowFire.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSOnslaughtGame.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSOnslaughtMessage.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSPlaneCraft.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSPlasmaHitBlue.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSPlasmaHitGreen.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSPlasmaHitPurple.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSPlasmaHitRed.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSPlasmaProjectile.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSPlayer.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSPlayerReplicationInfo.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSPowerCore.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSPowerCoreBlue.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSPowerCoreBreachEffect.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSPowerCoreEnergy.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSPowerCoreEnergyBlue.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSPowerCoreEnergyRed.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSPowerCoreRed.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSPowerCoreShield.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSPowerLinkCustomSetup.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSPowerLinkOfficialSetup.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSPowerNode.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSPowerNodeEnergySphere.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSPowerNodeNeutral.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSPowerNodeShield.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSProjectileFire.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSPRV.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSPRVBlue.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSPRVChainGun.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSPRVChainGunPawn.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSPRVComboEffect.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSPRVFactory.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSPRVRearGun.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSPRVRearGunCharge.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSPRVRearGunPawn.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSPRVRearGunProjectile.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSPRVRed.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSPRVSideGun.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSPRVSideGunMuzzleFlash.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSPRVSideGunPawn.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSPurplePlasmaSmallFireEffect.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSRedEnergyEffect.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSRedPlasmaFireEffect.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSRedPlasmaSmallFireEffect.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSRocketBatteryProj.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSRocketProjectile.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSRV.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSRVBlue.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSRVChainGunFireEffect.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSRVFactory.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSRVLeftBladeBreakOffEffect.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSRVRed.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSRVRightBladeBreakOffEffect.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSRVWebLauncher.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSRVWebLauncherMuzzleFlash.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSRVWebProjectile.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSRVWebProjectileEffect.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSRVWebProjectileLeader.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSSkyMine.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSSkyMineEffect.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSSmallVehicleExplosionEffect.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSSquadAI.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSStationaryWeaponPawn.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSTankExplosionEffect.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSTankFactory.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSTankFireEffect.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSTankFireTrailEffect.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSTankHitRockEffect.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSTankSecondaryTurret.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSTankSecondaryTurretPawn.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSTeamAI.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSTeleportPad.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSTreadCraft.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSTurretBeamEffect.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSTurretBeamEffectBlue.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSTurretBeamEffectRed.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSTurretController.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSVehDeathAttackCraft.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSVehDeathHoverBike.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSVehDeathHoverTank.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSVehDeathPRV.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSVehDeathRV.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSVehicle.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSVehicleBuildEffect.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSVehicleExplosionEffect.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSVehicleFactory.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSVehicleIonExplosionEffect.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSVehicleKillMessage.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSWeapon.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSWeaponAmbientEmitter.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSWeaponPawn.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSWeaponTrigger.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSWheeledCraft.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSWheeledVehicleExplosionEffect.uc">
+      <Filter>Classes</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Inc\OnslaughtClasses.h">
+      <Filter>Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Inc\OnslaughtPrivate.h">
+      <Filter>Inc</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

@@ -1,0 +1,56 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Classes">
+      <UniqueIdentifier>{e93a7594-0b73-42d4-97e6-4f3eb9d2bf4d}</UniqueIdentifier>
+      <Extensions>*.uc</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\Classes\ListItem.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\ObjectArray.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\SortedObjectArray.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\SortedStringArray.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\StringArray.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\UT2K3Skin.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\UTImageServer.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\UTServerAdmin.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\UTServerAdminSpectator.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\WebSkin.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\xWebAdminCommandLet.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\xWebQueryAdmins.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\xWebQueryCurrent.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\xWebQueryDefaults.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\xWebQueryHandler.uc">
+      <Filter>Classes</Filter>
+    </None>
+  </ItemGroup>
+</Project>

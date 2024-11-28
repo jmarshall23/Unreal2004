@@ -1,0 +1,381 @@
+dnl Process this file with autoconf to produce a configure script.
+dnl this is the unique file to use to check were in the right directory
+AC_INIT()
+
+dnl make sure we are using a recent autoconf version
+AC_PREREQ(2.13)
+
+dnl Checks for programs.
+AC_PROG_CPP
+AC_PROG_MAKE_SET
+
+dnl Checks for libraries.
+AC_PATH_X
+
+dnl Checks for header files.
+
+dnl Checks for typedefs, structures, and compiler characteristics.
+
+dnl Checks for library functions.
+
+
+dnl
+dnl Propagate the platform information into makefile(s)
+dnl
+ME_PLATFORMFLAG=${PLATFORM}
+AC_SUBST(ME_PLATFORMFLAG)
+
+
+dnl
+dnl Define top-level directories for later use in relative paths
+dnl
+ME_TOP_DIR=".."
+ME_COMPONENTS_DIR="../.."
+ME_TOOLS_DIR="${ME_TOP_DIR}/tools"
+BIN_DIR="./bin"
+
+
+dnl
+dnl Define the roots of the modules in ME Toolkit
+dnl
+MCD_MODULE_DIR="${ME_COMPONENTS_DIR}/Mcd"
+MDT_MODULE_DIR="${ME_COMPONENTS_DIR}/Mdt"
+MDTKEA_MODULE_DIR="${ME_COMPONENTS_DIR}/MdtKea"
+MEGLOBALS_MODULE_DIR="${ME_COMPONENTS_DIR}/MeGlobals"
+MEVIEWER_MODULE_DIR="${ME_COMPONENTS_DIR}/MeViewer"
+MEVIEWER2_MODULE_DIR="${ME_COMPONENTS_DIR}/MeViewer2"
+MEAPP_MODULE_DIR="${ME_COMPONENTS_DIR}/MeApp"
+MDTBCL_MODULE_DIR="${ME_COMPONENTS_DIR}/MdtBcl"
+MST_MODULE_DIR="${ME_COMPONENTS_DIR}/Mst"
+
+
+dnl
+dnl Construct a set of include paths to ME Toolkit headers
+dnl
+test -z "${ME_INC_PATH}" || ME_INC_PATH="${ME_INC_PATH}:"
+ME_INC_PATH="${ME_INC_PATH}${MCD_MODULE_DIR}/include"
+ME_INC_PATH="${ME_INC_PATH}:${MCD_MODULE_DIR}/examples/include"
+ME_INC_PATH="${ME_INC_PATH}:${MDT_MODULE_DIR}/include"
+ME_INC_PATH="${ME_INC_PATH}:${MDTBCL_MODULE_DIR}/include"
+ME_INC_PATH="${ME_INC_PATH}:${MDTKEA_MODULE_DIR}/include"
+ME_INC_PATH="${ME_INC_PATH}:${MEGLOBALS_MODULE_DIR}/include"
+ME_INC_PATH="${ME_INC_PATH}:\$(\$(VIEWER)_MODULE_DIR)/include"
+ME_INC_PATH="${ME_INC_PATH}:${MEAPP_MODULE_DIR}/include"
+ME_INC_PATH="${ME_INC_PATH}:${MST_MODULE_DIR}/include"
+test "${PLATFORM}" = "win32" && ME_INC_PATH="${ME_INC_PATH}:${ME_TOOLS_DIR}/glut"
+
+AC_SUBST(ME_INC_PATH)
+
+
+dnl
+dnl Construct a set of library paths to ME Toolkit libraries
+dnl 
+dnl ME_LIB_PATH="${ME_LIB_PATH}${MCD_MODULE_DIR}/lib"
+dnl ME_LIB_PATH="${ME_LIB_PATH}:${MDT_MODULE_DIR}/lib"
+dnl ME_LIB_PATH="${ME_LIB_PATH}:${MDTBCL_MODULE_DIR}/lib"
+dnl ME_LIB_PATH="${ME_LIB_PATH}:${MDTKEA_MODULE_DIR}/lib"
+dnl ME_LIB_PATH="${ME_LIB_PATH}:${MEGLOBALS_MODULE_DIR}/lib"
+ME_LIB_PATH="${ME_LIB_PATH}:\$(\$(VIEWER)_MODULE_DIR)/lib"
+dnl ME_LIB_PATH="${ME_LIB_PATH}:${MEAPP_MODULE_DIR}/lib"
+dnl ME_LIB_PATH="${ME_LIB_PATH}:${MST_MODULE_DIR}/lib"
+test "${PLATFORM}" = "win32" && ME_LIB_PATH="${ME_LIB_PATH}:${ME_TOOLS_DIR}/glut"
+
+
+AC_SUBST(ME_LIB_PATH)
+
+
+dnl
+dnl Set up for using MathEngine internal tools
+dnl (Not required outside of MathEngine)
+dnl
+ME_EAC="${ME_TOOLS_DIR}/eac"
+AC_SUBST(ME_EAC)
+
+
+dnl remember the output directory so we can use it later with the linker
+ME_OUT_DIR="${BIN_DIR}"
+AC_SUBST(ME_OUT_DIR)
+
+
+dnl setup the platform specific environment
+RECOGNIZED_PLATFORM=""
+AVAILABLE_PLATFORMS=""
+
+AVAILABLE_PLATFORMS="${AVAILABLE_PLATFORMS} win32"
+if test "${PLATFORM}" = 'win32' ; then
+
+	AC_MSG_RESULT(configuring for ${PLATFORM})
+	RECOGNIZED_PLATFORM="${PLATFORM}"
+
+	AC_CHECK_PROGS(ME_COMPILE,cl.exe,cl.exe)
+	AC_CHECK_PROGS(ME_COMPILE_C,cl.exe,cl.exe)
+	AC_CHECK_PROGS(ME_COMPILE_CXX,cl.exe,cl.exe)
+	AC_CHECK_PROGS(ME_LIBRARY,lib.exe,lib.exe)
+
+	ME_DEPEND="gcc"
+	ME_AS="echo"
+	ME_DVPASM="echo"
+	ME_STRIP="echo"
+
+	ME_DEPENDFLAGS="-w -MM"
+
+	CPPFLAGS_RELEASE="-DWIN32 -DNDEBUG"
+	CPPFLAGS_DEBUG="-DWIN32 -D_MECHECK"
+	CPPFLAGS_CHECK_RELEASE="-DWIN32 -D_MECHECK"
+
+	CFLAGS_RELEASE="/nologo /O2 /Oy- /W3"
+	CFLAGS_DEBUG="/nologo /W3 /ZI /MLd /Od /Gm /GX"
+
+	CXXFLAGS_RELEASE="/nologo /O2 /Oy- /W3"
+	CXXFLAGS_DEBUG="/nologo /W3 /ZI /MLd /Od /Gm /GX"
+
+	ME_ASFLAGS_RELEASE=""
+	ME_ASFLAGS_DEBUG=""
+
+	ME_DVPASMFLAGS=""
+
+	ME_OUT_PREFIX="/Fo"
+	ME_OUT_EXE_PREFIX="/Fe"
+
+	ME_CCLINKFLAGS_RELEASE="/link"
+	ME_CCLINKFLAGS_DEBUG="/link /DEBUG /NODEFAULTLIB:libc"
+
+	LDFLAGS_RELEASE=""
+	LDFLAGS_DEBUG=""
+
+fi
+
+
+AVAILABLE_PLATFORMS="${AVAILABLE_PLATFORMS} ps2"
+if test "${PLATFORM}" = 'ps2' ; then
+
+	AC_MSG_RESULT(configuring for ${PLATFORM})
+	RECOGNIZED_PLATFORM="${PLATFORM}"
+
+	AC_CHECK_PROGS(ME_COMPILE,ee-gcc,ee-gcc)
+	AC_CHECK_PROGS(ME_COMPILE_C,ee-gcc,ee-gcc)
+	AC_CHECK_PROGS(ME_COMPILE_CXX,ee-gcc,ee-gcc)
+	AC_CHECK_PROGS(ME_LIBRARY,ee-ar,ee-ar)
+dnl	Yeah, fat chance: this is in a lib, not on the path.
+dnl	AC_CHECK_PROGS(ME_CMD,app.cmd,app.cmd)
+
+	ME_DEPEND="ee-gcc"
+	ME_AS="ee-gcc"
+	ME_DVPASM="ee-dvp-asm"
+	ME_STRIP='ee-strip --strip-all'
+
+	ME_DEPENDFLAGS="-w -MM"
+
+	CPPFLAGS_RELEASE="-DPS2 -DNDEBUG"
+	CPPFLAGS_DEBUG="-DPS2 -D_MECHECK"
+	CPPFLAGS_CHECK_RELEASE="-DPS2 -D_MECHECK"
+
+	CFLAGS_RELEASE="-O6 -fno-omit-frame-pointer -G0"
+	CFLAGS_DEBUG="-ggdb3 -O0 -Wall -G0"
+
+	CXXFLAGS_RELEASE="-O6 -fno-omit-frame-pointer -G0"
+	CXXFLAGS_DEBUG="-ggdb3 -O0 -Wall -G0"
+
+	ME_ASFLAGS_RELEASE="-c -xassembler-with-cpp"
+	ME_ASFLAGS_DEBUG="-c -xassembler-with-cpp -Wa,-al"
+
+	ME_DVPASMFLAGS=""
+
+	ME_OUT_PREFIX="-o "
+	ME_OUT_EXE_PREFIX="-o "
+
+	ME_CCLINKFLAGS_RELEASE="-nostartfiles"
+	ME_CCLINKFLAGS_DEBUG="-nostartfiles -Wl,-Map,debug.map"
+
+	LDFLAGS_RELEASE="-T \$(OBJECT_DIR)/app.cmd"
+	LDFLAGS_DEBUG="-T \$(OBJECT_DIR)/app.cmd"
+
+fi
+
+
+AVAILABLE_PLATFORMS="${AVAILABLE_PLATFORMS} linux"
+if test "${PLATFORM}" = 'linux' ; then
+
+	AC_MSG_RESULT(configuring for ${PLATFORM})
+	RECOGNIZED_PLATFORM="${PLATFORM}"
+
+	AC_CHECK_PROGS(ME_COMPILE,g++,g++)
+	AC_CHECK_PROGS(ME_COMPILE_C,gcc,gcc)
+	AC_CHECK_PROGS(ME_COMPILE_CXX,g++,g++)
+	AC_CHECK_PROGS(ME_LIBRARY,ar,ar)
+
+	ME_DEPEND="gcc"
+	ME_AS="echo"
+	ME_DVPASM="echo"
+	ME_STRIP='strip --strip-all'
+
+	ME_DEPENDFLAGS="-w -MM"
+
+	CPPFLAGS_RELEASE="-DLINUX -DNDEBUG"
+	CPPFLAGS_DEBUG="-DLINUX -D_MECHECK"
+	CPPFLAGS_CHECK_RELEASE="-DLINUX -D_MECHECK"
+
+	CFLAGS_RELEASE="-O6 -fno-omit-frame-pointer"
+	CFLAGS_DEBUG="-ggdb3 -O0 -Wall"
+
+	CXXFLAGS_RELEASE="-O6 -fno-omit-frame-pointer"
+	CXXFLAGS_DEBUG="-ggdb3 -O0 -Wall"
+
+	ME_ASFLAGS_RELEASE=""
+	ME_ASFLAGS_DEBUG=""
+
+	ME_DVPASMFLAGS=""
+
+	ME_OUT_PREFIX="-o "
+	ME_OUT_EXE_PREFIX="-o "
+
+	ME_CCLINKFLAGS_RELEASE=""
+	ME_CCLINKFLAGS_DEBUG=""
+
+	LDFLAGS_RELEASE=""
+	LDFLAGS_DEBUG=""
+
+fi
+
+
+AVAILABLE_PLATFORMS="${AVAILABLE_PLATFORMS} irix"
+if test "${PLATFORM}" = 'irix' ; then
+
+	AC_MSG_RESULT(configuring for ${PLATFORM})
+	RECOGNIZED_PLATFORM="${PLATFORM}"
+
+	AC_CHECK_PROGS(ME_COMPILE,CC,CC)
+	AC_CHECK_PROGS(ME_COMPILE_C,cc,cc)
+	AC_CHECK_PROGS(ME_COMPILE_CXX,CC,CC)
+	AC_CHECK_PROGS(ME_LIBRARY,ar,ar)
+
+	ME_DEPEND="CC"
+	ME_AS=""
+	ME_DVPASM=""
+	ME_STRIP="strip"
+
+	ME_DEPENDFLAGS="-M"
+
+	CPPFLAGS_RELEASE="-DIRIX -DNDEBUG"
+	CPPFLAGS_DEBUG="-DIRIX -D_MECHECK"
+	CPPFLAGS_CHECK_RELEASE="-DIRIX -D_MECHECK"
+
+	CFLAGS_RELEASE="-O2 3201"
+	CFLAGS_DEBUG="-g3 -O0 -fullwarn -woff 3201"
+
+	CXXFLAGS_RELEASE="-O2 3201"
+	CXXFLAGS_DEBUG="-g3 -O0 -fullwarn -woff 3201"
+
+	ME_ASFLAGS_RELEASE=""
+	ME_ASFLAGS_DEBUG=""
+
+	ME_DVPASMFLAGS=""
+
+	ME_OUT_PREFIX="-o "
+	ME_OUT_EXE_PREFIX="-o "
+
+	ME_CCLINKFLAGS_RELEASE=""
+	ME_CCLINKFLAGS_DEBUG=""
+
+	LDFLAGS_RELEASE=""
+	LDFLAGS_DEBUG=""
+fi
+
+
+AVAILABLE_PLATFORMS="${AVAILABLE_PLATFORMS} mips3"
+if test "${PLATFORM}" = 'mips3' ; then
+
+        AC_MSG_RESULT(configuring for ${PLATFORM})
+	RECOGNIZED_PLATFORM="${PLATFORM}"
+
+        AC_CHECK_PROGS(ME_COMPILE,CC,CC)
+        AC_CHECK_PROGS(ME_COMPILE_C,cc,cc)
+        AC_CHECK_PROGS(ME_COMPILE_CXX,CC,CC)
+        AC_CHECK_PROGS(ME_LIBRARY,ar,ar)
+
+        ME_DEPEND="CC"
+        ME_AS="echo"
+        ME_DVPASM="echo"
+	ME_STRIP="strip"
+
+        ME_DEPENDFLAGS="-M"
+
+        CPPFLAGS_RELEASE="-DIRIX -DNDEBUG"
+        CPPFLAGS_DEBUG="-DIRIX -D_MECHECK"
+		CPPFLAGS_CHECK_RELEASE="-DIRIX -D_MECHECK"
+
+        CFLAGS_RELEASE="-mips3 -O2 3201"
+        CFLAGS_DEBUG="-mips3 -g3 -O0 -fullwarn -woff 3201"
+
+        CXXFLAGS_RELEASE="-mips3 -O2 3201"
+        CXXFLAGS_DEBUG="-mips3 -g3 -O0 -fullwarn -woff 3201"
+
+        ME_ASFLAGS_RELEASE=""
+        ME_ASFLAGS_DEBUG=""
+
+        ME_DVPASMFLAGS=""
+
+        ME_OUT_PREFIX="-o "
+        ME_OUT_EXE_PREFIX="-o "
+
+        ME_CCLINKFLAGS_RELEASE=""
+        ME_CCLINKFLAGS_DEBUG=""
+
+        LDFLAGS_RELEASE=""
+        LDFLAGS_DEBUG=""
+
+fi
+
+if test -z "${RECOGNIZED_PLATFORM}" ; then
+
+	AVAILABLE_PLATFORMS="${AVAILABLE_PLATFORMS} ${PLATFORM}"
+
+	if test -z "${PLATFORM}" ; then
+	  ERR_CAUSE=unset
+	else
+	  ERR_CAUSE=unrecognized
+	fi
+
+	echo
+	echo "ERROR: Environment variable '\$PLATFORM' ${ERR_CAUSE}."
+	echo "       Value must be one of: ${AVAILABLE_PLATFORMS}"
+	echo
+	AC_MSG_ERROR(Unable to continue.)
+
+fi
+
+AC_SUBST(ac_x_includes)
+AC_SUBST(ac_x_libraries)
+
+AC_SUBST(ME_DEPEND)
+AC_SUBST(ME_COMPILE)
+AC_SUBST(ME_COMPILE_C)
+AC_SUBST(ME_COMPILE_CXX)
+AC_SUBST(ME_AS)
+AC_SUBST(ME_DVPASM)
+AC_SUBST(ME_STRIP)
+AC_SUBST(ME_LIBRARY)
+
+AC_SUBST(ME_DEPENDFLAGS)
+AC_SUBST(CPPFLAGS_RELEASE)
+AC_SUBST(CPPFLAGS_DEBUG)
+AC_SUBST(CPPFLAGS_CHECK_RELEASE)
+AC_SUBST(CFLAGS_RELEASE)
+AC_SUBST(CFLAGS_DEBUG)
+AC_SUBST(CXXFLAGS_RELEASE)
+AC_SUBST(CXXFLAGS_DEBUG)
+AC_SUBST(ME_ASFLAGS_RELEASE)
+AC_SUBST(ME_ASFLAGS_DEBUG)
+AC_SUBST(ME_DVPASMFLAGS)
+AC_SUBST(ME_OUT_PREFIX)
+AC_SUBST(ME_OUT_EXE_PREFIX)
+AC_SUBST(ME_CCLINKFLAGS_RELEASE)
+AC_SUBST(ME_CCLINKFLAGS_DEBUG)
+AC_SUBST(LDFLAGS_RELEASE)
+AC_SUBST(LDFLAGS_DEBUG)
+
+AC_SUBST(MEVIEWER_MODULE_DIR)
+AC_SUBST(MEVIEWER2_MODULE_DIR)
+
+
+AC_OUTPUT(makefile.common)

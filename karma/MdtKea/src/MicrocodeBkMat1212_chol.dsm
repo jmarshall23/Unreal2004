@@ -1,0 +1,14 @@
+.include "vumacros.h"
+.global chol_dma_start
+.global chol_dma_end
+.global MicrocodeBkMat1212_chol
+
+chol_dma_start:
+DMAcnt *		; First source Chain Tag. Transfer the data after this tag. Next tag is after the data.
+  MPG 0, *		;     Transfer following data to location 0 in micromem0		
+  .include "MicrocodeBkMat1212_chol.vsm"
+  .EndMPG
+.EndDmaData
+DMAend			; Second source chain tag.
+
+chol_dma_end:

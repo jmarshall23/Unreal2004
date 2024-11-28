@@ -1,0 +1,412 @@
+--
+Version 1.2.1
+--
+
+Added MstAutoSetInertialTensor() which takes a model as a parameter.
+This function automatically sets the inertial tensor of the attached
+body based on its attatched geometry, and its mass.
+
+--
+
+Added MdtBodyDisableContacts() and MdtBodyDestroyContacts() which
+destroy/disable contact constraints associated with a body, whilst
+leaving the joint constraints intact. Useful for removing jointed
+structures from an McdSpace.
+
+-- 
+
+Known Issue: When using non-spherical moments of inertia, it is possible
+for a body to gain energy if it is connected with a skeletal constraint
+where the constraint's primary axis is coincident with the smallest
+inertia value. This only appears to be a problem when the body is joined
+to the world. The Asset Factory automatically corrects for this problem.
+
+--
+
+Spring6 has been redefined such that the 'springiness' is along the joint
+axes, and the joint's position is ignored, treating it a coincident with
+the first body that it constrains.
+
+--
+
+
+
+version 1.2.0
+
+*************** KNOWN BUGS ********************
+
+Some collision primitives do not handle scaling properly, specifically
+Sphyl, Cylinder, and Triangle List. This is unlikely to manifest unless
+you are working at small scales.
+
+--
+
+While substantially improved, convex collision still generates
+occasional erratic normals, and still has some performance issues.
+
+--
+
+There is a cyclic library dependencies between McdCommon and
+McdFrame. This means that when using the GNU linker you need to
+specify the library list twice. This is the default in the supplied
+example 'makefile's.
+
+
+*************** CHANGES ********************
+
+--
+
+On PS2 Karma now is compiled for the current SCE libraries, the version
+documented in the file '.../src/README_ps2libs.txt', available from
+
+  <URL:https://WWW.PS2-Pro.com/projects/t10k/>.
+--
+
+A prototype joint limit constraint, MdtSkeletal, has been added.
+
+--
+
+The deprecated MdtFPFO joint has been removed.
+
+--
+
+MdtCarWheelSetSteeringAxis and MdtCarWheelSetHingeAxis have been merged
+into a single API call MdtCarWheelSetSteeringAndHingeAxes.
+
+The individual axis accessors remain along with a new accessor
+MdtCarWheelGetAxes.
+
+--
+
+The MdtAngular3 constraint has been redefined, similar to the MdtHinge
+below.  The bogus 'flip' solution has been removed.
+
+--
+
+The MdtHinge constraint has been redefined so there is only one stable
+axis direction; previously the hinge axis could settle in either direction.
+
+--
+
+Angular and linear damping values are now scaled by mass, and so are
+effectively dimensionless
+
+--
+
+When a world is created, auto-disabling is _on_ by default.
+
+--
+
+McdGeometrySetTransformPtrs now takes a 5th parameter which specifies
+whether it should own the transforms, and so deallocate them when
+they're replaced or the model is destroyed. In order to use this, you
+should allocate the transforms with MeMemoryAPI.createAligned()
+
+--
+
+Group culling is implemented in the far field. See the section in the
+User Guide on enabling and disabling pairs of models for more details.
+
+--
+
+Toolkit messages no longer have \n as terminator: they may contain it as
+a separator. If you have your own message handler you will need to
+append a \n.
+
+--
+
+Mcd now batches collisions for better i-cache performance. The only
+noticeable effects should be that information contained in the
+McdModelPair which was previously available in triangle list callbacks
+is no longer available, so any userData you need should be cached in the
+userData field of the trilist geometry. However, the user data for both 
+McdModels is preserved.
+
+--
+
+Contact culling is no longer performed by intersection tests: if you are
+calling the intersections tests yourself directly you should put in your
+own call to McdContactSimplify if you need it.
+
+--
+
+The density field is now gone from McdModel.
+
+--
+
+McdInit now takes a scale parameter. If you are using scales very
+different from 1, you should set this to the approximate size of the
+entities in your world: for example, if your humans are 1000 units high,
+1000 is a reasonable value for this parameter.
+
+McdWorldCreate takes length and mass parameters. The length parameter
+should be the same as that given to McdInit, the mass parameter should
+be set to the approximate mass value of the objects used in the
+simulation. In checked builds, McdBodySetMass and SetInertia will warn
+if masses and inertias seem to be at the wrong scales, and clamp them.
+
+If you set these parameters to 1, the toolkit should behave (with
+respect to scale) as in release 1.1.
+
+The MstUniverseSizes structure has corresponding lengthScale and
+massScale parameters.
+
+See the section on "Units and Scaling" in the user guide for further
+details.
+
+--
+
+When creating a universe, you should always copy the structure
+MstUniverseDefaultSizes to your sizes struct. This will contain
+defaults for any new parameters we decide to add.
+
+--
+
+The function MstUniverseCreate now calls McdAggregateRegisterType and
+McdAggregateRegisterInteractions. If you call MstUniverseCreate, do not
+call either of the McdAggregateRegister* functions or else you will get
+an assertion failure.
+
+--
+
+If you create your own MdtContacts, you should always add them to the
+world as elements of MdtContactGroups. The ability to add single
+contacts as constraints will be removed in a future release.
+
+--
+The following are deprecated:
+
+  McdModelReset
+  McdGeometryInstanceReset
+  McdModelPairReset
+  MdtBodyReset
+  Mdt<Joint>Reset
+  MdtWorldReset
+
+--
+
+The interface to Triangle list has changed. You now create a triangle
+list with a bounding box instead of box radii, and so in most cases
+should not need a relative transform. Trilist now allocates its own
+memory for the user triangles, the application just has to fill it
+in. The order of convex and trilist has also been swapped over in the
+model pair so that trilist is always the second model in a pair.
+
+The callback now gives you the modelpair, space to put the triangles,
+thebounding sphere centre and radius, and the max number of triangles to
+write, which should make writing the callback a bit less irritating.
+
+See the triangleList and Tank examples.
+
+--
+
+The following collision geometries ARE supported in Karma.
+
+  Sphere
+  Box
+  Cylinder
+  Sphyl                 (cylinder with spherical caps)
+  Convex Mesh           (closed convex polyhedron)
+  Aggregate             (any rigid combination of the above)
+  Triangle List         (immovable only)
+  Plane                 (immovable only)
+        
+The following collision geometries ARE NOT supported in Karma.
+
+  Cone
+  Composite
+  RG (Regular Grid) Height Field
+  Triange Mesh
+  Particle System
+  Rw BSP
+
+Renderware BSP and Heightfield collision should be implemented using
+triangle list: see the "tank" example for prototypical code.
+
+--
+
+Added new parameter, MeBool tight, to McdGeometryGetAABB.  When false,
+the geometry will use faster algorithm (such as BB based on BS).  When
+tight=true, the geometry will use exact algorithm to return the smallest
+possible AABB.
+
+--
+
+Transformation matrices passed into collision must now be 16-byte
+aligned. Note that statically declaring matrices (eg. at the top of a
+file) will not usually result in guaranteed 16-byte alignment. However,
+there is a macro MeALIGNDATA which can be used to accomplish this.
+
+--
+
+MstBridgeCreate now takes an McdFramework parameter
+
+--
+
+Changed the way MeChunk (used for Kea's temporary workspace pool)
+works. The following functions are deprecated:
+
+  MdtWorldSetMemoryPool
+  MdtWorldSetMemoryPoolOverflowCB
+  MdtWorldGetMemoryPoolOverflowCB
+  MdtWorldGetMaxMemoryPoolUsed
+
+Instead, use
+
+  MdtWorldGetKeaPoolChunk
+
+This will return an MeChunk*. You can use the new MeChunk functions (see
+MeChunk.h in MeGlobals) to configure how the kea pool will be
+allocated/managed.  Alternatively, you can change the MeChunk
+implementation to your own needs.
+
+--
+
+MdtMakeKeaParameters is deprecated. MdtKeaParams is part of an MdtWorld, so you
+use something like:
+
+  sizeRequired = MdtKeaMemoryRequired(
+      keaCon->num_rows_exc_padding_partition,
+      keaCon->num_partitions,
+      maxRows,
+      po->totalBodies);
+
+  w->keaParams.memory_pool = MeChunkGetMem(&w->keaPool, sizeRequired);
+  w->keaParams.memory_pool_size = sizeRequired;
+          w->keaParams.gamma = w->constantGamma;
+  w->keaParams.stepsize = stepSize;
+
+And after calling Kea:
+
+  MeChunkPutMem(&(w->keaPool), w->keaParams.memory_pool);
+
+--
+
+MeChunk's used for all non-pool memory ares in MdtWorld. These are
+partitioner output, kea transform array & kea constraints structure. By
+default these will re-allocate to grow as needed (unlike allocating
+maximum possible previously).  Options for each can be changed by using
+MdtWorldGet*Chunk.
+
+--
+
+Algorithm used for resizing partitions larger than MaxMatrixSize has
+been changed.  MdtWorldSet/GetContactImportanceCB has been removed.  Use
+MdtWorldSet/GetLODParams to configure how this is done (or use a custom
+per partition callback).
+
+--
+
+Changed AliveWindow auto-disable parameter from number of evolves, to
+actual amount of evolved time (ie. from in to float).
+MdtWorldSet/GetAutoDisableAliveWindow -> MdtWorldSet/GetAutoDisableAliveTime
+
+--
+
+Interface to Universal has changes. Rather than MdtUniversalSetAxis,
+which would be called for each body, both axis are set at once using
+MdtUniversalSetAxes. Also, axis must be at perpendicular angles.
+
+------------------------------------------------------------------------
+
+***  Version 1.1.1  ***   12/Nov/2001 
+
+McdModelSetBody now freezes and unfreezes collision models in accordance
+with the enabled status of the dynamics body. If the dynamics body is
+zero, the model gets frozen. If you are using multiple collision models
+with a single dynamics body (NOT RECOMMENDED!) you should carefully read
+the documentation on the implications of this, and probably the source
+code too.
+
+McdFrameworkDestroyAllModelsAndGeometries implemented to clean up models and 
+geometries. In the next release it will become default behaviour for McdTerm. 
+In the meantime it is provided as an easy way to clean up resources before 
+calling McdTerm.
+
+McdModelGetTranformPtr now returns the transform the model is actually
+using, which, if a relative transform is being applied, will be the
+compound transform.
+
+The contact model has been reimplemented to remove some inconsistencies in the
+friction and restitution code.
+
+Experimental code for non-spherical inertia tensors and coriolis forces is 
+implemented. There are known dynamical stability issues with this code:
+you are free to try it if you wish (MdtBodyEnableNonSphericalInertia,
+MdtBodyEnableCoriolisForce) and we would welcome your feedback, but
+_you_ _have_ _been_ _warned_.
+
+Raw contacts (i.e. contact constraints not in contact groups) are
+deprecated, and will be removed in a future release. Using contact
+groups should in any case be more efficient in most cases.
+
+------------------------------------------------------------------------
+
+***  Version 1.1.0  ***   13/sep/2001
+
+Mcd
+===
+
+- Convex Mesh and Triangle List collision supported.
+
+- Triangle lists can have non-trivial transformation matrices.  The
+  interpretation of the transformation has changed.  Please refer to the
+  triangle list discussion in Chap. 4 in the "Karma Collision Developer
+  Guide".
+
+- Aggregate geometries replace composite geometries that are deprecated
+  in Karma 1.1. Composite will be removed in a future release.
+  See Chap. 4 of the Collision guide.
+
+- Sort keys may be used to ensure deterministic simulation.
+
+- 'McdInit' returns a framework parameter that most common constructors
+  take (see "McdCompatibility.h").
+
+- Geometries have reference counts that record the number of collision
+  models that use that particular geometry.
+
+- RwBSP support has been removed.
+
+- the layout of ModelPairs within a McdModelPairContainer has been changed, and 
+  functions added to add and remove pairs from the ModelPairContainer.
+
+Mdt
+===
+
+- Contact Groups: please refer to Chap. 3 of the Karma Dynamics
+  Developer Guide.
+
+- Many collections in 1.0.2 which were lists (such as the joints attached to 
+  a body) are now red-black trees. Iterators over such lists have been changed 
+  to iterators over the corresponding trees.
+
+- Limiting of the constraint matrix size:
+  - 'void MdtWorldSetMaxMatrixSize(const MdtWorld w,const int size)'
+  - 'void MdtWorldSetContactImportanceCB(const MdtWorldID w,
+      const MdtContactImportanceCBPtr icb)'
+
+- Coulomb like friction model added: friction force at each time step is
+  calculated by multiplying the friction coefficient by the normal force.
+
+Mst
+===
+
+- 'MstInit' and 'MstUniverseCreate' require the additional parameter
+  'collisionGeometryInstancesMaxCount'.
+
+- 'MstHandleTransitions' now takes 'McdSpaceID', 'MdtWorldID', 'MstBridgeID'
+  in addition to 'McdModelPairContainer *'.
+
+- The parameter 'unsigned int collisionGeometryInstancesMaxCount' now
+  needs to be set for MstUniverseSizes.
+
+Builds
+======
+
+- The Irix build is no longer available.
+
+- The following builds are available to customers on request:
+  - Double precision.
+  - Win32 linked against LIBC.
+  - Xbox.

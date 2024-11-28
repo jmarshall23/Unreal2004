@@ -1,0 +1,38 @@
+Microsoft Visual Studio Solution File, Format Version 8.00
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "UTV2003", "UTV2003.vcproj", "{7FFFBFC8-D503-4732-8011-B6D6AC43761D}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SourceCodeControl) = preSolution
+		SccNumberOfProjects = 1
+		SccProjectUniqueName0 = UTV2003.vcproj
+		SccProjectName0 = Perforce\u0020Project
+		SccLocalPath0 = ..
+		SccProvider0 = MSSCCI:Perforce\u0020SCM
+		SccProjectFilePathRelativizedFromConnection0 = Src\\
+	EndGlobalSection
+	GlobalSection(SolutionConfiguration) = preSolution
+		Debug = Debug
+		DebugSlow = DebugSlow
+		Profiling = Profiling
+		Release = Release
+		ReleaseFast = ReleaseFast
+	EndGlobalSection
+	GlobalSection(ProjectConfiguration) = postSolution
+		{7FFFBFC8-D503-4732-8011-B6D6AC43761D}.Debug.ActiveCfg = Debug|Win32
+		{7FFFBFC8-D503-4732-8011-B6D6AC43761D}.Debug.Build.0 = Debug|Win32
+		{7FFFBFC8-D503-4732-8011-B6D6AC43761D}.DebugSlow.ActiveCfg = DebugSlow|Win32
+		{7FFFBFC8-D503-4732-8011-B6D6AC43761D}.DebugSlow.Build.0 = DebugSlow|Win32
+		{7FFFBFC8-D503-4732-8011-B6D6AC43761D}.Profiling.ActiveCfg = Profiling|Win32
+		{7FFFBFC8-D503-4732-8011-B6D6AC43761D}.Profiling.Build.0 = Profiling|Win32
+		{7FFFBFC8-D503-4732-8011-B6D6AC43761D}.Release.ActiveCfg = Release|Win32
+		{7FFFBFC8-D503-4732-8011-B6D6AC43761D}.Release.Build.0 = Release|Win32
+		{7FFFBFC8-D503-4732-8011-B6D6AC43761D}.ReleaseFast.ActiveCfg = ReleaseFast|Win32
+		{7FFFBFC8-D503-4732-8011-B6D6AC43761D}.ReleaseFast.Build.0 = ReleaseFast|Win32
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+	EndGlobalSection
+	GlobalSection(ExtensibilityAddIns) = postSolution
+	EndGlobalSection
+EndGlobal

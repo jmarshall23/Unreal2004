@@ -1,0 +1,141 @@
+# -*- makefile -*- vim:noet:ts=8:sw=4:ft=make:
+
+######################################################################### WIN32
+
+# AC_MSG_RESULT(configuring for $PLATFORM)
+
+DEF_PLATFORM            := WIN32
+
+###################
+#
+#  File name elements (prefix & suffix)
+#
+
+S_OBJ                   := .obj
+S_EXE                   := .exe
+P_LIB                   := 
+S_LIB                   := .lib
+S_DEP                   := .d
+S_ASM                   := .asm
+
+###################
+#
+# Basic Options
+#
+
+O_DEF                   := /D
+O_UNDEF                 := /U
+_O_EXE                  := /OUT:
+_O_OBJ                  := /Fo
+_O_LIB                  := /OUT:
+_L			:= /LIBPATH:
+
+#############################
+#
+# Tool and flag-set definitions
+#
+
+ME_COMPILE              := cl.exe /nologo
+ME_COMPILE_C            := cl.exe /nologo /TC
+ME_COMPILE_CXX          := cl.exe /nologo /TP
+ME_ASSEMBLE             := cl.exe /nologo
+ME_LIBRARY              := lib.exe /nologo
+ME_LINK			:= link.exe /nologo
+
+ME_DEPEND               := cl.exe /nologo
+ME_AS=
+ME_DVPASM=
+
+ME_DEPENDFLAGS          := /E $(O_DEF)DEPENDENCY_PHASE
+
+CPPFLAGS_RELEASE        := $(O_DEF)NDEBUG
+CPPFLAGS_CHECK_RELEASE  := $(O_DEF)_MECHECK $(O_DEF)MCDCHECK
+CPPFLAGS_DEBUG          := $(CPPFLAGS_CHECK_RELEASE) $(O_DEF)_DEBUG
+
+CFLAGS_RELEASE          = /W3 /G6 /ML  /O2 /Oy
+CFLAGS_DEBUG            = /W3 /G6 /MLd /ZI /Gm /GX
+
+CXXFLAGS_RELEASE        = /W3 /G6 /ML  /O2 /Oy
+CXXFLAGS_DEBUG          = /W3 /G6 /MLd /ZI /Gm /GX
+
+CFLAGS_OPT_INTEL	= /Qsox- /Qrestrict /QxK /Qunroll0
+CFLAGS_OPT_RELEASE      = /O2 /Oy- /Zl
+CFLAGS_OPT_DEBUG        = /Od /Zl
+CFLAGS_OPT_CHECK_RELEASE= /O2 /Oy- /Zl
+
+ME_ASFLAGS_RELEASE      =
+ME_ASFLAGS_DEBUG        =
+
+ME_COMPILERPREFIX       = /Fo
+
+ME_CCLINKFLAGS_RELEASE  = 
+ME_CCLINKFLAGS_DEBUG    = /DEBUG /DEBUGTYPE:COFF
+
+LDFLAGS                 = /OUT:
+
+RM			:= rm -r -f
+
+#############################################
+#
+#  The calling convention
+#  Acceptable values are STDCALL, CDECL, and FASTCALL
+#  Note: Default ***REQUIRES*** matching info in MeCall.h
+#
+ifeq '$(DEF_CALL_CONVENTION)' 'CDECL'
+DEF_MEAPI               := MEAPI=__cdecl
+CFLAGS_RELEASE          := $(filter-out /Gd /Gr /Gz,$(CFLAGS_RELEASE)) /Gd
+CFLAGS_DEBUG            := $(filter-out /Gd /Gr /Gz,$(CFLAGS_DEBUG)) /Gd
+CXXFLAGS_RELEASE        := $(filter-out /Gd /Gr /Gz,$(CXXFLAGS_RELEASE)) /Gd
+CXXFLAGS_DEBUG          := $(filter-out /Gd /Gr /Gz,$(CXXFLAGS_DEBUG)) /Gd
+endif
+
+ifeq '$(DEF_CALL_CONVENTION)' 'FASTCALL'
+DEF_MEAPI               := MEAPI=__fastcall
+CFLAGS_RELEASE          := $(filter-out /Gd /Gr /Gz,$(CFLAGS_RELEASE)) /Gr
+CFLAGS_DEBUG            := $(filter-out /Gd /Gr /Gz,$(CFLAGS_DEBUG)) /Gr
+CXXFLAGS_RELEASE        := $(filter-out /Gd /Gr /Gz,$(CXXFLAGS_RELEASE)) /Gr
+CXXFLAGS_DEBUG          := $(filter-out /Gd /Gr /Gz,$(CXXFLAGS_DEBUG)) /Gr
+endif
+
+ifeq '$(DEF_CALL_CONVENTION)' 'STDCALL'
+# Suppress the default -> ***REQUIRES*** matching entry in MeCall.h
+#DEF_MEAPI              := MEAPI=__stdcall
+CFLAGS_RELEASE          := $(filter-out /Gd /Gr /Gz,$(CFLAGS_RELEASE)) /Gz
+CFLAGS_DEBUG            := $(filter-out /Gd /Gr /Gz,$(CFLAGS_DEBUG)) /Gz
+CXXFLAGS_RELEASE        := $(filter-out /Gd /Gr /Gz,$(CXXFLAGS_RELEASE)) /Gz
+CXXFLAGS_DEBUG          := $(filter-out /Gd /Gr /Gz,$(CXXFLAGS_DEBUG)) /Gz
+endif
+
+
+#############################################
+#
+#  The C runtime to use
+#  Acceptable values are STATIC, STATICMT, DLLMT
+#
+DEF_C_LIBRARY           ?= DLLMT
+
+ifeq '$(DEF_C_LIBRARY)' 'STATIC'
+CFLAGS_RELEASE          := $(filter-out /MDd /MLd /MTd /MD /ML /MT,$(CFLAGS_RELEASE)) /ML
+CFLAGS_DEBUG            := $(filter-out /MDd /MLd /MTd /MD /ML /MT,$(CFLAGS_DEBUG)) /MLd
+CXXFLAGS_RELEASE        := $(filter-out /MDd /MLd /MTd /MD /ML /MT,$(CXXFLAGS_RELEASE)) /ML
+CXXFLAGS_DEBUG          := $(filter-out /MDd /MLd /MTd /MD /ML /MT,$(CXXFLAGS_DEBUG)) /MLd
+endif
+
+ifeq '$(DEF_C_LIBRARY)' 'STATICMT'
+CFLAGS_RELEASE          := $(filter-out /MDd /MLd /MTd /MD /ML /MT,$(CFLAGS_RELEASE)) /MT
+CFLAGS_DEBUG            := $(filter-out /MDd /MLd /MTd /MD /ML /MT,$(CFLAGS_DEBUG)) /MTd
+CXXFLAGS_RELEASE        := $(filter-out /MDd /MLd /MTd /MD /ML /MT,$(CXXFLAGS_RELEASE)) /MT
+CXXFLAGS_DEBUG          := $(filter-out /MDd /MLd /MTd /MD /ML /MT,$(CXXFLAGS_DEBUG)) /MTd
+endif
+
+ifeq '$(DEF_C_LIBRARY)' 'DLLMT'
+CFLAGS_RELEASE          := $(filter-out /MDd /MLd /MTd /MD /ML /MT,$(CFLAGS_RELEASE)) /MD
+CFLAGS_DEBUG            := $(filter-out /MDd /MLd /MTd /MD /ML /MT,$(CFLAGS_DEBUG)) /MDd
+CXXFLAGS_RELEASE        := $(filter-out /MDd /MLd /MTd /MD /ML /MT,$(CXXFLAGS_RELEASE)) /MD
+CXXFLAGS_DEBUG          := $(filter-out /MDd /MLd /MTd /MD /ML /MT,$(CXXFLAGS_DEBUG)) /MDd
+endif
+
+
+#DEF_INTEL_OPT   := _USE_INTEL_COMPILER
+
+PLATFORM_LIBRARY_PATH	:= ../../tools/glut

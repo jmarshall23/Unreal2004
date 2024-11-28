@@ -1,0 +1,804 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Classes">
+      <UniqueIdentifier>{5d548df0-42f7-4d5a-8e14-ba7efdafffaf}</UniqueIdentifier>
+      <Extensions>*.uc</Extensions>
+    </Filter>
+    <Filter Include="ServerAdmin">
+      <UniqueIdentifier>{c8cf7727-bf22-4747-937f-f3e732c91516}</UniqueIdentifier>
+      <Extensions>*.htm</Extensions>
+    </Filter>
+    <Filter Include="ServerAdmin\Base">
+      <UniqueIdentifier>{6319a617-5796-40e2-97ae-1e70683ddc53}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ServerAdmin\Base\UT2K3Stats">
+      <UniqueIdentifier>{f7092aa8-1aaf-424b-b2d2-23879545a07d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ServerAdmin\Base\ClassicUT">
+      <UniqueIdentifier>{40a1c203-e4d0-4f9b-a195-3db307a813d2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ServerAdmin\Current">
+      <UniqueIdentifier>{8d02c3ae-2311-4337-a0ff-b863af6a5fdb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ServerAdmin\Current\UT2K3Stats">
+      <UniqueIdentifier>{d1b02f0a-057b-4c87-bb66-68ea4039dc6f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ServerAdmin\Current\ClassicUT">
+      <UniqueIdentifier>{20f99ac8-6998-4dcc-afb4-9e3d0825db6b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ServerAdmin\Defaults">
+      <UniqueIdentifier>{d68131fc-f95d-461a-8c48-e009634baf35}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ServerAdmin\Defaults\UT2K3Stats">
+      <UniqueIdentifier>{4c95bfc8-fe85-4d25-8cde-0a5b9dd65dc4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ServerAdmin\Defaults\ClassicUT">
+      <UniqueIdentifier>{cf6e61d4-26a9-4e46-a2ce-e539781fa300}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ServerAdmin\Admins">
+      <UniqueIdentifier>{bd8584bb-7afb-4fd4-bb22-9c7be4837c98}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ServerAdmin\Admins\UT2K3Stats">
+      <UniqueIdentifier>{09544eb6-9c84-4e01-9259-b09431f40a40}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ServerAdmin\Admins\ClassicUT">
+      <UniqueIdentifier>{03a99ae5-6953-4744-85ec-fce3a477c5ac}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="todo.txt">
+      <Filter>ServerAdmin</Filter>
+    </None>
+    <None Include="..\ServerAdmin\admins_priv_table.inc">
+      <Filter>ServerAdmin\Base</Filter>
+    </None>
+    <None Include="..\ServerAdmin\cell_center.inc">
+      <Filter>ServerAdmin\Base</Filter>
+    </None>
+    <None Include="..\ServerAdmin\cell_center_nowrap.inc">
+      <Filter>ServerAdmin\Base</Filter>
+    </None>
+    <None Include="..\ServerAdmin\cell_colspan.inc">
+      <Filter>ServerAdmin\Base</Filter>
+    </None>
+    <None Include="..\ServerAdmin\cell_left.inc">
+      <Filter>ServerAdmin\Base</Filter>
+    </None>
+    <None Include="..\ServerAdmin\cell_left_nowrap.inc">
+      <Filter>ServerAdmin\Base</Filter>
+    </None>
+    <None Include="..\ServerAdmin\cell_right.inc">
+      <Filter>ServerAdmin\Base</Filter>
+    </None>
+    <None Include="..\ServerAdmin\cell_right_nowrap.inc">
+      <Filter>ServerAdmin\Base</Filter>
+    </None>
+    <None Include="..\ServerAdmin\checkbox.inc">
+      <Filter>ServerAdmin\Base</Filter>
+    </None>
+    <None Include="..\ServerAdmin\ClassicUT\checkbox.inc">
+      <Filter>ServerAdmin\Base</Filter>
+    </None>
+    <None Include="..\ServerAdmin\current_game_stat_table.inc">
+      <Filter>ServerAdmin\Base</Filter>
+    </None>
+    <None Include="..\ServerAdmin\current_game_stat_table_row.inc">
+      <Filter>ServerAdmin\Base</Filter>
+    </None>
+    <None Include="..\ServerAdmin\defaults_row_check.inc">
+      <Filter>ServerAdmin\Base</Filter>
+    </None>
+    <None Include="..\ServerAdmin\defaults_row_select.inc">
+      <Filter>ServerAdmin\Base</Filter>
+    </None>
+    <None Include="..\ServerAdmin\defaults_row_text.inc">
+      <Filter>ServerAdmin\Base</Filter>
+    </None>
+    <None Include="..\ServerAdmin\footer.inc">
+      <Filter>ServerAdmin\Base</Filter>
+    </None>
+    <None Include="..\ServerAdmin\frame_header.inc">
+      <Filter>ServerAdmin\Base</Filter>
+    </None>
+    <None Include="..\ServerAdmin\header.inc">
+      <Filter>ServerAdmin\Base</Filter>
+    </None>
+    <None Include="..\ServerAdmin\hidden.inc">
+      <Filter>ServerAdmin\Base</Filter>
+    </None>
+    <None Include="..\ServerAdmin\mainmenu.htm">
+      <Filter>ServerAdmin\Base</Filter>
+    </None>
+    <None Include="..\ServerAdmin\mainmenu_item.inc">
+      <Filter>ServerAdmin\Base</Filter>
+    </None>
+    <None Include="..\ServerAdmin\mainmenu_itemd.inc">
+      <Filter>ServerAdmin\Base</Filter>
+    </None>
+    <None Include="..\ServerAdmin\mainmenu_items.inc">
+      <Filter>ServerAdmin\Base</Filter>
+    </None>
+    <None Include="..\ServerAdmin\menufooter.inc">
+      <Filter>ServerAdmin\Base</Filter>
+    </None>
+    <None Include="..\ServerAdmin\menuheader.inc">
+      <Filter>ServerAdmin\Base</Filter>
+    </None>
+    <None Include="..\ServerAdmin\message.htm">
+      <Filter>ServerAdmin\Base</Filter>
+    </None>
+    <None Include="..\ServerAdmin\radio_button.inc">
+      <Filter>ServerAdmin\Base</Filter>
+    </None>
+    <None Include="..\ServerAdmin\reset_button.inc">
+      <Filter>ServerAdmin\Base</Filter>
+    </None>
+    <None Include="..\ServerAdmin\rootframe.htm">
+      <Filter>ServerAdmin\Base</Filter>
+    </None>
+    <None Include="..\ServerAdmin\row_center.inc">
+      <Filter>ServerAdmin\Base</Filter>
+    </None>
+    <None Include="..\ServerAdmin\row_left.inc">
+      <Filter>ServerAdmin\Base</Filter>
+    </None>
+    <None Include="..\ServerAdmin\select.inc">
+      <Filter>ServerAdmin\Base</Filter>
+    </None>
+    <None Include="..\ServerAdmin\server_restart.htm">
+      <Filter>ServerAdmin\Base</Filter>
+    </None>
+    <None Include="..\ServerAdmin\server_restart_row.inc">
+      <Filter>ServerAdmin\Base</Filter>
+    </None>
+    <None Include="..\ServerAdmin\submit_button.inc">
+      <Filter>ServerAdmin\Base</Filter>
+    </None>
+    <None Include="..\ServerAdmin\textbox.inc">
+      <Filter>ServerAdmin\Base</Filter>
+    </None>
+    <None Include="..\ServerAdmin\ut2003.css">
+      <Filter>ServerAdmin\Base</Filter>
+    </None>
+    <None Include="..\ServerAdmin\UT2K3Stats\cell_center.inc">
+      <Filter>ServerAdmin\Base\UT2K3Stats</Filter>
+    </None>
+    <None Include="..\ServerAdmin\UT2K3Stats\cell_center_nowrap.inc">
+      <Filter>ServerAdmin\Base\UT2K3Stats</Filter>
+    </None>
+    <None Include="..\ServerAdmin\UT2K3Stats\cell_colspan.inc">
+      <Filter>ServerAdmin\Base\UT2K3Stats</Filter>
+    </None>
+    <None Include="..\ServerAdmin\UT2K3Stats\cell_left.inc">
+      <Filter>ServerAdmin\Base\UT2K3Stats</Filter>
+    </None>
+    <None Include="..\ServerAdmin\UT2K3Stats\cell_left_nowrap.inc">
+      <Filter>ServerAdmin\Base\UT2K3Stats</Filter>
+    </None>
+    <None Include="..\ServerAdmin\UT2K3Stats\cell_right.inc">
+      <Filter>ServerAdmin\Base\UT2K3Stats</Filter>
+    </None>
+    <None Include="..\ServerAdmin\UT2K3Stats\cell_right_nowrap.inc">
+      <Filter>ServerAdmin\Base\UT2K3Stats</Filter>
+    </None>
+    <None Include="..\ServerAdmin\UT2K3Stats\checkbox.inc">
+      <Filter>ServerAdmin\Base\UT2K3Stats</Filter>
+    </None>
+    <None Include="..\ServerAdmin\UT2K3Stats\ClassicUT\checkbox.inc">
+      <Filter>ServerAdmin\Base\UT2K3Stats</Filter>
+    </None>
+    <None Include="..\ServerAdmin\UT2K3Stats\footer.inc">
+      <Filter>ServerAdmin\Base\UT2K3Stats</Filter>
+    </None>
+    <None Include="..\ServerAdmin\UT2K3Stats\frame_header.inc">
+      <Filter>ServerAdmin\Base\UT2K3Stats</Filter>
+    </None>
+    <None Include="..\ServerAdmin\UT2K3Stats\header.inc">
+      <Filter>ServerAdmin\Base\UT2K3Stats</Filter>
+    </None>
+    <None Include="..\ServerAdmin\UT2K3Stats\hidden.inc">
+      <Filter>ServerAdmin\Base\UT2K3Stats</Filter>
+    </None>
+    <None Include="..\ServerAdmin\UT2K3Stats\mainmenu.htm">
+      <Filter>ServerAdmin\Base\UT2K3Stats</Filter>
+    </None>
+    <None Include="..\ServerAdmin\UT2K3Stats\mainmenu_item.inc">
+      <Filter>ServerAdmin\Base\UT2K3Stats</Filter>
+    </None>
+    <None Include="..\ServerAdmin\UT2K3Stats\mainmenu_itemd.inc">
+      <Filter>ServerAdmin\Base\UT2K3Stats</Filter>
+    </None>
+    <None Include="..\ServerAdmin\UT2K3Stats\mainmenu_items.inc">
+      <Filter>ServerAdmin\Base\UT2K3Stats</Filter>
+    </None>
+    <None Include="..\ServerAdmin\UT2K3Stats\menufooter.inc">
+      <Filter>ServerAdmin\Base\UT2K3Stats</Filter>
+    </None>
+    <None Include="..\ServerAdmin\UT2K3Stats\menuheader.inc">
+      <Filter>ServerAdmin\Base\UT2K3Stats</Filter>
+    </None>
+    <None Include="..\ServerAdmin\UT2K3Stats\message.htm">
+      <Filter>ServerAdmin\Base\UT2K3Stats</Filter>
+    </None>
+    <None Include="..\ServerAdmin\UT2K3Stats\radio_button.inc">
+      <Filter>ServerAdmin\Base\UT2K3Stats</Filter>
+    </None>
+    <None Include="..\ServerAdmin\UT2K3Stats\reset_button.inc">
+      <Filter>ServerAdmin\Base\UT2K3Stats</Filter>
+    </None>
+    <None Include="..\ServerAdmin\UT2K3Stats\rootframe.htm">
+      <Filter>ServerAdmin\Base\UT2K3Stats</Filter>
+    </None>
+    <None Include="..\ServerAdmin\UT2K3Stats\row_center.inc">
+      <Filter>ServerAdmin\Base\UT2K3Stats</Filter>
+    </None>
+    <None Include="..\ServerAdmin\UT2K3Stats\row_left.inc">
+      <Filter>ServerAdmin\Base\UT2K3Stats</Filter>
+    </None>
+    <None Include="..\ServerAdmin\UT2K3Stats\select.inc">
+      <Filter>ServerAdmin\Base\UT2K3Stats</Filter>
+    </None>
+    <None Include="..\ServerAdmin\UT2K3Stats\server_restart.htm">
+      <Filter>ServerAdmin\Base\UT2K3Stats</Filter>
+    </None>
+    <None Include="..\ServerAdmin\UT2K3Stats\server_restart_row.inc">
+      <Filter>ServerAdmin\Base\UT2K3Stats</Filter>
+    </None>
+    <None Include="..\ServerAdmin\UT2K3Stats\submit_button.inc">
+      <Filter>ServerAdmin\Base\UT2K3Stats</Filter>
+    </None>
+    <None Include="..\ServerAdmin\UT2K3Stats\textbox.inc">
+      <Filter>ServerAdmin\Base\UT2K3Stats</Filter>
+    </None>
+    <None Include="..\ServerAdmin\UT2K3Stats\ut2003stats.css">
+      <Filter>ServerAdmin\Base\UT2K3Stats</Filter>
+    </None>
+    <None Include="..\ServerAdmin\ClassicUT\cell_center.inc">
+      <Filter>ServerAdmin\Base\ClassicUT</Filter>
+    </None>
+    <None Include="..\ServerAdmin\ClassicUT\cell_center_nowrap.inc">
+      <Filter>ServerAdmin\Base\ClassicUT</Filter>
+    </None>
+    <None Include="..\ServerAdmin\ClassicUT\cell_colspan.inc">
+      <Filter>ServerAdmin\Base\ClassicUT</Filter>
+    </None>
+    <None Include="..\ServerAdmin\ClassicUT\cell_left.inc">
+      <Filter>ServerAdmin\Base\ClassicUT</Filter>
+    </None>
+    <None Include="..\ServerAdmin\ClassicUT\cell_left_nowrap.inc">
+      <Filter>ServerAdmin\Base\ClassicUT</Filter>
+    </None>
+    <None Include="..\ServerAdmin\ClassicUT\cell_right.inc">
+      <Filter>ServerAdmin\Base\ClassicUT</Filter>
+    </None>
+    <None Include="..\ServerAdmin\ClassicUT\cell_right_nowrap.inc">
+      <Filter>ServerAdmin\Base\ClassicUT</Filter>
+    </None>
+    <None Include="..\ServerAdmin\ClassicUT\classicut.css">
+      <Filter>ServerAdmin\Base\ClassicUT</Filter>
+    </None>
+    <None Include="..\ServerAdmin\ClassicUT\footer.inc">
+      <Filter>ServerAdmin\Base\ClassicUT</Filter>
+    </None>
+    <None Include="..\ServerAdmin\ClassicUT\frame_header.inc">
+      <Filter>ServerAdmin\Base\ClassicUT</Filter>
+    </None>
+    <None Include="..\ServerAdmin\ClassicUT\header.inc">
+      <Filter>ServerAdmin\Base\ClassicUT</Filter>
+    </None>
+    <None Include="..\ServerAdmin\ClassicUT\hidden.inc">
+      <Filter>ServerAdmin\Base\ClassicUT</Filter>
+    </None>
+    <None Include="..\ServerAdmin\ClassicUT\mainmenu.htm">
+      <Filter>ServerAdmin\Base\ClassicUT</Filter>
+    </None>
+    <None Include="..\ServerAdmin\ClassicUT\mainmenu_item.inc">
+      <Filter>ServerAdmin\Base\ClassicUT</Filter>
+    </None>
+    <None Include="..\ServerAdmin\ClassicUT\mainmenu_itemd.inc">
+      <Filter>ServerAdmin\Base\ClassicUT</Filter>
+    </None>
+    <None Include="..\ServerAdmin\ClassicUT\mainmenu_items.inc">
+      <Filter>ServerAdmin\Base\ClassicUT</Filter>
+    </None>
+    <None Include="..\ServerAdmin\ClassicUT\menufooter.inc">
+      <Filter>ServerAdmin\Base\ClassicUT</Filter>
+    </None>
+    <None Include="..\ServerAdmin\ClassicUT\menuheader.inc">
+      <Filter>ServerAdmin\Base\ClassicUT</Filter>
+    </None>
+    <None Include="..\ServerAdmin\ClassicUT\message.htm">
+      <Filter>ServerAdmin\Base\ClassicUT</Filter>
+    </None>
+    <None Include="..\ServerAdmin\ClassicUT\radio_button.inc">
+      <Filter>ServerAdmin\Base\ClassicUT</Filter>
+    </None>
+    <None Include="..\ServerAdmin\ClassicUT\reset_button.inc">
+      <Filter>ServerAdmin\Base\ClassicUT</Filter>
+    </None>
+    <None Include="..\ServerAdmin\ClassicUT\rootframe.htm">
+      <Filter>ServerAdmin\Base\ClassicUT</Filter>
+    </None>
+    <None Include="..\ServerAdmin\ClassicUT\row_center.inc">
+      <Filter>ServerAdmin\Base\ClassicUT</Filter>
+    </None>
+    <None Include="..\ServerAdmin\ClassicUT\row_left.inc">
+      <Filter>ServerAdmin\Base\ClassicUT</Filter>
+    </None>
+    <None Include="..\ServerAdmin\ClassicUT\select.inc">
+      <Filter>ServerAdmin\Base\ClassicUT</Filter>
+    </None>
+    <None Include="..\ServerAdmin\ClassicUT\server_restart.htm">
+      <Filter>ServerAdmin\Base\ClassicUT</Filter>
+    </None>
+    <None Include="..\ServerAdmin\ClassicUT\server_restart_row.inc">
+      <Filter>ServerAdmin\Base\ClassicUT</Filter>
+    </None>
+    <None Include="..\ServerAdmin\ClassicUT\submit_button.inc">
+      <Filter>ServerAdmin\Base\ClassicUT</Filter>
+    </None>
+    <None Include="..\ServerAdmin\ClassicUT\textbox.inc">
+      <Filter>ServerAdmin\Base\ClassicUT</Filter>
+    </None>
+    <None Include="..\ServerAdmin\current_bots.htm">
+      <Filter>ServerAdmin\Current</Filter>
+    </None>
+    <None Include="..\ServerAdmin\current_bots_row.inc">
+      <Filter>ServerAdmin\Current</Filter>
+    </None>
+    <None Include="..\ServerAdmin\current_bots_row_sel.inc">
+      <Filter>ServerAdmin\Current</Filter>
+    </None>
+    <None Include="..\ServerAdmin\current_bots_species.inc">
+      <Filter>ServerAdmin\Current</Filter>
+    </None>
+    <None Include="..\ServerAdmin\current_console.htm">
+      <Filter>ServerAdmin\Current</Filter>
+    </None>
+    <None Include="..\ServerAdmin\current_console_log.htm">
+      <Filter>ServerAdmin\Current</Filter>
+    </None>
+    <None Include="..\ServerAdmin\current_console_send.htm">
+      <Filter>ServerAdmin\Current</Filter>
+    </None>
+    <None Include="..\ServerAdmin\current_game.htm">
+      <Filter>ServerAdmin\Current</Filter>
+    </None>
+    <None Include="..\ServerAdmin\current_menu.htm">
+      <Filter>ServerAdmin\Current</Filter>
+    </None>
+    <None Include="..\ServerAdmin\current_mutators.htm">
+      <Filter>ServerAdmin\Current</Filter>
+    </None>
+    <None Include="..\ServerAdmin\current_mutators_group.inc">
+      <Filter>ServerAdmin\Current</Filter>
+    </None>
+    <None Include="..\ServerAdmin\current_mutators_group_row.inc">
+      <Filter>ServerAdmin\Current</Filter>
+    </None>
+    <None Include="..\ServerAdmin\current_mutators_row.inc">
+      <Filter>ServerAdmin\Current</Filter>
+    </None>
+    <None Include="..\ServerAdmin\current_mutators_selected.inc">
+      <Filter>ServerAdmin\Current</Filter>
+    </None>
+    <None Include="..\ServerAdmin\current_mutators_table.inc">
+      <Filter>ServerAdmin\Current</Filter>
+    </None>
+    <None Include="..\ServerAdmin\current_players.htm">
+      <Filter>ServerAdmin\Current</Filter>
+    </None>
+    <None Include="..\ServerAdmin\current_players_ban_col.inc">
+      <Filter>ServerAdmin\Current</Filter>
+    </None>
+    <None Include="..\ServerAdmin\current_players_empty_col.inc">
+      <Filter>ServerAdmin\Current</Filter>
+    </None>
+    <None Include="..\ServerAdmin\current_players_kick_col.inc">
+      <Filter>ServerAdmin\Current</Filter>
+    </None>
+    <None Include="..\ServerAdmin\current_players_list_head.inc">
+      <Filter>ServerAdmin\Current</Filter>
+    </None>
+    <None Include="..\ServerAdmin\current_players_list_head_link.inc">
+      <Filter>ServerAdmin\Current</Filter>
+    </None>
+    <None Include="..\ServerAdmin\current_players_minp.inc">
+      <Filter>ServerAdmin\Current</Filter>
+    </None>
+    <None Include="..\ServerAdmin\currentframe.htm">
+      <Filter>ServerAdmin\Current</Filter>
+    </None>
+    <None Include="..\ServerAdmin\UT2K3Stats\current_bots.htm">
+      <Filter>ServerAdmin\Current\UT2K3Stats</Filter>
+    </None>
+    <None Include="..\ServerAdmin\UT2K3Stats\current_bots_row.inc">
+      <Filter>ServerAdmin\Current\UT2K3Stats</Filter>
+    </None>
+    <None Include="..\ServerAdmin\UT2K3Stats\current_bots_row_sel.inc">
+      <Filter>ServerAdmin\Current\UT2K3Stats</Filter>
+    </None>
+    <None Include="..\ServerAdmin\UT2K3Stats\current_bots_species.inc">
+      <Filter>ServerAdmin\Current\UT2K3Stats</Filter>
+    </None>
+    <None Include="..\ServerAdmin\UT2K3Stats\current_console.htm">
+      <Filter>ServerAdmin\Current\UT2K3Stats</Filter>
+    </None>
+    <None Include="..\ServerAdmin\UT2K3Stats\current_console_log.htm">
+      <Filter>ServerAdmin\Current\UT2K3Stats</Filter>
+    </None>
+    <None Include="..\ServerAdmin\UT2K3Stats\current_console_send.htm">
+      <Filter>ServerAdmin\Current\UT2K3Stats</Filter>
+    </None>
+    <None Include="..\ServerAdmin\UT2K3Stats\current_game.htm">
+      <Filter>ServerAdmin\Current\UT2K3Stats</Filter>
+    </None>
+    <None Include="..\ServerAdmin\UT2K3Stats\current_menu.htm">
+      <Filter>ServerAdmin\Current\UT2K3Stats</Filter>
+    </None>
+    <None Include="..\ServerAdmin\UT2K3Stats\current_mutators.htm">
+      <Filter>ServerAdmin\Current\UT2K3Stats</Filter>
+    </None>
+    <None Include="..\ServerAdmin\UT2K3Stats\current_mutators_group.inc">
+      <Filter>ServerAdmin\Current\UT2K3Stats</Filter>
+    </None>
+    <None Include="..\ServerAdmin\UT2K3Stats\current_mutators_group_row.inc">
+      <Filter>ServerAdmin\Current\UT2K3Stats</Filter>
+    </None>
+    <None Include="..\ServerAdmin\UT2K3Stats\current_mutators_row.inc">
+      <Filter>ServerAdmin\Current\UT2K3Stats</Filter>
+    </None>
+    <None Include="..\ServerAdmin\UT2K3Stats\current_mutators_selected.inc">
+      <Filter>ServerAdmin\Current\UT2K3Stats</Filter>
+    </None>
+    <None Include="..\ServerAdmin\UT2K3Stats\current_mutators_table.inc">
+      <Filter>ServerAdmin\Current\UT2K3Stats</Filter>
+    </None>
+    <None Include="..\ServerAdmin\UT2K3Stats\current_players.htm">
+      <Filter>ServerAdmin\Current\UT2K3Stats</Filter>
+    </None>
+    <None Include="..\ServerAdmin\UT2K3Stats\current_players_ban_col.inc">
+      <Filter>ServerAdmin\Current\UT2K3Stats</Filter>
+    </None>
+    <None Include="..\ServerAdmin\UT2K3Stats\current_players_empty_col.inc">
+      <Filter>ServerAdmin\Current\UT2K3Stats</Filter>
+    </None>
+    <None Include="..\ServerAdmin\UT2K3Stats\current_players_kick_col.inc">
+      <Filter>ServerAdmin\Current\UT2K3Stats</Filter>
+    </None>
+    <None Include="..\ServerAdmin\UT2K3Stats\current_players_list_head.inc">
+      <Filter>ServerAdmin\Current\UT2K3Stats</Filter>
+    </None>
+    <None Include="..\ServerAdmin\UT2K3Stats\current_players_list_head_link.inc">
+      <Filter>ServerAdmin\Current\UT2K3Stats</Filter>
+    </None>
+    <None Include="..\ServerAdmin\UT2K3Stats\current_players_minp.inc">
+      <Filter>ServerAdmin\Current\UT2K3Stats</Filter>
+    </None>
+    <None Include="..\ServerAdmin\UT2K3Stats\currentframe.htm">
+      <Filter>ServerAdmin\Current\UT2K3Stats</Filter>
+    </None>
+    <None Include="..\ServerAdmin\ClassicUT\current_bots.htm">
+      <Filter>ServerAdmin\Current\ClassicUT</Filter>
+    </None>
+    <None Include="..\ServerAdmin\ClassicUT\current_bots_row.inc">
+      <Filter>ServerAdmin\Current\ClassicUT</Filter>
+    </None>
+    <None Include="..\ServerAdmin\ClassicUT\current_bots_row_sel.inc">
+      <Filter>ServerAdmin\Current\ClassicUT</Filter>
+    </None>
+    <None Include="..\ServerAdmin\ClassicUT\current_bots_species.inc">
+      <Filter>ServerAdmin\Current\ClassicUT</Filter>
+    </None>
+    <None Include="..\ServerAdmin\ClassicUT\current_console.htm">
+      <Filter>ServerAdmin\Current\ClassicUT</Filter>
+    </None>
+    <None Include="..\ServerAdmin\ClassicUT\current_console_log.htm">
+      <Filter>ServerAdmin\Current\ClassicUT</Filter>
+    </None>
+    <None Include="..\ServerAdmin\ClassicUT\current_console_send.htm">
+      <Filter>ServerAdmin\Current\ClassicUT</Filter>
+    </None>
+    <None Include="..\ServerAdmin\ClassicUT\current_game.htm">
+      <Filter>ServerAdmin\Current\ClassicUT</Filter>
+    </None>
+    <None Include="..\ServerAdmin\ClassicUT\current_menu.htm">
+      <Filter>ServerAdmin\Current\ClassicUT</Filter>
+    </None>
+    <None Include="..\ServerAdmin\ClassicUT\current_mutators.htm">
+      <Filter>ServerAdmin\Current\ClassicUT</Filter>
+    </None>
+    <None Include="..\ServerAdmin\ClassicUT\current_mutators_group.inc">
+      <Filter>ServerAdmin\Current\ClassicUT</Filter>
+    </None>
+    <None Include="..\ServerAdmin\ClassicUT\current_mutators_group_row.inc">
+      <Filter>ServerAdmin\Current\ClassicUT</Filter>
+    </None>
+    <None Include="..\ServerAdmin\ClassicUT\current_mutators_row.inc">
+      <Filter>ServerAdmin\Current\ClassicUT</Filter>
+    </None>
+    <None Include="..\ServerAdmin\ClassicUT\current_mutators_selected.inc">
+      <Filter>ServerAdmin\Current\ClassicUT</Filter>
+    </None>
+    <None Include="..\ServerAdmin\ClassicUT\current_mutators_table.inc">
+      <Filter>ServerAdmin\Current\ClassicUT</Filter>
+    </None>
+    <None Include="..\ServerAdmin\ClassicUT\current_players.htm">
+      <Filter>ServerAdmin\Current\ClassicUT</Filter>
+    </None>
+    <None Include="..\ServerAdmin\ClassicUT\current_players_ban_col.inc">
+      <Filter>ServerAdmin\Current\ClassicUT</Filter>
+    </None>
+    <None Include="..\ServerAdmin\ClassicUT\current_players_empty_col.inc">
+      <Filter>ServerAdmin\Current\ClassicUT</Filter>
+    </None>
+    <None Include="..\ServerAdmin\ClassicUT\current_players_kick_col.inc">
+      <Filter>ServerAdmin\Current\ClassicUT</Filter>
+    </None>
+    <None Include="..\ServerAdmin\ClassicUT\current_players_list_head.inc">
+      <Filter>ServerAdmin\Current\ClassicUT</Filter>
+    </None>
+    <None Include="..\ServerAdmin\ClassicUT\current_players_list_head_link.inc">
+      <Filter>ServerAdmin\Current\ClassicUT</Filter>
+    </None>
+    <None Include="..\ServerAdmin\ClassicUT\current_players_minp.inc">
+      <Filter>ServerAdmin\Current\ClassicUT</Filter>
+    </None>
+    <None Include="..\ServerAdmin\ClassicUT\currentframe.htm">
+      <Filter>ServerAdmin\Current\ClassicUT</Filter>
+    </None>
+    <None Include="..\ServerAdmin\defaults_header.inc">
+      <Filter>ServerAdmin\Defaults</Filter>
+    </None>
+    <None Include="..\ServerAdmin\defaults_ippolicy.htm">
+      <Filter>ServerAdmin\Defaults</Filter>
+    </None>
+    <None Include="..\ServerAdmin\defaults_ippolicy_row.inc">
+      <Filter>ServerAdmin\Defaults</Filter>
+    </None>
+    <None Include="..\ServerAdmin\defaults_maps.htm">
+      <Filter>ServerAdmin\Defaults</Filter>
+    </None>
+    <None Include="..\ServerAdmin\defaults_mark.inc">
+      <Filter>ServerAdmin\Defaults</Filter>
+    </None>
+    <None Include="..\ServerAdmin\defaults_menu.htm">
+      <Filter>ServerAdmin\Defaults</Filter>
+    </None>
+    <None Include="..\ServerAdmin\defaults_menu_row.inc">
+      <Filter>ServerAdmin\Defaults</Filter>
+    </None>
+    <None Include="..\ServerAdmin\defaults_row.inc">
+      <Filter>ServerAdmin\Defaults</Filter>
+    </None>
+    <None Include="..\ServerAdmin\defaults_rules.htm">
+      <Filter>ServerAdmin\Defaults</Filter>
+    </None>
+    <None Include="..\ServerAdmin\defaultsframe.htm">
+      <Filter>ServerAdmin\Defaults</Filter>
+    </None>
+    <None Include="..\ServerAdmin\UT2K3Stats\defaults_header.inc">
+      <Filter>ServerAdmin\Defaults\UT2K3Stats</Filter>
+    </None>
+    <None Include="..\ServerAdmin\UT2K3Stats\defaults_ippolicy.htm">
+      <Filter>ServerAdmin\Defaults\UT2K3Stats</Filter>
+    </None>
+    <None Include="..\ServerAdmin\UT2K3Stats\defaults_ippolicy_row.inc">
+      <Filter>ServerAdmin\Defaults\UT2K3Stats</Filter>
+    </None>
+    <None Include="..\ServerAdmin\UT2K3Stats\defaults_maps.htm">
+      <Filter>ServerAdmin\Defaults\UT2K3Stats</Filter>
+    </None>
+    <None Include="..\ServerAdmin\UT2K3Stats\defaults_mark.inc">
+      <Filter>ServerAdmin\Defaults\UT2K3Stats</Filter>
+    </None>
+    <None Include="..\ServerAdmin\UT2K3Stats\defaults_menu.htm">
+      <Filter>ServerAdmin\Defaults\UT2K3Stats</Filter>
+    </None>
+    <None Include="..\ServerAdmin\UT2K3Stats\defaults_menu_row.inc">
+      <Filter>ServerAdmin\Defaults\UT2K3Stats</Filter>
+    </None>
+    <None Include="..\ServerAdmin\UT2K3Stats\defaults_row.inc">
+      <Filter>ServerAdmin\Defaults\UT2K3Stats</Filter>
+    </None>
+    <None Include="..\ServerAdmin\UT2K3Stats\defaults_rules.htm">
+      <Filter>ServerAdmin\Defaults\UT2K3Stats</Filter>
+    </None>
+    <None Include="..\ServerAdmin\UT2K3Stats\defaultsframe.htm">
+      <Filter>ServerAdmin\Defaults\UT2K3Stats</Filter>
+    </None>
+    <None Include="..\ServerAdmin\ClassicUT\defaults_header.inc">
+      <Filter>ServerAdmin\Defaults\ClassicUT</Filter>
+    </None>
+    <None Include="..\ServerAdmin\ClassicUT\defaults_ippolicy.htm">
+      <Filter>ServerAdmin\Defaults\ClassicUT</Filter>
+    </None>
+    <None Include="..\ServerAdmin\ClassicUT\defaults_ippolicy_row.inc">
+      <Filter>ServerAdmin\Defaults\ClassicUT</Filter>
+    </None>
+    <None Include="..\ServerAdmin\ClassicUT\defaults_maps.htm">
+      <Filter>ServerAdmin\Defaults\ClassicUT</Filter>
+    </None>
+    <None Include="..\ServerAdmin\ClassicUT\defaults_mark.inc">
+      <Filter>ServerAdmin\Defaults\ClassicUT</Filter>
+    </None>
+    <None Include="..\ServerAdmin\ClassicUT\defaults_menu.htm">
+      <Filter>ServerAdmin\Defaults\ClassicUT</Filter>
+    </None>
+    <None Include="..\ServerAdmin\ClassicUT\defaults_menu_row.inc">
+      <Filter>ServerAdmin\Defaults\ClassicUT</Filter>
+    </None>
+    <None Include="..\ServerAdmin\ClassicUT\defaults_row.inc">
+      <Filter>ServerAdmin\Defaults\ClassicUT</Filter>
+    </None>
+    <None Include="..\ServerAdmin\ClassicUT\defaults_rules.htm">
+      <Filter>ServerAdmin\Defaults\ClassicUT</Filter>
+    </None>
+    <None Include="..\ServerAdmin\ClassicUT\defaultsframe.htm">
+      <Filter>ServerAdmin\Defaults\ClassicUT</Filter>
+    </None>
+    <None Include="..\ServerAdmin\admins_account.htm">
+      <Filter>ServerAdmin\Admins</Filter>
+    </None>
+    <None Include="..\ServerAdmin\admins_home.htm">
+      <Filter>ServerAdmin\Admins</Filter>
+    </None>
+    <None Include="..\ServerAdmin\admins_menu.htm">
+      <Filter>ServerAdmin\Admins</Filter>
+    </None>
+    <None Include="..\ServerAdmin\adminsframe.htm">
+      <Filter>ServerAdmin\Admins</Filter>
+    </None>
+    <None Include="..\ServerAdmin\groups_add.htm">
+      <Filter>ServerAdmin\Admins</Filter>
+    </None>
+    <None Include="..\ServerAdmin\groups_browse.htm">
+      <Filter>ServerAdmin\Admins</Filter>
+    </None>
+    <None Include="..\ServerAdmin\groups_edit.htm">
+      <Filter>ServerAdmin\Admins</Filter>
+    </None>
+    <None Include="..\ServerAdmin\groups_row.inc">
+      <Filter>ServerAdmin\Admins</Filter>
+    </None>
+    <None Include="..\ServerAdmin\privs_element.inc">
+      <Filter>ServerAdmin\Admins</Filter>
+    </None>
+    <None Include="..\ServerAdmin\privs_element_ro.inc">
+      <Filter>ServerAdmin\Admins</Filter>
+    </None>
+    <None Include="..\ServerAdmin\privs_header.inc">
+      <Filter>ServerAdmin\Admins</Filter>
+    </None>
+    <None Include="..\ServerAdmin\privs_header_chk.inc">
+      <Filter>ServerAdmin\Admins</Filter>
+    </None>
+    <None Include="..\ServerAdmin\users_add.htm">
+      <Filter>ServerAdmin\Admins</Filter>
+    </None>
+    <None Include="..\ServerAdmin\users_browse.htm">
+      <Filter>ServerAdmin\Admins</Filter>
+    </None>
+    <None Include="..\ServerAdmin\users_edit.htm">
+      <Filter>ServerAdmin\Admins</Filter>
+    </None>
+    <None Include="..\ServerAdmin\users_groups.htm">
+      <Filter>ServerAdmin\Admins</Filter>
+    </None>
+    <None Include="..\ServerAdmin\users_groups_row.inc">
+      <Filter>ServerAdmin\Admins</Filter>
+    </None>
+    <None Include="..\ServerAdmin\users_row.inc">
+      <Filter>ServerAdmin\Admins</Filter>
+    </None>
+    <None Include="..\ServerAdmin\UT2K3Stats\admins_account.htm">
+      <Filter>ServerAdmin\Admins\UT2K3Stats</Filter>
+    </None>
+    <None Include="..\ServerAdmin\UT2K3Stats\admins_home.htm">
+      <Filter>ServerAdmin\Admins\UT2K3Stats</Filter>
+    </None>
+    <None Include="..\ServerAdmin\UT2K3Stats\admins_menu.htm">
+      <Filter>ServerAdmin\Admins\UT2K3Stats</Filter>
+    </None>
+    <None Include="..\ServerAdmin\UT2K3Stats\adminsframe.htm">
+      <Filter>ServerAdmin\Admins\UT2K3Stats</Filter>
+    </None>
+    <None Include="..\ServerAdmin\UT2K3Stats\groups_add.htm">
+      <Filter>ServerAdmin\Admins\UT2K3Stats</Filter>
+    </None>
+    <None Include="..\ServerAdmin\UT2K3Stats\groups_browse.htm">
+      <Filter>ServerAdmin\Admins\UT2K3Stats</Filter>
+    </None>
+    <None Include="..\ServerAdmin\UT2K3Stats\groups_edit.htm">
+      <Filter>ServerAdmin\Admins\UT2K3Stats</Filter>
+    </None>
+    <None Include="..\ServerAdmin\UT2K3Stats\groups_row.inc">
+      <Filter>ServerAdmin\Admins\UT2K3Stats</Filter>
+    </None>
+    <None Include="..\ServerAdmin\UT2K3Stats\privs_element.inc">
+      <Filter>ServerAdmin\Admins\UT2K3Stats</Filter>
+    </None>
+    <None Include="..\ServerAdmin\UT2K3Stats\privs_element_ro.inc">
+      <Filter>ServerAdmin\Admins\UT2K3Stats</Filter>
+    </None>
+    <None Include="..\ServerAdmin\UT2K3Stats\privs_header.inc">
+      <Filter>ServerAdmin\Admins\UT2K3Stats</Filter>
+    </None>
+    <None Include="..\ServerAdmin\UT2K3Stats\privs_header_chk.inc">
+      <Filter>ServerAdmin\Admins\UT2K3Stats</Filter>
+    </None>
+    <None Include="..\ServerAdmin\UT2K3Stats\users_add.htm">
+      <Filter>ServerAdmin\Admins\UT2K3Stats</Filter>
+    </None>
+    <None Include="..\ServerAdmin\UT2K3Stats\users_browse.htm">
+      <Filter>ServerAdmin\Admins\UT2K3Stats</Filter>
+    </None>
+    <None Include="..\ServerAdmin\UT2K3Stats\users_edit.htm">
+      <Filter>ServerAdmin\Admins\UT2K3Stats</Filter>
+    </None>
+    <None Include="..\ServerAdmin\UT2K3Stats\users_groups.htm">
+      <Filter>ServerAdmin\Admins\UT2K3Stats</Filter>
+    </None>
+    <None Include="..\ServerAdmin\UT2K3Stats\users_groups_row.inc">
+      <Filter>ServerAdmin\Admins\UT2K3Stats</Filter>
+    </None>
+    <None Include="..\ServerAdmin\UT2K3Stats\users_row.inc">
+      <Filter>ServerAdmin\Admins\UT2K3Stats</Filter>
+    </None>
+    <None Include="..\ServerAdmin\ClassicUT\admins_account.htm">
+      <Filter>ServerAdmin\Admins\ClassicUT</Filter>
+    </None>
+    <None Include="..\ServerAdmin\ClassicUT\admins_home.htm">
+      <Filter>ServerAdmin\Admins\ClassicUT</Filter>
+    </None>
+    <None Include="..\ServerAdmin\ClassicUT\admins_menu.htm">
+      <Filter>ServerAdmin\Admins\ClassicUT</Filter>
+    </None>
+    <None Include="..\ServerAdmin\ClassicUT\adminsframe.htm">
+      <Filter>ServerAdmin\Admins\ClassicUT</Filter>
+    </None>
+    <None Include="..\ServerAdmin\ClassicUT\groups_add.htm">
+      <Filter>ServerAdmin\Admins\ClassicUT</Filter>
+    </None>
+    <None Include="..\ServerAdmin\ClassicUT\groups_browse.htm">
+      <Filter>ServerAdmin\Admins\ClassicUT</Filter>
+    </None>
+    <None Include="..\ServerAdmin\ClassicUT\groups_edit.htm">
+      <Filter>ServerAdmin\Admins\ClassicUT</Filter>
+    </None>
+    <None Include="..\ServerAdmin\ClassicUT\groups_row.inc">
+      <Filter>ServerAdmin\Admins\ClassicUT</Filter>
+    </None>
+    <None Include="..\ServerAdmin\ClassicUT\privs_element.inc">
+      <Filter>ServerAdmin\Admins\ClassicUT</Filter>
+    </None>
+    <None Include="..\ServerAdmin\ClassicUT\privs_element_ro.inc">
+      <Filter>ServerAdmin\Admins\ClassicUT</Filter>
+    </None>
+    <None Include="..\ServerAdmin\ClassicUT\privs_header.inc">
+      <Filter>ServerAdmin\Admins\ClassicUT</Filter>
+    </None>
+    <None Include="..\ServerAdmin\ClassicUT\privs_header_chk.inc">
+      <Filter>ServerAdmin\Admins\ClassicUT</Filter>
+    </None>
+    <None Include="..\ServerAdmin\ClassicUT\users_add.htm">
+      <Filter>ServerAdmin\Admins\ClassicUT</Filter>
+    </None>
+    <None Include="..\ServerAdmin\ClassicUT\users_browse.htm">
+      <Filter>ServerAdmin\Admins\ClassicUT</Filter>
+    </None>
+    <None Include="..\ServerAdmin\ClassicUT\users_edit.htm">
+      <Filter>ServerAdmin\Admins\ClassicUT</Filter>
+    </None>
+    <None Include="..\ServerAdmin\ClassicUT\users_groups.htm">
+      <Filter>ServerAdmin\Admins\ClassicUT</Filter>
+    </None>
+    <None Include="..\ServerAdmin\ClassicUT\users_groups_row.inc">
+      <Filter>ServerAdmin\Admins\ClassicUT</Filter>
+    </None>
+    <None Include="..\ServerAdmin\ClassicUT\users_row.inc">
+      <Filter>ServerAdmin\Admins\ClassicUT</Filter>
+    </None>
+  </ItemGroup>
+</Project>

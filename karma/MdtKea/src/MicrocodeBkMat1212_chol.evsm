@@ -1,0 +1,531 @@
+;chol(a0)
+;strsm(a0,a3)
+;strsm(a0,a6)
+    nop					lq  vf1,(0*4+0+180)(vi0)	;					'lq @col0,0x00(%0)
+    nop					lq  vf2,(0*4+1+180)(vi0)	;					'lq @col1,0x10(%0)
+    nop					lq  vf3,(0*4+2+180)(vi0)	;					'lq @col2,0x20(%0)
+    nop					lq  vf4,(0*4+3+180)(vi0)	;					'lq @col3,0x30(%0)
+    nop					rsqrt Q, vf0w, vf1x		;  Q=K.w/ | col0.x
+    nop					nop				;
+    nop					nop				;
+    nop					nop				;
+    nop					nop				;
+    nop					nop				;
+    nop					nop				;
+    nop					nop				;
+    nop					nop				;
+    nop					nop				;
+    nop					nop				;
+    nop					nop				;
+    nop					nop				;
+    mulq.xyzw    vf1,  vf1,    Q  	nop				;  col0.xyzw=col0.xyzw*Q
+    nop					nop				;
+    nop					nop				;
+    addax.yzw    ACC,  vf2,  vf0	nop				;  ACC.yzw=col1.yzw+K.x
+    msubay.yzw   ACC,  vf1,  vf1	sq  vf1,(0*4+0+180)(vi0)	;  ACC.yzw=ACC.yzw-col0.yzw*col0.y	'sq @col0,0x00(%0)
+    maddx.yzw    vf2,  vf0,  vf0  	nop				;  col1.yzw=ACC.yzw+K*K.x
+    nop				   	nop				;
+    nop				   	nop				;
+    nop					nop				;
+    nop					rsqrt Q, vf0w, vf2y  		;  					Q=K.w/ | col1.y
+    nop					nop				;
+    nop					nop				;
+    nop					nop				;
+    nop					nop				;
+    nop					nop				;
+    nop					nop				;
+    nop					nop				;
+    nop					nop				;
+    nop					nop				;
+    nop					nop				;
+    nop					nop				;
+    nop					nop    				;
+    mulq.yzw     vf2,  vf2,    Q  	nop				;  col1.yzw=col1.yzw*Q
+    nop					nop		  		;
+    addax.zw     ACC,  vf3,  vf0  	nop				;  ACC.zw=col2.zw+K.x
+    msubaz.zw    ACC,  vf1,  vf1  	nop				;  ACC.zw=ACC.zw-col0.zw*col0.z
+    msubaz.zw    ACC,  vf2,  vf2  	sq  vf2,(0*4+1+180)(vi0)	;  ACC.zw=ACC.zw-col1.zw*col1.z 	'sq @col1,0x10(%0)
+    maddx.zw     vf3,  vf0,  vf0  	nop				;  col2.zw=ACC.zw+K*K.x
+    nop					nop				;
+    nop					nop				;
+    nop					nop				;
+    nop					rsqrt Q, vf0w, vf3z  		;  Q=K.w/ | col2.z
+    nop					nop				;
+    nop					nop				;
+    nop					nop				;
+    nop					nop				;
+    nop					nop				;
+    nop					nop				;
+    nop					nop				;
+    nop					nop				;
+    nop					nop				;
+    nop					nop				;
+    nop					nop				;
+    nop					nop				;
+    mulq.zw      vf3,  vf3,    Q  	nop				;  col2.zw=col2.zw*Q
+    addax.w      ACC,  vf4,  vf0  	nop				;  ACC.w=col3.w+K.x
+    msubaw.w     ACC,  vf1,  vf1  	nop				;  ACC.w=ACC.w-col0.w*col0.w
+    msubaw.w     ACC,  vf2,  vf2  	nop				;  ACC.w=ACC.w-col1.w*col1.w
+    msubaw.w     ACC,  vf3,  vf3  	sq  vf3,(0*4+2+180)(vi0)	;  ACC.w=ACC.w-col2.w*col2.w		'sq @col2,0x20(%0)
+    maddx.w      vf4,  vf0,  vf0  	nop				;  col3.w=ACC.w+K*K.x
+    nop					nop				;
+    nop					nop				;
+    nop					nop				;
+    nop					rsqrt Q, vf0w, vf4w  		;  Q=K.w/ | col3.w
+    nop					nop				;
+    nop					nop				;
+    nop					nop				;
+    nop					nop				;
+    nop					nop				;
+    nop					nop				;
+    nop					nop				;
+    nop					nop				;
+    nop					nop				;
+    nop					nop				;
+    nop					nop				;
+    nop					nop        			;
+    mulq.w       vf4,  vf4,    Q  	nop				;  col3.w=col3.w*Q
+    nop					nop				;
+    nop					nop				;
+    nop					nop				;
+    nop					sq  vf4,(0*4+3+180)(vi0)	;  					'sq @col3,0x30(%0)
+;strsm
+    nop 				lq	   vf5,(0*4+0+180)(vi0) ;				A:=a0
+    nop 				lq	   vf6,(0*4+1+180)(vi0) ;
+    nop 				lq	   vf7,(0*4+2+180)(vi0) ;
+    nop 				lq	   vf8,(0*4+3+180)(vi0) ;
+    nop 				div	   Q, vf0w, vf5x	;				Q=K.w/Lcol0.x
+    nop 				lq	   vf1,(3*4+0+180)(vi0) ;				C:=a3
+    nop 				lq	   vf2,(3*4+1+180)(vi0) ;
+    nop 				lq	   vf3,(3*4+2+180)(vi0) ;
+    nop 				lq	   vf4,(3*4+3+180)(vi0) ;
+    nop 				nop				;
+    nop 				nop				;
+    mulq.xyzw	 vf1,  vf1,    Q	div	   Q, vf0w, vf6y	;  Bcol0=Bcol0*Q		Q=K.w/Lcol1.y
+    nop 				nop				;
+    nop 				nop				;
+    nop 				nop				;
+    addax.xyzw   ACC,  vf2,  vf0	nop				;  ACC=Bcol1+K.x
+    msubay.xyzw  ACC,  vf1,  vf5	nop				;  ACC=ACC-Bcol0*Lcol0.y
+    maddx.xyzw   vf2,  vf0,  vf0	nop				;  Bcol1=ACC+K*K.x
+    mulq.xyzw	 vf2,  vf2,    Q	div	   Q, vf0w, vf7z	;  Bcol1=Bcol1*Q		Q=K.w/Lcol2.z
+    nop 				nop				;
+    nop 				nop				;
+    addax.xyzw   ACC,  vf3,  vf0	nop				;  ACC=Bcol2+K.x
+    msubaz.xyzw  ACC,  vf1,  vf5	nop				;  ACC=ACC-Bcol0*Lcol0.z
+    msubaz.xyzw  ACC,  vf2,  vf6	nop				;  ACC=ACC-Bcol1*Lcol1.z
+    maddx.xyzw   vf3,  vf0,  vf0	nop 				;  Bcol2=ACC+K*K.x		
+    mulq.xyzw	 vf3,  vf3,    Q	div	   Q, vf0w, vf8w	;  Bcol2=Bcol2*Q		Q=K.w/Lcol3.w
+    nop 				nop				;
+    addax.xyzw   ACC,  vf4,  vf0	nop				;  ACC=Bcol3+K.x
+    msubaw.xyzw  ACC,  vf1,  vf5	nop				;  ACC=ACC-Bcol0*Lcol0.w
+    msubaw.xyzw  ACC,  vf2,  vf6	nop				;  ACC=ACC-Bcol1*Lcol1.w	
+    msubaw.xyzw  ACC,  vf3,  vf7	nop				;  ACC=ACC-Bcol2*Lcol2.w
+    maddx.xyzw   vf4,  vf0,  vf0	nop				;  Bcol3=ACC+K*K.x
+    mulq.xyzw	 vf4,  vf4,    Q	nop				;  Bcol3=Bcol3*Q
+    nop 				sq	   vf1,(3*4+0+180)(vi0) ;  				a3:=C
+    nop 				sq	   vf2,(3*4+1+180)(vi0) ;  
+    nop 				sq	   vf3,(3*4+2+180)(vi0) ;  
+    nop 				sq	   vf4,(3*4+3+180)(vi0) ;  
+;strsm
+    nop 				lq	   vf5,(0*4+0+180)(vi0) ;				A:=a0
+    nop 				lq	   vf6,(0*4+1+180)(vi0) ;
+    nop 				lq	   vf7,(0*4+2+180)(vi0) ;
+    nop 				lq	   vf8,(0*4+3+180)(vi0) ;
+    nop 				div	   Q, vf0w, vf5x	;				Q=K.w/Lcol0.x
+    nop 				lq	   vf1,(6*4+0+180)(vi0) ;				C:=a6
+    nop 				lq	   vf2,(6*4+1+180)(vi0) ;
+    nop 				lq	   vf3,(6*4+2+180)(vi0) ;
+    nop 				lq	   vf4,(6*4+3+180)(vi0) ;
+    nop 				nop				;
+    nop 				nop				;
+    mulq.xyzw	 vf1,  vf1,    Q	div	   Q, vf0w, vf6y	;  Bcol0=Bcol0*Q		Q=K.w/Lcol1.y
+    nop 				nop				;
+    nop 				nop				;
+    nop 				nop				;
+    addax.xyzw   ACC,  vf2,  vf0	nop				;  ACC=Bcol1+K.x
+    msubay.xyzw  ACC,  vf1,  vf5	nop				;  ACC=ACC-Bcol0*Lcol0.y
+    maddx.xyzw   vf2,  vf0,  vf0	nop				;  Bcol1=ACC+K*K.x
+    mulq.xyzw	 vf2,  vf2,    Q	div	   Q, vf0w, vf7z	;  Bcol1=Bcol1*Q		Q=K.w/Lcol2.z
+    nop 				nop				;
+    nop 				nop				;
+    addax.xyzw   ACC,  vf3,  vf0	nop				;  ACC=Bcol2+K.x
+    msubaz.xyzw  ACC,  vf1,  vf5	nop				;  ACC=ACC-Bcol0*Lcol0.z
+    msubaz.xyzw  ACC,  vf2,  vf6	nop				;  ACC=ACC-Bcol1*Lcol1.z
+    maddx.xyzw   vf3,  vf0,  vf0	nop 				;  Bcol2=ACC+K*K.x		
+    mulq.xyzw	 vf3,  vf3,    Q	div	   Q, vf0w, vf8w	;  Bcol2=Bcol2*Q		Q=K.w/Lcol3.w
+    nop 				nop				;
+    addax.xyzw   ACC,  vf4,  vf0	nop				;  ACC=Bcol3+K.x
+    msubaw.xyzw  ACC,  vf1,  vf5	nop				;  ACC=ACC-Bcol0*Lcol0.w
+    msubaw.xyzw  ACC,  vf2,  vf6	nop				;  ACC=ACC-Bcol1*Lcol1.w	
+    msubaw.xyzw  ACC,  vf3,  vf7	nop				;  ACC=ACC-Bcol2*Lcol2.w
+    maddx.xyzw   vf4,  vf0,  vf0	nop				;  Bcol3=ACC+K*K.x
+    mulq.xyzw	 vf4,  vf4,    Q	nop				;  Bcol3=Bcol3*Q
+    nop 				sq	   vf1,(6*4+0+180)(vi0) ;  				a6:=C
+    nop 				sq	   vf2,(6*4+1+180)(vi0) ;  
+    nop 				sq	   vf3,(6*4+2+180)(vi0) ;  
+    nop 				sq	   vf4,(6*4+3+180)(vi0) ;
+      
+;ssyrk(a3,a4)
+;chol(a4)
+;sgemm(a6,a3,a7)
+;strsm(a4,a7)
+;ssyrk
+    nop					lq  vf1,(3*4+0+180)(vi0)  	;  	   	   	   	        'lq @Acol0,0x00(%0)
+    nop					lq  vf2,(3*4+1+180)(vi0)  	;  	   	   	   	        'lq @Acol1,0x10(%0)
+    nop					lq  vf3,(3*4+2+180)(vi0)  	;  	   	   	   	        'lq @Acol2,0x20(%0)
+    nop					lq  vf4,(3*4+3+180)(vi0)  	;  	   	   	   	        'lq @Acol3,0x30(%0)
+    nop					lq  vf5,(4*4+0+180)(vi0)  	;  	   	   	   	        'lq @Bcol0,0x00(%1)
+    nop					lq  vf6,(4*4+1+180)(vi0)  	;  	   	   	   	        'lq @Bcol1,0x10(%1)
+    nop					lq  vf7,(4*4+2+180)(vi0)  	;  	   	   	   	        'lq @Bcol2,0x20(%1)
+    nop					lq  vf8,(4*4+3+180)(vi0)  	;  	   	   	   	        'lq @Bcol3,0x30(%1)
+    addax.xyzw   ACC,  vf5,  vf0  	nop				;  ACC	= Bcol0+K.x
+    msubax.xyzw  ACC,  vf1,  vf1  	nop				;  ACC	= ACC - Acol0*Acol0.x
+    msubax.xyzw  ACC,  vf2,  vf2  	nop				;  ACC	= ACC - Acol1*Acol1.x
+    msubax.xyzw  ACC,  vf3,  vf3  	nop				;  ACC	= ACC - Acol2*Acol2.x
+    msubx.xyzw   vf5,  vf4,  vf4  	nop				;  Bcol0.xyzw = ACC - Acol3*Acol3.x
+    addax.xyzw   ACC,  vf6,  vf0  	nop				;  ACC	= Bcol1+K.x
+    msubay.xyzw  ACC,  vf1,  vf1  	nop				;  ACC	= ACC - Acol0*Acol0.y
+    msubay.xyzw  ACC,  vf2,  vf2  	nop				;  ACC	= ACC - Acol1*Acol1.y
+    msubay.xyzw  ACC,  vf3,  vf3  	nop				;  ACC	= ACC - Acol2*Acol2.y
+    msuby.yzw	 vf6,  vf4,  vf4  	nop				;  Bcol1.yzw  = ACC - Acol3*Acol3.y
+    addax.xyzw   ACC,  vf7,  vf0  	nop				;  ACC	= Bcol2+K.x
+    msubaz.xyzw  ACC,  vf1,  vf1  	nop				;  ACC	= ACC - Acol0*Acol0.z
+    msubaz.xyzw  ACC,  vf2,  vf2  	nop				;  ACC	= ACC - Acol1*Acol1.z
+    msubaz.xyzw  ACC,  vf3,  vf3  	nop				;  ACC	= ACC - Acol2*Acol2.z
+    msubz.zw	 vf7,  vf4,  vf4  	nop				;  Bcol2.zw	= ACC - Acol3*Acol3.z
+    addax.xyzw   ACC,  vf8,  vf0  	nop				;  ACC	= Bcol3+K.x
+    msubaw.xyzw  ACC,  vf1,  vf1  	nop				;  ACC	= ACC - Acol0*Acol0.w
+    msubaw.xyzw  ACC,  vf2,  vf2  	nop				;  ACC	= ACC - Acol1*Acol1.w
+    msubaw.xyzw  ACC,  vf3,  vf3  	nop				;  ACC	= ACC - Acol2*Acol2.w
+    msubw.w	 vf8,  vf4,  vf4  	nop				;  Bcol3.w	= ACC - Acol3*Acol3.w
+    nop					sq  vf5,(4*4+0+180)(vi0)  	;                                       'sq @Bcol0,0x00(%1)
+    nop					sq  vf6,(4*4+1+180)(vi0)  	;                                       'sq @Bcol1,0x10(%1)
+    nop					sq  vf7,(4*4+2+180)(vi0)  	;                                       'sq @Bcol2,0x20(%1)
+    nop					sq  vf8,(4*4+3+180)(vi0)  	;                                       'sq @Bcol3,0x30(%1)
+;chol    
+    nop					lq  vf1,(4*4+0+180)(vi0)	;					'lq @col0,0x00(%0)
+    nop					lq  vf2,(4*4+1+180)(vi0)	;					'lq @col1,0x10(%0)
+    nop					lq  vf3,(4*4+2+180)(vi0)	;					'lq @col2,0x20(%0)
+    nop					lq  vf4,(4*4+3+180)(vi0)	;					'lq @col3,0x30(%0)
+    nop					rsqrt Q, vf0w, vf1x		;  Q=K.w/ | col0.x
+    nop					nop				;
+    nop					nop				;
+    nop					nop				;
+    nop					nop				;
+    nop					nop				;
+    nop					nop				;
+    nop					nop				;
+    nop					nop				;
+    nop					nop				;
+    nop					nop				;
+    nop					nop				;
+    nop					nop				;
+    mulq.xyzw    vf1,  vf1,    Q  	nop				;  col0.xyzw=col0.xyzw*Q
+    nop					nop				;
+    nop					nop				;
+    addax.yzw    ACC,  vf2,  vf0	nop				;  ACC.yzw=col1.yzw+K.x
+    msubay.yzw   ACC,  vf1,  vf1	sq  vf1,(4*4+0+180)(vi0)	;  ACC.yzw=ACC.yzw-col0.yzw*col0.y	'sq @col0,0x00(%0)
+    maddx.yzw    vf2,  vf0,  vf0  	nop				;  col1.yzw=ACC.yzw+K*K.x
+    nop				   	nop				;
+    nop				   	nop				;
+    nop					nop				;
+    nop					rsqrt Q, vf0w, vf2y  		;  					Q=K.w/ | col1.y
+    nop					nop				;
+    nop					nop				;
+    nop					nop				;
+    nop					nop				;
+    nop					nop				;
+    nop					nop				;
+    nop					nop				;
+    nop					nop				;
+    nop					nop				;
+    nop					nop				;
+    nop					nop				;
+    nop					nop    				;
+    mulq.yzw     vf2,  vf2,    Q  	nop				;  col1.yzw=col1.yzw*Q
+    nop					nop		  		;
+    addax.zw     ACC,  vf3,  vf0  	nop				;  ACC.zw=col2.zw+K.x
+    msubaz.zw    ACC,  vf1,  vf1  	nop				;  ACC.zw=ACC.zw-col0.zw*col0.z
+    msubaz.zw    ACC,  vf2,  vf2  	sq  vf2,(4*4+1+180)(vi0)	;  ACC.zw=ACC.zw-col1.zw*col1.z 	'sq @col1,0x10(%0)
+    maddx.zw     vf3,  vf0,  vf0  	nop				;  col2.zw=ACC.zw+K*K.x
+    nop					nop				;
+    nop					nop				;
+    nop					nop				;
+    nop					rsqrt Q, vf0w, vf3z  		;  Q=K.w/ | col2.z
+    nop					nop				;
+    nop					nop				;
+    nop					nop				;
+    nop					nop				;
+    nop					nop				;
+    nop					nop				;
+    nop					nop				;
+    nop					nop				;
+    nop					nop				;
+    nop					nop				;
+    nop					nop				;
+    nop					nop				;
+    mulq.zw      vf3,  vf3,    Q  	nop				;  col2.zw=col2.zw*Q
+    addax.w      ACC,  vf4,  vf0  	nop				;  ACC.w=col3.w+K.x
+    msubaw.w     ACC,  vf1,  vf1  	nop				;  ACC.w=ACC.w-col0.w*col0.w
+    msubaw.w     ACC,  vf2,  vf2  	nop				;  ACC.w=ACC.w-col1.w*col1.w
+    msubaw.w     ACC,  vf3,  vf3  	sq  vf3,(4*4+2+180)(vi0)	;  ACC.w=ACC.w-col2.w*col2.w		'sq @col2,0x20(%0)
+    maddx.w      vf4,  vf0,  vf0  	nop				;  col3.w=ACC.w+K*K.x
+    nop					nop				;
+    nop					nop				;
+    nop					nop				;
+    nop					rsqrt Q, vf0w, vf4w  		;  Q=K.w/ | col3.w
+    nop					nop				;
+    nop					nop				;
+    nop					nop				;
+    nop					nop				;
+    nop					nop				;
+    nop					nop				;
+    nop					nop				;
+    nop					nop				;
+    nop					nop				;
+    nop					nop				;
+    nop					nop				;
+    nop					nop        			;
+    mulq.w       vf4,  vf4,    Q  	nop				;  col3.w=col3.w*Q
+    nop					nop				;
+    nop					nop				;
+    nop					nop				;
+    nop					sq  vf4,(4*4+3+180)(vi0)	;  					'sq @col3,0x30(%0)
+;sgemm
+    nop 				lq	  vf1,(6*4+0+180)(vi0)  ;                                A=a6
+    nop 				lq	  vf2,(6*4+1+180)(vi0)  ;
+    nop 				lq	  vf3,(6*4+2+180)(vi0)  ;
+    nop 				lq	  vf4,(6*4+3+180)(vi0)  ;
+    nop 				lq	  vf5,(3*4+0+180)(vi0)  ;                                B=a3
+    nop 				lq	  vf6,(3*4+1+180)(vi0)  ;
+    nop 				lq	  vf7,(3*4+2+180)(vi0)  ;
+    nop 				lq	  vf8,(3*4+3+180)(vi0)  ;
+    nop 				lq	  vf9,(7*4+0+180)(vi0)  ;                                C=a7
+    nop 				lq	  vf10,(7*4+1+180)(vi0) ;  
+    nop 				lq	  vf11,(7*4+2+180)(vi0) ;  
+    nop 				lq	  vf12,(7*4+3+180)(vi0) ;  
+    addax.xyzw   ACC,  vf9,  vf0	nop				;  ACC   = Ccol0+K.x		 c0:=C
+    msubax.xyzw  ACC,  vf1,  vf5	nop				;  ACC   = ACC - Acol0*BTrow0.x
+    msubax.xyzw  ACC,  vf2,  vf6	nop				;  ACC   = ACC - Acol1*BTrow1.x
+    msubax.xyzw  ACC,  vf3,  vf7	nop				;  ACC   = ACC - Acol2*BTrow2.x
+    msubx.xyzw   vf9,  vf4,  vf8	nop				;  Ccol0 = ACC - Acol3*BTrow3.x
+    addax.xyzw   ACC, vf10,  vf0	nop				;  ACC   = Ccol1+K.x
+    msubay.xyzw  ACC,  vf1,  vf5	nop				;  ACC   = ACC - Acol0*BTrow0.y
+    msubay.xyzw  ACC,  vf2,  vf6	nop				;  ACC   = ACC - Acol1*BTrow1.y
+    msubay.xyzw  ACC,  vf3,  vf7	nop				;  ACC   = ACC - Acol2*BTrow2.y
+    msuby.xyzw  vf10,  vf4,  vf8	nop				;  Ccol1 = ACC - Acol3*BTrow3.y
+    addax.xyzw   ACC, vf11,  vf0	nop				;  ACC   = Ccol2+K.x
+    msubaz.xyzw  ACC,  vf1,  vf5	nop				;  ACC   = ACC - Acol0*BTrow0.z
+    msubaz.xyzw  ACC,  vf2,  vf6	nop				;  ACC   = ACC - Acol1*BTrow1.z  
+    msubaz.xyzw  ACC,  vf3,  vf7	nop				;  ACC   = ACC - Acol2*BTrow2.z
+    msubz.xyzw  vf11,  vf4,  vf8	nop				;  Ccol2 = ACC - Acol3*BTrow3.z
+    addax.xyzw   ACC, vf12,  vf0	nop				;  ACC   = Ccol3+K.x
+    msubaw.xyzw  ACC,  vf1,  vf5	nop				;  ACC   = ACC - Acol0*BTrow0.w  
+    msubaw.xyzw  ACC,  vf2,  vf6	nop				;  ACC   = ACC - Acol1*BTrow1.w
+    msubaw.xyzw  ACC,  vf3,  vf7	nop				;  ACC   = ACC - Acol2*BTrow2.w
+    msubw.xyzw  vf12,  vf4,  vf8	nop				;  Ccol3 = ACC - Acol3*BTrow3.w
+    nop 				sq	   vf9,(7*4+0+180)(vi0) ;                                a7=C
+    nop 				sq	  vf10,(7*4+1+180)(vi0) ;  
+    nop 				sq	  vf11,(7*4+2+180)(vi0) ;  
+    nop 				sq	  vf12,(7*4+3+180)(vi0) ;  
+
+;strsm
+    nop 				lq	   vf5,(4*4+0+180)(vi0) ;				A:=a0
+    nop 				lq	   vf6,(4*4+1+180)(vi0) ;
+    nop 				lq	   vf7,(4*4+2+180)(vi0) ;
+    nop 				lq	   vf8,(4*4+3+180)(vi0) ;
+    nop 				div	   Q, vf0w, vf5x	;				Q=K.w/Lcol0.x
+    nop 				lq	   vf1,(7*4+0+180)(vi0) ;				C:=a3
+    nop 				lq	   vf2,(7*4+1+180)(vi0) ;
+    nop 				lq	   vf3,(7*4+2+180)(vi0) ;
+    nop 				lq	   vf4,(7*4+3+180)(vi0) ;
+    nop 				nop				;
+    nop 				nop				;
+    mulq.xyzw	 vf1,  vf1,    Q	div	   Q, vf0w, vf6y	;  Bcol0=Bcol0*Q		Q=K.w/Lcol1.y
+    nop 				nop				;
+    nop 				nop				;
+    nop 				nop				;
+    addax.xyzw   ACC,  vf2,  vf0	nop				;  ACC=Bcol1+K.x
+    msubay.xyzw  ACC,  vf1,  vf5	nop				;  ACC=ACC-Bcol0*Lcol0.y
+    maddx.xyzw   vf2,  vf0,  vf0	nop				;  Bcol1=ACC+K*K.x
+    mulq.xyzw	 vf2,  vf2,    Q	div	   Q, vf0w, vf7z	;  Bcol1=Bcol1*Q		Q=K.w/Lcol2.z
+    nop 				nop				;
+    nop 				nop				;
+    addax.xyzw   ACC,  vf3,  vf0	nop				;  ACC=Bcol2+K.x
+    msubaz.xyzw  ACC,  vf1,  vf5	nop				;  ACC=ACC-Bcol0*Lcol0.z
+    msubaz.xyzw  ACC,  vf2,  vf6	nop				;  ACC=ACC-Bcol1*Lcol1.z
+    maddx.xyzw   vf3,  vf0,  vf0	nop 				;  Bcol2=ACC+K*K.x		
+    mulq.xyzw	 vf3,  vf3,    Q	div	   Q, vf0w, vf8w	;  Bcol2=Bcol2*Q		Q=K.w/Lcol3.w
+    nop 				nop				;
+    addax.xyzw   ACC,  vf4,  vf0	nop				;  ACC=Bcol3+K.x
+    msubaw.xyzw  ACC,  vf1,  vf5	nop				;  ACC=ACC-Bcol0*Lcol0.w
+    msubaw.xyzw  ACC,  vf2,  vf6	nop				;  ACC=ACC-Bcol1*Lcol1.w	
+    msubaw.xyzw  ACC,  vf3,  vf7	nop				;  ACC=ACC-Bcol2*Lcol2.w
+    maddx.xyzw   vf4,  vf0,  vf0	nop				;  Bcol3=ACC+K*K.x
+    mulq.xyzw	 vf4,  vf4,    Q	nop				;  Bcol3=Bcol3*Q
+    nop 				sq	   vf1,(7*4+0+180)(vi0) ;				a3:=C
+    nop 				sq	   vf2,(7*4+1+180)(vi0) ;
+    nop 				sq	   vf3,(7*4+2+180)(vi0) ;
+    nop 				sq	   vf4,(7*4+3+180)(vi0) ;
+
+;ssyrk(a6,a8)
+;ssyrk(a7,a8)
+;chol(a8)    
+;ssyrk
+    nop					lq  vf1,(6*4+0+180)(vi0)  	;  	   	   	   	        'lq @Acol0,0x00(%0)
+    nop					lq  vf2,(6*4+1+180)(vi0)  	;  	   	   	   	        'lq @Acol1,0x10(%0)
+    nop					lq  vf3,(6*4+2+180)(vi0)  	;  	   	   	   	        'lq @Acol2,0x20(%0)
+    nop					lq  vf4,(6*4+3+180)(vi0)  	;  	   	   	   	        'lq @Acol3,0x30(%0)
+    nop					lq  vf5,(8*4+0+180)(vi0)  	;  	   	   	   	        'lq @Bcol0,0x00(%1)
+    nop					lq  vf6,(8*4+1+180)(vi0)  	;  	   	   	   	        'lq @Bcol1,0x10(%1)
+    nop					lq  vf7,(8*4+2+180)(vi0)  	;  	   	   	   	        'lq @Bcol2,0x20(%1)
+    nop					lq  vf8,(8*4+3+180)(vi0)  	;  	   	   	   	        'lq @Bcol3,0x30(%1)
+    addax.xyzw   ACC,  vf5,  vf0  	nop				;  ACC	= Bcol0+K.x
+    msubax.xyzw  ACC,  vf1,  vf1  	nop				;  ACC	= ACC - Acol0*Acol0.x
+    msubax.xyzw  ACC,  vf2,  vf2  	nop				;  ACC	= ACC - Acol1*Acol1.x
+    msubax.xyzw  ACC,  vf3,  vf3  	nop				;  ACC	= ACC - Acol2*Acol2.x
+    msubx.xyzw   vf5,  vf4,  vf4  	nop				;  Bcol0.xyzw = ACC - Acol3*Acol3.x
+    addax.xyzw   ACC,  vf6,  vf0  	nop				;  ACC	= Bcol1+K.x
+    msubay.xyzw  ACC,  vf1,  vf1  	nop				;  ACC	= ACC - Acol0*Acol0.y
+    msubay.xyzw  ACC,  vf2,  vf2  	nop				;  ACC	= ACC - Acol1*Acol1.y
+    msubay.xyzw  ACC,  vf3,  vf3  	nop				;  ACC	= ACC - Acol2*Acol2.y
+    msuby.yzw	 vf6,  vf4,  vf4  	nop				;  Bcol1.yzw  = ACC - Acol3*Acol3.y
+    addax.xyzw   ACC,  vf7,  vf0  	nop				;  ACC	= Bcol2+K.x
+    msubaz.xyzw  ACC,  vf1,  vf1  	nop				;  ACC	= ACC - Acol0*Acol0.z
+    msubaz.xyzw  ACC,  vf2,  vf2  	nop				;  ACC	= ACC - Acol1*Acol1.z
+    msubaz.xyzw  ACC,  vf3,  vf3  	nop				;  ACC	= ACC - Acol2*Acol2.z
+    msubz.zw	 vf7,  vf4,  vf4  	nop				;  Bcol2.zw	= ACC - Acol3*Acol3.z
+    addax.xyzw   ACC,  vf8,  vf0  	nop				;  ACC	= Bcol3+K.x
+    msubaw.xyzw  ACC,  vf1,  vf1  	nop				;  ACC	= ACC - Acol0*Acol0.w
+    msubaw.xyzw  ACC,  vf2,  vf2  	nop				;  ACC	= ACC - Acol1*Acol1.w
+    msubaw.xyzw  ACC,  vf3,  vf3  	nop				;  ACC	= ACC - Acol2*Acol2.w
+    msubw.w	 vf8,  vf4,  vf4  	nop				;  Bcol3.w	= ACC - Acol3*Acol3.w
+    nop					sq  vf5,(8*4+0+180)(vi0)  	;                                       'sq @Bcol0,0x00(%1)
+    nop					sq  vf6,(8*4+1+180)(vi0)  	;                                       'sq @Bcol1,0x10(%1)
+    nop					sq  vf7,(8*4+2+180)(vi0)  	;                                       'sq @Bcol2,0x20(%1)
+    nop					sq  vf8,(8*4+3+180)(vi0)  	;                                       'sq @Bcol3,0x30(%1)
+;ssyrk
+    nop					lq  vf1,(7*4+0+180)(vi0)  	;  	   	   	   	        'lq @Acol0,0x00(%0)
+    nop					lq  vf2,(7*4+1+180)(vi0)  	;  	   	   	   	        'lq @Acol1,0x10(%0)
+    nop					lq  vf3,(7*4+2+180)(vi0)  	;  	   	   	   	        'lq @Acol2,0x20(%0)
+    nop					lq  vf4,(7*4+3+180)(vi0)  	;  	   	   	   	        'lq @Acol3,0x30(%0)
+    nop					lq  vf5,(8*4+0+180)(vi0)  	;  	   	   	   	        'lq @Bcol0,0x00(%1)
+    nop					lq  vf6,(8*4+1+180)(vi0)  	;  	   	   	   	        'lq @Bcol1,0x10(%1)
+    nop					lq  vf7,(8*4+2+180)(vi0)  	;  	   	   	   	        'lq @Bcol2,0x20(%1)
+    nop					lq  vf8,(8*4+3+180)(vi0)  	;  	   	   	   	        'lq @Bcol3,0x30(%1)
+    addax.xyzw   ACC,  vf5,  vf0  	nop				;  ACC	= Bcol0+K.x
+    msubax.xyzw  ACC,  vf1,  vf1  	nop				;  ACC	= ACC - Acol0*Acol0.x
+    msubax.xyzw  ACC,  vf2,  vf2  	nop				;  ACC	= ACC - Acol1*Acol1.x
+    msubax.xyzw  ACC,  vf3,  vf3  	nop				;  ACC	= ACC - Acol2*Acol2.x
+    msubx.xyzw   vf5,  vf4,  vf4  	nop				;  Bcol0.xyzw = ACC - Acol3*Acol3.x
+    addax.xyzw   ACC,  vf6,  vf0  	nop				;  ACC	= Bcol1+K.x
+    msubay.xyzw  ACC,  vf1,  vf1  	nop				;  ACC	= ACC - Acol0*Acol0.y
+    msubay.xyzw  ACC,  vf2,  vf2  	nop				;  ACC	= ACC - Acol1*Acol1.y
+    msubay.xyzw  ACC,  vf3,  vf3  	nop				;  ACC	= ACC - Acol2*Acol2.y
+    msuby.yzw	 vf6,  vf4,  vf4  	nop				;  Bcol1.yzw  = ACC - Acol3*Acol3.y
+    addax.xyzw   ACC,  vf7,  vf0  	nop				;  ACC	= Bcol2+K.x
+    msubaz.xyzw  ACC,  vf1,  vf1  	nop				;  ACC	= ACC - Acol0*Acol0.z
+    msubaz.xyzw  ACC,  vf2,  vf2  	nop				;  ACC	= ACC - Acol1*Acol1.z
+    msubaz.xyzw  ACC,  vf3,  vf3  	nop				;  ACC	= ACC - Acol2*Acol2.z
+    msubz.zw	 vf7,  vf4,  vf4  	nop				;  Bcol2.zw	= ACC - Acol3*Acol3.z
+    addax.xyzw   ACC,  vf8,  vf0  	nop				;  ACC	= Bcol3+K.x
+    msubaw.xyzw  ACC,  vf1,  vf1  	nop				;  ACC	= ACC - Acol0*Acol0.w
+    msubaw.xyzw  ACC,  vf2,  vf2  	nop				;  ACC	= ACC - Acol1*Acol1.w
+    msubaw.xyzw  ACC,  vf3,  vf3  	nop				;  ACC	= ACC - Acol2*Acol2.w
+    msubw.w	 vf8,  vf4,  vf4  	nop				;  Bcol3.w	= ACC - Acol3*Acol3.w
+    nop					sq  vf5,(8*4+0+180)(vi0)  	;                                       'sq @Bcol0,0x00(%1)
+    nop					sq  vf6,(8*4+1+180)(vi0)  	;                                       'sq @Bcol1,0x10(%1)
+    nop					sq  vf7,(8*4+2+180)(vi0)  	;                                       'sq @Bcol2,0x20(%1)
+    nop					sq  vf8,(8*4+3+180)(vi0)  	;                                       'sq @Bcol3,0x30(%1)
+    
+    nop					lq  vf1,(8*4+0+180)(vi0)	;					'lq @col0,0x00(%0)
+    nop					lq  vf2,(8*4+1+180)(vi0)	;					'lq @col1,0x10(%0)
+    nop					lq  vf3,(8*4+2+180)(vi0)	;					'lq @col2,0x20(%0)
+    nop					lq  vf4,(8*4+3+180)(vi0)	;					'lq @col3,0x30(%0)
+    nop					rsqrt Q, vf0w, vf1x		;  Q=K.w/ | col0.x
+    nop					nop				;
+    nop					nop				;
+    nop					nop				;
+    nop					nop				;
+    nop					nop				;
+    nop					nop				;
+    nop					nop				;
+    nop					nop				;
+    nop					nop				;
+    nop					nop				;
+    nop					nop				;
+    nop					nop				;
+    mulq.xyzw    vf1,  vf1,    Q  	nop				;  col0.xyzw=col0.xyzw*Q
+    nop					nop				;
+    nop					nop				;
+    addax.yzw    ACC,  vf2,  vf0	nop				;  ACC.yzw=col1.yzw+K.x
+    msubay.yzw   ACC,  vf1,  vf1	sq  vf1,(8*4+0+180)(vi0)	;  ACC.yzw=ACC.yzw-col0.yzw*col0.y	'sq @col0,0x00(%0)
+    maddx.yzw    vf2,  vf0,  vf0  	nop				;  col1.yzw=ACC.yzw+K*K.x
+    nop				   	nop				;
+    nop				   	nop				;
+    nop					nop				;
+    nop					rsqrt Q, vf0w, vf2y  		;  					Q=K.w/ | col1.y
+    nop					nop				;
+    nop					nop				;
+    nop					nop				;
+    nop					nop				;
+    nop					nop				;
+    nop					nop				;
+    nop					nop				;
+    nop					nop				;
+    nop					nop				;
+    nop					nop				;
+    nop					nop				;
+    nop					nop    				;
+    mulq.yzw     vf2,  vf2,    Q  	nop				;  col1.yzw=col1.yzw*Q
+    nop					nop		  		;
+    addax.zw     ACC,  vf3,  vf0  	nop				;  ACC.zw=col2.zw+K.x
+    msubaz.zw    ACC,  vf1,  vf1  	nop				;  ACC.zw=ACC.zw-col0.zw*col0.z
+    msubaz.zw    ACC,  vf2,  vf2  	sq  vf2,(8*4+1+180)(vi0)	;  ACC.zw=ACC.zw-col1.zw*col1.z 	'sq @col1,0x10(%0)
+    maddx.zw     vf3,  vf0,  vf0  	nop				;  col2.zw=ACC.zw+K*K.x
+    nop					nop				;
+    nop					nop				;
+    nop					nop				;
+    nop					rsqrt Q, vf0w, vf3z  		;  Q=K.w/ | col2.z
+    nop					nop				;
+    nop					nop				;
+    nop					nop				;
+    nop					nop				;
+    nop					nop				;
+    nop					nop				;
+    nop					nop				;
+    nop					nop				;
+    nop					nop				;
+    nop					nop				;
+    nop					nop				;
+    nop					nop				;
+    mulq.zw      vf3,  vf3,    Q  	nop				;  col2.zw=col2.zw*Q
+    addax.w      ACC,  vf4,  vf0  	nop				;  ACC.w=col3.w+K.x
+    msubaw.w     ACC,  vf1,  vf1  	nop				;  ACC.w=ACC.w-col0.w*col0.w
+    msubaw.w     ACC,  vf2,  vf2  	nop				;  ACC.w=ACC.w-col1.w*col1.w
+    msubaw.w     ACC,  vf3,  vf3  	sq  vf3,(8*4+2+180)(vi0)	;  ACC.w=ACC.w-col2.w*col2.w		'sq @col2,0x20(%0)
+    maddx.w      vf4,  vf0,  vf0  	nop				;  col3.w=ACC.w+K*K.x
+    nop					nop				;
+    nop					nop				;
+    nop					nop				;
+    nop					rsqrt Q, vf0w, vf4w  		;  Q=K.w/ | col3.w
+    nop					nop				;
+    nop					nop				;
+    nop					nop				;
+    nop					nop				;
+    nop					nop				;
+    nop					nop				;
+    nop					nop				;
+    nop					nop				;
+    nop					nop				;
+    nop					nop				;
+    nop					nop				;
+    nop					nop        			;
+    mulq.w       vf4,  vf4,    Q  	nop				;  col3.w=col3.w*Q
+    nop					nop				;
+    nop					nop				;
+    nop					nop				;
+    nop					sq  vf4,(8*4+3+180)(vi0)	;  					'sq @col3,0x30(%0)
+    nop[e]				nop
+    nop					nop

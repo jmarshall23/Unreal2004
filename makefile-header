@@ -1,0 +1,990 @@
+#=============================================================================
+# makefile-header: Global definitions for non-Windows Unreal.
+#
+# Makefiles must define UNREAL_DIR before including makefile-header.
+#=============================================================================
+
+#-----------------------------------------------------------------------------
+# Configuration.
+#-----------------------------------------------------------------------------
+
+# Specify build here.  Either [release] or [debug]. No trailing space allowed.
+BUILD				= release
+
+# Demo version? Either [true] or [false].
+DEMOVERSION			= false
+
+# If this is a build that is an extra platform-specific patch, set it here.
+#  Setting this to 1 will note in the log files that the game is version X,
+#  and this is Linux patch X.1, or whatnot.
+PATCH_VERSION		= 0
+
+# You can use ccache for rebuild speedups. (http://ccache.samba.org/)
+USE_CCACHE			= true
+
+# You can use distcc for rebuild speedups. (http://distcc.samba.org/)
+USE_DISTCC			= false
+
+# Specify link method here.  Either [static] or [shared].
+LINKSTYLE			= static
+
+# Target type.  Either [linux] or [freebsd] or [psx2] or [macosx] or [win64]
+TARGETTYPE			= macosx
+
+# Machine type.  Either [x86] or [amd64] or [mips-ee] or [powerpc]
+MACHTYPE			= powerpc
+
+# Specify compiler here. Either [icc] or [gcc] or [visualc].
+COMPILER			= gcc
+
+# Specify error format here.  Either [gcc] or [visualc]
+# DON'T CHANGE THIS!
+ERRORFORMAT			= gcc
+
+# Compile in UNICODE support? Either [true] or [false].
+DOUNICODE			= true
+
+# Do case-insensitive file opens? Either [true] or [false].
+NOFILECASE			= true
+
+# Include Karma code? Either [true] or [false].
+DOKARMA				= true
+
+# Don't render "stat fps", etc.
+DISABLESTATS		= false
+
+# Enable Portable Guard Blocks...might be a slight performance hit, but
+#  gives you readable backtraces like the Win32 version...should work with
+#  any compiler. Costs in RAM plus cache affinity plus a few cycles per
+#  guard/unguard. YMMV.
+DOGUARDBLOCKS       = true
+
+# Enable Pixomatic. This is only for x86 Linux when statically linking.
+DOPIXO              = true
+
+# Force extreme struct packing? Either [true] or [false].
+#  DO NOT SHIP WITH THIS ENABLED! This is just for aiding in new ports.
+FORCEEXTREMEPACKING = false
+
+# Use "push" form of #pragma pack? Either [true] or [false].
+# Some GCC variants have #pragma pack(push,x), and some do not.
+#  On 32-bit platforms, it's usually safe to set this to false, but the
+#  amd64 requires the "push" version of #pragma pack, or odd crashes
+#  will occur during engine initialization. It's complicated.
+HAVEPRAGMAPACK      = true
+
+# Newer versions (3.1+, I think) of gcc have a -fshort-wchar option, which
+#  treat the C++ wchar_t type as 16 bits instead of 32. If you're using
+#  Unicode support, you'll need to either have this option, or hack your
+#  version of gcc to force wchar_t to 16 bits (ask Ryan about how to
+#  accomplish that feat if you prefer gcc 2.95.3 to the 3.x series). Someday
+#  Ryan will decide that gcc3 is stable and remove this option.
+HAVEFSHORTWCHAR     = true
+
+# This is only for Visual C++ (that is, win64) at this moment.
+#  (...and it's broken right now...)
+HAVEPRECOMPILEDHEADERS = false
+
+# Use SSE opcodes on ia32 and amd64 platforms?
+HAVESSE = false
+
+# These need to be set at compile time for UT2004. Set to 1 or 0.
+DO_CHECK		= 1
+DO_GUARD		= 1
+DO_CLOCK		= 1
+DO_STAT			= 1
+DO_CHECK_SLOW   	= 0
+DO_GUARD_SLOW   	= 0
+DO_CLOCK_SLOW   	= 0
+DO_STAT_SLOW   		= 0
+#-----------------------------------------------------------------------------
+
+SHELL = /bin/sh
+BUILD_SUBDIR			= $(BUILD)-$(TARGETTYPE)-$(MACHTYPE)-$(LINKSTYLE)
+
+ifeq ($(TARGETTYPE),linux)
+  ISGNU=true
+endif
+ifeq ($(TARGETTYPE),freebsd)
+  ISGNU=true
+endif
+ifeq ($(TARGETTYPE),macosx)
+  ISGNU=true
+endif
+ifeq ($(TARGETTYPE),win32)
+  $(error win32 target is not completely written or tested.)
+  ISWINDOWS=true
+endif
+ifeq ($(TARGETTYPE),win64)
+  ISWINDOWS=true
+endif
+
+ifneq ($(ISGNU),true)
+  ISGNU=false
+endif
+ifneq ($(ISWINDOWS),true)
+  ISWINDOWS=false
+endif
+
+ifeq ($(ISWINDOWS),true)
+  CONVPATH=$(subst /,\,$(1))
+  STD_RUNEXT := .exe
+else
+  CONVPATH=$(1)
+endif
+
+# Sanity check pixo option...
+ifeq ($(DOPIXO),true)
+  DOPIXO := false
+  ifeq ($(TARGETTYPE),linux)
+    ifeq ($(LINKSTYLE),static)
+      ifeq ($(MACHTYPE),x86)
+		DOPIXO := true
+      endif
+    endif
+  endif
+endif
+
+# Release build.
+ifeq ($(BUILD),release)
+	ifeq ($(ISGNU),true)
+		ifeq ($(COMPILER),gcc)
+               	                 #-Werror -fomit-frame-pointer
+			# -O3 (instead of -O2) and -mdynamic-no-pic were
+			#  Sanjay Patel from Apple's suggestions. --ryan.
+			BUILD_CXXFLAGS		= -O3 -g -D_REENTRANT -D_NDEBUG=1 -ffast-math -fexpensive-optimizations
+			ifeq ($(TARGETTYPE),macosx)
+				BUILD_CXXFLAGS += -mdynamic-no-pic -fno-math-errno
+			endif
+
+		else
+			BUILD_CXXFLAGS		= -D_REENTRANT -D_NDEBUG=1
+		endif
+	endif
+	ifeq ($(ISWINDOWS),true)
+		ifeq ($(COMPILER),visualc)
+            # -D becomes /D later through the subst macro.
+			BUILD_CXXFLAGS		= /Zi /Ox /Ob2 /Og /Oi /Ot /Oy /GF /Gy /W3 -DNDEBUG -D_NDEBUG
+		else
+			$(error write me.)
+		endif
+    endif
+	ifeq ($(TARGETTYPE),psx2)
+		BUILD_CXXFLAGS		= -O2 -fno-strict-aliasing -ffast-math -Werror -Wa,-al -fno-common -G0 -msingle-float
+							# -O3 -fno-strict-aliasing -ffast-math -Werror -Wa,-al -fno-common -G0 -msingle-float
+	endif
+
+	# Adds to the build time, risks optimization bugs...and doesn't seem to improve framerate at all...
+	#ifeq ($(TARGETTYPE),macosx)
+	#	BUILD_CXXFLAGS += -fstrength-reduce -fthread-jumps -fcse-follow-jumps -fcse-skip-blocks -frerun-cse-after-loop -frerun-loop-opt -fgcse -fgcse-lm -fgcse-sm -fdelete-null-pointer-checks -fschedule-insns -fschedule-insns2 -frename-registers -fno-cprop-registers
+	#endif
+	ifeq ($(MACHTYPE),x86)
+	    BUILD_CXXFLAGS += -march=pentium -mcpu=pentiumpro
+        ifeq ($(HAVESSE),true)
+		  BUILD_CXXFLAGS += -msse -mmmx
+        endif
+	endif
+	ifeq ($(MACHTYPE),amd64)
+	    #BUILD_CXXFLAGS += -march=k8 -mcpu=k8
+        ifeq ($(HAVESSE),true)
+		  BUILD_CXXFLAGS += -msse -mmmx
+        endif
+	endif
+endif
+
+# Debug build.
+ifeq ($(BUILD),debug)
+	ifeq ($(ISGNU),true)
+		ifeq ($(COMPILER),gcc)
+			BUILD_CXXFLAGS		= -O2 -D_REENTRANT -g -D_DEBUG
+		else
+			BUILD_CXXFLAGS		= -wr873,1125,858,69,654,161,186 -D_REENTRANT -O0 -Kc++eh -Zp4
+		endif
+	endif
+	ifeq ($(ISWINDOWS),true)
+		ifeq ($(COMPILER),visualc)
+            # -D becomes /D later through the subst macro.
+			BUILD_CXXFLAGS		= /Od /Zi -D_DEBUG -DDEBUG -D_DEBUG_WIN32_IE=0x0200
+		else
+			$(error write me.)
+		endif
+    endif
+	ifeq ($(TARGETTYPE),psx2)
+		BUILD_CXXFLAGS		= -O2 -fno-strict-aliasing -ffast-math -Werror -Wa,-al -fno-common -G0 -g -msingle-float
+							# -O3 -fno-strict-aliasing -ffast-math -Werror -Wa,-al -fno-common -G0 -g -msingle-float
+	endif
+endif
+
+BUILD_CXXFLAGS += -DPLATFORM_VERSION_BUMP=$(PATCH_VERSION)
+
+ifneq ($(HAVESSE),true)
+	BUILD_CXXFLAGS += -DNO_SSE_SUPPORT=1
+endif
+
+# always need -faltivec on the Mac, since we use the "vector" keyword.
+ifeq ($(TARGETTYPE),macosx)
+	BUILD_CXXFLAGS += -faltivec
+endif
+
+ifeq ($(COMPILER),gcc)
+  BUILD_CXXFLAGS += -pipe -fsigned-char
+endif
+
+ifeq ($(HAVEFSHORTWCHAR),true)
+  ifeq ($(COMPILER),gcc)
+    BUILD_CXXFLAGS += -fshort-wchar
+  else
+    $(error No known -fshort-wchar equivalent in your compiler.)
+  endif
+endif
+
+ifeq ($(ISWINDOWS),true)
+  # we use the WIN32 define even on Win64 at this moment.  --ryan.
+  # -D becomes /D via the subst variable later.
+  BUILD_CXXFLAGS += -DWIN32 -D_WIN32 -D_WINDOWS -D_MBCS
+
+  ifeq ($(TARGETTYPE),win64)
+    BUILD_CXXFLAGS += -DWIN64 -D_WIN64
+  endif
+
+  OBJSUFFIX=.obj
+  # "SONAME" is the import lib on Windows.
+  SONAMESUFFIX=.lib
+
+  ifeq ($(COMPILER),visualc)
+    # I don't know what /FD does, but the Visual Studio project files use it.
+    BUILD_CXXFLAGS += /FD /EHsc /Zp4 /Zc:forScope
+
+    # Do 64-bit portability checking, even on win32.
+    BUILD_CXXFLAGS += /Wp64
+  endif
+endif
+
+ifeq ($(TARGETTYPE),macosx)
+  export MACOSX_DEPLOYMENT_TARGET=10.2
+  BUILD_CXXFLAGS += -DMACOSX=1
+  SONAMESUFFIX=.dylib
+  OBJSUFFIX=.o
+endif
+
+ifeq ($(TARGETTYPE),linux)
+  BUILD_CXXFLAGS += -DLINUX=1
+  SONAMESUFFIX=.so
+  OBJSUFFIX=.o
+endif
+
+ifeq ($(TARGETTYPE),freebsd)
+  # !!! FIXME: Karma headers need LINUX defined.
+  BUILD_CXXFLAGS += -DLINUX=1 -DFREEBSD=1
+  SONAMESUFFIX=.so
+  OBJSUFFIX=.o
+endif
+
+ifeq ($(DOGUARDBLOCKS),true)
+  BUILD_CXXFLAGS += -DDO_PORTABLE_GUARD_BLOCKS=1
+endif
+
+ifeq ($(DOPIXO),true)
+  BUILD_CXXFLAGS += -DUSE_PIXOMATIC=1
+endif
+
+ifeq ($(FORCEEXTREMEPACKING),true)
+  BUILD_CXXFLAGS += -DFORCE_EXTREME_PACKING=1
+endif
+
+ifeq ($(HAVEPRAGMAPACK),true)
+  BUILD_CXXFLAGS += -DSUPPORTS_PRAGMA_PACK=1
+endif
+
+ifeq ($(DISABLESTATS),true)
+  BUILD_CXXFLAGS += -DDISABLE_STATS=1
+endif
+
+# Shared build.
+ifeq ($(LINKSTYLE),shared)
+	STATICLINK			= 0
+	ifeq ($(TARGETTYPE),macosx)
+	  LIBSUFFIX			= dylib
+	endif
+	ifeq ($(ISWINDOWS),true)
+	  LIBSUFFIX			= dll
+	endif
+	ifeq ($(strip $(LIBSUFFIX)),)
+	  LIBSUFFIX			= so
+	endif
+endif
+
+# Static build.
+ifeq ($(LINKSTYLE),static)
+	STATICLINK			= 1
+	ifeq ($(ISWINDOWS),true)
+		LIBSUFFIX			= lib
+	else
+		LIBSUFFIX			= a
+	endif
+endif
+
+ifeq ($(DOUNICODE),true)
+    UNICODE_CXXFLAGS    = -DUNICODE=1 -D_UNICODE=1
+	ifeq ($(COMPILER),icc)
+        UNICODE_CXXFLAGS += -Qoption,c,-_W4
+    endif
+else
+    UNICODE_CXXFLAGS    = -DNO_UNICODE_OS_SUPPORT=1
+endif
+
+ifeq ($(NOFILECASE),true)
+    FILECASE_CXXFLAGS   = -D__FILE_NOCASE=1
+endif
+
+ifneq ($(DOKARMA),true)
+  KARMA_CXXFLAGS = -DNO_KARMA=1
+else
+ ifeq ($(strip $(TARGETTYPE)),win64)
+    METOOLKIT_DIR = $(UNREAL_DIR)/metoolkit_AMD64
+    METOOLKIT_INC = $(METOOLKIT_DIR)/include
+    METOOLKIT_LIB = $(METOOLKIT_DIR)/lib
+    KARMA_CXXFLAGS = -DWITH_KARMA=1 -I$(METOOLKIT_INC)
+    KARMA_LIBS = $(wildcard $(METOOLKIT_LIB)/*.lib)
+ else
+    METOOLKIT_DIR = $(UNREAL_DIR)/metoolkit
+    METOOLKIT_INC = $(METOOLKIT_DIR)/include
+
+    ifeq ($(BUILD),debug)
+      METOOLKIT_RELCHK = lib.chk
+    else
+      METOOLKIT_RELCHK = lib.rel
+    endif
+
+    ifeq ($(TARGETTYPE),linux)
+      ifeq ($(MACHTYPE),x86)
+        # !!! FIXME: can be gcc3 libs, too.  --ryan.
+        #METOOLKIT_LIBTYPE = linux_single_gcc2.95
+        METOOLKIT_LIBTYPE = linux_single_gcc3.2
+      endif
+      ifeq ($(MACHTYPE),amd64)
+        METOOLKIT_LIBTYPE = linux_hx_single
+      endif
+    endif
+
+    ifeq ($(TARGETTYPE),macosx)
+      ifeq ($(MACHTYPE),powerpc)
+        METOOLKIT_LIBTYPE = macos_single
+      endif
+    endif
+
+    ifeq ($(strip $(METOOLKIT_LIBTYPE)),)
+      $(error no metoolkit libs for this platform. Please set DOKARMA to false.
+    endif
+
+    METOOLKIT_LIB = $(METOOLKIT_DIR)/$(METOOLKIT_RELCHK)/$(METOOLKIT_LIBTYPE)
+    KARMA_CXXFLAGS = -DWITH_KARMA=1 -I$(METOOLKIT_INC)
+    KARMA_LIBS = $(wildcard $(METOOLKIT_LIB)/*.a)
+  endif
+endif
+
+ifeq ($(TARGETTYPE),macosx)
+    GAMERANGER_LIBS := $(UNREAL_DIR)/System/libGameRanger.a
+endif
+
+
+ifeq ($(DEMOVERSION),true)
+    BUILD_CXXFLAGS += -DDEMOVERSION=1
+endif
+
+DO_CXXFLAGS = -DDO_CHECK=$(DO_CHECK) -DDO_CHECK_SLOW=$(DO_CHECK_SLOW) \
+              -DDO_GUARD=$(DO_GUARD) -DDO_GUARD_SLOW=$(DO_GUARD_SLOW) \
+              -DDO_CLOCK=$(DO_CLOCK) -DDO_CLOCK_SLOW=$(DO_CLOCK_SLOW) \
+              -DDO_STAT=$(DO_STAT) -DDO_STAT_SLOW=$(DO_STAT_SLOW)
+
+BUILD_CXXFLAGS += -DZ_PREFIX=1
+
+#-----------------------------------------------------------------------------
+# Directories.
+#-----------------------------------------------------------------------------
+
+# Output.
+OUTPUT_DIR			= $(UNREAL_DIR)/System
+
+# PSX2 support directories.
+PSX2_LIB			= $(PSX2ROOT)/ee/lib
+PSX2_INC			= $(PSX2ROOT)/ee/include
+PSX2_COMMON_INC			= $(PSX2ROOT)/common/include
+
+# Core directories.
+CORE_SRC			= $(UNREAL_DIR)/Core/Src
+CORE_INC			= $(UNREAL_DIR)/Core/Inc
+CORE_BUILD			= $(UNREAL_DIR)/Core/$(BUILD_SUBDIR)
+
+# Engine directories.
+ENGINE_SRC			= $(UNREAL_DIR)/Engine/Src
+ENGINE_INC			= $(UNREAL_DIR)/Engine/Inc
+ENGINE_BUILD			= $(UNREAL_DIR)/Engine/$(BUILD_SUBDIR)
+
+# IpDrv directories.
+IPDRV_SRC			= $(UNREAL_DIR)/IpDrv/Src
+IPDRV_INC			= $(UNREAL_DIR)/IpDrv/Inc
+IPDRV_BUILD			= $(UNREAL_DIR)/IpDrv/$(BUILD_SUBDIR)
+
+# Fire directories.
+FIRE_SRC			= $(UNREAL_DIR)/Fire/Src
+FIRE_INC			= $(UNREAL_DIR)/Fire/Inc
+FIRE_BUILD			= $(UNREAL_DIR)/Fire/$(BUILD_SUBDIR)
+
+# MP3 directories.
+MP3_SRC			= $(UNREAL_DIR)/ALAudio/MP3
+MP3_INC			= $(UNREAL_DIR)/ALAudio/MP3
+MP3_BUILD			= $(UNREAL_DIR)/ALAudio/$(BUILD_SUBDIR)
+
+# ALAudio directories.
+ALAUDIO_SRC			= $(UNREAL_DIR)/ALAudio/Src
+ALAUDIO_INC			= $(UNREAL_DIR)/ALAudio/Inc
+ALAUDIO_BUILD			= $(UNREAL_DIR)/ALAudio/$(BUILD_SUBDIR)
+
+# !!! FIXME: do something with this?
+OPENGLLNX_INC		= $(UNREAL_DIR)/OpenGLDrv/Inc/linuxGL
+OPENAL_INC			= $(UNREAL_DIR)/OpenAL/Inc
+SDL12_INC 			= $(UNREAL_DIR)/SDL12/include
+ifeq ($(TARGETTYPE),macosx)
+  SDL12_LIBS			= $(UNREAL_DIR)/System/libSDL-1.2.0.dylib
+else
+  SDL12_LIBS			= $(UNREAL_DIR)/System/libSDL-1.2.so.0
+endif
+
+PIXOMATIC_INC			= $(UNREAL_DIR)/Pixomatic/Inc
+ifeq ($(DOPIXO),true)
+  PIXOMATIC_LIBS			= $(UNREAL_DIR)/Pixomatic/Lib/pixomatic_linux.a
+endif
+
+# UTV directories.
+UTV_SRC			= $(UNREAL_DIR)/UTV/UTV2003/Src
+UTV_INC			= $(UNREAL_DIR)/UTV/UTV2003/Inc
+UTV_BUILD			= $(UNREAL_DIR)/UTV/UTV2003/$(BUILD_SUBDIR)
+
+# Speex directories.
+SPEEX_SRC			= $(UNREAL_DIR)/Speex/Src/libspeex
+SPEEX_INC			= $(UNREAL_DIR)/Speex/Inc
+SPEEX_BUILD			= $(UNREAL_DIR)/Speex/$(BUILD_SUBDIR)
+
+# Editor directories.
+EDITOR_SRC			= $(UNREAL_DIR)/Editor/Src
+EDITOR_INC			= $(UNREAL_DIR)/Editor/Inc
+EDITOR_BUILD			= $(UNREAL_DIR)/Editor/$(BUILD_SUBDIR)
+
+# UCC directories.
+UCC_SRC				= $(UNREAL_DIR)/UCC/Src
+UCC_INC				= $(UNREAL_DIR)/UCC/Inc
+UCC_BUILD			= $(UNREAL_DIR)/UCC/$(BUILD_SUBDIR)
+
+# XLaunch directories.
+XLAUNCH_SRC			= $(UNREAL_DIR)/XLaunch/Src
+XLAUNCH_INC			= $(UNREAL_DIR)/XLaunch/Inc
+XLAUNCH_BUILD			= $(UNREAL_DIR)/XLaunch/$(BUILD_SUBDIR)
+
+# PSX2Launch directories.
+PSX2LAUNCH_SRC			= $(UNREAL_DIR)/PSX2Launch/Src
+PSX2LAUNCH_INC			= $(UNREAL_DIR)/PSX2Launch/Inc
+PSX2LAUNCH_BUILD		= $(UNREAL_DIR)/PSX2Launch/$(BUILD_SUBDIR)
+
+# SDLLaunch directories.
+SDLLAUNCH_SRC			= $(UNREAL_DIR)/SDLLaunch/Src
+SDLLAUNCH_INC			= $(UNREAL_DIR)/SDLLaunch/Inc
+SDLLAUNCH_BUILD			= $(UNREAL_DIR)/SDLLaunch/$(BUILD_SUBDIR)
+
+# Launch directories.
+LAUNCH_SRC			= $(UNREAL_DIR)/Launch/Src
+LAUNCH_INC			= $(UNREAL_DIR)/Launch/Inc
+LAUNCH_BUILD			= $(UNREAL_DIR)/Launch/$(BUILD_SUBDIR)
+
+# OpenGLDrv directories.
+OPENGLDRV_SRC			= $(UNREAL_DIR)/OpenGLDrv/Src
+OPENGLDRV_INC			= $(UNREAL_DIR)/OpenGLDrv/Inc
+OPENGLDRV_BUILD			= $(UNREAL_DIR)/OpenGLDrv/$(BUILD_SUBDIR)
+
+# PixoDrv directories.
+PIXODRV_SRC			= $(UNREAL_DIR)/PixoDrv/Src
+PIXODRV_INC			= $(UNREAL_DIR)/PixoDrv/Src
+PIXODRV_BUILD		= $(UNREAL_DIR)/PixoDrv/$(BUILD_SUBDIR)
+
+# Render directories.
+RENDER_SRC			= $(UNREAL_DIR)/Render/Src
+RENDER_INC			= $(UNREAL_DIR)/Render/Inc
+RENDER_BUILD			= $(UNREAL_DIR)/Render/$(BUILD_SUBDIR)
+
+# XMesaGLDrv directories.
+XMESAGLDRV_SRC			= $(UNREAL_DIR)/XMesaGLDrv/Src
+XMESAGLDRV_INC			= $(UNREAL_DIR)/XMesaGLDrv/Inc
+XMESAGLDRV_BUILD		= $(UNREAL_DIR)/XMesaGLDrv/$(BUILD_SUBDIR)
+
+# XDrv directories.
+XDRV_SRC			= $(UNREAL_DIR)/XDrv/Src
+XDRV_INC			= $(UNREAL_DIR)/XDrv/Inc
+XDRV_BUILD			= $(UNREAL_DIR)/XDrv/$(BUILD_SUBDIR)
+
+# PSX2Drv directories.
+PSX2DRV_SRC			= $(UNREAL_DIR)/PSX2Drv/Src
+PSX2DRV_INC			= $(UNREAL_DIR)/PSX2Drv/Inc
+PSX2DRV_IOPMODULE		= $(UNREAL_DIR)/PSX2Drv/IOPModule
+PSX2DRV_BUILD			= $(UNREAL_DIR)/PSX2Drv/$(BUILD_SUBDIR)
+
+# PSX2NetDrv directories.
+PSX2NETDRV_SRC			= $(UNREAL_DIR)/PSX2NetDrv/Src
+PSX2NETDRV_INC			= $(UNREAL_DIR)/PSX2NetDrv/Inc
+PSX2NETDRV_BUILD		= $(UNREAL_DIR)/PSX2NetDrv/$(BUILD_SUBDIR)
+
+# GlideDrv directories.
+GLIDEDRV_SRC			= $(UNREAL_DIR)/GlideDrv/Src
+GLIDEDRV_INC			= $(UNREAL_DIR)/GlideDrv/Inc
+GLIDEDRV_BUILD			= $(UNREAL_DIR)/GlideDrv/$(BUILD_SUBDIR)
+
+# Unreal audio subsystem directories.
+AUDIO_SRC			= $(UNREAL_DIR)/Audio/Src
+AUDIO_INC			= $(UNREAL_DIR)/Audio/Inc
+AUDIO_BUILD			= $(UNREAL_DIR)/Audio/$(BUILD_SUBDIR)
+
+# UWeb
+UWEB_SRC			= $(UNREAL_DIR)/UWeb/Src
+UWEB_INC			= $(UNREAL_DIR)/UWeb/Inc
+UWEB_BUILD			= $(UNREAL_DIR)/UWeb/$(BUILD_SUBDIR)
+
+# PSX Render
+PSX2RENDER_SRC			= $(UNREAL_DIR)/PSX2Render/Src
+PSX2RENDER_INC			= $(UNREAL_DIR)/PSX2Render/Src
+PSX2RENDER_BUILD		= $(UNREAL_DIR)/PSX2Render/$(BUILD_SUBDIR)
+
+# PSX Audio
+PSX2AUDIO_SRC			= $(UNREAL_DIR)/PSX2Audio/Src
+PSX2AUDIO_INC			= $(UNREAL_DIR)/PSX2Audio/Inc
+PSX2AUDIO_IOPMODULE		= $(UNREAL_DIR)/PSX2Audio/IOPModule
+PSX2AUDIO_BUILD			= $(UNREAL_DIR)/PSX2Audio/$(BUILD_SUBDIR)
+
+# PSX iLink Network Driver
+PSX2ILINKDRV_SRC		= $(UNREAL_DIR)/PSX2iLinkDrv/Src
+PSX2ILINKDRV_INC		= $(UNREAL_DIR)/PSX2iLinkDrv/Inc
+PSX2ILINKDRV_IOPMODULE		= $(UNREAL_DIR)/PSX2iLinkDrv/IOPModule
+PSX2ILINKDRV_BUILD		= $(UNREAL_DIR)/PSX2iLinkDrv/$(BUILD_SUBDIR)
+
+# XGame directories.
+XGAME_SRC			= $(UNREAL_DIR)/XGame/Src
+XGAME_INC			= $(UNREAL_DIR)/XGame/Inc
+XGAME_BUILD			= $(UNREAL_DIR)/XGame/$(BUILD_SUBDIR)
+
+# XInterface directories.
+XINTERFACE_SRC		= $(UNREAL_DIR)/XInterface/Src
+XINTERFACE_INC		= $(UNREAL_DIR)/XInterface/Inc
+XINTERFACE_BUILD	= $(UNREAL_DIR)/XInterface/$(BUILD_SUBDIR)
+
+# Onslaught directories.
+ONSLAUGHT_SRC		= $(UNREAL_DIR)/Onslaught/Src
+ONSLAUGHT_INC		= $(UNREAL_DIR)/Onslaught/Inc
+ONSLAUGHT_BUILD		= $(UNREAL_DIR)/Onslaught/$(BUILD_SUBDIR)
+
+# Window directories.
+WINDOW_SRC		= $(UNREAL_DIR)/Window/Src
+WINDOW_INC		= $(UNREAL_DIR)/Window/Inc
+WINDOW_BUILD		= $(UNREAL_DIR)/Window/$(BUILD_SUBDIR)
+
+# WinDrv directories.
+WINDRV_SRC		= $(UNREAL_DIR)/WinDrv/Src
+WINDRV_INC		= $(UNREAL_DIR)/WinDrv/Inc
+WINDRV_BUILD		= $(UNREAL_DIR)/WinDrv/$(BUILD_SUBDIR)
+
+# D3D9Drv directories.
+D3D9DRV_SRC		= $(UNREAL_DIR)/D3D9Drv/Src
+D3D9DRV_INC		= $(UNREAL_DIR)/D3D9Drv/Inc
+D3D9DRV_BUILD		= $(UNREAL_DIR)/D3D9Drv/$(BUILD_SUBDIR)
+
+# zlib directories.
+ZLIB_SRC			= $(UNREAL_DIR)/zlib/
+ZLIB_INC			= $(UNREAL_DIR)/zlib/
+ZLIB_BUILD			= $(UNREAL_DIR)/zlib/$(BUILD_SUBDIR)
+
+# ogg directories.
+OGG_SRC				= $(UNREAL_DIR)/Vorbis/ogg/src
+OGG_INC				= $(UNREAL_DIR)/Vorbis/ogg/include
+OGG_BUILD			= $(UNREAL_DIR)/Vorbis/ogg/$(BUILD_SUBDIR)
+
+# vorbis directories.
+VORBIS_SRC			= $(UNREAL_DIR)/Vorbis/vorbis/lib
+VORBIS_INC			= $(UNREAL_DIR)/Vorbis/vorbis/include
+VORBIS_BUILD		= $(UNREAL_DIR)/Vorbis/vorbis/$(BUILD_SUBDIR)
+
+# SDLDrv directories.
+SDLDRV_SRC			= $(UNREAL_DIR)/SDLDrv/Src
+SDLDRV_INC			= $(UNREAL_DIR)/SDLDrv/Inc
+SDLDRV_BUILD		= $(UNREAL_DIR)/SDLDrv/$(BUILD_SUBDIR)
+
+# Source directories.
+ALL_SRC_DIRS			= $(CORE_INC) $(CORE_SRC) \
+					  $(ENGINE_INC) $(ENGINE_SRC) \
+					  $(IPDRV_INC) $(IPDRV_SRC) \
+					  $(FIRE_INC) $(FIRE_SRC) \
+					  $(MP3_INC) $(MP3_SRC) \
+					  $(ALAUDIO_INC) $(ALAUDIO_SRC) \
+					  $(UCC_INC) $(UCC_SRC) \
+					  $(RENDER_INC) $(RENDER_SRC) \
+					  $(UTV_SRC) $(UTV_INC) \
+					  $(SPEEX_SRC) $(SPEEX_INC) \
+					  $(EDITOR_SRC) $(EDITOR_INC) \
+					  $(OPENGLDRV_SRC) $(OPENGLDRV_INC) \
+					  $(WINDOW_SRC) $(WINDOW_INC) \
+					  $(WINDRV_SRC) $(WINDRV_INC) \
+					  $(D3D9DRV_SRC) $(D3D9DRV_INC) \
+					  $(PIXODRV_SRC) $(PIXODRV_INC) \
+					  $(XMESAGLDRV_SRC) $(XMESAGLDRV_INC) \
+					  $(GLIDEDRV_SRC) $(GLIDEDRV_INC) \
+					  $(XDRV_SRC) $(XDRV_INC) \
+					  $(XLAUNCH_SRC) $(XLAUNCH_INC) \
+					  $(AUDIO_SRC) $(AUDIO_INC) \
+					  $(UWEB_SRC) $(UWEB_INC) \
+					  $(XGAME_INC) $(XGAME_SRC) \
+					  $(SDLDRV_INC) $(SDLDRV_SRC) \
+					  $(SDLLAUNCH_INC) $(SDLLAUNCH_SRC) \
+					  $(LAUNCH_INC) $(LAUNCH_SRC) \
+					  $(XINTERFACE_INC) $(XINTERFACE_SRC) \
+					  $(ONSLAUGHT_INC) $(ONSLAUGHT_SRC) \
+					  $(ZLIB_INC) $(ZLIB_SRC) \
+					  $(OGG_INC) $(OGG_SRC) \
+					  $(VORBIS_INC) $(VORBIS_SRC) \
+
+
+#-----------------------------------------------------------------------------
+# Output files.
+#-----------------------------------------------------------------------------
+
+# Core library
+CORE				= $(OUTPUT_DIR)/Core.$(LIBSUFFIX)
+CORE_SONAME			= Core$(SONAMESUFFIX)
+
+# Engine library
+ENGINE				= $(OUTPUT_DIR)/Engine.$(LIBSUFFIX)
+ENGINE_SONAME			= Engine$(SONAMESUFFIX)
+
+# IpDrv library
+IPDRV				= $(OUTPUT_DIR)/IpDrv.$(LIBSUFFIX)
+IPDRV_SONAME			= IpDrv$(SONAMESUFFIX)
+
+# Fire library
+FIRE				= $(OUTPUT_DIR)/Fire.$(LIBSUFFIX)
+FIRE_SONAME			= Fire$(SONAMESUFFIX)
+
+# ALAudio library
+MP3				= $(OUTPUT_DIR)/MP3.$(LIBSUFFIX)
+MP3_SONAME			= MP3$(SONAMESUFFIX)
+
+# ALAudio library
+ALAUDIO				= $(OUTPUT_DIR)/ALAudio.$(LIBSUFFIX)
+ALAUDIO_SONAME			= ALAudio$(SONAMESUFFIX)
+
+# UTV library
+UTV				= $(OUTPUT_DIR)/UTV.$(LIBSUFFIX)
+UTV_SONAME			= UTV$(SONAMESUFFIX)
+
+# Editor library
+SPEEX				= $(OUTPUT_DIR)/Speex.$(LIBSUFFIX)
+SPEEX_SONAME			= Speex$(SONAMESUFFIX)
+
+# Editor library
+EDITOR				= $(OUTPUT_DIR)/Editor.$(LIBSUFFIX)
+EDITOR_SONAME			= Editor$(SONAMESUFFIX)
+
+# UCC executable
+ifeq ($(strip $(ISWINDOWS)),true)
+UCC				= $(OUTPUT_DIR)/ucc$(STD_RUNEXT)
+else
+UCC				= $(OUTPUT_DIR)/ucc-bin$(STD_RUNEXT)
+endif
+
+# XLaunch executable
+XLAUNCH				= $(OUTPUT_DIR)/ut2004-bin$(STD_RUNEXT)
+
+# SDLLaunch executable
+SDLLAUNCH				= $(OUTPUT_DIR)/ut2004-bin$(STD_RUNEXT)
+
+# Launch executable
+LAUNCH				= $(OUTPUT_DIR)/ut2004$(STD_RUNEXT)
+
+# Playstation executable
+PSX2LAUNCH			= $(OUTPUT_DIR)/psx2game$(STD_RUNEXT)
+
+# XGame library
+XGAME   			= $(OUTPUT_DIR)/XGame.$(LIBSUFFIX)
+XGAME_SONAME		= XGame$(SONAMESUFFIX)
+
+# XInterface library
+XINTERFACE   			= $(OUTPUT_DIR)/XInterface.$(LIBSUFFIX)
+XINTERFACE_SONAME		= XInterface$(SONAMESUFFIX)
+
+# Onslaught library
+ONSLAUGHT   			= $(OUTPUT_DIR)/Onslaught.$(LIBSUFFIX)
+ONSLAUGHT_SONAME		= Onslaught$(SONAMESUFFIX)
+
+# zlib library
+ZLIB		= $(OUTPUT_DIR)/zlib.$(LIBSUFFIX)
+ZLIB_SONAME		= zlib$(SONAMESUFFIX)
+
+# ogg library
+OGG		= $(OUTPUT_DIR)/ogg.$(LIBSUFFIX)
+OGG_SONAME		= ogg$(SONAMESUFFIX)
+
+# ogg library
+VORBIS		= $(OUTPUT_DIR)/vorbis.$(LIBSUFFIX)
+VORBIS_SONAME		= vorbis$(SONAMESUFFIX)
+
+# SDLDrv library
+SDLDRV   			= $(OUTPUT_DIR)/SDLDrv.$(LIBSUFFIX)
+SDLDRV_SONAME		= SDLDrv$(SONAMESUFFIX)
+
+# OpenGLDrv library
+OPENGLDRV   			= $(OUTPUT_DIR)/OpenGLDrv.$(LIBSUFFIX)
+OPENGLDRV_SONAME		= OpenGLDrv$(SONAMESUFFIX)
+
+# Window library
+WINDOW   			= $(OUTPUT_DIR)/Window.$(LIBSUFFIX)
+WINDOW_SONAME		= Window$(SONAMESUFFIX)
+
+# WinDrv library
+WINDRV   			= $(OUTPUT_DIR)/WinDrv.$(LIBSUFFIX)
+WINDRV_SONAME		= WinDrv$(SONAMESUFFIX)
+
+# WinDrv library
+D3D9DRV   			= $(OUTPUT_DIR)/D3D9Drv.$(LIBSUFFIX)
+D3D9DRV_SONAME		= D3D9Drv$(SONAMESUFFIX)
+
+ifeq ($(DOPIXO),true)
+# PixoDrv library
+PIXODRV   			= $(OUTPUT_DIR)/PixoDrv.$(LIBSUFFIX)
+PIXODRV_SONAME		= PixoDrv$(SONAMESUFFIX)
+endif
+
+# Render library
+RENDER				= $(OUTPUT_DIR)/Render.$(LIBSUFFIX)
+RENDER_SONAME			= Render$(SONAMESUFFIX)
+
+# XMesaGLDrv library
+XMESAGLDRV			= $(OUTPUT_DIR)/XMesaGLDrv.$(LIBSUFFIX)
+XMESAGLDRV_SONAME		= XMesaGLDrv$(SONAMESUFFIX)
+
+# XDrv library
+XDRV				= $(OUTPUT_DIR)/XDrv.$(LIBSUFFIX)
+XDRV_SONAME			= XDrv$(SONAMESUFFIX)
+
+# GlideDrv library
+GLIDEDRV			= $(OUTPUT_DIR)/GlideDrv.$(LIBSUFFIX)
+GLIDEDRV_SONAME			= GlideDrv$(SONAMESUFFIX)
+
+# Audio library
+AUDIO				= $(OUTPUT_DIR)/Audio.$(LIBSUFFIX)
+AUDIO_SONAME			= Audio$(SONAMESUFFIX)
+
+# UWeb library
+UWEB				= $(OUTPUT_DIR)/UWeb.$(LIBSUFFIX)
+UWEB_SONAME			= UWeb$(SONAMESUFFIX)
+
+# PSX2Drv library
+PSX2DRV				= $(OUTPUT_DIR)/PSX2Drv.$(LIBSUFFIX)
+PSX2DRV_SONAME			= PSX2Drv$(SONAMESUFFIX)
+
+# PSX2NetDrv library
+PSX2NETDRV			= $(OUTPUT_DIR)/PSX2NetDrv.$(LIBSUFFIX)
+PSX2NETDRV_SONAME		= PSX2NetDrv$(SONAMESUFFIX)
+
+# PSX2Render library
+PSX2RENDER			= $(OUTPUT_DIR)/PSX2Render.$(LIBSUFFIX)
+PSX2RENDER_SONAME		= PSX2Render$(SONAMESUFFIX)
+
+# PSX2Audio library
+PSX2AUDIO			= $(OUTPUT_DIR)/PSX2Audio.$(LIBSUFFIX)
+PSX2AUDIO_SONAME		= PSX2Audio$(SONAMESUFFIX)
+
+# PSX2iLinkDrv library
+PSX2ILINKDRV			= $(OUTPUT_DIR)/PSX2iLinkDrv.$(LIBSUFFIX)
+PSX2ILINKDRV_SONAME		= psx2iLinkDrv$(SONAMESUFFIX)
+
+#-----------------------------------------------------------------------------
+# Standard compiler/linker options.
+#-----------------------------------------------------------------------------
+
+ifeq ($(LINKSTYLE),shared)
+  ifeq ($(TARGETTYPE),linux)
+    ifeq ($(COMPILER),gcc)
+       EXT_LDFLAGS		= -shared -Wl,-soname,
+       EXT_CXXFLAGS		= -fPIC
+    else
+       EXT_LDFLAGS		= -shared -Qoption,link,-soname,
+       EXT_CXXFLAGS		= -KPIC
+    endif
+  endif
+  ifeq ($(TARGETTYPE),macosx)
+    EXT_LDFLAGS = -fno-common -dynamiclib -Wl,-install_name,./
+    EXT_CXXFLAGS = -fPIC -fno-common
+  endif
+  ifeq ($(TARGETTYPE),freebsd)
+    EXT_LDFLAGS	= -shared -Wl,-soname,
+    EXT_CXXFLAGS = -fPIC
+  endif
+  ifeq ($(ISWINDOWS),true)
+    ifneq ($(COMPILER),visualc)
+      $(error this has not been written.)
+    endif
+
+    EXT_LDFLAGS += /DLL /IMPLIB:$(call CONVPATH,$(UNREAL_DIR))\System$(strip \)
+  endif
+endif
+
+ifeq ($(COMPILER),icc)
+STD_CXX = icc
+STD_CC  = icc
+CXXFLAG_OBJOUT = -o $(1)
+CXXFLAG_EXEOUT = -o $(1)
+CXXFLAG_DLLOUT = -o $(1)
+CXXFLAG_JUSTCOMPILE = -c
+endif
+
+ifeq ($(COMPILER),gcc)
+STD_CXX = g++
+STD_CC  = gcc
+CXXFLAG_OBJOUT = -o $(1)
+CXXFLAG_EXEOUT = -o $(1)
+CXXFLAG_DLLOUT = -o $(1)
+CXXFLAG_JUSTCOMPILE = -c
+endif
+
+ifeq ($(COMPILER),visualc)
+# !!! FIXME: zlib and ogg have warnings, so only treat warnings as errors for C++...lame.
+STD_CXX = cl.exe /TP /WX
+STD_CC  = cl.exe /TC
+LINKER = link.exe
+BUILD_CXXFLAGS += /nologo
+CXXFLAG_JUSTCOMPILE = /c
+CXXFLAG_OBJOUT = /Fo"$(call CONVPATH,$(1))"
+CXXFLAG_EXEOUT = /OUT:"$(call CONVPATH,$(1))"
+CXXFLAG_DLLOUT = /OUT:"$(call CONVPATH,$(1))"
+endif
+
+ifeq ($(strip $(LINKER)),)
+  LINKER = $(STD_CXX)
+endif
+
+ifeq ($(USE_CCACHE),true)
+CXX_COMPILER_PREFIX += ccache
+CC_COMPILER_PREFIX += ccache
+endif
+
+ifeq ($(USE_DISTCC),true)
+CXX_COMPILER_PREFIX += distcc
+# !!! FIXME: Make this work with multiple compilers? gcc vs g++ ...
+endif
+
+ifneq ($(strip $(CXX_COMPILER_PREFIX)),)
+STD_CXX := $(CXX_COMPILER_PREFIX) $(STD_CXX)
+endif
+
+ifneq ($(strip $(CC_COMPILER_PREFIX)),)
+STD_CC := $(CC_COMPILER_PREFIX) $(STD_CC)
+endif
+
+STD_CXXFLAGS	= $(BUILD_CXXFLAGS) $(UNICODE_CXXFLAGS) $(FILECASE_CXXFLAGS) \
+				  $(KARMA_CXXFLAGS) $(DO_CXXFLAGS) \
+				  -D__STATIC_LINK=$(STATICLINK)
+
+ifeq ($(ISGNU),true)
+  ifeq ($(TARGETTYPE),linux)
+    ifeq ($(MACHTYPE),x86)
+      STD_CXXFLAGS += -D__LINUX_X86__
+    endif
+    ifeq ($(MACHTYPE),amd64)
+      STD_CXXFLAGS += -D__LINUX_X86__
+    endif
+
+    ifeq ($(COMPILER),gcc)
+      STD_LDFLAGS		= -Wl,-rpath,.
+    else
+      STD_LDFLAGS		= -Qoption,link,-rpath,.
+    endif
+    #STD_LIBS		= -lm -ldl -lnsl -lpthread
+    STD_LDFLAGS		= -ldl -lpthread
+  endif
+  
+  ifeq ($(TARGETTYPE),freebsd)
+    STD_LDFLAGS = -Wl,-rpath,.
+    STD_LIBS		= -lm -pthread
+  endif
+
+  ifeq ($(TARGETTYPE),macosx)
+    # stack overflows during garbage collection on OS X...apparently this
+    #  needs a ton of stack (and OSX gives you 512k by default).  --ryan.
+    STD_LDFLAGS += -Wl,-stack_addr -Wl,c0000000 -Wl,-stack_size -Wl,200000
+
+    # Need this to prevent namespace clashes with system zlib, etc...
+    STD_LDFLAGS += -flat_namespace
+  endif
+
+  STD_AR     = ar
+  STD_RUNEXT =
+endif
+
+
+ifeq ($(ISWINDOWS),true)
+#    STD_LDFLAGS += /NODEFAULTLIB:"LIBCD" /NODEFAULTLIB:"LIBCMTD" \
+#                   /NODEFAULTLIB:"MSVCRTD" /NODEFAULTLIB:"LIBC" \
+#                   /NODEFAULTLIB:"LIBCMT" MSVCRT.lib
+    STD_LDFLAGS += /NODEFAULTLIB:"LIBCD" /NODEFAULTLIB:"LIBCMTD" \
+                   /NODEFAULTLIB:"MSVCRTD" /NODEFAULTLIB:"LIBCMT" \
+                   /NODEFAULTLIB:"MSVCRT"
+    STD_LDFLAGS += /NOLOGO
+    # !!! FIXME: INCREMENTAL:YES broken on win64 right now?
+    STD_LDFLAGS += /INCREMENTAL:NO
+
+    ifeq ($(BUILD),debug)
+      STD_LDFLAGS += /DEBUG
+    endif
+
+    ifeq ($(TARGETTYPE),win32)
+      STD_LDFLAGS += /MACHINE:I386
+    endif
+    ifeq ($(TARGETTYPE),win64)
+      STD_LDFLAGS += /MACHINE:AMD64
+    endif
+endif
+
+STD_RM = rm -f
+
+ifeq ($(ISWINDOWS),true)
+  STD_MKDIR = .\\unxutils\\usr\\wbin\\mkdir.exe -p
+else
+  STD_MKDIR = mkdir -p
+endif
+
+ifeq ($(TARGETTYPE),psx2)
+PSX2ROOT        	= /usr/local/sce
+STD_CXX			= ee-gcc
+STD_AS			= $(STD_CXX)
+STD_CXXFLAGS		= $(BUILD_CXXFLAGS) $(UNICODE_CXXFLAGS) \
+				  -fno-for-scope \
+				  -D__PSX2_EE__ -D__STATIC_LINK=$(STATICLINK) -DDO_GUARD=0 -DDO_CHECK=0 \
+		  		  -I$(PSX2ROOT)/ee/gcc/include/g++-2 \
+		  		  -I$(PSX2ROOT)/ee/include \
+				  -I$(PSX2ROOT)/common/include \
+				  -I$(UNREAL_DIR)
+STD_ASFLAGS		= -c -xassembler-with-cpp -Wal,-al
+STD_DVPASM		= ee-dvp-as
+STD_DVPASMFLAGS	= -g -I$(PSX2ROOT)/ee/include
+STD_LDFLAGS		= -nostartfiles -L$(PSX2_LIB)
+STD_LIBS		=
+STD_OBJDUMP		= ee-objdump
+RUN				= dsedb -r run
+STRIP   	        = ee-strip
+STD_AR			= ee-ar
+STD_RUNEXT      	= .elf
+LCFILE			= $(UNREAL_DIR)/PSX2Launch/Src/app.cmd
+VCL				= vcl
+VCLOPT			= -t1
+GASP			= gasp
+
+endif
+
+
+#-----------------------------------------------------------------------------
+# The End.
+#-----------------------------------------------------------------------------

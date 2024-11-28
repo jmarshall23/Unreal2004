@@ -1,0 +1,35 @@
+# Assuming GNU make {>v3.76}
+# $Header$
+# ($Name$)
+
+#------------------------------
+#Platform independent Makefile
+#------------------------------
+
+#include Makefile.defs
+
+# What's to be built
+targetname:=McdConvexCreateHull
+targettype:=library
+
+SOURCES:=\
+	convex/CxConvexHull.cpp\
+	convex/McdConvexHull.cpp\
+	QHull/cnvHull.c\
+	QHull/qhull.c\
+	QHull/geom.c\
+	QHull/geom2.c\
+	QHull/global.c\
+	QHull/io.c\
+	QHull/mem.c\
+	QHull/merge.c\
+	QHull/poly.c\
+	QHull/poly2.c\
+	QHull/qset.c\
+	QHull/stat.c\
+	QHull/user.c
+
+# Standard incantation
+makerulesdir:=../../build/makerules/
+include ${makerulesdir}Make.rules
+

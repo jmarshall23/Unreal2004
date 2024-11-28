@@ -1,0 +1,191 @@
+# -*- makefile -*- vim:noet:ts=8:sw=4:ft=make:
+
+# This file defines ME Toolkit libraries that one may wish to use
+
+# Define a default viewer
+
+VIEWER			?= MEVIEWER2
+
+# Define the list of libraries defined, and mangle them for use.
+# Assumes platform-specific decorations for library
+# base names has already been defined.
+
+LIB_MST			:=$(LIB_PREFIX)Mst$(LIB_SUFFIX)
+LIB_MEAPP		:=$(LIB_PREFIX)MeApp$(LIB_SUFFIX)
+LIB_MEASSETDB           :=$(LIB_PREFIX)MeAssetDB$(LIB_SUFFIX) 
+LIB_MEASSETDBXMLIO      :=$(LIB_PREFIX)MeAssetDBXMLIO$(LIB_SUFFIX)
+LIB_MEASSETFACTORY      :=$(LIB_PREFIX)MeAssetFactory$(LIB_SUFFIX)
+LIB_MEXML               :=$(LIB_PREFIX)MeXML$(LIB_SUFFIX)
+
+LIB_MDT			:=$(LIB_PREFIX)Mdt$(LIB_SUFFIX)
+LIB_MDTBCL		:=$(LIB_PREFIX)MdtBcl$(LIB_SUFFIX)
+LIB_MDTKEA		:=$(LIB_PREFIX)MdtKea$(LL)$(LIB_SUFFIX)
+
+LIB_MCDCONVEX		:=$(LIB_PREFIX)McdConvex$(LIB_SUFFIX)
+LIB_MCDCONVEXHULL	:=$(LIB_PREFIX)McdConvexCreateHull$(LIB_SUFFIX)
+LIB_MCDCOMMON		:=$(LIB_PREFIX)McdCommon$(LL)$(LIB_SUFFIX)
+LIB_MCDFRAME		:=$(LIB_PREFIX)McdFrame$(LIB_SUFFIX)
+LIB_MCDPRIMITIVES	:=$(LIB_PREFIX)McdPrimitives$(LIB_SUFFIX)
+#LIB_MCDCONVEXGJK	:=$(LIB_PREFIX)McdConvexGjk$(LIB_SUFFIX)
+#LIB_MCDRGHEIGHTFIELD	:=$(LIB_PREFIX)McdRGHeightField$(LIB_SUFFIX)
+#LIB_MCDTRIMESH		:=$(LIB_PREFIX)McdTriangleMesh$(LIB_SUFFIX)
+
+LIB_MCDPARTICLE		:=$(LIB_PREFIX)McdParticle$(LIB_SUFFIX)
+
+LIB_MCDRWBSP		:=$(LIB_PREFIX)McdRwBSP$(LIB_SUFFIX)
+
+LIB_MEGLOBALS		:=$(LIB_PREFIX)MeGlobals$(LIB_SUFFIX)
+
+LIB_MEVIEWER		:=$(LIB_PREFIX)MeViewer$(LIB_SUFFIX)
+LIB_MEVIEWER2		:=$(LIB_PREFIX)MeViewer2$(LIB_SUFFIX)
+
+LIB_MPA			:=$(LIB_PREFIX)Mpa$(LIB_SUFFIX)
+
+ifeq '$(DEF_C_LIBRARY)' 'DLLMT'
+    MM			:=_md
+endif
+
+# Additional library definitions for the different platforms
+
+LIB_WIN32_GLUT32	:=glut32.lib
+LIB_WIN32		:=user32.lib gdi32.lib kernel32.lib advapi32.lib
+LIB_WIN32		+=oldnames.lib netapi32.lib
+LIB_WIN32		+=comdlg32.lib comctl32.lib wsock32.lib
+
+LIB_UNIX_OPENGL		:=-lglut -lGL -lGLU -lXmu -lX11 -lXi
+LIB_UNIX		:=-lm #-ltiff 
+
+LIB_PS2			:=-lps2glut -lps2gl -lps2stuff
+LIB_PS2			+=-lgraph -ldma -ldev -lpkt -lpad -lpc
+LIB_PS2			+=-lstdc++ -lm -lc -lkernl
+
+LIB_NGC			:=base os exi si db mtx dvd vi demo pad ai ar ax \
+			  axfx mix sp am axart syn seq dsp dtk card hio \
+			  mcc gx G2D texPalette fileCache support perf
+LIB_NGC			+=amcnotstub odemustubs
+LIB_NGC_DDK		:=amcExi2
+
+ifeq '$(PLATFORM)' 'win32'
+    LIB_SYSTEM		:=$(LIB_WIN32_GLUT32) $(LIB_WIN32)
+endif
+
+ifeq '$(PLATFORM)' 'ps2'
+    LIB_SYSTEM		:=$(LIB_PS2)
+endif
+
+ifeq '$(PLATFORM)' 'irix'
+    LIB_SYSTEM		:=$(LIB_UNIX_OPENGL) $(LIB_UNIX)
+endif
+
+ifeq '$(PLATFORM)' 'linux'
+    LIB_SYSTEM		:=$(LIB_UNIX_OPENGL) $(LIB_UNIX)
+endif
+
+ifeq '$(PLATFORM)' 'linux_hx'
+    LIB_SYSTEM		:= $(LIB_UNIX) #$(LIB_UNIX_OPENGL)
+endif
+
+ifeq '$(PLATFORM)' 'linux_hx_cc'
+    LIB_SYSTEM		:= $(LIB_UNIX) #$(LIB_UNIX_OPENGL)
+endif
+
+ifeq '$(PLATFORM)' 'mips3'
+    LIB_SYSTEM		:=$(LIB_UNIX_OPENGL) $(LIB_UNIX)
+endif
+
+ifeq '$(PLATFORM)' 'irix_o32'
+    LIB_SYSTEM 		:=$(LIB_UNIX_OPENGL) $(LIB_UNIX)
+endif
+
+ifeq '$(PLATFORM)' 'xbox'
+#
+# $(DEFINES) etc. not defined at this point. Anyway NDEBUG is
+# in $(CCPFLAGS) or $(CFLAGS) I think (RMCC)
+#
+#    ifeq '$(findstring NDEBUG,$(DEFINES))' ''
+#	LIB_XBOX   	+=xapilibd.lib d3d8d.lib d3dx8d.lib \
+#		     	  xgraphicsd.lib dsoundd.lib dmusicd.lib
+#    else
+    LIB_XBOX     	+=xapilib.lib d3d8.lib d3dx8.lib \
+		     	  xgraphics.lib dsound.lib dmusic.lib
+#    endif
+    LIB_SYSTEM		:=$(LIB_XBOX) xboxkrnl.lib
+endif
+
+ifeq '$(PLATFORM)' 'ngc'
+    # Nintendo SDK libraries
+    LIB_NGC		:=$(addprefix $$$$NGC_LIB/,$(LIB_NGC))
+    LIB_NGC_DDK		:=$(addprefix $$$$NGC_DDK/,$(LIB_NGC_DDK))
+    ifeq '$(findstring NDEBUG,$(DEFINES))' ''
+	LIB_NGC		:=$(addsuffix D.a,$(LIB_NGC))
+	LIB_NGC_DDK	:=$(addsuffix D.a,$(LIB_NGC_DDK))
+    else
+	LIB_NGC		:=$(addsuffix .a,$(LIB_NGC))
+	LIB_NGC_DDK	:=$(addsuffix .a,$(LIB_NGC_DDK))
+    endif
+
+    LIB_SYSTEM		:=$(LIB_NGC) $(LIB_NGC_DDK)
+
+    # CodeWarrior libraries
+    LIB_SYSTEM		+=$(addprefix $$$$CWNGC_LIBCXX/,$(CWNGC_LIBSCXX))
+    LIB_SYSTEM		+=$(addprefix $$$$CWNGC_LIBC/,$(CWNGC_LIBSC))
+#   LIB_SYSTEM		+=$(addprefix $$$$CWNGC_LIBC/,$(CWNGC_MATH))
+    LIB_SYSTEM		+=$(addprefix $$$$CWNGC_RTLIB/,$(CWNGC_RT))
+    LIB_SYSTEM		+=$(addprefix $$$$CWNGC_EABI/MetroTRK/,$(CWNGC_MINNOW))
+endif
+
+# Some useful aggregations of libraries
+
+# These libraries are listed multiple times because of reciprocal
+# dependencies (the cycle is 2 long). It's not pretty. Perhaps these
+# libraries should be merged.
+
+LIB_MCDALL		:=\
+			  $(LIB_MCDPRIMITIVES) \
+			  $(LIB_MCDCONVEX) \
+			  $(LIB_MCDCONVEXHULL) \
+			  $(LIB_MCDCOMMON) \
+			  $(LIB_MCDFRAME) \
+			  \
+			  $(LIB_MCDPRIMITIVES) \
+			  $(LIB_MCDCONVEX) \
+			  $(LIB_MCDCONVEXHULL) \
+			  $(LIB_MCDCOMMON) \
+			  $(LIB_MCDFRAME)
+
+LIB_MDTALL           	:=$(LIB_MDT) \
+			  $(LIB_MDTKEA) \
+			  $(LIB_MDTBCL)
+
+LIB_COMMON           	:=$(LIB_MEAPP) \
+			  $(LIB_MEASSETDB) \
+			  $(LIB_MEASSETDBXMLIO) \
+			  $(LIB_MEXML) \
+			  $(LIB_MEASSETFACTORY) \
+			  $(LIB_MST) \
+			  $(LIB_$(VIEWER)) \
+			  $(LIB_MDTALL) \
+			  $(LIB_MEGLOBALS)
+
+
+LIB_ALL              	:=$(LIB_MEAPP) \
+			  $(LIB_MEASSETDB) \
+			  $(LIB_MEASSETDBXMLIO) \
+			  $(LIB_MEXML) \
+			  $(LIB_MEASSETFACTORY) \
+			  $(LIB_MST) \
+			  $(LIB_$(VIEWER)) \
+			  $(LIB_MDTALL) \
+			  $(LIB_MCDALL) \
+			  $(LIB_MEGLOBALS) \
+			  $(LIB_SYSTEM)
+
+LIB_ALL_NOCD		:=$(LIB_COMMON) $(LIB_SYSTEM)
+
+# Prettify these definitions for use in commands
+
+LIB_COMMON           	:=$(strip $(LIB_COMMON))
+LIB_MCDALL           	:=$(strip $(LIB_MCDALL))
+LIB_MDTALL           	:=$(strip $(LIB_MDTALL))
+LIB_ALL              	:=$(strip $(LIB_ALL))
+lIB_ALL_NOCD         	:=$(strip $(LIB_ALL_NOCD))

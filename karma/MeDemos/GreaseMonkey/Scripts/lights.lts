@@ -1,0 +1,26 @@
+
+Light
+	Type  	AMBIENT
+	Position 	0 0 0
+	Direction	0
+	Pitch		0
+	RGB  		255 255 255
+	Alpha 	255
+	Radius	0
+	Cone		0
+	World		1
+	Atomics	1
+EndLight
+
+Light
+	Type  	DIRECTIONAL
+	Position 	-118 -1263 360
+	Direction	0
+	Pitch		25
+	RGB  		600 400 300
+	Alpha 	255
+	Radius	0
+	Cone		0
+	World		0
+	Atomics	1
+EndLight

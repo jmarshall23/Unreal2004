@@ -1,0 +1,1 @@
+<tr><td class="<%CellClass%>" nowrap>&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="<%GroupName%>" value="<%MutatorClass%>"<%Checked%>>&nbsp;<%MutatorName%></td><td class="<%CellClass%>"><%MutatorDesc%></td></tr>

@@ -1,0 +1,94 @@
+Collision TODO list for Beta.
+
+DISCUSSION:
+
+API ----------------------------------------------------------------------
+
+Separate libraries for 
+ - McdFrame - source
+ - McdCommon - no source, include Space, common utilities.
+
+[Deferred] Merge struct McdParticleIntersect with McdIntersect ??
+
+const correctness of Mcd
+
+consistency of structs: mFieldName v.s. m_FieldName v.s. fieldName (for beta?)
+
+FEATURES ----------------------------------------------------------------
+
+[Scott] Particle system math cleanup (Mps)
+
+[Scott] Particle collision
+	Particle cleanup:
+		McdParticleIntersectHello/Goodbye --> McdHello/McdGoodbye
+		McdParticle system accessors/mutators (get/set fns)
+
+RGHeightField accessors/mutators. Build function?
+
+Test:
+          - space api
+[Scott]   - composite
+	  - memory leaks in convexStairs, ...
+
+Mesh Primitive interactions
+
+name string in McdModel
+
+McdXY[S/G]etContactBufferSize() X,Y = geometries
+
+TriList - RW (Paddy?)
+
+SpaceResize
+
+IntersectAt - epsilon needs cleaning up
+
+BUG FIXES --------------------------------------------------------------
+
+convex stability with small number of contacts
+
+OTHER CLEANUP ----------------------------------------------------------
+[probably non-essential for beta]
+
+ 5.b) now can "unwrap" the redundant Mcd wrappers in those same IxAB.cpp
+    files, which had been used to "cast" CxObject functions into
+    McdModel/McdIntersectResult functions.
+    Most of the wrapping is currently being done via
+    MCD_INTERSECT_DEFINE macro from McdIntersectDefine.h.
+
+   Accomodate in implementations. Where implementation make
+   non-trivial use of lsTransform, can either find corresponding MeMath
+   function, if any, or cast to type lsTransform inside that
+   implementation:
+   eg:
+
+    McdBoxUpdateAABB( McdGeometry* g, MeMatrix4 _tm)
+     {
+       lsTransform *tm = (lsTransform*)_tm;
+
+- * Docs: user plug-in mechanism: types and interactions.
+
+- checks,checks and more checks. I've written lots of code with
+   incomplete/missing checks that should be there for the debug
+ version..
+
+- merge vectormath.[e]h with lsVec3
+
+- expose (a copy of) the primitive-triangle_list code that is used in
+renderware.
+
+- mBounds in geometry
+
+- doxygen McdLoad/SaveXML.cpp
+
+- separate/virtualize McdLoad/SaveXML
+
+- assert from cnvHull -> MCD_ASSERT
+
+- CX_MALLOC
+
+TALK ABOUT: ------------------------------------------------------------
+
+POST BETA: -------------------------------------------------------------
+
+For Lumeo: flag triangles as non-colliding using a non-interaction group id.
+

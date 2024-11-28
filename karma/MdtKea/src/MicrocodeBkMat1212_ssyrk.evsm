@@ -1,0 +1,502 @@
+;void VecAsmBkMat33_ssyrk(float *A,float *C)
+;
+;On Entry: vi1=quadword pointer to A (should be 0 for A buffer 0, 36 for A buffer 1)
+;On Exit:  vi1=36-vi1o, so a double buffer is implemented with one A buffer starting at 0, the other starting at 36
+;          answer is written to micromem[180..216) 
+;Takes 470 cycles
+
+MicrocodeBkMat1212_ssyrk:
+; ssyrk(a0,c0) 
+; ssyrk(a1,c0)
+; ssyrk(a2,c0) 
+; 72 cycles
+	nop				lq  vf5,(0*4+0+0)(vi1)	     ;  				   'lq @A0col0,(0*4+0+0)(vi1)
+	nop				lq  vf6,(0*4+1+0)(vi1)	     ;  				   'lq @A0col1,(0*4+1+0)(vi1)
+	nop				lq  vf7,(0*4+2+0)(vi1)	     ;  				   'lq @A0col2,(0*4+2+0)(vi1)
+	nop				lq  vf8,(0*4+3+0)(vi1)	     ;  				   'lq @A0col3,(0*4+3+0)(vi1)
+	nop				lq  vf9,(1*4+0+0)(vi1)	     ;  				   'lq @A1col0,(1*4+0+0)(vi1)
+	nop				lq vf10,(1*4+1+0)(vi1)	     ;  				   'lq @A1col1,(1*4+1+0)(vi1)
+	nop				lq vf11,(1*4+2+0)(vi1)	     ;  				   'lq @A1col2,(1*4+2+0)(vi1)
+	nop				lq vf12,(1*4+3+0)(vi1)	     ;  				   'lq @A1col3,(1*4+3+0)(vi1)
+	nop				lq vf13,(2*4+0+0)(vi1)	     ;  				   'lq @A2col0,(2*4+0+0)(vi1)
+	nop				lq vf14,(2*4+1+0)(vi1)	     ;  				   'lq @A2col1,(2*4+1+0)(vi1)
+	nop				lq vf15,(2*4+2+0)(vi1)	     ;  				   'lq @A2col2,(2*4+2+0)(vi1)
+	nop				lq vf16,(2*4+3+0)(vi1)	     ;  				   'lq @A2col3,(2*4+3+0)(vi1)
+	nop				lq  vf1,(0*4+0+180)(vi0)	     ;  				   'lq @Ccol0,(0*4+0+180)(vi0)
+	nop				lq  vf2,(0*4+1+180)(vi0)	     ;  				   'lq @Ccol1,(0*4+1+180)(vi0)
+	nop				lq  vf3,(0*4+2+180)(vi0)	     ;  				   'lq @Ccol2,(0*4+2+180)(vi0)
+	nop				lq  vf4,(0*4+3+180)(vi0)	     ;  				   'lq @Ccol3,(0*4+3+180)(vi0)
+	addax.xyzw   ACC,  vf1,  vf0	nop			     ;  ACC	   = Ccol0+K.x
+	msubax.xyzw  ACC,  vf5,  vf5	nop			     ;  ACC	   = ACC - A0col0*A0col0.x
+	msubax.xyzw  ACC,  vf6,  vf6	nop			     ;  ACC	   = ACC - A0col1*A0col1.x
+	msubax.xyzw  ACC,  vf7,  vf7	nop			     ;  ACC	   = ACC - A0col2*A0col2.x
+	msubax.xyzw  ACC,  vf8,  vf8	nop			     ;  ACC	   = ACC - A0col3*A0col3.x
+	msubax.xyzw  ACC,  vf9,  vf9	nop			     ;  ACC	   = ACC - A1col0*A1col0.x
+	msubax.xyzw  ACC, vf10, vf10	nop			     ;  ACC	   = ACC - A1col1*A1col1.x
+	msubax.xyzw  ACC, vf11, vf11	nop			     ;  ACC	   = ACC - A1col2*A1col2.x
+	msubax.xyzw  ACC, vf12, vf12	nop			     ;  ACC	   = ACC - A1col3*A1col3.x
+	msubax.xyzw  ACC, vf13, vf13	nop			     ;  ACC	   = ACC - A2col0*A2col0.x
+	msubax.xyzw  ACC, vf14, vf14	nop			     ;  ACC	   = ACC - A2col1*A2col1.x
+	msubax.xyzw  ACC, vf15, vf15	nop			     ;  ACC	   = ACC - A2col2*A2col2.x
+	msubx.xyzw   vf1, vf16, vf16	nop			     ;  Ccol0.xyzw = ACC - A2col3*A2col3.x
+	addax.xyzw   ACC,  vf2,  vf0	nop			     ;  ACC	   = Ccol1+K.x
+	msubay.xyzw  ACC,  vf5,  vf5	nop			     ;  ACC	   = ACC - A0col0*A0col0.y
+	msubay.xyzw  ACC,  vf6,  vf6	nop			     ;  ACC	   = ACC - A0col1*A0col1.y
+	msubay.xyzw  ACC,  vf7,  vf7	nop			     ;  ACC	   = ACC - A0col2*A0col2.y
+	msubay.xyzw  ACC,  vf8,  vf8	nop			     ;  ACC	   = ACC - A0col3*A0col3.y
+	msubay.xyzw  ACC,  vf9,  vf9	nop			     ;  ACC	   = ACC - A1col0*A1col0.y
+	msubay.xyzw  ACC, vf10, vf10	nop			     ;  ACC	   = ACC - A1col1*A1col1.y
+	msubay.xyzw  ACC, vf11, vf11	nop			     ;  ACC	   = ACC - A1col2*A1col2.y
+	msubay.xyzw  ACC, vf12, vf12	nop			     ;  ACC	   = ACC - A1col3*A1col3.y
+	msubay.xyzw  ACC, vf13, vf13	nop			     ;  ACC	   = ACC - A2col0*A2col0.y
+	msubay.xyzw  ACC, vf14, vf14	nop			     ;  ACC	   = ACC - A2col1*A2col1.y
+	msubay.xyzw  ACC, vf15, vf15	nop			     ;  ACC	   = ACC - A2col2*A2col2.y
+	msuby.yzw    vf2, vf16, vf16	nop			     ;  Ccol1.yzw  = ACC - A2col3*A2col3.y
+	addax.xyzw   ACC,  vf3,  vf0	nop			     ;  ACC	   = Ccol2+K.x
+	msubaz.xyzw  ACC,  vf5,  vf5	nop			     ;  ACC	   = ACC - A0col0*A0col0.z
+	msubaz.xyzw  ACC,  vf6,  vf6	nop			     ;  ACC	   = ACC - A0col1*A0col1.z
+	msubaz.xyzw  ACC,  vf7,  vf7	nop			     ;  ACC	   = ACC - A0col2*A0col2.z
+	msubaz.xyzw  ACC,  vf8,  vf8	nop			     ;  ACC	   = ACC - A0col3*A0col3.z
+	msubaz.xyzw  ACC,  vf9,  vf9	nop			     ;  ACC	   = ACC - A1col0*A1col0.z
+	msubaz.xyzw  ACC, vf10, vf10	nop			     ;  ACC	   = ACC - A1col1*A1col1.z
+	msubaz.xyzw  ACC, vf11, vf11	nop			     ;  ACC	   = ACC - A1col2*A1col2.z
+	msubaz.xyzw  ACC, vf12, vf12	nop			     ;  ACC	   = ACC - A1col3*A1col3.z
+	msubaz.xyzw  ACC, vf13, vf13	nop			     ;  ACC	   = ACC - A2col0*A2col0.z
+	msubaz.xyzw  ACC, vf14, vf14	nop			     ;  ACC	   = ACC - A2col1*A2col1.z
+	msubaz.xyzw  ACC, vf15, vf15	nop			     ;  ACC	   = ACC - A2col2*A2col2.z
+	msubz.zw     vf3, vf16, vf16	nop			     ;  Ccol2.zw   = ACC - A2col3*A2col3.z
+	addax.xyzw   ACC,  vf4,  vf0	nop			     ;  ACC	   = Ccol3+K.x
+	msubaw.xyzw  ACC,  vf5,  vf5	nop			     ;  ACC	   = ACC - A0col0*A0col0.w
+	msubaw.xyzw  ACC,  vf6,  vf6	nop			     ;  ACC	   = ACC - A0col1*A0col1.w
+	msubaw.xyzw  ACC,  vf7,  vf7	nop			     ;  ACC	   = ACC - A0col2*A0col2.w
+	msubaw.xyzw  ACC,  vf8,  vf8	nop			     ;  ACC	   = ACC - A0col3*A0col3.w
+	msubaw.xyzw  ACC,  vf9,  vf9	nop			     ;  ACC	   = ACC - A1col0*A1col0.w
+	msubaw.xyzw  ACC, vf10, vf10	nop			     ;  ACC	   = ACC - A1col1*A1col1.w
+	msubaw.xyzw  ACC, vf11, vf11	nop			     ;  ACC	   = ACC - A1col2*A1col2.w
+	msubaw.xyzw  ACC, vf12, vf12	nop			     ;  ACC	   = ACC - A1col3*A1col3.w
+	msubaw.xyzw  ACC, vf13, vf13	nop			     ;  ACC	   = ACC - A2col0*A2col0.w
+	msubaw.xyzw  ACC, vf14, vf14	nop			     ;  ACC	   = ACC - A2col1*A2col1.w
+	msubaw.xyzw  ACC, vf15, vf15	nop			     ;  ACC	   = ACC - A2col2*A2col2.w
+	msubw.w      vf4, vf16, vf16	nop			     ;  Ccol3.w    = ACC - A2col3*A2col3.w
+	nop		        	sq  vf1,(0*4+0+180)(vi0)	     ;  'sq @Ccol0,(0*4+0+180)(vi0)
+	nop		        	sq  vf2,(0*4+1+180)(vi0)	     ;  'sq @Ccol1,(0*4+1+180)(vi0)
+	nop		        	sq  vf3,(0*4+2+180)(vi0)	     ;  'sq @Ccol2,(0*4+2+180)(vi0)
+	nop		        	sq  vf4,(0*4+3+180)(vi0)	     ;  'sq @Ccol3,(0*4+3+180)(vi0)
+
+; sgemm(a3,a0,c3)
+; sgemm(a4,a1,c3)
+; sgemm(a5,a2,c3)
+; 85 cycles
+	nop		     	    	lq  vf5, (3*4+0+0)(vi1)	     ;  'lq @A0col0, (3*4+0+0)(vi1)
+	nop				lq  vf6, (3*4+1+0)(vi1)	     ;  'lq @A0col1, (3*4+1+0)(vi1)
+	nop				lq  vf7, (3*4+2+0)(vi1)	     ;  'lq @A0col2, (3*4+2+0)(vi1)
+	nop				lq  vf8, (3*4+3+0)(vi1)	     ;  'lq @A0col3, (3*4+3+0)(vi1)
+	nop				lq  vf9, (4*4+0+0)(vi1)	     ;  'lq @A1col0, (4*4+0+0)(vi1)
+	nop				lq vf10, (4*4+1+0)(vi1)	     ;  'lq @A1col1, (4*4+1+0)(vi1)
+	nop				lq vf11, (4*4+2+0)(vi1)	     ;  'lq @A1col2, (4*4+2+0)(vi1)
+	nop				lq vf12, (4*4+3+0)(vi1)	     ;  'lq @A1col3, (4*4+3+0)(vi1)
+	nop				lq vf13, (5*4+0+0)(vi1)	     ;  'lq @A2col0, (5*4+0+0)(vi1)
+	nop				lq vf14, (5*4+1+0)(vi1)	     ;  'lq @A2col1, (5*4+1+0)(vi1)
+	nop				lq vf15, (5*4+2+0)(vi1)	     ;  'lq @A2col2, (5*4+2+0)(vi1)
+	nop				lq vf16, (5*4+3+0)(vi1)	     ;  'lq @A2col3, (5*4+3+0)(vi1)
+	nop				lq vf17,(0*4+0+0)(vi1)	     ;  'lq @B0Trow0,(0*4+0+0)(vi1)
+	nop				lq vf18,(0*4+1+0)(vi1)	     ;  'lq @B0Trow1,(0*4+1+0)(vi1)
+	nop				lq vf19,(0*4+2+0)(vi1)	     ;  'lq @B0Trow2,(0*4+2+0)(vi1)
+	nop				lq vf20,(0*4+3+0)(vi1)	     ;  'lq @B0Trow3,(0*4+3+0)(vi1)
+	nop				lq vf21,(1*4+0+0)(vi1)	     ;  'lq @B1Trow0,(1*4+0+0)(vi1)
+	nop				lq vf22,(1*4+1+0)(vi1)	     ;  'lq @B1Trow1,(1*4+1+0)(vi1)
+	nop				lq vf23,(1*4+2+0)(vi1)	     ;  'lq @B1Trow2,(1*4+2+0)(vi1)
+	nop				lq vf24,(1*4+3+0)(vi1)	     ;  'lq @B1Trow3,(1*4+3+0)(vi1)
+	nop				lq vf25,(2*4+0+0)(vi1)	     ;  'lq @B2Trow0,(2*4+0+0)(vi1)
+	nop				lq vf26,(2*4+1+0)(vi1)	     ;  'lq @B2Trow1,(2*4+1+0)(vi1)
+	nop				lq vf27,(2*4+2+0)(vi1)	     ;  'lq @B2Trow2,(2*4+2+0)(vi1)
+	nop				lq vf28,(2*4+3+0)(vi1)	     ;  'lq @B2Trow3,(2*4+3+0)(vi1)
+	nop				lq  vf1, (3*4+0+180)(vi0)	     ;  'lq @Ccol0, (3*4+0+180)(vi0)
+	nop				lq  vf2, (3*4+1+180)(vi0)	     ;  'lq @Ccol1, (3*4+1+180)(vi0)
+	nop				lq  vf3, (3*4+2+180)(vi0)	     ;  'lq @Ccol2, (3*4+2+180)(vi0)
+	nop				lq  vf4, (3*4+3+180)(vi0)	     ;  'lq @Ccol3, (3*4+3+180)(vi0)
+	addax.xyzw   ACC,  vf1,  vf0	nop			     ;  ACC   = Ccol0+K.x
+	msubax.xyzw  ACC,  vf5, vf17	nop			     ;  ACC   = ACC - A0col0*B0Trow0.x
+	msubax.xyzw  ACC,  vf6, vf18	nop			     ;  ACC   = ACC - A0col1*B0Trow1.x
+	msubax.xyzw  ACC,  vf7, vf19	nop			     ;  ACC   = ACC - A0col2*B0Trow2.x
+	msubax.xyzw  ACC,  vf8, vf20	nop			     ;  ACC   = ACC - A0col3*B0Trow3.x
+	msubax.xyzw  ACC,  vf9, vf21	nop			     ;  ACC   = ACC - A1col0*B1Trow0.x
+	msubax.xyzw  ACC, vf10, vf22	nop			     ;  ACC   = ACC - A1col1*B1Trow1.x
+	msubax.xyzw  ACC, vf11, vf23	nop			     ;  ACC   = ACC - A1col2*B1Trow2.x
+	msubax.xyzw  ACC, vf12, vf24	nop			     ;  ACC   = ACC - A1col3*B1Trow3.x
+	msubax.xyzw  ACC, vf13, vf25	nop			     ;  ACC   = ACC - A2col0*B2Trow0.x
+	msubax.xyzw  ACC, vf14, vf26	nop			     ;  ACC   = ACC - A2col1*B2Trow1.x
+	msubax.xyzw  ACC, vf15, vf27	nop			     ;  ACC   = ACC - A2col2*B2Trow2.x
+	msubx.xyzw   vf1, vf16, vf28	nop			     ;  Ccol0 = ACC - A2col3*B2Trow3.x
+	addax.xyzw   ACC,  vf2,  vf0	nop			     ;  ACC   = Ccol1+K.x
+	msubay.xyzw  ACC,  vf5, vf17	nop			     ;  ACC   = ACC - A0col0*B0Trow0.y
+	msubay.xyzw  ACC,  vf6, vf18	nop			     ;  ACC   = ACC - A0col1*B0Trow1.y
+	msubay.xyzw  ACC,  vf7, vf19	nop			     ;  ACC   = ACC - A0col2*B0Trow2.y
+	msubay.xyzw  ACC,  vf8, vf20	nop			     ;  ACC   = ACC - A0col3*B0Trow3.y
+	msubay.xyzw  ACC,  vf9, vf21	nop			     ;  ACC   = ACC - A1col0*B1Trow0.y
+	msubay.xyzw  ACC, vf10, vf22	nop			     ;  ACC   = ACC - A1col1*B1Trow1.y
+	msubay.xyzw  ACC, vf11, vf23	nop			     ;  ACC   = ACC - A1col2*B1Trow2.y
+	msubay.xyzw  ACC, vf12, vf24	nop			     ;  ACC   = ACC - A1col3*B1Trow3.y
+	msubay.xyzw  ACC, vf13, vf25	nop			     ;  ACC   = ACC - A2col0*B2Trow0.y
+	msubay.xyzw  ACC, vf14, vf26	nop			     ;  ACC   = ACC - A2col1*B2Trow1.y
+	msubay.xyzw  ACC, vf15, vf27	nop			     ;  ACC   = ACC - A2col2*B2Trow2.y
+	msuby.xyzw   vf2, vf16, vf28	nop			     ;  Ccol1 = ACC - A2col3*B2Trow3.y
+	addax.xyzw   ACC,  vf3,  vf0	nop			     ;  ACC   = Ccol2+K.x
+	addax.xyzw   ACC,  vf3,  vf0	nop			     ;  ACC   = Ccol2+K.x
+	msubaz.xyzw  ACC,  vf5, vf17	nop			     ;  ACC   = ACC - A0col0*B0Trow0.z
+	msubaz.xyzw  ACC,  vf6, vf18	nop			     ;  ACC   = ACC - A0col1*B0Trow1.z
+	msubaz.xyzw  ACC,  vf7, vf19	nop			     ;  ACC   = ACC - A0col2*B0Trow2.z
+	msubaz.xyzw  ACC,  vf8, vf20	nop			     ;  ACC   = ACC - A0col3*B0Trow3.z
+	msubaz.xyzw  ACC,  vf9, vf21	nop			     ;  ACC   = ACC - A1col0*B1Trow0.z
+	msubaz.xyzw  ACC, vf10, vf22	nop			     ;  ACC   = ACC - A1col1*B1Trow1.z
+	msubaz.xyzw  ACC, vf11, vf23	nop			     ;  ACC   = ACC - A1col2*B1Trow2.z
+	msubaz.xyzw  ACC, vf12, vf24	nop			     ;  ACC   = ACC - A1col3*B1Trow3.z
+	msubaz.xyzw  ACC, vf13, vf25	nop			     ;  ACC   = ACC - A2col0*B2Trow0.z
+	msubaz.xyzw  ACC, vf14, vf26	nop			     ;  ACC   = ACC - A2col1*B2Trow1.z
+	msubaz.xyzw  ACC, vf15, vf27	nop			     ;  ACC   = ACC - A2col2*B2Trow2.z
+	msubz.xyzw   vf3, vf16, vf28	nop			     ;  Ccol2 = ACC - A2col3*B2Trow3.z
+	addax.xyzw   ACC,  vf4,  vf0	nop			     ;  ACC   = Ccol3+K.x
+	msubaw.xyzw  ACC,  vf5, vf17	nop			     ;  ACC   = ACC - A0col0*B0Trow0.w
+	msubaw.xyzw  ACC,  vf6, vf18	nop			     ;  ACC   = ACC - A0col1*B0Trow1.w
+	msubaw.xyzw  ACC,  vf7, vf19	nop			     ;  ACC   = ACC - A0col2*B0Trow2.w
+	msubaw.xyzw  ACC,  vf8, vf20	nop			     ;  ACC   = ACC - A0col3*B0Trow3.w
+	msubaw.xyzw  ACC,  vf9, vf21	nop			     ;  ACC   = ACC - A1col0*B1Trow0.w
+	msubaw.xyzw  ACC, vf10, vf22	nop			     ;  ACC   = ACC - A1col1*B1Trow1.w
+	msubaw.xyzw  ACC, vf11, vf23	nop			     ;  ACC   = ACC - A1col2*B1Trow2.w
+	msubaw.xyzw  ACC, vf12, vf24	nop			     ;  ACC   = ACC - A1col3*B1Trow3.w
+	msubaw.xyzw  ACC, vf13, vf25	nop			     ;  ACC   = ACC - A2col0*B2Trow0.w
+	msubaw.xyzw  ACC, vf14, vf26	nop			     ;  ACC   = ACC - A2col1*B2Trow1.w
+	msubaw.xyzw  ACC, vf15, vf27	nop			     ;  ACC   = ACC - A2col2*B2Trow2.w
+	msubw.xyzw   vf4, vf16, vf28	nop			     ;  Ccol3 = ACC - A2col3*B2Trow3.w
+	nop				sq  vf1, (3*4+0+180)(vi0)	     ;  'sq @Ccol0, (3*4+0+180)(vi0)
+	nop				sq  vf2, (3*4+1+180)(vi0)	     ;  'sq @Ccol1, (3*4+1+180)(vi0)
+	nop				sq  vf3, (3*4+2+180)(vi0)	     ;  'sq @Ccol2, (3*4+2+180)(vi0)
+	nop				sq  vf4, (3*4+3+180)(vi0)	     ;  'sq @Ccol3, (3*4+3+180)(vi0)
+; ssyrk(a3,c4)
+; ssyrk(a4,c4)
+; ssyrk(a5,c4)
+; 72 cycles
+	nop				lq  vf5,(3*4+0+0)(vi1)	     ;  'lq @A0col0,(3*4+0+0)(vi1)
+	nop				lq  vf6,(3*4+1+0)(vi1)	     ;  'lq @A0col1,(3*4+1+0)(vi1)
+	nop				lq  vf7,(3*4+2+0)(vi1)	     ;  'lq @A0col2,(3*4+2+0)(vi1)
+	nop				lq  vf8,(3*4+3+0)(vi1)	     ;  'lq @A0col3,(3*4+3+0)(vi1)
+	nop				lq  vf9,(4*4+0+0)(vi1)	     ;  'lq @A1col0,(4*4+0+0)(vi1)
+	nop				lq vf10,(4*4+1+0)(vi1)	     ;  'lq @A1col1,(4*4+1+0)(vi1)
+	nop				lq vf11,(4*4+2+0)(vi1)	     ;  'lq @A1col2,(4*4+2+0)(vi1)
+	nop				lq vf12,(4*4+3+0)(vi1)	     ;  'lq @A1col3,(4*4+3+0)(vi1)
+	nop				lq vf13,(5*4+0+0)(vi1)	     ;  'lq @A2col0,(5*4+0+0)(vi1)
+	nop				lq vf14,(5*4+1+0)(vi1)	     ;  'lq @A2col1,(5*4+1+0)(vi1)
+	nop				lq vf15,(5*4+2+0)(vi1)	     ;  'lq @A2col2,(5*4+2+0)(vi1)
+	nop				lq vf16,(5*4+3+0)(vi1)	     ;  'lq @A2col3,(5*4+3+0)(vi1)
+	nop				lq  vf1,(4*4+0+180)(vi0)	     ;  'lq @Ccol0,(4*4+0+180)(vi0)
+	nop				lq  vf2,(4*4+1+180)(vi0)	     ;  'lq @Ccol1,(4*4+1+180)(vi0)
+	nop				lq  vf3,(4*4+2+180)(vi0)	     ;  'lq @Ccol2,(4*4+2+180)(vi0)
+	nop				lq  vf4,(4*4+3+180)(vi0)	     ;  'lq @Ccol3,(4*4+3+180)(vi0)
+	addax.xyzw   ACC,  vf1,  vf0	nop			     ;  ACC	     = Ccol0+K.x
+	msubax.xyzw  ACC,  vf5,  vf5	nop			     ;  ACC	   = ACC - A0col0*A0col0.x
+	msubax.xyzw  ACC,  vf6,  vf6	nop			     ;  ACC	   = ACC - A0col1*A0col1.x
+	msubax.xyzw  ACC,  vf7,  vf7	nop			     ;  ACC	   = ACC - A0col2*A0col2.x
+	msubax.xyzw  ACC,  vf8,  vf8	nop			     ;  ACC	   = ACC - A0col3*A0col3.x
+	msubax.xyzw  ACC,  vf9,  vf9	nop			     ;  ACC	   = ACC - A1col0*A1col0.x
+	msubax.xyzw  ACC, vf10, vf10	nop			     ;  ACC	   = ACC - A1col1*A1col1.x
+	msubax.xyzw  ACC, vf11, vf11	nop			     ;  ACC	   = ACC - A1col2*A1col2.x
+	msubax.xyzw  ACC, vf12, vf12	nop			     ;  ACC	   = ACC - A1col3*A1col3.x
+	msubax.xyzw  ACC, vf13, vf13	nop			     ;  ACC	   = ACC - A2col0*A2col0.x
+	msubax.xyzw  ACC, vf14, vf14	nop			     ;  ACC	   = ACC - A2col1*A2col1.x
+	msubax.xyzw  ACC, vf15, vf15	nop			     ;  ACC	   = ACC - A2col2*A2col2.x
+	msubx.xyzw   vf1, vf16, vf16	nop			     ;  Ccol0.xyzw = ACC - A2col3*A2col3.x
+	addax.xyzw   ACC,  vf2,  vf0	nop			     ;  ACC	   = Ccol1+K.x
+	msubay.xyzw  ACC,  vf5,  vf5	nop			     ;  ACC	   = ACC - A0col0*A0col0.y
+	msubay.xyzw  ACC,  vf6,  vf6	nop			     ;  ACC	   = ACC - A0col1*A0col1.y
+	msubay.xyzw  ACC,  vf7,  vf7	nop			     ;  ACC	   = ACC - A0col2*A0col2.y
+	msubay.xyzw  ACC,  vf8,  vf8	nop			     ;  ACC	   = ACC - A0col3*A0col3.y
+	msubay.xyzw  ACC,  vf9,  vf9	nop			     ;  ACC	   = ACC - A1col0*A1col0.y
+	msubay.xyzw  ACC, vf10, vf10	nop			     ;  ACC	   = ACC - A1col1*A1col1.y
+	msubay.xyzw  ACC, vf11, vf11	nop			     ;  ACC	   = ACC - A1col2*A1col2.y
+	msubay.xyzw  ACC, vf12, vf12	nop			     ;  ACC	   = ACC - A1col3*A1col3.y
+	msubay.xyzw  ACC, vf13, vf13	nop			     ;  ACC	   = ACC - A2col0*A2col0.y
+	msubay.xyzw  ACC, vf14, vf14	nop			     ;  ACC	   = ACC - A2col1*A2col1.y
+	msubay.xyzw  ACC, vf15, vf15	nop			     ;  ACC	   = ACC - A2col2*A2col2.y
+	msuby.yzw    vf2, vf16, vf16	nop			     ;  Ccol1.yzw  = ACC - A2col3*A2col3.y
+	addax.xyzw   ACC,  vf3,  vf0	nop			     ;  ACC	   = Ccol2+K.x
+	msubaz.xyzw  ACC,  vf5,  vf5	nop			     ;  ACC	   = ACC - A0col0*A0col0.z
+	msubaz.xyzw  ACC,  vf6,  vf6	nop			     ;  ACC	   = ACC - A0col1*A0col1.z
+	msubaz.xyzw  ACC,  vf7,  vf7	nop			     ;  ACC	   = ACC - A0col2*A0col2.z
+	msubaz.xyzw  ACC,  vf8,  vf8	nop			     ;  ACC	   = ACC - A0col3*A0col3.z
+	msubaz.xyzw  ACC,  vf9,  vf9	nop			     ;  ACC	   = ACC - A1col0*A1col0.z
+	msubaz.xyzw  ACC, vf10, vf10	nop			     ;  ACC	   = ACC - A1col1*A1col1.z
+	msubaz.xyzw  ACC, vf11, vf11	nop			     ;  ACC	   = ACC - A1col2*A1col2.z
+	msubaz.xyzw  ACC, vf12, vf12	nop			     ;  ACC	   = ACC - A1col3*A1col3.z
+	msubaz.xyzw  ACC, vf13, vf13	nop			     ;  ACC	   = ACC - A2col0*A2col0.z
+	msubaz.xyzw  ACC, vf14, vf14	nop			     ;  ACC	   = ACC - A2col1*A2col1.z
+	msubaz.xyzw  ACC, vf15, vf15	nop			     ;  ACC	   = ACC - A2col2*A2col2.z
+	msubz.zw     vf3, vf16, vf16	nop			     ;  Ccol2.zw   = ACC - A2col3*A2col3.z
+	addax.xyzw   ACC,  vf4,  vf0	nop			     ;  ACC	   = Ccol3+K.x
+	msubaw.xyzw  ACC,  vf5,  vf5	nop			     ;  ACC	   = ACC - A0col0*A0col0.w
+	msubaw.xyzw  ACC,  vf6,  vf6	nop			     ;  ACC	   = ACC - A0col1*A0col1.w
+	msubaw.xyzw  ACC,  vf7,  vf7	nop			     ;  ACC	   = ACC - A0col2*A0col2.w
+	msubaw.xyzw  ACC,  vf8,  vf8	nop			     ;  ACC	   = ACC - A0col3*A0col3.w
+	msubaw.xyzw  ACC,  vf9,  vf9	nop			     ;  ACC	   = ACC - A1col0*A1col0.w
+	msubaw.xyzw  ACC, vf10, vf10	nop			     ;  ACC	   = ACC - A1col1*A1col1.w
+	msubaw.xyzw  ACC, vf11, vf11	nop			     ;  ACC	   = ACC - A1col2*A1col2.w
+	msubaw.xyzw  ACC, vf12, vf12	nop			     ;  ACC	   = ACC - A1col3*A1col3.w
+	msubaw.xyzw  ACC, vf13, vf13	nop			     ;  ACC	   = ACC - A2col0*A2col0.w
+	msubaw.xyzw  ACC, vf14, vf14	nop			     ;  ACC	   = ACC - A2col1*A2col1.w
+	msubaw.xyzw  ACC, vf15, vf15	nop			     ;  ACC	   = ACC - A2col2*A2col2.w
+	msubw.w      vf4, vf16, vf16	nop			     ;  Ccol3.w    = ACC - A2col3*A2col3.w
+	nop		    	    	sq  vf1,(4*4+0+180)(vi0)	     ;  'sq @Ccol0,(4*4+0+180)(vi0)
+	nop		    	    	sq  vf2,(4*4+1+180)(vi0)	     ;  'sq @Ccol1,(4*4+1+180)(vi0)
+	nop		    	    	sq  vf3,(4*4+2+180)(vi0)	     ;  'sq @Ccol2,(4*4+2+180)(vi0)
+	nop		    	    	sq  vf4,(4*4+3+180)(vi0)	     ;  'sq @Ccol3,(4*4+3+180)(vi0)
+; sgemm(a6,a0,c6)
+; sgemm(a7,a1,c6)
+; sgemm(a8,a2,c6)
+; 84 cycles
+	nop				lq  vf5, (6*4+0+0)(vi1)	     ;  'lq @A0col0, (6*4+0+0)(vi1)
+	nop				lq  vf6, (6*4+1+0)(vi1)	     ;  'lq @A0col1, (6*4+1+0)(vi1)
+	nop				lq  vf7, (6*4+2+0)(vi1)	     ;  'lq @A0col2, (6*4+2+0)(vi1)
+	nop				lq  vf8, (6*4+3+0)(vi1)	     ;  'lq @A0col3, (6*4+3+0)(vi1)
+	nop				lq  vf9, (7*4+0+0)(vi1)	     ;  'lq @A1col0, (7*4+0+0)(vi1)
+	nop				lq vf10, (7*4+1+0)(vi1)	     ;  'lq @A1col1, (7*4+1+0)(vi1)
+	nop				lq vf11, (7*4+2+0)(vi1)	     ;  'lq @A1col2, (7*4+2+0)(vi1)
+	nop				lq vf12, (7*4+3+0)(vi1)	     ;  'lq @A1col3, (7*4+3+0)(vi1)
+	nop				lq vf13, (8*4+0+0)(vi1)	     ;  'lq @A2col0, (8*4+0+0)(vi1)
+	nop				lq vf14, (8*4+1+0)(vi1)	     ;  'lq @A2col1, (8*4+1+0)(vi1)
+	nop				lq vf15, (8*4+2+0)(vi1)	     ;  'lq @A2col2, (8*4+2+0)(vi1)
+	nop				lq vf16, (8*4+3+0)(vi1)	     ;  'lq @A2col3, (8*4+3+0)(vi1)
+	nop				lq vf17,(0*4+0+0)(vi1)	     ;  'lq @B0Trow0,(0*4+0+0)(vi1)
+	nop				lq vf18,(0*4+1+0)(vi1)	     ;  'lq @B0Trow1,(0*4+1+0)(vi1)
+	nop				lq vf19,(0*4+2+0)(vi1)	     ;  'lq @B0Trow2,(0*4+2+0)(vi1)
+	nop				lq vf20,(0*4+3+0)(vi1)	     ;  'lq @B0Trow3,(0*4+3+0)(vi1)
+	nop				lq vf21,(1*4+0+0)(vi1)	     ;  'lq @B1Trow0,(1*4+0+0)(vi1)
+	nop				lq vf22,(1*4+1+0)(vi1)	     ;  'lq @B1Trow1,(1*4+1+0)(vi1)
+	nop				lq vf23,(1*4+2+0)(vi1)	     ;  'lq @B1Trow2,(1*4+2+0)(vi1)
+	nop				lq vf24,(1*4+3+0)(vi1)	     ;  'lq @B1Trow3,(1*4+3+0)(vi1)
+	nop				lq vf25,(2*4+0+0)(vi1)	     ;  'lq @B2Trow0,(2*4+0+0)(vi1)
+	nop				lq vf26,(2*4+1+0)(vi1)	     ;  'lq @B2Trow1,(2*4+1+0)(vi1)
+	nop				lq vf27,(2*4+2+0)(vi1)	     ;  'lq @B2Trow2,(2*4+2+0)(vi1)
+	nop				lq vf28,(2*4+3+0)(vi1)	     ;  'lq @B2Trow3,(2*4+3+0)(vi1)
+	nop				lq  vf1, (6*4+0+180)(vi0)	     ;  'lq @Ccol0, (6*4+0+180)(vi0)
+	nop				lq  vf2, (6*4+1+180)(vi0)	     ;  'lq @Ccol1, (6*4+1+180)(vi0)
+	nop				lq  vf3, (6*4+2+180)(vi0)	     ;  'lq @Ccol2, (6*4+2+180)(vi0)
+	nop				lq  vf4, (6*4+3+180)(vi0)	     ;  'lq @Ccol3, (6*4+3+180)(vi0)
+	addax.xyzw   ACC,  vf1,  vf0	nop			     ;  ACC   = Ccol0+K.x
+	msubax.xyzw  ACC,  vf5, vf17	nop			     ;  ACC   = ACC - A0col0*B0Trow0.x
+	msubax.xyzw  ACC,  vf6, vf18	nop			     ;  ACC   = ACC - A0col1*B0Trow1.x
+	msubax.xyzw  ACC,  vf7, vf19	nop			     ;  ACC   = ACC - A0col2*B0Trow2.x
+	msubax.xyzw  ACC,  vf8, vf20	nop			     ;  ACC   = ACC - A0col3*B0Trow3.x
+	msubax.xyzw  ACC,  vf9, vf21	nop			     ;  ACC   = ACC - A1col0*B1Trow0.x
+	msubax.xyzw  ACC, vf10, vf22	nop			     ;  ACC   = ACC - A1col1*B1Trow1.x
+	msubax.xyzw  ACC, vf11, vf23	nop			     ;  ACC   = ACC - A1col2*B1Trow2.x
+	msubax.xyzw  ACC, vf12, vf24	nop			     ;  ACC   = ACC - A1col3*B1Trow3.x
+	msubax.xyzw  ACC, vf13, vf25	nop			     ;  ACC   = ACC - A2col0*B2Trow0.x
+	msubax.xyzw  ACC, vf14, vf26	nop			     ;  ACC   = ACC - A2col1*B2Trow1.x
+	msubax.xyzw  ACC, vf15, vf27	nop			     ;  ACC   = ACC - A2col2*B2Trow2.x
+	msubx.xyzw   vf1, vf16, vf28	nop			     ;  Ccol0 = ACC - A2col3*B2Trow3.x
+	addax.xyzw   ACC,  vf2,  vf0	nop			     ;  ACC   = Ccol1+K.x
+	msubay.xyzw  ACC,  vf5, vf17	nop			     ;  ACC   = ACC - A0col0*B0Trow0.y
+	msubay.xyzw  ACC,  vf6, vf18	nop			     ;  ACC   = ACC - A0col1*B0Trow1.y
+	msubay.xyzw  ACC,  vf7, vf19	nop			     ;  ACC   = ACC - A0col2*B0Trow2.y
+	msubay.xyzw  ACC,  vf8, vf20	nop			     ;  ACC   = ACC - A0col3*B0Trow3.y
+	msubay.xyzw  ACC,  vf9, vf21	nop			     ;  ACC   = ACC - A1col0*B1Trow0.y
+	msubay.xyzw  ACC, vf10, vf22	nop			     ;  ACC   = ACC - A1col1*B1Trow1.y
+	msubay.xyzw  ACC, vf11, vf23	nop			     ;  ACC   = ACC - A1col2*B1Trow2.y
+	msubay.xyzw  ACC, vf12, vf24	nop			     ;  ACC   = ACC - A1col3*B1Trow3.y
+	msubay.xyzw  ACC, vf13, vf25	nop			     ;  ACC   = ACC - A2col0*B2Trow0.y
+	msubay.xyzw  ACC, vf14, vf26	nop			     ;  ACC   = ACC - A2col1*B2Trow1.y
+	msubay.xyzw  ACC, vf15, vf27	nop			     ;  ACC   = ACC - A2col2*B2Trow2.y
+	msuby.xyzw   vf2, vf16, vf28	nop			     ;  Ccol1 = ACC - A2col3*B2Trow3.y
+	addax.xyzw   ACC,  vf3,  vf0	nop			     ;  ACC   = Ccol2+K.x
+	msubaz.xyzw  ACC,  vf5, vf17	nop			     ;  ACC   = ACC - A0col0*B0Trow0.z
+	msubaz.xyzw  ACC,  vf6, vf18	nop			     ;  ACC   = ACC - A0col1*B0Trow1.z
+	msubaz.xyzw  ACC,  vf7, vf19	nop			     ;  ACC   = ACC - A0col2*B0Trow2.z
+	msubaz.xyzw  ACC,  vf8, vf20	nop			     ;  ACC   = ACC - A0col3*B0Trow3.z
+	msubaz.xyzw  ACC,  vf9, vf21	nop			     ;  ACC   = ACC - A1col0*B1Trow0.z
+	msubaz.xyzw  ACC, vf10, vf22	nop			     ;  ACC   = ACC - A1col1*B1Trow1.z
+	msubaz.xyzw  ACC, vf11, vf23	nop			     ;  ACC   = ACC - A1col2*B1Trow2.z
+	msubaz.xyzw  ACC, vf12, vf24	nop			     ;  ACC   = ACC - A1col3*B1Trow3.z
+	msubaz.xyzw  ACC, vf13, vf25	nop			     ;  ACC   = ACC - A2col0*B2Trow0.z
+	msubaz.xyzw  ACC, vf14, vf26	nop			     ;  ACC   = ACC - A2col1*B2Trow1.z
+	msubaz.xyzw  ACC, vf15, vf27	nop			     ;  ACC   = ACC - A2col2*B2Trow2.z
+	msubz.xyzw   vf3, vf16, vf28	nop			     ;  Ccol2 = ACC - A2col3*B2Trow3.z
+	addax.xyzw   ACC,  vf4,  vf0	nop			     ;  ACC   = Ccol3+K.x
+	msubaw.xyzw  ACC,  vf5, vf17	nop			     ;  ACC   = ACC - A0col0*B0Trow0.w
+	msubaw.xyzw  ACC,  vf6, vf18	nop			     ;  ACC   = ACC - A0col1*B0Trow1.w
+	msubaw.xyzw  ACC,  vf7, vf19	nop			     ;  ACC   = ACC - A0col2*B0Trow2.w
+	msubaw.xyzw  ACC,  vf8, vf20	nop			     ;  ACC   = ACC - A0col3*B0Trow3.w
+	msubaw.xyzw  ACC,  vf9, vf21	nop			     ;  ACC   = ACC - A1col0*B1Trow0.w
+	msubaw.xyzw  ACC, vf10, vf22	nop			     ;  ACC   = ACC - A1col1*B1Trow1.w
+	msubaw.xyzw  ACC, vf11, vf23	nop			     ;  ACC   = ACC - A1col2*B1Trow2.w
+	msubaw.xyzw  ACC, vf12, vf24	nop			     ;  ACC   = ACC - A1col3*B1Trow3.w
+	msubaw.xyzw  ACC, vf13, vf25	nop			     ;  ACC   = ACC - A2col0*B2Trow0.w
+	msubaw.xyzw  ACC, vf14, vf26	nop			     ;  ACC   = ACC - A2col1*B2Trow1.w
+	msubaw.xyzw  ACC, vf15, vf27	nop			     ;  ACC   = ACC - A2col2*B2Trow2.w
+	msubw.xyzw   vf4, vf16, vf28	nop			     ;  Ccol3 = ACC - A2col3*B2Trow3.w
+	nop		     	    	sq  vf1, (6*4+0+180)(vi0)	     ;  'sq @Ccol0, (6*4+0+180)(vi0)
+	nop		     	    	sq  vf2, (6*4+1+180)(vi0)	     ;  'sq @Ccol1, (6*4+1+180)(vi0)
+	nop		     	    	sq  vf3, (6*4+2+180)(vi0)	     ;  'sq @Ccol2, (6*4+2+180)(vi0)
+	nop		     	    	sq  vf4, (6*4+3+180)(vi0)	     ;  'sq @Ccol3, (6*4+3+180)(vi0)
+; sgemm(a6,a3,c7)
+; sgemm(a7,a4,c7)
+; sgemm(a8,a5,c7)
+	nop				lq  vf5, (6*4+0+0)(vi1)	     ;  'lq @A0col0, (6*4+0+0)(vi1)
+	nop				lq  vf6, (6*4+1+0)(vi1)	     ;  'lq @A0col1, (6*4+1+0)(vi1)
+	nop				lq  vf7, (6*4+2+0)(vi1)	     ;  'lq @A0col2, (6*4+2+0)(vi1)
+	nop				lq  vf8, (6*4+3+0)(vi1)	     ;  'lq @A0col3, (6*4+3+0)(vi1)
+	nop				lq  vf9, (7*4+0+0)(vi1)	     ;  'lq @A1col0, (7*4+0+0)(vi1)
+	nop				lq vf10, (7*4+1+0)(vi1)	     ;  'lq @A1col1, (7*4+1+0)(vi1)
+	nop				lq vf11, (7*4+2+0)(vi1)	     ;  'lq @A1col2, (7*4+2+0)(vi1)
+	nop				lq vf12, (7*4+3+0)(vi1)	     ;  'lq @A1col3, (7*4+3+0)(vi1)
+	nop				lq vf13, (8*4+0+0)(vi1)	     ;  'lq @A2col0, (8*4+0+0)(vi1)
+	nop				lq vf14, (8*4+1+0)(vi1)	     ;  'lq @A2col1, (8*4+1+0)(vi1)
+	nop				lq vf15, (8*4+2+0)(vi1)	     ;  'lq @A2col2, (8*4+2+0)(vi1)
+	nop				lq vf16, (8*4+3+0)(vi1)	     ;  'lq @A2col3, (8*4+3+0)(vi1)
+	nop				lq vf17,(3*4+0+0)(vi1)	     ;  'lq @B0Trow0,(3*4+0+0)(vi1)
+	nop				lq vf18,(3*4+1+0)(vi1)	     ;  'lq @B0Trow1,(3*4+1+0)(vi1)
+	nop				lq vf19,(3*4+2+0)(vi1)	     ;  'lq @B0Trow2,(3*4+2+0)(vi1)
+	nop				lq vf20,(3*4+3+0)(vi1)	     ;  'lq @B0Trow3,(3*4+3+0)(vi1)
+	nop				lq vf21,(4*4+0+0)(vi1)	     ;  'lq @B1Trow0,(4*4+0+0)(vi1)
+	nop				lq vf22,(4*4+1+0)(vi1)	     ;  'lq @B1Trow1,(4*4+1+0)(vi1)
+	nop				lq vf23,(4*4+2+0)(vi1)	     ;  'lq @B1Trow2,(4*4+2+0)(vi1)
+	nop				lq vf24,(4*4+3+0)(vi1)	     ;  'lq @B1Trow3,(4*4+3+0)(vi1)
+	nop				lq vf25,(5*4+0+0)(vi1)	     ;  'lq @B2Trow0,(5*4+0+0)(vi1)
+	nop				lq vf26,(5*4+1+0)(vi1)	     ;  'lq @B2Trow1,(5*4+1+0)(vi1)
+	nop				lq vf27,(5*4+2+0)(vi1)	     ;  'lq @B2Trow2,(5*4+2+0)(vi1)
+	nop				lq vf28,(5*4+3+0)(vi1)	     ;  'lq @B2Trow3,(5*4+3+0)(vi1)
+	nop				lq  vf1, (7*4+0+180)(vi0)	     ;  'lq @Ccol0, (7*4+0+180)(vi0)
+	nop				lq  vf2, (7*4+1+180)(vi0)	     ;  'lq @Ccol1, (7*4+1+180)(vi0)
+	nop				lq  vf3, (7*4+2+180)(vi0)	     ;  'lq @Ccol2, (7*4+2+180)(vi0)
+	nop				lq  vf4, (7*4+3+180)(vi0)	     ;  'lq @Ccol3, (7*4+3+180)(vi0)
+	addax.xyzw   ACC,  vf1,  vf0	nop			     ;  ACC   = Ccol0+K.x
+	msubax.xyzw  ACC,  vf5, vf17	nop			     ;  ACC   = ACC - A0col0*B0Trow0.x
+	msubax.xyzw  ACC,  vf6, vf18	nop			     ;  ACC   = ACC - A0col1*B0Trow1.x
+	msubax.xyzw  ACC,  vf7, vf19	nop			     ;  ACC   = ACC - A0col2*B0Trow2.x
+	msubax.xyzw  ACC,  vf8, vf20	nop			     ;  ACC   = ACC - A0col3*B0Trow3.x
+	msubax.xyzw  ACC,  vf9, vf21	nop			     ;  ACC   = ACC - A1col0*B1Trow0.x
+	msubax.xyzw  ACC, vf10, vf22	nop			     ;  ACC   = ACC - A1col1*B1Trow1.x
+	msubax.xyzw  ACC, vf11, vf23	nop			     ;  ACC   = ACC - A1col2*B1Trow2.x
+	msubax.xyzw  ACC, vf12, vf24	nop			     ;  ACC   = ACC - A1col3*B1Trow3.x
+	msubax.xyzw  ACC, vf13, vf25	nop			     ;  ACC   = ACC - A2col0*B2Trow0.x
+	msubax.xyzw  ACC, vf14, vf26	nop			     ;  ACC   = ACC - A2col1*B2Trow1.x
+	msubax.xyzw  ACC, vf15, vf27	nop			     ;  ACC   = ACC - A2col2*B2Trow2.x
+	msubx.xyzw   vf1, vf16, vf28	nop			     ;  Ccol0 = ACC - A2col3*B2Trow3.x
+	addax.xyzw   ACC,  vf2,  vf0	nop			     ;  ACC   = Ccol1+K.x
+	msubay.xyzw  ACC,  vf5, vf17	nop			     ;  ACC   = ACC - A0col0*B0Trow0.y
+	msubay.xyzw  ACC,  vf6, vf18	nop			     ;  ACC   = ACC - A0col1*B0Trow1.y
+	msubay.xyzw  ACC,  vf7, vf19	nop			     ;  ACC   = ACC - A0col2*B0Trow2.y
+	msubay.xyzw  ACC,  vf8, vf20	nop			     ;  ACC   = ACC - A0col3*B0Trow3.y
+	msubay.xyzw  ACC,  vf9, vf21	nop			     ;  ACC   = ACC - A1col0*B1Trow0.y
+	msubay.xyzw  ACC, vf10, vf22	nop			     ;  ACC   = ACC - A1col1*B1Trow1.y
+	msubay.xyzw  ACC, vf11, vf23	nop			     ;  ACC   = ACC - A1col2*B1Trow2.y
+	msubay.xyzw  ACC, vf12, vf24	nop			     ;  ACC   = ACC - A1col3*B1Trow3.y
+	msubay.xyzw  ACC, vf13, vf25	nop			     ;  ACC   = ACC - A2col0*B2Trow0.y
+	msubay.xyzw  ACC, vf14, vf26	nop			     ;  ACC   = ACC - A2col1*B2Trow1.y
+	msubay.xyzw  ACC, vf15, vf27	nop			     ;  ACC   = ACC - A2col2*B2Trow2.y
+	msuby.xyzw   vf2, vf16, vf28	nop			     ;  Ccol1 = ACC - A2col3*B2Trow3.y
+	addax.xyzw   ACC,  vf3,  vf0	nop			     ;  ACC   = Ccol2+K.x
+	msubaz.xyzw  ACC,  vf5, vf17	nop			     ;  ACC   = ACC - A0col0*B0Trow0.z
+	msubaz.xyzw  ACC,  vf6, vf18	nop			     ;  ACC   = ACC - A0col1*B0Trow1.z
+	msubaz.xyzw  ACC,  vf7, vf19	nop			     ;  ACC   = ACC - A0col2*B0Trow2.z
+	msubaz.xyzw  ACC,  vf8, vf20	nop			     ;  ACC   = ACC - A0col3*B0Trow3.z
+	msubaz.xyzw  ACC,  vf9, vf21	nop			     ;  ACC   = ACC - A1col0*B1Trow0.z
+	msubaz.xyzw  ACC, vf10, vf22	nop			     ;  ACC   = ACC - A1col1*B1Trow1.z
+	msubaz.xyzw  ACC, vf11, vf23	nop			     ;  ACC   = ACC - A1col2*B1Trow2.z
+	msubaz.xyzw  ACC, vf12, vf24	nop			     ;  ACC   = ACC - A1col3*B1Trow3.z
+	msubaz.xyzw  ACC, vf13, vf25	nop			     ;  ACC   = ACC - A2col0*B2Trow0.z
+	msubaz.xyzw  ACC, vf14, vf26	nop			     ;  ACC   = ACC - A2col1*B2Trow1.z
+	msubaz.xyzw  ACC, vf15, vf27	nop			     ;  ACC   = ACC - A2col2*B2Trow2.z
+	msubz.xyzw   vf3, vf16, vf28	nop			     ;  Ccol2 = ACC - A2col3*B2Trow3.z
+	addax.xyzw   ACC,  vf4,  vf0	nop			     ;  ACC   = Ccol3+K.x
+	msubaw.xyzw  ACC,  vf5, vf17	nop			     ;  ACC   = ACC - A0col0*B0Trow0.w
+	msubaw.xyzw  ACC,  vf6, vf18	nop			     ;  ACC   = ACC - A0col1*B0Trow1.w
+	msubaw.xyzw  ACC,  vf7, vf19	nop			     ;  ACC   = ACC - A0col2*B0Trow2.w
+	msubaw.xyzw  ACC,  vf8, vf20	nop			     ;  ACC   = ACC - A0col3*B0Trow3.w
+	msubaw.xyzw  ACC,  vf9, vf21	nop			     ;  ACC   = ACC - A1col0*B1Trow0.w
+	msubaw.xyzw  ACC, vf10, vf22	nop			     ;  ACC   = ACC - A1col1*B1Trow1.w
+	msubaw.xyzw  ACC, vf11, vf23	nop			     ;  ACC   = ACC - A1col2*B1Trow2.w
+	msubaw.xyzw  ACC, vf12, vf24	nop			     ;  ACC   = ACC - A1col3*B1Trow3.w
+	msubaw.xyzw  ACC, vf13, vf25	nop			     ;  ACC   = ACC - A2col0*B2Trow0.w
+	msubaw.xyzw  ACC, vf14, vf26	nop			     ;  ACC   = ACC - A2col1*B2Trow1.w
+	msubaw.xyzw  ACC, vf15, vf27	nop			     ;  ACC   = ACC - A2col2*B2Trow2.w
+	msubw.xyzw   vf4, vf16, vf28	nop			     ;  Ccol3 = ACC - A2col3*B2Trow3.w
+	nop				sq  vf1, (7*4+0+180)(vi0)	     ;  'sq @Ccol0, (7*4+0+180)(vi0)
+	nop				sq  vf2, (7*4+1+180)(vi0)	     ;  'sq @Ccol1, (7*4+1+180)(vi0)
+	nop				sq  vf3, (7*4+2+180)(vi0)	     ;  'sq @Ccol2, (7*4+2+180)(vi0)
+	nop				sq  vf4, (7*4+3+180)(vi0)	     ;  'sq @Ccol3, (7*4+3+180)(vi0)
+; ssyrk(a6,c8)
+; ssyrk(a7,c8)
+; ssyrk(a8,c8)
+	nop				lq  vf5,(6*4+0+0)(vi1)	     ;  'lq @A0col0,(6*4+0+0)(vi1)
+	nop				lq  vf6,(6*4+1+0)(vi1)	     ;  'lq @A0col1,(6*4+1+0)(vi1)
+	nop				lq  vf7,(6*4+2+0)(vi1)	     ;  'lq @A0col2,(6*4+2+0)(vi1)
+	nop				lq  vf8,(6*4+3+0)(vi1)	     ;  'lq @A0col3,(6*4+3+0)(vi1)
+	nop				lq  vf9,(7*4+0+0)(vi1)	     ;  'lq @A1col0,(7*4+0+0)(vi1)
+	nop				lq vf10,(7*4+1+0)(vi1)	     ;  'lq @A1col1,(7*4+1+0)(vi1)
+	nop				lq vf11,(7*4+2+0)(vi1)	     ;  'lq @A1col2,(7*4+2+0)(vi1)
+	nop				lq vf12,(7*4+3+0)(vi1)	     ;  'lq @A1col3,(7*4+3+0)(vi1)
+	nop				lq vf13,(8*4+0+0)(vi1)	     ;  'lq @A2col0,(8*4+0+0)(vi1)
+	nop				lq vf14,(8*4+1+0)(vi1)	     ;  'lq @A2col1,(8*4+1+0)(vi1)
+	nop				lq vf15,(8*4+2+0)(vi1)	     ;  'lq @A2col2,(8*4+2+0)(vi1)
+	nop				lq vf16,(8*4+3+0)(vi1)	     ;  'lq @A2col3,(8*4+3+0)(vi1)
+	nop				lq  vf1,(8*4+0+180)(vi0)	     ;  'lq @Ccol0,(8*4+0+180)(vi0)
+	nop				lq  vf2,(8*4+1+180)(vi0)	     ;  'lq @Ccol1,(8*4+1+180)(vi0)
+	nop				lq  vf3,(8*4+2+180)(vi0)	     ;  'lq @Ccol2,(8*4+2+180)(vi0)
+	nop				lq  vf4,(8*4+3+180)(vi0)	     ;  'lq @Ccol3,(8*4+3+180)(vi0)
+	addax.xyzw   ACC,  vf1,  vf0	nop			     ;  ACC	   = Ccol0+K.x
+	msubax.xyzw  ACC,  vf5,  vf5	nop			     ;  ACC	   = ACC - A0col0*A0col0.x
+	msubax.xyzw  ACC,  vf6,  vf6	nop			     ;  ACC	   = ACC - A0col1*A0col1.x
+	msubax.xyzw  ACC,  vf7,  vf7	nop			     ;  ACC	   = ACC - A0col2*A0col2.x
+	msubax.xyzw  ACC,  vf8,  vf8	nop			     ;  ACC	   = ACC - A0col3*A0col3.x
+	msubax.xyzw  ACC,  vf9,  vf9	nop			     ;  ACC	   = ACC - A1col0*A1col0.x
+	msubax.xyzw  ACC, vf10, vf10	nop			     ;  ACC	   = ACC - A1col1*A1col1.x
+	msubax.xyzw  ACC, vf11, vf11	nop			     ;  ACC	   = ACC - A1col2*A1col2.x
+	msubax.xyzw  ACC, vf12, vf12	nop			     ;  ACC	   = ACC - A1col3*A1col3.x
+	msubax.xyzw  ACC, vf13, vf13	nop			     ;  ACC	   = ACC - A2col0*A2col0.x
+	msubax.xyzw  ACC, vf14, vf14	nop			     ;  ACC	   = ACC - A2col1*A2col1.x
+	msubax.xyzw  ACC, vf15, vf15	nop			     ;  ACC	   = ACC - A2col2*A2col2.x
+	msubx.xyzw   vf1, vf16, vf16	nop			     ;  Ccol0.xyzw = ACC - A2col3*A2col3.x
+	addax.xyzw   ACC,  vf2,  vf0	nop			     ;  ACC	   = Ccol1+K.x
+	msubay.xyzw  ACC,  vf5,  vf5	nop			     ;  ACC	   = ACC - A0col0*A0col0.y
+	msubay.xyzw  ACC,  vf6,  vf6	nop			     ;  ACC	   = ACC - A0col1*A0col1.y
+	msubay.xyzw  ACC,  vf7,  vf7	nop			     ;  ACC	   = ACC - A0col2*A0col2.y
+	msubay.xyzw  ACC,  vf8,  vf8	nop			     ;  ACC	   = ACC - A0col3*A0col3.y
+	msubay.xyzw  ACC,  vf9,  vf9	nop			     ;  ACC	   = ACC - A1col0*A1col0.y
+	msubay.xyzw  ACC, vf10, vf10	nop			     ;  ACC	   = ACC - A1col1*A1col1.y
+	msubay.xyzw  ACC, vf11, vf11	nop			     ;  ACC	   = ACC - A1col2*A1col2.y
+	msubay.xyzw  ACC, vf12, vf12	nop			     ;  ACC	   = ACC - A1col3*A1col3.y
+	msubay.xyzw  ACC, vf13, vf13	nop			     ;  ACC	   = ACC - A2col0*A2col0.y
+	msubay.xyzw  ACC, vf14, vf14	nop			     ;  ACC	   = ACC - A2col1*A2col1.y
+	msubay.xyzw  ACC, vf15, vf15	nop			     ;  ACC	   = ACC - A2col2*A2col2.y
+	msuby.yzw    vf2, vf16, vf16	nop			     ;  Ccol1.yzw  = ACC - A2col3*A2col3.y
+	addax.xyzw   ACC,  vf3,  vf0	nop			     ;  ACC	   = Ccol2+K.x
+	msubaz.xyzw  ACC,  vf5,  vf5	nop			     ;  ACC	   = ACC - A0col0*A0col0.z
+	msubaz.xyzw  ACC,  vf6,  vf6	nop			     ;  ACC	   = ACC - A0col1*A0col1.z
+	msubaz.xyzw  ACC,  vf7,  vf7	nop			     ;  ACC	   = ACC - A0col2*A0col2.z
+	msubaz.xyzw  ACC,  vf8,  vf8	nop			     ;  ACC	   = ACC - A0col3*A0col3.z
+	msubaz.xyzw  ACC,  vf9,  vf9	nop			     ;  ACC	   = ACC - A1col0*A1col0.z
+	msubaz.xyzw  ACC, vf10, vf10	nop			     ;  ACC	   = ACC - A1col1*A1col1.z
+	msubaz.xyzw  ACC, vf11, vf11	nop			     ;  ACC	   = ACC - A1col2*A1col2.z
+	msubaz.xyzw  ACC, vf12, vf12	nop			     ;  ACC	   = ACC - A1col3*A1col3.z
+	msubaz.xyzw  ACC, vf13, vf13	nop			     ;  ACC	   = ACC - A2col0*A2col0.z
+	msubaz.xyzw  ACC, vf14, vf14	nop			     ;  ACC	   = ACC - A2col1*A2col1.z
+	msubaz.xyzw  ACC, vf15, vf15	nop			     ;  ACC	   = ACC - A2col2*A2col2.z
+	msubz.zw     vf3, vf16, vf16	nop			     ;  Ccol2.zw   = ACC - A2col3*A2col3.z
+	addax.xyzw   ACC,  vf4,  vf0	nop			     ;  ACC	   = Ccol3+K.x
+	msubaw.xyzw  ACC,  vf5,  vf5	nop			     ;  ACC	   = ACC - A0col0*A0col0.w
+	msubaw.xyzw  ACC,  vf6,  vf6	nop			     ;  ACC	   = ACC - A0col1*A0col1.w
+	msubaw.xyzw  ACC,  vf7,  vf7	nop			     ;  ACC	   = ACC - A0col2*A0col2.w
+	msubaw.xyzw  ACC,  vf8,  vf8	nop			     ;  ACC	   = ACC - A0col3*A0col3.w
+	msubaw.xyzw  ACC,  vf9,  vf9	nop			     ;  ACC	   = ACC - A1col0*A1col0.w
+	msubaw.xyzw  ACC, vf10, vf10	nop			     ;  ACC	   = ACC - A1col1*A1col1.w
+	msubaw.xyzw  ACC, vf11, vf11	nop			     ;  ACC	   = ACC - A1col2*A1col2.w
+	msubaw.xyzw  ACC, vf12, vf12	nop			     ;  ACC	   = ACC - A1col3*A1col3.w
+	msubaw.xyzw  ACC, vf13, vf13	nop			     ;  ACC	   = ACC - A2col0*A2col0.w
+	msubaw.xyzw  ACC, vf14, vf14	nop			     ;  ACC	   = ACC - A2col1*A2col1.w
+	msubaw.xyzw  ACC, vf15, vf15	iaddiu vi2,vi0,72	     ;  ACC	   = ACC - A2col2*A2col2.w
+	msubw.w      vf4, vf16, vf16	isub   vi1,vi2,vi1	     ;  Ccol3.w    = ACC - A2col3*A2col3.w
+	nop				sq  vf1,(8*4+0+180)(vi0)	     ;  'sq @Ccol0,(8*4+0+180)(vi0)
+	nop				sq  vf2,(8*4+1+180)(vi0)	     ;  'sq @Ccol1,(8*4+1+180)(vi0)
+	nop				sq  vf3,(8*4+2+180)(vi0)	     ;  'sq @Ccol2,(8*4+2+180)(vi0)
+	nop				sq  vf4,(8*4+3+180)(vi0)	     ;  'sq @Ccol3,(8*4+3+180)(vi0)
+        nop[e]                          nop                         
+	nop                             nop

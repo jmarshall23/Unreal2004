@@ -1,0 +1,8 @@
+
+CREATE TABLE warez (
+  id int(11) NOT NULL auto_increment,
+  cdkeyid int(11) default NULL,
+  ip varchar(15) default NULL,
+  lastseen datetime default NULL,
+  PRIMARY KEY  (id)
+);

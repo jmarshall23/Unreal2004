@@ -1,0 +1,297 @@
+Log: Log file open, 11/20/24 11:13:42
+Init: Name subsystem initialized
+Init: Detected: Microsoft Windows NT 6.2 (Build: 9200)
+Init: Version: 3186 (127.29)
+Init: Compiled: Nov 20 2024 10:14:56
+Init: Command line: 
+Init: Character set: Unicode
+Init: Base directory: C:\projects\Unreal2004\System\
+Init: Ini:UT2004.ini   UserIni:User.ini
+Init: Object subsystem initialized
+Log: 	nvldumd.dll/NVIDIA GeForce RTX 4070 Ti SUPER
+Log: 	nvldumd.dll/NVIDIA GeForce RTX 4070 Ti SUPER
+Log: Startup time: 6.080000 seconds
+Cmd: MODE MAPEXT=ut2
+Log: Opened viewport
+Log: Enter SetRes: 386x55 Fullscreen 0
+Log: Using back-buffer format 22(32-bit)
+Log: Using depth-buffer format 75(32-bit)
+Log: Creating device
+Log: xD3DHelper::Init (QuadEmulation)
+Log: Opened viewport
+Log: Enter SetRes: 420x174 Fullscreen 0
+Log: Using back-buffer format 22(32-bit)
+Log: Using depth-buffer format 75(32-bit)
+Log: xD3DHelper::Init (QuadEmulation)
+Log: Opened viewport
+Log: Enter SetRes: 420x174 Fullscreen 0
+Log: Using back-buffer format 22(32-bit)
+Log: Using depth-buffer format 75(32-bit)
+Log: xD3DHelper::Init (QuadEmulation)
+Log: Opened viewport
+Log: Enter SetRes: 320x177 Fullscreen 0
+Log: Using back-buffer format 22(32-bit)
+Log: Using depth-buffer format 75(32-bit)
+Log: xD3DHelper::Init (QuadEmulation)
+Log: Opened viewport
+Log: Enter SetRes: 320x177 Fullscreen 0
+Log: Using back-buffer format 22(32-bit)
+Log: Using depth-buffer format 75(32-bit)
+Log: xD3DHelper::Init (QuadEmulation)
+Log: Opened viewport
+Log: Enter SetRes: 320x177 Fullscreen 0
+Log: Using back-buffer format 22(32-bit)
+Log: Using depth-buffer format 75(32-bit)
+Log: xD3DHelper::Init (QuadEmulation)
+Log: Opened viewport
+Log: Enter SetRes: 320x200 Fullscreen 0
+Log: Using back-buffer format 22(32-bit)
+Log: Using depth-buffer format 75(32-bit)
+Log: xD3DHelper::Init (QuadEmulation)
+Log: Enter SetRes: 314x0 Fullscreen 0
+Log: Using back-buffer format 22(32-bit)
+Log: Using depth-buffer format 75(32-bit)
+Log: xD3DHelper::Init (QuadEmulation)
+Log: Enter SetRes: 44x23 Fullscreen 0
+Log: Using back-buffer format 22(32-bit)
+Log: Using depth-buffer format 75(32-bit)
+Log: xD3DHelper::Init (QuadEmulation)
+Log: Enter SetRes: 44x23 Fullscreen 0
+Log: Using back-buffer format 22(32-bit)
+Log: Using depth-buffer format 75(32-bit)
+Log: xD3DHelper::Init (QuadEmulation)
+Log: Opened viewport
+Log: Enter SetRes: 320x200 Fullscreen 0
+Log: Using back-buffer format 22(32-bit)
+Log: Using depth-buffer format 75(32-bit)
+Log: xD3DHelper::Init (QuadEmulation)
+Log: Enter SetRes: 314x0 Fullscreen 0
+Log: Using back-buffer format 22(32-bit)
+Log: Using depth-buffer format 75(32-bit)
+Log: xD3DHelper::Init (QuadEmulation)
+Log: Enter SetRes: 44x23 Fullscreen 0
+Log: Using back-buffer format 22(32-bit)
+Log: Using depth-buffer format 75(32-bit)
+Log: xD3DHelper::Init (QuadEmulation)
+Log: Enter SetRes: 44x23 Fullscreen 0
+Log: Using back-buffer format 22(32-bit)
+Log: Using depth-buffer format 75(32-bit)
+Log: xD3DHelper::Init (QuadEmulation)
+Log: Opened viewport
+Log: Enter SetRes: 320x200 Fullscreen 0
+Log: Using back-buffer format 22(32-bit)
+Log: Using depth-buffer format 75(32-bit)
+Log: xD3DHelper::Init (QuadEmulation)
+Log: Enter SetRes: 314x0 Fullscreen 0
+Log: Using back-buffer format 22(32-bit)
+Log: Using depth-buffer format 75(32-bit)
+Log: xD3DHelper::Init (QuadEmulation)
+Log: Enter SetRes: 44x23 Fullscreen 0
+Log: Using back-buffer format 22(32-bit)
+Log: Using depth-buffer format 75(32-bit)
+Log: xD3DHelper::Init (QuadEmulation)
+Log: Enter SetRes: 44x23 Fullscreen 0
+Log: Using back-buffer format 22(32-bit)
+Log: Using depth-buffer format 75(32-bit)
+Log: xD3DHelper::Init (QuadEmulation)
+Log: Opened viewport
+Log: Enter SetRes: 320x200 Fullscreen 0
+Log: Using back-buffer format 22(32-bit)
+Log: Using depth-buffer format 75(32-bit)
+Log: xD3DHelper::Init (QuadEmulation)
+Log: Enter SetRes: 314x0 Fullscreen 0
+Log: Using back-buffer format 22(32-bit)
+Log: Using depth-buffer format 75(32-bit)
+Log: xD3DHelper::Init (QuadEmulation)
+Log: Enter SetRes: 44x23 Fullscreen 0
+Log: Using back-buffer format 22(32-bit)
+Log: Using depth-buffer format 75(32-bit)
+Log: xD3DHelper::Init (QuadEmulation)
+Log: Enter SetRes: 44x23 Fullscreen 0
+Log: Using back-buffer format 22(32-bit)
+Log: Using depth-buffer format 75(32-bit)
+Log: xD3DHelper::Init (QuadEmulation)
+Log: Enter SetRes: 71x0 Fullscreen 0
+Log: Using back-buffer format 22(32-bit)
+Log: Using depth-buffer format 75(32-bit)
+Log: xD3DHelper::Init (QuadEmulation)
+Log: Enter SetRes: 35x0 Fullscreen 0
+Log: Using back-buffer format 22(32-bit)
+Log: Using depth-buffer format 75(32-bit)
+Log: xD3DHelper::Init (QuadEmulation)
+Log: Enter SetRes: 71x0 Fullscreen 0
+Log: Using back-buffer format 22(32-bit)
+Log: Using depth-buffer format 75(32-bit)
+Log: xD3DHelper::Init (QuadEmulation)
+Log: Enter SetRes: 35x0 Fullscreen 0
+Log: Using back-buffer format 22(32-bit)
+Log: Using depth-buffer format 75(32-bit)
+Log: xD3DHelper::Init (QuadEmulation)
+Log: Opened viewport
+Log: Enter SetRes: 256x256 Fullscreen 0
+Log: Using back-buffer format 22(32-bit)
+Log: Using depth-buffer format 75(32-bit)
+Log: xD3DHelper::Init (QuadEmulation)
+Cmd: CAMERA UPDATE NAME=MeshViewer MESH="banner" FLAGS=641 REN=19 MISC1=0 MISC2=0
+Cmd: CAMERA UPDATE NAME=MeshViewer MESH="banner" FLAGS=641 REN=19 MISC1=0 MISC2=0
+Log: Preprocessing:  Vertex stream total vertices: 319 Orig wedges: 319
+Log: Allocating 16384 byte dynamic index buffer.
+Log: Enter SetRes: 851x674 Fullscreen 0
+Log: Using back-buffer format 22(32-bit)
+Log: Using depth-buffer format 75(32-bit)
+Log: xD3DHelper::Init (QuadEmulation)
+Log: Allocating 16384 byte dynamic index buffer.
+Log: Enter SetRes: 851x694 Fullscreen 0
+Log: Using back-buffer format 22(32-bit)
+Log: Using depth-buffer format 75(32-bit)
+Log: xD3DHelper::Init (QuadEmulation)
+Log: Allocating 16384 byte dynamic index buffer.
+Log: Enter SetRes: 851x674 Fullscreen 0
+Log: Using back-buffer format 22(32-bit)
+Log: Using depth-buffer format 75(32-bit)
+Log: xD3DHelper::Init (QuadEmulation)
+Log: Allocating 16384 byte dynamic index buffer.
+Log: Opened viewport
+Log: Enter SetRes: 256x256 Fullscreen 0
+Log: Using back-buffer format 22(32-bit)
+Log: Using depth-buffer format 75(32-bit)
+Log: xD3DHelper::Init (QuadEmulation)
+Log: Enter SetRes: 0x0 Fullscreen 0
+Log: Using back-buffer format 22(32-bit)
+Log: Using depth-buffer format 75(32-bit)
+Log: xD3DHelper::Init (QuadEmulation)
+Log: Enter SetRes: 602x660 Fullscreen 0
+Log: Using back-buffer format 22(32-bit)
+Log: Using depth-buffer format 75(32-bit)
+Log: xD3DHelper::Init (QuadEmulation)
+Cmd: CAMERA UPDATE NAME=AnimationViewer MESH="FloorTurretGun" FLAGS=16810633 REN=26 MISC1=0 MISC2=0
+Cmd: CAMERA UPDATE NAME=AnimationViewer MESH="FloorTurretGun" FLAGS=16810633 REN=26 MISC1=0 MISC2=0
+Cmd: CAMERA UPDATE NAME=AnimationViewer MESH="FloorTurretGun" FLAGS=16810633 REN=26 MISC1=0 MISC2=0
+Cmd: CAMERA UPDATE NAME=AnimationViewer MESH="FloorTurretGun" FLAGS=16810633 REN=26 MISC1=0 MISC2=0
+Log: Opened viewport
+Log: Enter SetRes: 320x200 Fullscreen 0
+Log: Using back-buffer format 22(32-bit)
+Log: Using depth-buffer format 75(32-bit)
+Log: xD3DHelper::Init (QuadEmulation)
+Cmd: CAMERA UPDATE FLAGS=545425097 REN=20 NAME=PrefabBrowser
+Log: Enter SetRes: 851x685 Fullscreen 0
+Log: Using back-buffer format 22(32-bit)
+Log: Using depth-buffer format 75(32-bit)
+Log: xD3DHelper::Init (QuadEmulation)
+Log: Opened viewport
+Log: Enter SetRes: 320x200 Fullscreen 0
+Log: Using back-buffer format 22(32-bit)
+Log: Using depth-buffer format 75(32-bit)
+Log: xD3DHelper::Init (QuadEmulation)
+Log: Enter SetRes: 320x200 Fullscreen 0
+Log: Using back-buffer format 22(32-bit)
+Log: Using depth-buffer format 75(32-bit)
+Log: xD3DHelper::Init (QuadEmulation)
+Log: Enter SetRes: 0x0 Fullscreen 0
+Log: Using back-buffer format 22(32-bit)
+Log: Using depth-buffer format 75(32-bit)
+Log: xD3DHelper::Init (QuadEmulation)
+Log: Enter SetRes: 883x425 Fullscreen 0
+Log: Using back-buffer format 22(32-bit)
+Log: Using depth-buffer format 75(32-bit)
+Log: xD3DHelper::Init (QuadEmulation)
+Log: Opened viewport
+Log: Enter SetRes: 320x200 Fullscreen 0
+Log: Using back-buffer format 22(32-bit)
+Log: Using depth-buffer format 75(32-bit)
+Log: xD3DHelper::Init (QuadEmulation)
+Log: Enter SetRes: 466x178 Fullscreen 0
+Log: Using back-buffer format 22(32-bit)
+Log: Using depth-buffer format 75(32-bit)
+Log: xD3DHelper::Init (QuadEmulation)
+Log: Opened viewport
+Log: Enter SetRes: 320x200 Fullscreen 0
+Log: Using back-buffer format 22(32-bit)
+Log: Using depth-buffer format 75(32-bit)
+Log: xD3DHelper::Init (QuadEmulation)
+Log: Enter SetRes: 466x224 Fullscreen 0
+Log: Using back-buffer format 22(32-bit)
+Log: Using depth-buffer format 75(32-bit)
+Log: xD3DHelper::Init (QuadEmulation)
+Log: Opened viewport
+Log: Enter SetRes: 320x200 Fullscreen 0
+Log: Using back-buffer format 22(32-bit)
+Log: Using depth-buffer format 75(32-bit)
+Log: xD3DHelper::Init (QuadEmulation)
+Log: Enter SetRes: 466x224 Fullscreen 0
+Log: Using back-buffer format 22(32-bit)
+Log: Using depth-buffer format 75(32-bit)
+Log: xD3DHelper::Init (QuadEmulation)
+Log: Enter SetRes: 0x0 Fullscreen 0
+Log: Using back-buffer format 22(32-bit)
+Log: Using depth-buffer format 75(32-bit)
+Log: xD3DHelper::Init (QuadEmulation)
+Log: Enter SetRes: 1001x614 Fullscreen 0
+Log: Using back-buffer format 22(32-bit)
+Log: Using depth-buffer format 75(32-bit)
+Log: xD3DHelper::Init (QuadEmulation)
+Cmd: CAMERA UPDATE FLAGS=1073742464 MISC2=0 REN=17 NAME=TextureBrowser PACKAGE="2K4Chargers" GROUP="ChargerTextures"
+Log: Enter SetRes: 355x149 Fullscreen 0
+Log: Using back-buffer format 22(32-bit)
+Log: Using depth-buffer format 75(32-bit)
+Log: xD3DHelper::Init (QuadEmulation)
+Log: Enter SetRes: 188x149 Fullscreen 0
+Log: Using back-buffer format 22(32-bit)
+Log: Using depth-buffer format 75(32-bit)
+Log: xD3DHelper::Init (QuadEmulation)
+Log: Enter SetRes: 355x149 Fullscreen 0
+Log: Using back-buffer format 22(32-bit)
+Log: Using depth-buffer format 75(32-bit)
+Log: xD3DHelper::Init (QuadEmulation)
+Log: Enter SetRes: 188x149 Fullscreen 0
+Log: Using back-buffer format 22(32-bit)
+Log: Using depth-buffer format 75(32-bit)
+Log: xD3DHelper::Init (QuadEmulation)
+Log: Enter SetRes: 1613x613 Fullscreen 0
+Log: Using back-buffer format 22(32-bit)
+Log: Using depth-buffer format 75(32-bit)
+Log: xD3DHelper::Init (QuadEmulation)
+Log: Enter SetRes: 866x613 Fullscreen 0
+Log: Using back-buffer format 22(32-bit)
+Log: Using depth-buffer format 75(32-bit)
+Log: xD3DHelper::Init (QuadEmulation)
+Log: Enter SetRes: 1613x613 Fullscreen 0
+Log: Using back-buffer format 22(32-bit)
+Log: Using depth-buffer format 75(32-bit)
+Log: xD3DHelper::Init (QuadEmulation)
+Log: Enter SetRes: 866x613 Fullscreen 0
+Log: Using back-buffer format 22(32-bit)
+Log: Using depth-buffer format 75(32-bit)
+Log: xD3DHelper::Init (QuadEmulation)
+Log: Enter SetRes: 71x0 Fullscreen 0
+Log: Using back-buffer format 22(32-bit)
+Log: Using depth-buffer format 75(32-bit)
+Log: xD3DHelper::Init (QuadEmulation)
+Log: Enter SetRes: 35x0 Fullscreen 0
+Log: Using back-buffer format 22(32-bit)
+Log: Using depth-buffer format 75(32-bit)
+Log: xD3DHelper::Init (QuadEmulation)
+Log: Enter SetRes: 71x0 Fullscreen 0
+Log: Using back-buffer format 22(32-bit)
+Log: Using depth-buffer format 75(32-bit)
+Log: xD3DHelper::Init (QuadEmulation)
+Log: Enter SetRes: 35x0 Fullscreen 0
+Log: Using back-buffer format 22(32-bit)
+Log: Using depth-buffer format 75(32-bit)
+Log: xD3DHelper::Init (QuadEmulation)
+Log: Enter SetRes: 1613x613 Fullscreen 0
+Log: Using back-buffer format 22(32-bit)
+Log: Using depth-buffer format 75(32-bit)
+Log: xD3DHelper::Init (QuadEmulation)
+Log: Enter SetRes: 866x613 Fullscreen 0
+Log: Using back-buffer format 22(32-bit)
+Log: Using depth-buffer format 75(32-bit)
+Log: xD3DHelper::Init (QuadEmulation)
+Log: Enter SetRes: 1613x613 Fullscreen 0
+Log: Using back-buffer format 22(32-bit)
+Log: Using depth-buffer format 75(32-bit)
+Log: xD3DHelper::Init (QuadEmulation)
+Log: Enter SetRes: 866x613 Fullscreen 0
+Log: Using back-buffer format 22(32-bit)
+Log: Using depth-buffer format 75(32-bit)
+Log: xD3DHelper::Init (Qua

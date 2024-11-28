@@ -1,0 +1,27 @@
+# Assuming GNU make (>v3.76)
+# $Header: /proj/Toolkits/MeApp/src/MeMakefile,v 1.5 2001/08/02 10:28:23 jamesrf Exp $
+# ($Name: t-stevet-RWSpre-030110 $)
+
+# vim:syntax=make:
+
+#------------------------------
+# Mst
+#------------------------------
+
+# What's to be built
+targetname:=MeApp
+targettype:=library
+
+SOURCES:=\
+	MeApp.c \
+	MeAppGraphics.c \
+	RConvex.c \
+	RRGHeightfield.c \
+	RTriangleMesh.c \
+	RGeometry.c \
+	version.c
+
+# Standard incantation
+makerulesdir:=../../build/makerules/
+include ${makerulesdir}Make.rules
+

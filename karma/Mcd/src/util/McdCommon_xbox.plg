@@ -1,0 +1,56 @@
+<html>
+<body>
+<pre>
+<h1>Build Log</h1>
+<h3>
+--------------------Configuration: McdCommon_xbox - Xbox Release--------------------
+</h3>
+<h3>Command Lines</h3>
+Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP2390.tmp" with contents
+[
+/nologo /MT /W3 /GX /O2 /I "./" /I "../primitives" /I "../math" /I "../cx" /I "../rwbsp" /I "../space" /I "../util" /I "../frame" /I "../../include" /I "../../../MdtKea/include" /I "../../../Mdt/include" /I "../../src/convex" /I "../../../MeGlobals/include" /D "WIN32" /D "_XBOX" /D "NDEBUG" /D "_MBCS" /D "_LIB" /D "VS6" /D "LCE_USE_STATIC_LIB" /Fp"Release/McdCommon_xbox.pch" /YX /Fo"Release/" /Fd"Release/" /FD /G6 /Zvc6 /c 
+"D:\Projects\Xbox-port\Mcd\src\space\CxSmallSort.cpp"
+"D:\Projects\Xbox-port\Mcd\src\space\McdSpace.cpp"
+"D:\Projects\Xbox-port\Mcd\src\math\Ix2D.cpp"
+"D:\Projects\Xbox-port\Mcd\src\math\MathUtils.cpp"
+"D:\Projects\Xbox-port\Mcd\src\math\McdCore.cpp"
+"D:\Projects\Xbox-port\Mcd\src\math\McdTestCore.cpp"
+"D:\Projects\Xbox-port\Mcd\src\math\McdVanillaCore.cpp"
+"D:\Projects\Xbox-port\Mcd\src\math\mesffnmin.cpp"
+"D:\Projects\Xbox-port\Mcd\src\util\McdContact.cpp"
+]
+Creating command line "cl.exe @C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP2390.tmp" 
+Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP2391.tmp" with contents
+[
+/nologo /out:"../../../lib.rel/xbox/McdCommon.lib" 
+".\Release\CxSmallSort.obj"
+".\Release\McdSpace.obj"
+".\Release\Ix2D.obj"
+".\Release\MathUtils.obj"
+".\Release\McdCore.obj"
+".\Release\McdTestCore.obj"
+".\Release\McdVanillaCore.obj"
+".\Release\mesffnmin.obj"
+".\Release\McdContact.obj"
+]
+Creating command line "link.exe -lib @C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP2391.tmp"
+<h3>Output Window</h3>
+Compiling...
+CxSmallSort.cpp
+McdSpace.cpp
+Ix2D.cpp
+MathUtils.cpp
+McdCore.cpp
+McdTestCore.cpp
+McdVanillaCore.cpp
+mesffnmin.cpp
+McdContact.cpp
+Creating library...
+
+
+
+<h3>Results</h3>
+McdCommon.lib - 0 error(s), 0 warning(s)
+</pre>
+</body>
+</html>

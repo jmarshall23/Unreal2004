@@ -1,0 +1,61 @@
+3/Dec/99
+
+* (RLS) Fixed keaInverse() for non-lapack targets, now it actually works
+  instead of returning the original matrix as the inverse.
+
+2/Feb/2000
+
+* (RLS) Added restitution to the kea contact class. now there is a 'bouncy'
+  flag and a restitution parameter.
+
+* (RLS) fixed a dynamics bug:
+    rhs = c/h - gamma*xi/(h^2) - J*(vel(:)/h + inv(M)*fe(:))
+  instead of
+    rhs = c - gamma*xi/(h^2) - J*(vel(:)/h + inv(M)*fe(:))
+
+3/Feb/2000
+
+* (RLS) added two chunks of code to step(). one calculates Iworld and
+  invIworld arrays, the other calculates fr (rotational forces) and adds them
+  to fe. all references to body->invI are replaced with references to
+  invIworld+int(body->_data)*9. this fixes a long standing dynamics bug,
+  inertia tensors were not transformed to world coordinates, and coriolis
+  forces were not added. file modified: keaRbdCore.cpp.
+
+4/Feb/2000
+
+* (RLS) fixed a bug in the ball and socket joint, it was not being pinned to
+  the world frame correctly. files modified: kea_ballnsoclet.cpp,
+  kea_ballnsoclet.h.
+
+* (RLS) added a static parameters structure to keaContact and a
+  copyParameters() function, at marek's request (its useful for collision
+  stuff). also changed the stupid softGround mode to a softContact mode and
+  added a parameter k1. these changes need to be reflected in the C APIs.
+  files changed: kea_contact.h, kea_contact.cpp.
+
+8/Feb/2000
+
+* (RLS) added and implemented the keaLCPMatrix::formPSM() functions.
+  files changed: keaLCP.hpp, keaRbdCore.cpp.
+
+* (RLS) new speedup features in LCP solver:
+  1. optimistic cycle detection.
+  2. first 5 iterations are block pivoting.
+  3. switches to principal submatrix technique when index set size > n/2.
+  files modified: keaLCP.cpp.
+
+* (RLS) added better cycle detection, cleaned up timing code a bit.
+  files modified: keaLCP.cpp.
+
+10/Feb/2000
+
+* (RLS) added keaContact2, a new contact constraint type. this has a number
+  of enhancements and new features. a new contact type was made because it
+  is incompatible with the old contact constraint.
+  files added: kea_contact2.cpp, kea_contact2.h, Makefile.sources, kea.h.
+
+30/Aug/2000
+
+* Changed prototype of MdtKeaMemoryRequired function to just take a number of
+  rows.

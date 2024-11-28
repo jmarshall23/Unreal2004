@@ -1,0 +1,7 @@
+create table versionurls
+(
+  upgradeid int not null,
+  siteid int not null,
+  url varchar(255),
+  primary key(upgradeid, siteid)
+);

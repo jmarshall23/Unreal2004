@@ -1,0 +1,20 @@
+FontName (Eurostile-Demi)
+FullName (Eurostile Demi)
+AppleName (D Eurostile Demi)
+AppleFONDID 14843
+FamilyName (Eurostile)
+version (001.002)
+isFixedPitch false
+CharacterSet (isoadobe+euro.cs)
+Encoding (StandardEncoding)
+ItalicAngle 0
+CapHeight 750
+UnderlinePosition -100
+UnderlineThickness 50
+StemWidth 126
+Serif false
+Pi false
+SuperiorBaseline 306
+MSMenuName (Eurostile)
+VPStyle (B)
+PCFileNamePrefix (EUD__)

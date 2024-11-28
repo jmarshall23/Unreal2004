@@ -1,0 +1,35 @@
+# Assuming GNU make {>v3.76}
+# $Header: /proj/Toolkits/Mcd/src/util/MeMakefile,v 1.1 2001/03/02 15:51:04 williamg Exp $
+# ($Name: t-stevet-RWSpre-030110 $)
+
+# vim:syntax=make:
+
+#------------------------------
+#Platform independent Makefile
+#------------------------------
+
+# What's to be built
+targetname:=McdCommon
+targettype:=library
+
+SOURCES:=\
+	util/McdContact.cpp \
+	util/McdCompositeGeometry.cpp \
+	space/McdSpace.cpp \
+	math/geometry.cpp \
+	math/mesffnmin.cpp \
+	math/MathUtils.cpp \
+	space/CxSmallSort.cpp \
+	primitives/IxSpaceLineSegment.cpp \
+
+
+# SOURCES_COMMON are to be put in a separate library: McdCommon.[lib,a]
+
+# accumulate groups of sources into the SOURCES variable
+#SOURCES:=$(SOURCES_FRAME)
+#SOURCES += $(SOURCES_COMMON)
+
+# Standard incantation
+makerulesdir:=../../build/makerules/
+include ${makerulesdir}Make.rules
+

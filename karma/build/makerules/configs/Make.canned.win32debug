@@ -1,0 +1,13 @@
+# $Id: Make.canned.win32debug,v 1.1.10.1 2002/04/11 03:45:35 jamesg Exp $
+# $Name: t-stevet-RWSpre-030110 $
+#
+# vim:syntax=make:
+#
+# See Readme.txt for comments
+
+buildcontext?=moth
+PLATFORM?=win32
+BUILD?=free
+CRT?=dlld
+OPTS?=none
+SYMBOLS?=all

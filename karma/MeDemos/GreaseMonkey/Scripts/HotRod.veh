@@ -1,0 +1,9 @@
+#HotRod.veh
+SHAPE_DIR ./Models/HotRod
+TEXTURE_DIR ./Models/HotRod/textures
+CMPT_SHAPES wheelR.DFF wheelL.DFF wheelR.DFF wheelL.DFF HotRod.DFF
+INTERNAL_SHAPE interiorview.dff
+EXTERNAL_TEXTURE RodMap
+STEERING_GAINS 1.0 6.0 -1.0 0.6
+THROTTLE_GAINS 0.00063
+CAR_DATA_FILE HotRodD.txt

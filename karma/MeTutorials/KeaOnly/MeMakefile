@@ -1,0 +1,20 @@
+# Assuming GNU make (>v3.76)
+# $Header$
+# ($Name$)
+
+# vim:syntax=make:
+
+#------------------------------
+# Mdt
+#------------------------------
+
+# What's to be built
+targetname:=KeaOnly
+targettype:=executeable
+
+SOURCES	:= KeaOnly.c
+
+# Standard incantation
+makerulesdir:=../../build/makerules/
+include ${makerulesdir}Make.rules
+

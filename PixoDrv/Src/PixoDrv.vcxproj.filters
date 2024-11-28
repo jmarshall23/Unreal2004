@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Src">
+      <UniqueIdentifier>{a2518343-4d9d-457e-b411-10eac060f5d6}</UniqueIdentifier>
+      <Extensions>*.cpp;*.h</Extensions>
+    </Filter>
+    <Filter Include="Inc">
+      <UniqueIdentifier>{63d4feba-4dcf-4030-864e-56e7a0b5a03e}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="PixoDrv.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="PixoLighting.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="PixoMaterialState.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="PixoRenderDevice.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="PixoRenderInterface.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="PixoResource.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="pixo_gl.h">
+      <Filter>Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="PixoDrv.h">
+      <Filter>Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="PixoRenderDevice.h">
+      <Filter>Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="PixoRenderInterface.h">
+      <Filter>Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="PixoResource.h">
+      <Filter>Inc</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

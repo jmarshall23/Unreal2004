@@ -1,0 +1,187 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Classes">
+      <UniqueIdentifier>{eff5380a-ff48-42e4-a4ab-43ab24eea4f7}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="classes\Ammo_BallTurret.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="classes\ASTurret_BallTurret.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="classes\ASTurret_BallTurret_Base.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="classes\ASTurret_IonCannon.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="classes\ASTurret_IonCannon_Base.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="classes\ASTurret_IonCannon_Swivel.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="classes\ASTurret_LinkTurret.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="classes\ASTurret_LinkTurret_Base.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="classes\ASTurret_LinkTurret_Swivel.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="classes\ASVehicle_SpaceFighter_Human.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="classes\ASVehicle_SpaceFighter_Skaarj.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="classes\ASVehicleFactory_IonCannon.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="classes\DamTypeBallTurretPlasma.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="classes\DamTypeIonCannonBlast.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="classes\DamTypeLinkTurretBeam.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="classes\DamTypeLinkTurretPlasma.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="classes\DamTypeSpaceFighterLaser.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="classes\DamTypeSpaceFighterLaser_Skaarj.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="classes\DamTypeSpaceFighterMissile.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="classes\DamTypeSpaceFighterMissileSkaarj.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="classes\FM_BallTurret_Fire.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="classes\FM_LinkTurret_AltFire.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="classes\FM_LinkTurret_Fire.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="classes\FM_SpaceFighter_AltFire.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="classes\FM_SpaceFighter_InstantHitLaser.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="classes\FM_Turret_AltFire_Shield.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="classes\FM_Turret_IonCannon_Fire.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="classes\FX_BallTurret_Shield.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="classes\FX_LinkTurret_BeamEffect.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="classes\FX_LinkTurret_GreenPlasma.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="classes\FX_LinkTurretShield.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="classes\FX_LinkTurretShield_Red.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="classes\FX_NewIonCore.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="classes\FX_NewIonPlasmaBeam.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="classes\FX_SpaceFighter_InstantHitLaser.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="classes\FX_SpaceFighter_Rocket_Trail.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="classes\FX_SpaceFighter_Shield.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="classes\FX_SpaceFighter_Shield_Red.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="classes\FX_SpaceFighter_ShotDownEmitter.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="classes\FX_SpaceFighter_SkaarjPlasma.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="classes\FX_Turret_IonCannon_BeamExplosion.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="classes\FX_Turret_IonCannon_BeamFire.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="classes\FX_Turret_IonCannon_ChargeBeam.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="classes\FX_Turret_IonCannon_FireEffect.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="classes\FX_Turret_IonCannon_LaserBeam.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="classes\LinkTurretController.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="classes\PROJ_LinkTurret_Plasma.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="classes\PROJ_SpaceFighter_Rocket.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="classes\PROJ_TurretSkaarjPlasma.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="classes\PROJ_TurretSkaarjPlasma_Red.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="classes\WA_LinkTurret.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="classes\WA_SpaceFighter.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="classes\WA_Turret.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="classes\WA_Turret_IonCannon.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="classes\Weapon_LinkTurret.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="classes\Weapon_SpaceFighter.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="classes\Weapon_SpaceFighter_Skaarj.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="classes\Weapon_Turret.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="classes\Weapon_Turret_IonCannon.uc">
+      <Filter>Classes</Filter>
+    </None>
+  </ItemGroup>
+</Project>

@@ -1,0 +1,34 @@
+DIR=.
+#MeTutorials/Bounce
+
+if [ $1 = SEARCH ]; then
+
+/usr/bin/find $DIR -regex ".*\.dsp" -print0 | xargs -0 perl -n -e 'print $_ if m#((lib|bin).(rel|dbg|chk))[\\\/]win32[\\\/\"]#;'
+
+elif [ $1 = REPLACE ]; then
+
+/usr/bin/find $DIR -regex ".*\.dsp" -print0 | xargs -0 perl -pi.bak -e 's#((lib|bin).(rel|dbg|chk)[\\\/])win32([\\\/\"])#${1}win32_single_libc${4}#g'
+
+elif [ $1 = DIFF ]; then
+
+/usr/bin/find $DIR -regex ".*\.dsp" -print0 | xargs -0 perl -e 'foreach my $arg (@ARGV) {system("diff $arg.bak $arg") if -f "$arg.bak";}'
+
+elif [ $1 = RESET ]; then
+
+/usr/bin/find $DIR -regex ".*\.dsp" -print0 | xargs -0 perl -e 'foreach my $arg (@ARGV) {print "Reseting $arg\n"; system("cp $arg.bak $arg") if -f "$arg.bak";}'
+
+else
+
+echo "USAGE: $0 SEARCH"
+echo ""
+echo "For each .dsp files, recursively from current directory"
+echo ""
+echo "$0 SEARCH:  To search for win32"
+echo "$0 REPLACE: To replace win32 with win32_single_libc"
+echo "$0 DIFF:    Compare file with file.bak"
+echo "$0 RESET:   Reset file back to file.bak"
+echo ""
+exit
+
+fi
+

@@ -1,0 +1,40 @@
+# Assuming GNU make (>v3.76)
+# $Header: /proj/Toolkits/MeDemos/GreaseMonkey/src/MeMakefile,v 1.1.14.2 2002/03/01 19:45:24 richardm Exp $
+# ($Name: t-stevet-RWSpre-030110 $)
+
+# vim:syntax=make:
+
+#------------------------------
+# Mdt
+#------------------------------
+
+# What's to be built
+targetname:=GreaseMonkey
+targettype:=executeable
+
+incpath${makelevel}+=../../../renderware/v3.04/ps2/rwsdk/include/sky
+libpath${makelevel}+=../../../renderware/v3.04/ps2/rwsdk/lib/sky
+
+SOURCES:=\
+	plat/sky.c \
+	plat/skyextra.c \
+	rw_skel/skeleton.c \
+	rw_skel/padmap.c \
+	rw_skel/camera.c \
+	rw_skel/skyfs.c \
+	app/RwFuncs.cpp \
+	app/car.cpp \
+	app/MdtCar.cpp \
+	app/control.cpp \
+	app/driver.cpp \
+	app/events.cpp \
+	app/parser.cpp \
+	app/carAPI.cpp \
+	app/smoke.cpp \
+	app/init.cpp \
+	app/utils.cpp
+
+# Standard incantation
+makerulesdir:=../../../build/makerules/
+include ${makerulesdir}Make.rules
+

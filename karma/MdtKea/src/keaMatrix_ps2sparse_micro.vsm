@@ -1,0 +1,868 @@
+
+
+  ;  # BkMat_sgemv4ColNoTrans33MinusA3X1OneY1
+  ;  # --------------------------------------
+  ;  #
+  ;  # Y := Y - A*X 
+  ;  #
+  ;  # Y - 12*1 vector
+  ;  # A - 12*12 matrix
+  ;  # X - 12*1 vector
+  ;  #
+  ;  # On Entry:
+  ;  #
+  ;  # vi1 = buffer
+  ;  # VUMEM[buffer+0..buffer+36)  - A
+  ;  # VUMEM[buffer+36..buffer+39) - X 
+  ;  # vf1 = Y[0..4)
+  ;  # vf2 = Y[4..8)
+  ;  # vf3 = Y[8..12)
+  ;  #
+          ;  %buffer
+          ;  %bufferlen
+          ;  %px
+          ;  %pa
+
+          ;  y0
+          ;  y1
+          ;  y2
+          ;  ablock0_0
+          ;  ablock0_1
+          ;  ablock0_2
+          ;  ablock0_3
+          ;  ablock1_0
+          ;  ablock1_1
+          ;  ablock1_2
+          ;  ablock1_3
+          ;  ablock2_0
+          ;  ablock2_1
+          ;  ablock2_2
+          ;  ablock2_3
+          ;  x0
+          ;  x1
+          ;  x2
+
+sgemvSubNoTrans:  ;  'sgemvSubNoTrans:
+        nop                         IADD           VI04, VI01, VI00  ;  'nop                         || %pa = %buffer + %K
+        nop                         IADDIU         VI03, VI04, 36  ;  'nop                         || %px = %pa + 36u
+        nop                         LQ             VF16, 0(VI03)  ;  'nop                         || x0        << (%px+0)
+        nop                         LQI            VF04, (VI04++)  ;  'nop                         || ablock0_0 << (%pa++)
+        nop                         LQI            VF05, (VI04++)  ;  'nop                         || ablock0_1 << (%pa++)
+        nop                         LQI            VF06, (VI04++)  ;  'nop                         || ablock0_2 << (%pa++)
+        nop                         LQI            VF07, (VI04++)  ;  'nop                         || ablock0_3 << (%pa++)
+        ADDAx.xyzw   ACC, VF01, VF00          LQ             VF17, 1(VI03)  ;  ACC = y0 + K.x               || x1        << (%px+1)
+        MSUBAx.xyzw  ACC, VF04, VF16          LQI            VF08, (VI04++)  ;  ACC = ACC - ablock0_0 * x0.x || ablock1_0 << (%pa++)
+        MSUBAy.xyzw  ACC, VF05, VF16          LQI            VF09, (VI04++)  ;  ACC = ACC - ablock0_1 * x0.y || ablock1_1 << (%pa++)
+        MSUBAz.xyzw  ACC, VF06, VF16          LQI            VF10, (VI04++)  ;  ACC = ACC - ablock0_2 * x0.z || ablock1_2 << (%pa++)
+        MSUBAw.xyzw  ACC, VF07, VF16          LQI            VF11, (VI04++)  ;  ACC = ACC - ablock0_3 * x0.w || ablock1_3 << (%pa++)
+        nop                         LQ             VF18, 2(VI03)  ;  'nop                         || x2        << (%px+2)
+        MSUBAx.xyzw  ACC, VF08, VF17          LQI            VF12, (VI04++)  ;  ACC = ACC - ablock1_0 * x1.x || ablock2_0 << (%pa++)
+        MSUBAy.xyzw  ACC, VF09, VF17          LQI            VF13, (VI04++)  ;  ACC = ACC - ablock1_1 * x1.y || ablock2_1 << (%pa++)
+        MSUBAz.xyzw  ACC, VF10, VF17          LQI            VF14, (VI04++)  ;  ACC = ACC - ablock1_2 * x1.z || ablock2_2 << (%pa++)
+        MSUBAw.xyzw  ACC, VF11, VF17          LQI            VF15, (VI04++)  ;  ACC = ACC - ablock1_3 * x1.w || ablock2_3 << (%pa++)
+        nop                         LQ             VF16, 0(VI03)  ;  'nop                         || x0        << (%px+0)
+        MSUBAx.xyzw  ACC, VF12, VF18          LQI            VF04, (VI04++)  ;  ACC = ACC - ablock2_0 * x2.x || ablock0_0 << (%pa++)
+        MSUBAy.xyzw  ACC, VF13, VF18          LQI            VF05, (VI04++)  ;  ACC = ACC - ablock2_1 * x2.y || ablock0_1 << (%pa++)
+        MSUBAz.xyzw  ACC, VF14, VF18          LQI            VF06, (VI04++)  ;  ACC = ACC - ablock2_2 * x2.z || ablock0_2 << (%pa++)
+        MSUBw.xyzw  VF01, VF15, VF18          LQI            VF07, (VI04++)  ;  y0  = ACC - ablock2_3 * x2.w || ablock0_3 << (%pa++)
+          ;  
+        ADDAx.xyzw   ACC, VF02, VF00          LQ             VF17, 1(VI03)  ;  ACC = y1 + K.x               || x1        << (%px+1)
+        MSUBAx.xyzw  ACC, VF04, VF16          LQI            VF08, (VI04++)  ;  ACC = ACC - ablock0_0 * x0.x || ablock1_0 << (%pa++)
+        MSUBAy.xyzw  ACC, VF05, VF16          LQI            VF09, (VI04++)  ;  ACC = ACC - ablock0_1 * x0.y || ablock1_1 << (%pa++)
+        MSUBAz.xyzw  ACC, VF06, VF16          LQI            VF10, (VI04++)  ;  ACC = ACC - ablock0_2 * x0.z || ablock1_2 << (%pa++)
+        MSUBAw.xyzw  ACC, VF07, VF16          LQI            VF11, (VI04++)  ;  ACC = ACC - ablock0_3 * x0.w || ablock1_3 << (%pa++)
+        nop                         LQ             VF18, 2(VI03)  ;  'nop                         || x2        << (%px+2)
+        MSUBAx.xyzw  ACC, VF08, VF17          LQI            VF12, (VI04++)  ;  ACC = ACC - ablock1_0 * x1.x || ablock2_0 << (%pa++)
+        MSUBAy.xyzw  ACC, VF09, VF17          LQI            VF13, (VI04++)  ;  ACC = ACC - ablock1_1 * x1.y || ablock2_1 << (%pa++)
+        MSUBAz.xyzw  ACC, VF10, VF17          LQI            VF14, (VI04++)  ;  ACC = ACC - ablock1_2 * x1.z || ablock2_2 << (%pa++)
+        MSUBAw.xyzw  ACC, VF11, VF17          LQI            VF15, (VI04++)  ;  ACC = ACC - ablock1_3 * x1.w || ablock2_3 << (%pa++)
+        nop                         LQ             VF16, 0(VI03)  ;  'nop                         || x0        << (%px+0)
+        MSUBAx.xyzw  ACC, VF12, VF18          LQI            VF04, (VI04++)  ;  ACC = ACC - ablock2_0 * x2.x || ablock0_0 << (%pa++)
+        MSUBAy.xyzw  ACC, VF13, VF18          LQI            VF05, (VI04++)  ;  ACC = ACC - ablock2_1 * x2.y || ablock0_1 << (%pa++)
+        MSUBAz.xyzw  ACC, VF14, VF18          LQI            VF06, (VI04++)  ;  ACC = ACC - ablock2_2 * x2.z || ablock0_2 << (%pa++)
+        MSUBw.xyzw  VF02, VF15, VF18          LQI            VF07, (VI04++)  ;  y1  = ACC - ablock2_3 * x2.w || ablock0_3 << (%pa++)
+          ;  
+        ADDAx.xyzw   ACC, VF03, VF00          LQ             VF17, 1(VI03)  ;  ACC = y2 + K.x               || x1        << (%px+1)
+        MSUBAx.xyzw  ACC, VF04, VF16          LQI            VF08, (VI04++)  ;  ACC = ACC - ablock0_0 * x0.x || ablock1_0 << (%pa++)
+        MSUBAy.xyzw  ACC, VF05, VF16          LQI            VF09, (VI04++)  ;  ACC = ACC - ablock0_1 * x0.y || ablock1_1 << (%pa++)
+        MSUBAz.xyzw  ACC, VF06, VF16          LQI            VF10, (VI04++)  ;  ACC = ACC - ablock0_2 * x0.z || ablock1_2 << (%pa++)
+        MSUBAw.xyzw  ACC, VF07, VF16          LQI            VF11, (VI04++)  ;  ACC = ACC - ablock0_3 * x0.w || ablock1_3 << (%pa++)
+        nop                         LQ             VF18, 2(VI03)  ;  'nop                         || x2        << (%px+2)
+        MSUBAx.xyzw  ACC, VF08, VF17          LQI            VF12, (VI04++)  ;  ACC = ACC - ablock1_0 * x1.x || ablock2_0 << (%pa++)
+        MSUBAy.xyzw  ACC, VF09, VF17          LQI            VF13, (VI04++)  ;  ACC = ACC - ablock1_1 * x1.y || ablock2_1 << (%pa++)
+        MSUBAz.xyzw  ACC, VF10, VF17          LQI            VF14, (VI04++)  ;  ACC = ACC - ablock1_2 * x1.z || ablock2_2 << (%pa++)
+        MSUBAw.xyzw  ACC, VF11, VF17          LQI            VF15, (VI04++)  ;  ACC = ACC - ablock1_3 * x1.w || ablock2_3 << (%pa++)
+        MSUBAx.xyzw  ACC, VF12, VF18          IADDIU         VI02, VI00, 39  ;  ACC = ACC - ablock2_0 * x2.x || %bufferlen = %K + 39u
+        MSUBAy.xyzw  ACC, VF13, VF18          ISUB           VI01, VI02, VI01  ;  ACC = ACC - ablock2_1 * x2.y || %buffer = %bufferlen - %buffer
+        MSUBAz.xyzw  ACC, VF14, VF18          nop   ;  ACC = ACC - ablock2_2 * x2.z || 'nop 
+        MSUBw.xyzw  VF03, VF15, VF18          nop  ;  y2  = ACC - ablock2_3 * x2.w || 'nop
+        nop[e]                      nop  ;  'nop[e]                      || 'nop
+        nop                         nop  ;  'nop                         || 'nop
+
+          ;  ~%buffer
+          ;  ~%bufferlen
+          ;  ~%px
+          ;  ~%pa
+
+          ;  ~y0
+          ;  ~y1
+          ;  ~y2
+          ;  ~ablock0_0
+          ;  ~ablock0_1
+          ;  ~ablock0_2
+          ;  ~ablock0_3
+          ;  ~ablock1_0
+          ;  ~ablock1_1
+          ;  ~ablock1_2
+          ;  ~ablock1_3
+          ;  ~ablock2_0
+          ;  ~ablock2_1
+          ;  ~ablock2_2
+          ;  ~ablock2_3
+          ;  ~x0
+          ;  ~x1
+          ;  ~x2
+
+sgemvSubTrans:  ;  'sgemvSubTrans:
+          ;  %buffer
+          ;  %pans
+          ;  %bufferlen
+          ;  %px
+          ;  %prow0
+          ;  %prow1
+          ;  %prow2
+
+          ;  x0
+          ;  x1
+          ;  x2
+          ;  zero
+          ;  in_0
+          ;  in_1
+          ;  in_2
+          ;  in_3
+          ;  ablock_0
+          ;  ablock_1
+          ;  ablock_2
+          ;  ablock_3
+          ;  y0
+          ;  y1
+          ;  y2
+
+        nop                         IADD           VI05, VI01, VI00  ;  'nop                         ||    %prow0 = %buffer + %K
+        nop                         IADDIU         VI06, VI05, 12  ;  'nop                         ||    %prow1 = %prow0 + 12u
+        nop                         IADDIU         VI07, VI05, 24  ;  'nop                         ||    %prow2 = %prow0 + 24u
+        SUB.xyzw    VF04, VF00, VF00          LQ             VF13, 0(VI02)  ;  zero = K-K                   ||    y0   << (%pans+0)
+        nop                         LQ             VF14, 1(VI02)  ;  'nop                         ||    y1   << (%pans+1)
+        nop                         LQI            VF05, (VI05++)  ;  'nop                         ||    in_0 << (%prow0++)
+        nop                         LQI            VF06, (VI05++)  ;  'nop                         ||    in_1 << (%prow0++)
+        nop                         LQI            VF07, (VI05++)  ;  'nop                         ||    in_2 << (%prow0++)
+        nop                         LQI            VF08, (VI05++)  ;  'nop                         ||    in_3 << (%prow0++)
+        ADDx.y      VF09, VF04, VF06          MOVE.y  VF10, VF06  ;  ablock_0.y = zero + in_1.x   ||    'MOVE.y  @ablock_1, @in_1
+        ADDx.z      VF09, VF04, VF07          MR32.x  VF10, VF05  ;  ablock_0.z = zero + in_2.x   ||    'MR32.x  @ablock_1, @in_0
+        ADDy.z      VF10, VF04, VF07          MOVE.x  VF09, VF05  ;  ablock_1.z = zero + in_2.y   ||    'MOVE.x  @ablock_0, @in_0
+        ADDy.w      VF10, VF04, VF08          MR32.w  VF09, VF08  ;  ablock_1.w = zero + in_3.y   ||    'MR32.w  @ablock_0, @in_3
+        ADDz.x      VF11, VF04, VF05          MOVE.w  VF12, VF08  ;  ablock_2.x = zero + in_0.z   ||    'MOVE.w  @ablock_3, @in_3
+        ADDz.w      VF11, VF04, VF08          MR32.z  VF12, VF07  ;  ablock_2.w = zero + in_3.z   ||    'MR32.z  @ablock_3, @in_2
+        ADDw.x      VF12, VF04, VF05          MR32.y  VF11, VF06  ;  ablock_3.x = zero + in_0.w   ||    'MR32.y  @ablock_2, @in_1
+        ADDw.y      VF12, VF04, VF06          MOVE.z  VF11, VF07  ;  ablock_3.y = zero + in_1.w   ||    'MOVE.z  @ablock_2, @in_2
+        ADDAx.xyzw   ACC, VF13, VF00          LQ             VF15, 2(VI02)  ;  ACC = y0 + K.x               ||    y2   << (%pans+2)
+        MSUBAx.xyzw  ACC, VF09, VF01          LQI            VF05, (VI06++)  ;  ACC = ACC - ablock_0 * x0.x  ||    in_0 << (%prow1++)
+        MSUBAy.xyzw  ACC, VF10, VF01          LQI            VF06, (VI06++)  ;  ACC = ACC - ablock_1 * x0.y  ||    in_1 << (%prow1++)
+        MSUBAz.xyzw  ACC, VF11, VF01          LQI            VF07, (VI06++)  ;  ACC = ACC - ablock_2 * x0.z  ||    in_2 << (%prow1++)
+        MSUBAw.xyzw  ACC, VF12, VF01          LQI            VF08, (VI06++)  ;  ACC = ACC - ablock_3 * x0.w  ||    in_3 << (%prow1++)
+        ADDx.y      VF09, VF04, VF06          MOVE.y  VF10, VF06  ;  ablock_0.y = zero + in_1.x   ||    'MOVE.y  @ablock_1, @in_1
+        ADDx.z      VF09, VF04, VF07          MR32.x  VF10, VF05  ;  ablock_0.z = zero + in_2.x   ||    'MR32.x  @ablock_1, @in_0
+        ADDy.z      VF10, VF04, VF07          MOVE.x  VF09, VF05  ;  ablock_1.z = zero + in_2.y   ||    'MOVE.x  @ablock_0, @in_0
+        ADDy.w      VF10, VF04, VF08          MR32.w  VF09, VF08  ;  ablock_1.w = zero + in_3.y   ||    'MR32.w  @ablock_0, @in_3
+        ADDz.x      VF11, VF04, VF05          MOVE.w  VF12, VF08  ;  ablock_2.x = zero + in_0.z   ||    'MOVE.w  @ablock_3, @in_3
+        ADDz.w      VF11, VF04, VF08          MR32.z  VF12, VF07  ;  ablock_2.w = zero + in_3.z   ||    'MR32.z  @ablock_3, @in_2
+        ADDw.x      VF12, VF04, VF05          MR32.y  VF11, VF06  ;  ablock_3.x = zero + in_0.w   ||    'MR32.y  @ablock_2, @in_1
+        ADDw.y      VF12, VF04, VF06          MOVE.z  VF11, VF07  ;  ablock_3.y = zero + in_1.w   ||    'MOVE.z  @ablock_2, @in_2
+        MSUBAx.xyzw  ACC, VF09, VF02          LQI            VF05, (VI07++)  ;  ACC = ACC - ablock_0 * x1.x  ||    in_0 << (%prow2++)
+        MSUBAy.xyzw  ACC, VF10, VF02          LQI            VF06, (VI07++)  ;  ACC = ACC - ablock_1 * x1.y  ||    in_1 << (%prow2++)
+        MSUBAz.xyzw  ACC, VF11, VF02          LQI            VF07, (VI07++)  ;  ACC = ACC - ablock_2 * x1.z  ||    in_2 << (%prow2++)
+        MSUBAw.xyzw  ACC, VF12, VF02          LQI            VF08, (VI07++)  ;  ACC = ACC - ablock_3 * x1.w  ||    in_3 << (%prow2++)
+        ADDx.y      VF09, VF04, VF06          MOVE.y  VF10, VF06  ;  ablock_0.y = zero + in_1.x   ||    'MOVE.y  @ablock_1, @in_1
+        ADDx.z      VF09, VF04, VF07          MR32.x  VF10, VF05  ;  ablock_0.z = zero + in_2.x   ||    'MR32.x  @ablock_1, @in_0
+        ADDy.z      VF10, VF04, VF07          MOVE.x  VF09, VF05  ;  ablock_1.z = zero + in_2.y   ||    'MOVE.x  @ablock_0, @in_0
+        ADDy.w      VF10, VF04, VF08          MR32.w  VF09, VF08  ;  ablock_1.w = zero + in_3.y   ||    'MR32.w  @ablock_0, @in_3
+        ADDz.x      VF11, VF04, VF05          MOVE.w  VF12, VF08  ;  ablock_2.x = zero + in_0.z   ||    'MOVE.w  @ablock_3, @in_3
+        ADDz.w      VF11, VF04, VF08          MR32.z  VF12, VF07  ;  ablock_2.w = zero + in_3.z   ||    'MR32.z  @ablock_3, @in_2
+        ADDw.x      VF12, VF04, VF05          MR32.y  VF11, VF06  ;  ablock_3.x = zero + in_0.w   ||    'MR32.y  @ablock_2, @in_1
+        ADDw.y      VF12, VF04, VF06          MOVE.z  VF11, VF07  ;  ablock_3.y = zero + in_1.w   ||    'MOVE.z  @ablock_2, @in_2
+        MSUBAx.xyzw  ACC, VF09, VF03          LQI            VF05, (VI05++)  ;  ACC = ACC - ablock_0 * x2.x  ||    in_0 << (%prow0++)
+        MSUBAy.xyzw  ACC, VF10, VF03          LQI            VF06, (VI05++)  ;  ACC = ACC - ablock_1 * x2.y  ||    in_1 << (%prow0++)
+        MSUBAz.xyzw  ACC, VF11, VF03          LQI            VF07, (VI05++)  ;  ACC = ACC - ablock_2 * x2.z  ||    in_2 << (%prow0++)
+        MSUBw.xyzw  VF13, VF12, VF03          LQI            VF08, (VI05++)  ;  y0  = ACC - ablock_3 * x2.w  ||    in_3 << (%prow0++)
+
+        ADDx.y      VF09, VF04, VF06          MOVE.y  VF10, VF06  ;  ablock_0.y = zero + in_1.x   ||    'MOVE.y  @ablock_1, @in_1
+        ADDx.z      VF09, VF04, VF07          MR32.x  VF10, VF05  ;  ablock_0.z = zero + in_2.x   ||    'MR32.x  @ablock_1, @in_0
+        ADDy.z      VF10, VF04, VF07          MOVE.x  VF09, VF05  ;  ablock_1.z = zero + in_2.y   ||    'MOVE.x  @ablock_0, @in_0
+        ADDy.w      VF10, VF04, VF08          MR32.w  VF09, VF08  ;  ablock_1.w = zero + in_3.y   ||    'MR32.w  @ablock_0, @in_3
+        ADDz.x      VF11, VF04, VF05          MOVE.w  VF12, VF08  ;  ablock_2.x = zero + in_0.z   ||    'MOVE.w  @ablock_3, @in_3
+        ADDz.w      VF11, VF04, VF08          MR32.z  VF12, VF07  ;  ablock_2.w = zero + in_3.z   ||    'MR32.z  @ablock_3, @in_2
+        ADDw.x      VF12, VF04, VF05          MR32.y  VF11, VF06  ;  ablock_3.x = zero + in_0.w   ||    'MR32.y  @ablock_2, @in_1
+        ADDw.y      VF12, VF04, VF06          MOVE.z  VF11, VF07  ;  ablock_3.y = zero + in_1.w   ||    'MOVE.z  @ablock_2, @in_2
+        ADDAx.xyzw   ACC, VF14, VF00          SQ             VF13, 0(VI02)  ;  ACC = y1 + K.x               ||    y0   >> (%pans+0)
+        MSUBAx.xyzw  ACC, VF09, VF01          LQI            VF05, (VI06++)  ;  ACC = ACC - ablock_0 * x0.x  ||    in_0 << (%prow1++)
+        MSUBAy.xyzw  ACC, VF10, VF01          LQI            VF06, (VI06++)  ;  ACC = ACC - ablock_1 * x0.y  ||    in_1 << (%prow1++)
+        MSUBAz.xyzw  ACC, VF11, VF01          LQI            VF07, (VI06++)  ;  ACC = ACC - ablock_2 * x0.z  ||    in_2 << (%prow1++)
+        MSUBAw.xyzw  ACC, VF12, VF01          LQI            VF08, (VI06++)  ;  ACC = ACC - ablock_3 * x0.w  ||    in_3 << (%prow1++)
+        ADDx.y      VF09, VF04, VF06          MOVE.y  VF10, VF06  ;  ablock_0.y = zero + in_1.x   ||    'MOVE.y  @ablock_1, @in_1
+        ADDx.z      VF09, VF04, VF07          MR32.x  VF10, VF05  ;  ablock_0.z = zero + in_2.x   ||    'MR32.x  @ablock_1, @in_0
+        ADDy.z      VF10, VF04, VF07          MOVE.x  VF09, VF05  ;  ablock_1.z = zero + in_2.y   ||    'MOVE.x  @ablock_0, @in_0
+        ADDy.w      VF10, VF04, VF08          MR32.w  VF09, VF08  ;  ablock_1.w = zero + in_3.y   ||    'MR32.w  @ablock_0, @in_3
+        ADDz.x      VF11, VF04, VF05          MOVE.w  VF12, VF08  ;  ablock_2.x = zero + in_0.z   ||    'MOVE.w  @ablock_3, @in_3
+        ADDz.w      VF11, VF04, VF08          MR32.z  VF12, VF07  ;  ablock_2.w = zero + in_3.z   ||    'MR32.z  @ablock_3, @in_2
+        ADDw.x      VF12, VF04, VF05          MR32.y  VF11, VF06  ;  ablock_3.x = zero + in_0.w   ||    'MR32.y  @ablock_2, @in_1
+        ADDw.y      VF12, VF04, VF06          MOVE.z  VF11, VF07  ;  ablock_3.y = zero + in_1.w   ||    'MOVE.z  @ablock_2, @in_2
+        MSUBAx.xyzw  ACC, VF09, VF02          LQI            VF05, (VI07++)  ;  ACC = ACC - ablock_0 * x1.x  ||    in_0 << (%prow2++)
+        MSUBAy.xyzw  ACC, VF10, VF02          LQI            VF06, (VI07++)  ;  ACC = ACC - ablock_1 * x1.y  ||    in_1 << (%prow2++)
+        MSUBAz.xyzw  ACC, VF11, VF02          LQI            VF07, (VI07++)  ;  ACC = ACC - ablock_2 * x1.z  ||    in_2 << (%prow2++)
+        MSUBAw.xyzw  ACC, VF12, VF02          LQI            VF08, (VI07++)  ;  ACC = ACC - ablock_3 * x1.w  ||    in_3 << (%prow2++)
+        ADDx.y      VF09, VF04, VF06          MOVE.y  VF10, VF06  ;  ablock_0.y = zero + in_1.x   ||    'MOVE.y  @ablock_1, @in_1
+        ADDx.z      VF09, VF04, VF07          MR32.x  VF10, VF05  ;  ablock_0.z = zero + in_2.x   ||    'MR32.x  @ablock_1, @in_0
+        ADDy.z      VF10, VF04, VF07          MOVE.x  VF09, VF05  ;  ablock_1.z = zero + in_2.y   ||    'MOVE.x  @ablock_0, @in_0
+        ADDy.w      VF10, VF04, VF08          MR32.w  VF09, VF08  ;  ablock_1.w = zero + in_3.y   ||    'MR32.w  @ablock_0, @in_3
+        ADDz.x      VF11, VF04, VF05          MOVE.w  VF12, VF08  ;  ablock_2.x = zero + in_0.z   ||    'MOVE.w  @ablock_3, @in_3
+        ADDz.w      VF11, VF04, VF08          MR32.z  VF12, VF07  ;  ablock_2.w = zero + in_3.z   ||    'MR32.z  @ablock_3, @in_2
+        ADDw.x      VF12, VF04, VF05          MR32.y  VF11, VF06  ;  ablock_3.x = zero + in_0.w   ||    'MR32.y  @ablock_2, @in_1
+        ADDw.y      VF12, VF04, VF06          MOVE.z  VF11, VF07  ;  ablock_3.y = zero + in_1.w   ||    'MOVE.z  @ablock_2, @in_2
+        MSUBAx.xyzw  ACC, VF09, VF03          LQI            VF05, (VI05++)  ;  ACC = ACC - ablock_0 * x2.x  ||    in_0 << (%prow0++)
+        MSUBAy.xyzw  ACC, VF10, VF03          LQI            VF06, (VI05++)  ;  ACC = ACC - ablock_1 * x2.y  ||    in_1 << (%prow0++)
+        MSUBAz.xyzw  ACC, VF11, VF03          LQI            VF07, (VI05++)  ;  ACC = ACC - ablock_2 * x2.z  ||    in_2 << (%prow0++)
+        MSUBw.xyzw  VF14, VF12, VF03          LQI            VF08, (VI05++)  ;  y1  = ACC - ablock_3 * x2.w  ||    in_3 << (%prow0++)
+                   ;  
+        ADDx.y      VF09, VF04, VF06          MOVE.y  VF10, VF06  ;  ablock_0.y = zero + in_1.x   ||    'MOVE.y  @ablock_1, @in_1
+        ADDx.z      VF09, VF04, VF07          MR32.x  VF10, VF05  ;  ablock_0.z = zero + in_2.x   ||    'MR32.x  @ablock_1, @in_0
+        ADDy.z      VF10, VF04, VF07          MOVE.x  VF09, VF05  ;  ablock_1.z = zero + in_2.y   ||    'MOVE.x  @ablock_0, @in_0
+        ADDy.w      VF10, VF04, VF08          MR32.w  VF09, VF08  ;  ablock_1.w = zero + in_3.y   ||    'MR32.w  @ablock_0, @in_3
+        ADDz.x      VF11, VF04, VF05          MOVE.w  VF12, VF08  ;  ablock_2.x = zero + in_0.z   ||    'MOVE.w  @ablock_3, @in_3
+        ADDz.w      VF11, VF04, VF08          MR32.z  VF12, VF07  ;  ablock_2.w = zero + in_3.z   ||    'MR32.z  @ablock_3, @in_2
+        ADDw.x      VF12, VF04, VF05          MR32.y  VF11, VF06  ;  ablock_3.x = zero + in_0.w   ||    'MR32.y  @ablock_2, @in_1
+        ADDw.y      VF12, VF04, VF06          MOVE.z  VF11, VF07  ;  ablock_3.y = zero + in_1.w   ||    'MOVE.z  @ablock_2, @in_2
+        ADDAx.xyzw   ACC, VF15, VF00          SQ             VF14, 1(VI02)  ;  ACC = y2 + K.x               ||    y1  >> (%pans+1)
+        MSUBAx.xyzw  ACC, VF09, VF01          LQI            VF05, (VI06++)  ;  ACC = ACC - ablock_0 * x0.x  ||    in_0 << (%prow1++)
+        MSUBAy.xyzw  ACC, VF10, VF01          LQI            VF06, (VI06++)  ;  ACC = ACC - ablock_1 * x0.y  ||    in_1 << (%prow1++)
+        MSUBAz.xyzw  ACC, VF11, VF01          LQI            VF07, (VI06++)  ;  ACC = ACC - ablock_2 * x0.z  ||    in_2 << (%prow1++)
+        MSUBAw.xyzw  ACC, VF12, VF01          LQI            VF08, (VI06++)  ;  ACC = ACC - ablock_3 * x0.w  ||    in_3 << (%prow1++)
+        ADDx.y      VF09, VF04, VF06          MOVE.y  VF10, VF06  ;  ablock_0.y = zero + in_1.x   ||    'MOVE.y  @ablock_1, @in_1
+        ADDx.z      VF09, VF04, VF07          MR32.x  VF10, VF05  ;  ablock_0.z = zero + in_2.x   ||    'MR32.x  @ablock_1, @in_0
+        ADDy.z      VF10, VF04, VF07          MOVE.x  VF09, VF05  ;  ablock_1.z = zero + in_2.y   ||    'MOVE.x  @ablock_0, @in_0
+        ADDy.w      VF10, VF04, VF08          MR32.w  VF09, VF08  ;  ablock_1.w = zero + in_3.y   ||    'MR32.w  @ablock_0, @in_3
+        ADDz.x      VF11, VF04, VF05          MOVE.w  VF12, VF08  ;  ablock_2.x = zero + in_0.z   ||    'MOVE.w  @ablock_3, @in_3
+        ADDz.w      VF11, VF04, VF08          MR32.z  VF12, VF07  ;  ablock_2.w = zero + in_3.z   ||    'MR32.z  @ablock_3, @in_2
+        ADDw.x      VF12, VF04, VF05          MR32.y  VF11, VF06  ;  ablock_3.x = zero + in_0.w   ||    'MR32.y  @ablock_2, @in_1
+        ADDw.y      VF12, VF04, VF06          MOVE.z  VF11, VF07  ;  ablock_3.y = zero + in_1.w   ||    'MOVE.z  @ablock_2, @in_2
+        MSUBAx.xyzw  ACC, VF09, VF02          LQI            VF05, (VI07++)  ;  ACC = ACC - ablock_0 * x1.x  ||    in_0 << (%prow2++)
+        MSUBAy.xyzw  ACC, VF10, VF02          LQI            VF06, (VI07++)  ;  ACC = ACC - ablock_1 * x1.y  ||    in_1 << (%prow2++)
+        MSUBAz.xyzw  ACC, VF11, VF02          LQI            VF07, (VI07++)  ;  ACC = ACC - ablock_2 * x1.z  ||    in_2 << (%prow2++)
+        MSUBAw.xyzw  ACC, VF12, VF02          LQI            VF08, (VI07++)  ;  ACC = ACC - ablock_3 * x1.w  ||    in_3 << (%prow2++)
+        ADDx.y      VF09, VF04, VF06          MOVE.y  VF10, VF06  ;  ablock_0.y = zero + in_1.x   ||    'MOVE.y  @ablock_1, @in_1
+        ADDx.z      VF09, VF04, VF07          MR32.x  VF10, VF05  ;  ablock_0.z = zero + in_2.x   ||    'MR32.x  @ablock_1, @in_0
+        ADDy.z      VF10, VF04, VF07          MOVE.x  VF09, VF05  ;  ablock_1.z = zero + in_2.y   ||    'MOVE.x  @ablock_0, @in_0
+        ADDy.w      VF10, VF04, VF08          MR32.w  VF09, VF08  ;  ablock_1.w = zero + in_3.y   ||    'MR32.w  @ablock_0, @in_3
+        ADDz.x      VF11, VF04, VF05          MOVE.w  VF12, VF08  ;  ablock_2.x = zero + in_0.z   ||    'MOVE.w  @ablock_3, @in_3
+        ADDz.w      VF11, VF04, VF08          MR32.z  VF12, VF07  ;  ablock_2.w = zero + in_3.z   ||    'MR32.z  @ablock_3, @in_2
+        ADDw.x      VF12, VF04, VF05          MR32.y  VF11, VF06  ;  ablock_3.x = zero + in_0.w   ||    'MR32.y  @ablock_2, @in_1
+        ADDw.y      VF12, VF04, VF06          MOVE.z  VF11, VF07  ;  ablock_3.y = zero + in_1.w   ||    'MOVE.z  @ablock_2, @in_2
+        MSUBAx.xyzw  ACC, VF09, VF03          IADDIU         VI03, VI00, 36  ;  ACC = ACC - ablock_0 * x2.x  ||    %bufferlen = %K + 36u
+        MSUBAy.xyzw  ACC, VF10, VF03          ISUB           VI01, VI03, VI01  ;  ACC = ACC - ablock_1 * x2.y  ||    %buffer    = %bufferlen - %buffer
+        MSUBAz.xyzw  ACC, VF11, VF03          nop  ;  ACC = ACC - ablock_2 * x2.z  ||    'nop
+        MSUBw.xyzw  VF15, VF12, VF03          nop  ;  y2  = ACC - ablock_3 * x2.w  ||    'nop
+        nop                         nop  ;  'nop                         ||    'nop
+        nop                         nop  ;  'nop                         ||    'nop
+        nop                         nop  ;  'nop                         ||    'nop
+        nop                         SQ             VF15, 2(VI02)  ;  'nop                         ||    y2 >> (%pans+2)
+        nop                         ISUBIU         VI02, VI02, 3  ;  'nop                         ||    %pans      = %pans - 3u
+        nop[e]                      nop  ;  'nop[e]                      ||    'nop
+        nop                         nop  ;  'nop                         ||    'nop
+
+          ;  ~%buffer
+          ;  ~%pans
+          ;  ~%bufferlen
+          ;  ~%px
+          ;  ~%prow0
+          ;  ~%prow1
+          ;  ~%prow2
+
+          ;  ~x0
+          ;  ~x1
+          ;  ~x2
+          ;  ~zero
+          ;  ~in_0
+          ;  ~in_1
+          ;  ~in_2
+          ;  ~in_3
+          ;  ~ablock_0
+          ;  ~ablock_1
+          ;  ~ablock_2
+          ;  ~ablock_3
+          ;  ~y0
+          ;  ~y1
+          ;  ~y2
+
+strsvTrans:  ;  'strsvTrans:
+
+          ;  %pa
+          ;  %pans
+          ;  %bufferlen
+          ;  r0
+          ;  r1
+          ;  r2
+          ;  in_0
+          ;  in_1
+          ;  in_2
+          ;  in_3
+          ;  a0
+          ;  a1
+          ;  a2
+          ;  a3
+          ;  a4
+          ;  a5
+          ;  a6
+          ;  a7
+          ;  recip
+          ;  zero
+          ;  tmp
+
+          ;  # Flip the contents of each quad in the rhs vector
+
+        SUB.xyzw    VF17, VF00, VF00          nop  ;  zero = K - K                 ||    'nop
+        ADDw.x      VF18, VF17, VF01          nop  ;  tmp.x = zero + r0.w          ||    'nop
+        ADDz.y      VF18, VF17, VF01          nop  ;  tmp.y = zero + r0.z          ||    'nop
+        ADDy.z      VF18, VF17, VF01          nop  ;  tmp.z = zero + r0.y          ||    'nop
+        ADDx.w      VF18, VF17, VF01          nop  ;  tmp.w = zero + r0.x          ||    'nop
+        ADDx.xyzw   VF01, VF18, VF00          nop       ;  r0    = tmp + K.x            ||    'nop     
+        ADDw.x      VF18, VF17, VF02          nop  ;  tmp.x = zero + r1.w          ||    'nop
+        ADDz.y      VF18, VF17, VF02          nop  ;  tmp.y = zero + r1.z          ||    'nop
+        ADDy.z      VF18, VF17, VF02          nop  ;  tmp.z = zero + r1.y          ||    'nop
+        ADDx.w      VF18, VF17, VF02          nop  ;  tmp.w = zero + r1.x          ||    'nop
+        ADDx.xyzw   VF02, VF18, VF00          nop       ;  r1    = tmp + K.x            ||    'nop     
+        ADDw.x      VF18, VF17, VF03          nop  ;  tmp.x = zero + r2.w          ||    'nop
+        ADDz.y      VF18, VF17, VF03          nop  ;  tmp.y = zero + r2.z          ||    'nop
+        ADDy.z      VF18, VF17, VF03          nop  ;  tmp.z = zero + r2.y          ||    'nop
+        ADDx.w      VF18, VF17, VF03          nop  ;  tmp.w = zero + r2.x          ||    'nop
+        ADDx.xyzw   VF03, VF18, VF00          nop       ;  r2    = tmp + K.x            ||    'nop     
+
+        nop                         LQ             VF07, 35(VI01)  ;  'nop                         ||    in_3 << (%pa+35)
+        nop                         LQ             VF05, 33(VI01)  ;  'nop                         ||    in_1 << (%pa+33)
+        nop                         LQ             VF06, 34(VI01)  ;  'nop                         ||    in_2 << (%pa+34)
+        nop                         LQ             VF04, 32(VI01)  ;  'nop                         ||    in_0 << (%pa+32)
+        nop                         DIV            Q,VF00w,VF07w  ;  'nop                         ||    Q = K.w / in_3.w
+        ADDw.x      VF08, VF17, VF07          MOVE.z  VF09, VF05  ;  a0.x = zero + in_3.w         ||    'MOVE.z  @a1, @in_1
+        ADDw.y      VF08, VF17, VF06          MR32.y  VF09, VF06  ;  a0.y = zero + in_2.w         ||    'MR32.y  @a1, @in_2
+        ADDz.x      VF09, VF17, VF07          MOVE.w  VF08, VF04  ;  a1.x = zero + in_3.z         ||    'MOVE.w  @a0, @in_0
+        ADDz.w      VF09, VF17, VF04          MR32.z  VF08, VF05  ;  a1.w = zero + in_0.z         ||    'MR32.z  @a0, @in_1
+        ADDy.z      VF10, VF17, VF05          MOVE.x  VF11, VF07  ;  a2.z = zero + in_1.y         ||    'MOVE.x  @a3, @in_3
+        ADDy.w      VF10, VF17, VF04          MR32.w  VF11, VF04  ;  a2.w = zero + in_0.y         ||    'MR32.w  @a3, @in_0
+        ADDq.x      VF16, VF17,    Q          DIV            Q,VF00w,VF06z  ;  recip.x = zero + Q           ||    Q = K.w / in_2.z
+        ADDx.y      VF11, VF17, VF06          MOVE.y  VF10, VF06  ;  a3.y = zero + in_2.x         ||    'MOVE.y  @a2, @in_2
+        ADDx.z      VF11, VF17, VF05          MR32.x  VF10, VF07  ;  a3.z = zero + in_1.x         ||    'MR32.x  @a2, @in_3
+        nop                         waitq  ;  'nop                         ||    'waitq
+        ADDq.y      VF16, VF17,    Q          DIV            Q,VF00w,VF05y  ;  recip.y = zero + Q           ||    Q = K.w / in_1.y
+        nop                         waitq  ;  'nop                         ||    'waitq
+        ADDq.z      VF16, VF17,    Q          DIV            Q,VF00w,VF04x  ;  recip.z = zero + Q           ||    Q = K.w / in_0.x
+        nop                         waitq  ;  'nop                         ||    'waitq
+        ADDq.w      VF16, VF17,    Q          nop  ;  recip.w = zero + Q           ||    'nop
+        SUBA.xyzw    ACC, VF00, VF00          nop  ;  ACC     = K - K              ||    'nop
+
+        MULx.x      VF03, VF03, VF16          nop  ;  r2.x    = r2.x * recip.x     ||    'nop
+        MSUBAx.yzw   ACC, VF08, VF03          nop  ;  ACC.yzw = ACC - a0 * r2.x    ||    'nop
+        MADDw.y     VF03, VF03, VF00          nop  ;  r2.y    = ACC + r2 * K.w     ||    'nop
+        MULy.y      VF03, VF03, VF16          nop  ;  r2.y    = r2.y * recip.y     ||    'nop
+        MSUBAy.zw    ACC, VF09, VF03          nop  ;  ACC.zw  = ACC - a1 * r2.y    ||    'nop
+        MADDw.z     VF03, VF03, VF00          nop  ;  r2.z    = ACC + r2 * K.w     ||    'nop
+        MULz.z      VF03, VF03, VF16          nop  ;  r2.z    = r2.z * recip.z     ||    'nop
+        MSUBAz.w     ACC, VF10, VF03          nop  ;  ACC.w   = ACC - a2 * r2.z    ||    'nop
+        MADDw.w     VF03, VF03, VF00          nop  ;  r2.w    = ACC + r2 * K.w     ||    'nop
+        MULw.w      VF03, VF03, VF16          nop  ;  r2.w    = r2.w * recip.w     ||    'nop
+
+          ;  # Square triangle
+
+        nop                         LQ             VF07, 31(VI01)  ;  'nop                         ||    in_3 << (%pa+31)
+        nop                         LQ             VF05, 29(VI01)  ;  'nop                         ||    in_1 << (%pa+29)
+        nop                         LQ             VF06, 30(VI01)  ;  'nop                         ||    in_2 << (%pa+30)
+        nop                         LQ             VF04, 28(VI01)  ;  'nop                         ||    in_0 << (%pa+28)
+        nop                         nop  ;  'nop                         ||    'nop
+        ADDw.x      VF08, VF17, VF07          MOVE.z  VF09, VF05  ;  a0.x = zero + in_3.w         ||    'MOVE.z  @a1, @in_1
+        ADDw.y      VF08, VF17, VF06          MR32.y  VF09, VF06  ;  a0.y = zero + in_2.w         ||    'MR32.y  @a1, @in_2
+        ADDz.x      VF09, VF17, VF07          MOVE.w  VF08, VF04  ;  a1.x = zero + in_3.z         ||    'MOVE.w  @a0, @in_0
+        ADDz.w      VF09, VF17, VF04          MR32.z  VF08, VF05  ;  a1.w = zero + in_0.z         ||    'MR32.z  @a0, @in_1
+        ADDy.z      VF10, VF17, VF05          MOVE.x  VF11, VF07  ;  a2.z = zero + in_1.y         ||    'MOVE.x  @a3, @in_3
+        ADDy.w      VF10, VF17, VF04          MR32.w  VF11, VF04  ;  a2.w = zero + in_0.y         ||    'MR32.w  @a3, @in_0
+        ADDx.y      VF11, VF17, VF06          MOVE.y  VF10, VF06  ;  a3.y = zero + in_2.x         ||    'MOVE.y  @a2, @in_2
+        ADDx.z      VF11, VF17, VF05          MR32.x  VF10, VF07  ;  a3.z = zero + in_1.x         ||    'MR32.x  @a2, @in_3
+        SUBA.xyzw    ACC, VF00, VF00          nop  ;  ACC = K - K                  ||    'nop
+        MSUBAx.xyzw  ACC, VF08, VF03          nop  ;  ACC = ACC - a0 * r2.x        ||    'nop
+        MSUBAy.xyzw  ACC, VF09, VF03          nop  ;  ACC = ACC - a1 * r2.y        ||    'nop
+        MSUBAz.xyzw  ACC, VF10, VF03          nop  ;  ACC = ACC - a2 * r2.z        ||    'nop
+        MSUBAw.xyzw  ACC, VF11, VF03          nop  ;  ACC = ACC - a3 * r2.w        ||    'nop
+
+        SUB.xyzw    VF17, VF00, VF00          LQ             VF07, 19(VI01)  ;  zero = K - K                 ||    in_3 << (%pa+19)
+        nop                         LQ             VF05, 17(VI01)  ;  'nop                         ||    in_1 << (%pa+17)
+        nop                         LQ             VF06, 18(VI01)  ;  'nop                         ||    in_2 << (%pa+18)
+        nop                         LQ             VF04, 16(VI01)  ;  'nop                         ||    in_0 << (%pa+16)
+        nop                         DIV            Q,VF00w,VF07w  ;  'nop                         ||    Q = K.w / in_3.w
+        ADDw.x      VF08, VF17, VF07          MOVE.z  VF09, VF05  ;  a0.x = zero + in_3.w         ||    'MOVE.z  @a1, @in_1
+        ADDw.y      VF08, VF17, VF06          MR32.y  VF09, VF06  ;  a0.y = zero + in_2.w         ||    'MR32.y  @a1, @in_2
+        ADDz.x      VF09, VF17, VF07          MOVE.w  VF08, VF04  ;  a1.x = zero + in_3.z         ||    'MOVE.w  @a0, @in_0
+        ADDz.w      VF09, VF17, VF04          MR32.z  VF08, VF05  ;  a1.w = zero + in_0.z         ||    'MR32.z  @a0, @in_1
+        ADDy.z      VF10, VF17, VF05          MOVE.x  VF11, VF07  ;  a2.z = zero + in_1.y         ||    'MOVE.x  @a3, @in_3
+        ADDy.w      VF10, VF17, VF04          MR32.w  VF11, VF04  ;  a2.w = zero + in_0.y         ||    'MR32.w  @a3, @in_0
+        ADDq.x      VF16, VF17,    Q          DIV            Q,VF00w,VF06z  ;  recip.x = zero + Q           ||    Q = K.w / in_2.z
+        ADDx.y      VF11, VF17, VF06          MOVE.y  VF10, VF06  ;  a3.y = zero + in_2.x         ||    'MOVE.y  @a2, @in_2
+        ADDx.z      VF11, VF17, VF05          MR32.x  VF10, VF07  ;  a3.z = zero + in_1.x         ||    'MR32.x  @a2, @in_3
+        nop                         waitq  ;  'nop                         ||    'waitq
+        ADDq.y      VF16, VF17,    Q          DIV            Q,VF00w,VF05y  ;  recip.y = zero + Q           ||    Q = K.w / in_1.y
+        nop                         waitq  ;  'nop                         ||    'waitq
+        ADDq.z      VF16, VF17,    Q          DIV            Q,VF00w,VF04x  ;  recip.z = zero + Q           ||    Q = K.w / in_0.x
+        nop                         waitq  ;  'nop                         ||    'waitq
+        ADDq.w      VF16, VF17,    Q          nop  ;  recip.w = zero + Q           ||    'nop
+
+
+        MADDw.x     VF02, VF02, VF00          nop  ;  r1.x = ACC + r1 * K.w        ||    'nop
+        MULx.x      VF02, VF02, VF16          nop  ;  r1.x = r1.x * recip.x        ||    'nop
+
+        MSUBAx.yzw   ACC, VF08, VF02          nop  ;  ACC.yzw = ACC - a0 * r1.x    ||    'nop
+        MADDw.y     VF02, VF02, VF00          nop  ;  r1.y = ACC + r1 * K.w        ||    'nop
+        MULy.y      VF02, VF02, VF16          nop  ;  r1.y = r1.y * recip.y        ||    'nop
+
+        MSUBAy.zw    ACC, VF09, VF02          nop  ;  ACC.zw = ACC - a1 * r1.y     ||    'nop
+        MADDw.z     VF02, VF02, VF00          nop  ;  r1.z = ACC + r1 * K.w        ||    'nop
+        MULz.z      VF02, VF02, VF16          nop  ;  r1.z = r1.z * recip.z        ||    'nop
+
+        MSUBAz.w     ACC, VF10, VF02          nop  ;  ACC.w = ACC - a2 * r1.z      ||    'nop
+        MADDw.w     VF02, VF02, VF00          nop  ;  r1.w = ACC + r1 * K.w        ||    'nop
+        MULw.w      VF02, VF02, VF16          nop  ;  r1.w = r1.w * recip.w        ||    'nop
+
+          ;  # r1 is done, now do r0
+
+        nop                         LQ             VF04, 24(VI01)  ;  'nop                         ||    in_0 << (%pa+24)
+        nop                         LQ             VF05, 25(VI01)  ;  'nop                         ||    in_1 << (%pa+25)
+        nop                         LQ             VF06, 26(VI01)  ;  'nop                         ||    in_2 << (%pa+26)
+        nop                         LQ             VF07, 27(VI01)  ;  'nop                         ||    in_3 << (%pa+27)
+        ADDw.x      VF08, VF17, VF07          MOVE.z  VF09, VF05  ;  a0.x = zero + in_3.w         ||    'MOVE.z  @a1, @in_1
+        ADDw.y      VF08, VF17, VF06          MR32.y  VF09, VF06  ;  a0.y = zero + in_2.w         ||    'MR32.y  @a1, @in_2
+        ADDz.x      VF09, VF17, VF07          MOVE.w  VF08, VF04  ;  a1.x = zero + in_3.z         ||    'MOVE.w  @a0, @in_0
+        ADDz.w      VF09, VF17, VF04          MR32.z  VF08, VF05  ;  a1.w = zero + in_0.z         ||    'MR32.z  @a0, @in_1
+        ADDy.z      VF10, VF17, VF05          MOVE.x  VF11, VF07  ;  a2.z = zero + in_1.y         ||    'MOVE.x  @a3, @in_3
+        ADDy.w      VF10, VF17, VF04          MR32.w  VF11, VF04  ;  a2.w = zero + in_0.y         ||    'MR32.w  @a3, @in_0
+        ADDx.y      VF11, VF17, VF06          MOVE.y  VF10, VF06  ;  a3.y = zero + in_2.x         ||    'MOVE.y  @a2, @in_2
+        ADDx.z      VF11, VF17, VF05          MR32.x  VF10, VF07  ;  a3.z = zero + in_1.x         ||    'MR32.x  @a2, @in_3
+        nop                         LQ             VF04, 12(VI01)  ;  'nop                         ||    in_0 << (%pa+12)
+        nop                         LQ             VF05, 13(VI01)  ;  'nop                         ||    in_1 << (%pa+13)
+        nop                         LQ             VF06, 14(VI01)  ;  'nop                         ||    in_2 << (%pa+14)
+        nop                         LQ             VF07, 15(VI01)  ;  'nop                         ||    in_3 << (%pa+15)
+        ADDw.x      VF12, VF17, VF07          MOVE.z  VF13, VF05  ;  a4.x = zero + in_3.w         ||    'MOVE.z  @a5, @in_1
+        ADDw.y      VF12, VF17, VF06          MR32.y  VF13, VF06  ;  a4.y = zero + in_2.w         ||    'MR32.y  @a5, @in_2
+        ADDz.x      VF13, VF17, VF07          MOVE.w  VF12, VF04  ;  a5.x = zero + in_3.z         ||    'MOVE.w  @a4, @in_0
+        ADDz.w      VF13, VF17, VF04          MR32.z  VF12, VF05  ;  a5.w = zero + in_0.z         ||    'MR32.z  @a4, @in_1
+        ADDy.z      VF14, VF17, VF05          MOVE.x  VF15, VF07  ;  a6.z = zero + in_1.y         ||    'MOVE.x  @a7, @in_3
+        ADDy.w      VF14, VF17, VF04          MR32.w  VF15, VF04  ;  a6.w = zero + in_0.y         ||    'MR32.w  @a7, @in_0
+        ADDx.y      VF15, VF17, VF06          MOVE.y  VF14, VF06  ;  a7.y = zero + in_2.x         ||    'MOVE.y  @a6, @in_2
+        ADDx.z      VF15, VF17, VF05          MR32.x  VF14, VF07  ;  a7.z = zero + in_1.x         ||    'MR32.x  @a6, @in_3
+        SUBA.xyzw    ACC, VF00, VF00          nop  ;  ACC = K - K                  ||    'nop
+        MSUBAx.xyzw  ACC, VF08, VF03          nop  ;  ACC = ACC - a0 * r2.x        ||    'nop
+        MSUBAy.xyzw  ACC, VF09, VF03          nop  ;  ACC = ACC - a1 * r2.y        ||    'nop
+        MSUBAz.xyzw  ACC, VF10, VF03          nop  ;  ACC = ACC - a2 * r2.z        ||    'nop
+        MSUBAw.xyzw  ACC, VF11, VF03          nop  ;  ACC = ACC - a3 * r2.w        ||    'nop
+        MSUBAx.xyzw  ACC, VF12, VF02          nop  ;  ACC = ACC - a4 * r1.x        ||    'nop
+        MSUBAy.xyzw  ACC, VF13, VF02          nop  ;  ACC = ACC - a5 * r1.y        ||    'nop
+        MSUBAz.xyzw  ACC, VF14, VF02          nop  ;  ACC = ACC - a6 * r1.z        ||    'nop
+        MSUBAw.xyzw  ACC, VF15, VF02          nop  ;  ACC = ACC - a7 * r1.w        ||    'nop
+
+        SUB.xyzw    VF17, VF00, VF00          LQ             VF07, 3(VI01)  ;  zero = K - K                 ||    in_3 << (%pa+3)
+        nop                         LQ             VF05, 1(VI01)  ;  'nop                         ||    in_1 << (%pa+1)
+        nop                         LQ             VF06, 2(VI01)  ;  'nop                         ||    in_2 << (%pa+2)
+        nop                         LQ             VF04, 0(VI01)  ;  'nop                         ||    in_0 << (%pa+0)
+        nop                         DIV            Q,VF00w,VF07w  ;  'nop                         ||    Q = K.w / in_3.w
+        ADDw.x      VF08, VF17, VF07          MOVE.z  VF09, VF05  ;  a0.x = zero + in_3.w         ||    'MOVE.z  @a1, @in_1
+        ADDw.y      VF08, VF17, VF06          MR32.y  VF09, VF06  ;  a0.y = zero + in_2.w         ||    'MR32.y  @a1, @in_2
+        ADDz.x      VF09, VF17, VF07          MOVE.w  VF08, VF04  ;  a1.x = zero + in_3.z         ||    'MOVE.w  @a0, @in_0
+        ADDz.w      VF09, VF17, VF04          MR32.z  VF08, VF05  ;  a1.w = zero + in_0.z         ||    'MR32.z  @a0, @in_1
+        ADDy.z      VF10, VF17, VF05          MOVE.x  VF11, VF07  ;  a2.z = zero + in_1.y         ||    'MOVE.x  @a3, @in_3
+        ADDy.w      VF10, VF17, VF04          MR32.w  VF11, VF04  ;  a2.w = zero + in_0.y         ||    'MR32.w  @a3, @in_0
+        ADDq.x      VF16, VF17,    Q          DIV            Q,VF00w,VF06z  ;  recip.x = zero + Q           ||    Q = K.w / in_2.z
+        ADDx.y      VF11, VF17, VF06          MOVE.y  VF10, VF06  ;  a3.y = zero + in_2.x         ||    'MOVE.y  @a2, @in_2
+        ADDx.z      VF11, VF17, VF05          MR32.x  VF10, VF07  ;  a3.z = zero + in_1.x         ||    'MR32.x  @a2, @in_3
+        nop                         waitq  ;  'nop                         ||    'waitq
+        ADDq.y      VF16, VF17,    Q          DIV            Q,VF00w,VF05y  ;  recip.y = zero + Q           ||    Q = K.w / in_1.y
+        nop                         waitq  ;  'nop                         ||    'waitq
+        ADDq.z      VF16, VF17,    Q          DIV            Q,VF00w,VF04x  ;  recip.z = zero + Q           ||    Q = K.w / in_0.x
+        nop                         waitq  ;  'nop                         ||    'waitq
+        ADDq.w      VF16, VF17,    Q          nop  ;  recip.w = zero + Q           ||    'nop
+        MADDw.x     VF01, VF01, VF00          nop  ;  r0.x = ACC + r0 * K.w        ||    'nop
+        MULx.x      VF01, VF01, VF16          nop   ;  r0.x = r0.x * recip.x        ||    'nop 
+        MSUBAx.yzw   ACC, VF08, VF01          nop  ;  ACC.yzw = ACC - a0 * r0.x    ||    'nop
+        MADDw.y     VF01, VF01, VF00          nop  ;  r0.y = ACC + r0 * K.w        ||    'nop
+        MULy.y      VF01, VF01, VF16          nop  ;  r0.y = r0.y * recip.y        ||    'nop
+        MSUBAy.zw    ACC, VF09, VF01          nop  ;  ACC.zw = ACC - a1 * r0.y     ||    'nop
+        MADDw.z     VF01, VF01, VF00          nop  ;  r0.z = ACC + r0 * K.w        ||    'nop
+        MULz.z      VF01, VF01, VF16          nop  ;  r0.z = r0.z * recip.z        ||    'nop
+        MSUBAz.w     ACC, VF10, VF01          IADDIU         VI03, VI00, 36  ;  ACC.w = ACC - a2 * r0.z      ||    %bufferlen = %K + 36u
+        MADDw.w     VF01, VF01, VF00          ISUB           VI01, VI03, VI01  ;  r0.w = ACC + r0 * K.w        ||    %pa    = %bufferlen - %pa
+        MULw.w      VF01, VF01, VF16          nop  ;  r0.w = r0.w * recip.w        ||    'nop
+
+          ;  # Flip the quadwords in the answer vector
+
+        ADDw.x      VF18, VF17, VF01          nop  ;  tmp.x = zero + r0.w          ||    'nop
+        ADDz.y      VF18, VF17, VF01          nop  ;  tmp.y = zero + r0.z          ||    'nop
+        ADDy.z      VF18, VF17, VF01          nop  ;  tmp.z = zero + r0.y          ||    'nop
+        ADDx.w      VF18, VF17, VF01          nop  ;  tmp.w = zero + r0.x          ||    'nop
+        ADDx.xyzw   VF01, VF18, VF00          nop       ;  r0    = tmp + K.x            ||    'nop     
+        ADDw.x      VF18, VF17, VF02          nop  ;  tmp.x = zero + r1.w          ||    'nop
+        ADDz.y      VF18, VF17, VF02          nop  ;  tmp.y = zero + r1.z          ||    'nop
+        ADDy.z      VF18, VF17, VF02          nop  ;  tmp.z = zero + r1.y          ||    'nop
+        ADDx.w      VF18, VF17, VF02          nop  ;  tmp.w = zero + r1.x          ||    'nop
+        ADDx.xyzw   VF02, VF18, VF00          nop       ;  r1    = tmp + K.x            ||    'nop     
+        ADDw.x      VF18, VF17, VF03          nop  ;  tmp.x = zero + r2.w          ||    'nop
+        ADDz.y      VF18, VF17, VF03          nop  ;  tmp.y = zero + r2.z          ||    'nop
+        ADDy.z      VF18, VF17, VF03          nop  ;  tmp.z = zero + r2.y          ||    'nop
+        ADDx.w      VF18, VF17, VF03          nop  ;  tmp.w = zero + r2.x          ||    'nop
+        ADDx.xyzw   VF03, VF18, VF00          nop       ;  r2    = tmp + K.x            ||    'nop     
+
+        nop[e]                      nop  ;  'nop[e]                      ||    'nop
+        nop                         nop  ;  'nop                         ||    'nop
+
+          ;  ~%pa
+          ;  ~%pans
+          ;  ~%bufferlen
+          ;  ~r0
+          ;  ~r1
+          ;  ~r2
+          ;  ~in_0
+          ;  ~in_1
+          ;  ~in_2
+          ;  ~in_3
+          ;  ~a0
+          ;  ~a1
+          ;  ~a2
+          ;  ~a3
+          ;  ~a4
+          ;  ~a5
+          ;  ~a6
+          ;  ~a7
+          ;  ~recip
+          ;  ~zero
+          ;  ~tmp
+
+strsv:  ;  'strsv:
+          ;  %pa
+          ;  x0
+          ;  x1
+          ;  x2
+         ;  
+          ;  in_0
+          ;  in_1
+          ;  in_2
+          ;  in_3
+          ;  a0
+          ;  a1
+          ;  a2
+          ;  a3
+          ;  a4
+          ;  a5
+          ;  a6
+          ;  a7
+          ;  recip
+          ;  zero
+
+        SUB.xyzw    VF17, VF00, VF00          LQ             VF08, 0(VI01)  ;  zero = K - K                 ||    a0 << (%pa+0)
+        nop                         LQ             VF09, 1(VI01)  ;  'nop                         ||    a1 << (%pa+1)
+        nop                         LQ             VF10, 2(VI01)  ;  'nop                         ||    a2 << (%pa+2)
+        nop                         LQ             VF11, 3(VI01)  ;  'nop                         ||    a3 << (%pa+3)
+
+        nop                         DIV            Q,VF00w,VF08x  ;  'nop                         ||    Q = K.w / a0.x
+        nop                         waitq  ;  'nop                         ||    'waitq
+        ADDq.x      VF16, VF17,    Q          DIV            Q,VF00w,VF09y  ;  recip.x = zero + Q           ||    Q = K.w / a1.y
+        nop                         waitq  ;  'nop                         ||    'waitq
+        ADDq.y      VF16, VF17,    Q          DIV            Q,VF00w,VF10z  ;  recip.y = zero + Q           ||    Q = K.w / a2.z
+        nop                         waitq  ;  'nop                         ||    'waitq
+        ADDq.z      VF16, VF17,    Q          DIV            Q,VF00w,VF11w  ;  recip.z = zero + Q           ||    Q = K.w / a3.w
+        nop                         waitq  ;  'nop                         ||    'waitq
+        ADDq.w      VF16, VF17,    Q          nop  ;  recip.w = zero + Q           ||    'nop
+
+        SUBA.xyzw    ACC, VF00, VF00          nop  ;  ACC = K - K                  ||    'nop
+
+        MULx.x      VF01, VF01, VF16          nop  ;  x0.x = x0.x * recip.x        ||    'nop
+
+        MSUBAx.yzw   ACC, VF08, VF01          nop  ;  ACC.yzw = ACC - a0 * x0.x    ||    'nop
+        MADDw.y     VF01, VF01, VF00          nop  ;  x0.y = ACC + x0 * K.w        ||    'nop
+        MULy.y      VF01, VF01, VF16          nop  ;  x0.y = x0.y * recip.y        ||    'nop
+
+        MSUBAy.zw    ACC, VF09, VF01          nop  ;  ACC.zw = ACC - a1 * x0.y     ||    'nop
+        MADDw.z     VF01, VF01, VF00          nop  ;  x0.z = ACC + x0 * K.w        ||    'nop
+        MULz.z      VF01, VF01, VF16          nop  ;  x0.z = x0.z * recip.z        ||    'nop
+
+        MSUBAz.w     ACC, VF10, VF01          nop  ;  ACC.w = ACC - a2 * x0.z      ||    'nop
+        MADDw.w     VF01, VF01, VF00          nop  ;  x0.w = ACC + x0 * K.w        ||    'nop
+        MULw.w      VF01, VF01, VF16          nop  ;  x0.w = x0.w * recip.w        ||    'nop
+
+
+
+        nop                         LQ             VF08, 12(VI01)  ;  'nop                         ||    a0 << (%pa+12)
+        nop                         LQ             VF09, 13(VI01)  ;  'nop                         ||    a1 << (%pa+13)
+        nop                         LQ             VF10, 14(VI01)  ;  'nop                         ||    a2 << (%pa+14)
+        nop                         LQ             VF11, 15(VI01)  ;  'nop                         ||    a3 << (%pa+15)
+
+        SUBA.xyzw    ACC, VF00, VF00          nop  ;  ACC = K - K                  ||    'nop
+
+        MSUBAx.xyzw  ACC, VF08, VF01          nop  ;  ACC = ACC - a0 * x0.x        ||    'nop
+        MSUBAy.xyzw  ACC, VF09, VF01          nop  ;  ACC = ACC - a1 * x0.y        ||    'nop
+        MSUBAz.xyzw  ACC, VF10, VF01          nop  ;  ACC = ACC - a2 * x0.z        ||    'nop
+        MSUBAw.xyzw  ACC, VF11, VF01          nop  ;  ACC = ACC - a3 * x0.w        ||    'nop
+
+        nop                         LQ             VF08, 16(VI01)  ;  'nop                         ||    a0 << (%pa+16)
+        nop                         LQ             VF09, 17(VI01)  ;  'nop                         ||    a1 << (%pa+17)
+        nop                         LQ             VF10, 18(VI01)  ;  'nop                         ||    a2 << (%pa+18)
+        nop                         LQ             VF11, 19(VI01)  ;  'nop                         ||    a3 << (%pa+19)
+
+        nop                         DIV            Q,VF00w,VF08x  ;  'nop                         ||    Q = K.w / a0.x
+        nop                         waitq  ;  'nop                         ||    'waitq
+        ADDq.x      VF16, VF17,    Q          nop  ;  recip.x = zero + Q           ||    'nop
+
+        nop                         DIV            Q,VF00w,VF09y  ;  'nop                         ||    Q = K.w / a1.y
+        nop                         waitq  ;  'nop                         ||    'waitq
+        ADDq.y      VF16, VF17,    Q          nop  ;  recip.y = zero + Q           ||    'nop
+
+        nop                         DIV            Q,VF00w,VF10z  ;  'nop                         ||    Q = K.w / a2.z
+        nop                         waitq  ;  'nop                         ||    'waitq
+        ADDq.z      VF16, VF17,    Q          nop  ;  recip.z = zero + Q           ||    'nop
+
+        nop                         DIV            Q,VF00w,VF11w  ;  'nop                         ||    Q = K.w / a3.w
+        nop                         waitq  ;  'nop                         ||    'waitq
+        ADDq.w      VF16, VF17,    Q          nop  ;  recip.w = zero + Q           ||    'nop
+
+        MADDw.x     VF02, VF02, VF00          nop  ;  x1.x = ACC + x1 * K.w        ||    'nop
+        MULx.x      VF02, VF02, VF16          nop  ;  x1.x = x1.x * recip.x        ||    'nop
+
+        MSUBAx.yzw   ACC, VF08, VF02          nop  ;  ACC.yzw = ACC - a0 * x1.x    ||    'nop
+        MADDw.y     VF02, VF02, VF00          nop  ;  x1.y = ACC + x1 * K.w        ||    'nop
+        MULy.y      VF02, VF02, VF16          nop  ;  x1.y = x1.y * recip.y        ||    'nop
+
+        MSUBAy.zw    ACC, VF09, VF02          nop  ;  ACC.zw = ACC - a1 * x1.y     ||    'nop
+        MADDw.z     VF02, VF02, VF00          nop  ;  x1.z = ACC + x1 * K.w        ||    'nop
+        MULz.z      VF02, VF02, VF16          nop  ;  x1.z = x1.z * recip.z        ||    'nop
+
+        MSUBAz.w     ACC, VF10, VF02          nop  ;  ACC.w = ACC - a2 * x1.z      ||    'nop
+        MADDw.w     VF02, VF02, VF00          nop  ;  x1.w = ACC + x1 * K.w        ||    'nop
+        MULw.w      VF02, VF02, VF16          nop  ;  x1.w = x1.w * recip.w        ||    'nop
+
+
+
+        nop                         LQ             VF08, 24(VI01)  ;  'nop                         ||    a0 << (%pa+24)
+        nop                         LQ             VF09, 25(VI01)  ;  'nop                         ||    a1 << (%pa+25)
+        nop                         LQ             VF10, 26(VI01)  ;  'nop                         ||    a2 << (%pa+26)
+        nop                         LQ             VF11, 27(VI01)  ;  'nop                         ||    a3 << (%pa+27)
+        nop                         LQ             VF12, 28(VI01)  ;  'nop                         ||    a4 << (%pa+28)
+        nop                         LQ             VF13, 29(VI01)  ;  'nop                         ||    a5 << (%pa+29)
+        nop                         LQ             VF14, 30(VI01)  ;  'nop                         ||    a6 << (%pa+30)
+        nop                         LQ             VF15, 31(VI01)  ;  'nop                         ||    a7 << (%pa+31)
+
+        SUBA.xyzw    ACC, VF00, VF00          nop  ;  ACC = K - K                  ||    'nop
+
+        MSUBAx.xyzw  ACC, VF08, VF01          nop  ;  ACC = ACC - a0 * x0.x        ||    'nop
+        MSUBAy.xyzw  ACC, VF09, VF01          nop  ;  ACC = ACC - a1 * x0.y        ||    'nop
+        MSUBAz.xyzw  ACC, VF10, VF01          nop  ;  ACC = ACC - a2 * x0.z        ||    'nop
+        MSUBAw.xyzw  ACC, VF11, VF01          nop  ;  ACC = ACC - a3 * x0.w        ||    'nop
+        MSUBAx.xyzw  ACC, VF12, VF02          nop  ;  ACC = ACC - a4 * x1.x        ||    'nop
+        MSUBAy.xyzw  ACC, VF13, VF02          nop  ;  ACC = ACC - a5 * x1.y        ||    'nop
+        MSUBAz.xyzw  ACC, VF14, VF02          nop  ;  ACC = ACC - a6 * x1.z        ||    'nop
+        MSUBAw.xyzw  ACC, VF15, VF02          nop  ;  ACC = ACC - a7 * x1.w        ||    'nop
+        nop                         LQ             VF08, 32(VI01)  ;  'nop                         ||    a0 << (%pa+32)
+        nop                         LQ             VF09, 33(VI01)  ;  'nop                         ||    a1 << (%pa+33)
+        nop                         LQ             VF10, 34(VI01)  ;  'nop                         ||    a2 << (%pa+34)
+        nop                         LQ             VF11, 35(VI01)  ;  'nop                         ||    a3 << (%pa+35)
+        nop                         DIV            Q,VF00w,VF08x  ;  'nop                         ||    Q = K.w / a0.x       
+        nop                         waitq  ;  'nop                         ||    'waitq
+        ADDq.x      VF16, VF17,    Q          nop  ;  recip.x = zero + Q           ||    'nop
+        nop                         DIV            Q,VF00w,VF09y  ;  'nop                         ||    Q = K.w / a1.y               
+        nop                         waitq  ;  'nop                         ||    'waitq
+        ADDq.y      VF16, VF17,    Q          nop  ;  recip.y = zero + Q           ||    'nop
+        nop                         DIV            Q,VF00w,VF10z  ;  'nop                         ||    Q = K.w / a2.z
+        nop                         waitq  ;  'nop                         ||    'waitq
+        ADDq.z      VF16, VF17,    Q          nop  ;  recip.z = zero + Q           ||    'nop
+        nop                         DIV            Q,VF00w,VF11w  ;  'nop                         ||    Q = K.w / a3.w
+        nop                         waitq  ;  'nop                         ||    'waitq
+        ADDq.w      VF16, VF17,    Q          nop  ;  recip.w = zero + Q           ||    'nop
+        MADDw.x     VF03, VF03, VF00          nop  ;  x2.x = ACC + x2 * K.w        ||    'nop
+        MULx.x      VF03, VF03, VF16          nop   ;  x2.x = x2.x * recip.x        ||    'nop 
+        MSUBAx.yzw   ACC, VF08, VF03          nop  ;  ACC.yzw = ACC - a0 * x2.x    ||    'nop
+        MADDw.y     VF03, VF03, VF00          nop  ;  x2.y = ACC + x2 * K.w        ||    'nop
+        MULy.y      VF03, VF03, VF16          nop  ;  x2.y = x2.y * recip.y        ||    'nop
+        MSUBAy.zw    ACC, VF09, VF03          nop  ;  ACC.zw = ACC - a1 * x2.y     ||    'nop
+        MADDw.z     VF03, VF03, VF00          nop  ;  x2.z = ACC + x2 * K.w        ||    'nop
+        MULz.z      VF03, VF03, VF16          nop  ;  x2.z = x2.z * recip.z        ||    'nop
+        MSUBAz.w     ACC, VF10, VF03          nop  ;  ACC.w = ACC - a2 * x2.z      ||    'nop
+        MADDw.w     VF03, VF03, VF00          nop  ;  x2.w = ACC + x2 * K.w        ||    'nop
+        MULw.w      VF03, VF03, VF16          nop  ;  x2.w = x2.w * recip.w        ||    'nop
+
+        nop[e]                      nop  ;  'nop[e]                      ||    'nop
+        nop                         nop  ;  'nop                         ||    'nop
+
+          ;  ~%pa
+          ;  ~x0
+          ;  ~x1
+          ;  ~x2
+
+          ;  ~in_0
+          ;  ~in_1
+          ;  ~in_2
+          ;  ~in_3
+          ;  ~a0
+          ;  ~a1
+          ;  ~a2
+          ;  ~a3
+          ;  ~a4
+          ;  ~a5
+          ;  ~a6
+          ;  ~a7
+          ;  ~recip
+          ;  ~zero
+
+      ;  # Transposed multiply-add 12x12 block
+
+  ;  # A is 12x12, x and y are 12x1
+  ;  #
+  ;  # A is of course 'transpose wallpapered'
+  ;  # 
+  ;  # y += At * x
+  ;  # 
+  ;  # Input: y in vf1 thru vf3
+  ;  #        x in vf4 thru vf6
+  ;  # 
+  ;  #        A in memory starting at ITOP
+  ;  # 
+  ;  # Output: y (still in vf1 thru vf3)
+
+  ;  # Note these declarations rely on eac using the registers in turn and
+  ;  # starting at vf1.
+
+  ;  # This one is optimized for space
+
+  ;  y0
+  ;  y1
+  ;  y2
+
+  ;  x0
+  ;  x1
+  ;  x2
+
+  ;  # These don't
+
+  ;  a0
+  ;  a1
+  ;  a2
+  ;  a3
+
+  ;  t0
+  ;  t1
+  ;  t2
+  ;  t3
+
+  ;  zero
+  ;  %start
+  ;  %blk
+  ;  %ra
+  ;  %ra2
+  ;  %proc_block
+  ;  %proc_load_block
+
+trmuladd:  ;  'trmuladd:
+
+      ;  # Actually, it's not double-buffered yet, and won't be anytime
+      ;  # soon, because it isn't any longer the hotspot. We don't set ITOP in
+      ;  # the VIF chain, so it's safer just to say it starts at the top.
+
+
+  ;  #    'NOP             ||  'XITOP  @%start
+    NOP                                   ISUB           VI01, VI00, VI00  ;  %start = %K - %K
+
+      ;  # NOTE NOTE NOTE NB WARNING THESE OFFSETS CHANGE IF YOU CHANGE ANY
+      ;  # OF THE CODE, MAKE SURE THEY'RE UP TO DATE, OR NOTHING WILL WORK !!!!
+
+    SUB.xyzw    VF15, VF00, VF00          IADDIU         VI05, VI00, 477  ;  zero = K - K     ||  %proc_block = %K + 477u
+    NOP                                   IADDIU         VI06, VI00, 490  ;  %proc_load_block = %K + 490u
+
+    ADDAx.xyzw   ACC, VF01, VF00          JALR  VI03, VI05  ;  ACC = y0 + K.x   ||    'JALR  @%ra, @%proc_block
+    NOP                                   IADD           VI02, VI01, VI00  ;  %blk = %start + %K
+    MADDw.xyzw  VF01, VF14, VF06          NOP  ;  y0  = ACC + t3 * x2.w
+
+    ADDAx.xyzw   ACC, VF02, VF00          JALR  VI03, VI05  ;  ACC = y1 + K.x   ||    'JALR  @%ra, @%proc_block
+    NOP                                   IADDIU         VI02, VI01, 4  ;  %blk = %start + 4u  
+    MADDw.xyzw  VF02, VF14, VF06          NOP  ;  y1  = ACC + t3 * x2.w
+
+    ADDAx.xyzw   ACC, VF03, VF00          JALR  VI03, VI05  ;  ACC = y2 + K.x   ||    'JALR  @%ra, @%proc_block
+    NOP                                   IADDIU         VI02, VI01, 8  ;  %blk = %start + 8u
+    MADDw.xyzw  VF03, VF14, VF06          NOP  ;  y2  = ACC + t3 * x2.w
+
+    NOP[E] NOP  ;  'NOP[E] ||   'NOP
+    NOP    NOP  ;  'NOP    ||   'NOP
+
+proc_block:  ;  'proc_block:
+
+    NOP    JALR  VI04, VI06   ;  'NOP    ||   'JALR  @%ra2, @%proc_load_block 
+    NOP    NOP  ;  'NOP    ||   'NOP
+
+    MADDAx.xyzw  ACC, VF11, VF04          NOP  ;  ACC = ACC + t0 * x0.x  
+    MADDAy.xyzw  ACC, VF12, VF04          IADDIU         VI02, VI02, 12  ;  ACC = ACC + t1 * x0.y    ||    %blk = %blk + 12u
+    MADDAz.xyzw  ACC, VF13, VF04          JALR  VI04, VI06  ;  ACC = ACC + t2 * x0.z    ||    'JALR  @%ra2, @%proc_load_block
+    MADDAw.xyzw  ACC, VF14, VF04          NOP  ;  ACC = ACC + t3 * x0.w  
+
+    MADDAx.xyzw  ACC, VF11, VF05          NOP  ;  ACC = ACC + t0 * x1.x  
+    MADDAy.xyzw  ACC, VF12, VF05          IADDIU         VI02, VI02, 12  ;  ACC = ACC + t1 * x1.y    ||    %blk = %blk + 12u 
+    MADDAz.xyzw  ACC, VF13, VF05          JALR  VI04, VI06  ;  ACC = ACC + t2 * x1.z    ||    'JALR  @%ra2, @%proc_load_block
+    MADDAw.xyzw  ACC, VF14, VF05          NOP  ;  ACC = ACC + t3 * x1.w  
+
+    MADDAx.xyzw  ACC, VF11, VF06          NOP  ;  ACC = ACC + t0 * x2.x  
+    MADDAy.xyzw  ACC, VF12, VF06          JR  VI03   ;  ACC = ACC + t1 * x2.y    ||    'JR  @%ra 
+    MADDAz.xyzw  ACC, VF13, VF06          NOP  ;  ACC = ACC + t2 * x2.z  
+
+end_proc_block:  ;  'end_proc_block:
+
+proc_load_block:  ;  'proc_load_block:
+
+    NOP                                   LQ             VF07, 0(VI02)  ;  a0 << (%blk)
+    NOP                                   LQ             VF08, 1(VI02)  ;  a1 << (%blk+1)
+    NOP                                   LQ             VF09, 2(VI02)  ;  a2 << (%blk+2)
+    NOP                                   LQ             VF10, 3(VI02)  ;  a3 << (%blk+3)
+
+    ADDx.y      VF11, VF15, VF08          MOVE.y  VF12, VF08  ;  t0.y = zero + a1.x    ||    'MOVE.y  @t1, @a1
+    ADDx.z      VF11, VF15, VF09          MR32.x  VF12, VF07  ;  t0.z = zero + a2.x    ||    'MR32.x  @t1, @a0
+
+    ADDy.z      VF12, VF15, VF09          MOVE.x  VF11, VF07  ;  t1.z = zero + a2.y    ||    'MOVE.x  @t0, @a0
+    ADDy.w      VF12, VF15, VF10          MR32.w  VF11, VF10  ;  t1.w = zero + a3.y    ||    'MR32.w  @t0, @a3
+
+    ADDz.x      VF13, VF15, VF07          MOVE.w  VF14, VF10  ;  t2.x = zero + a0.z    ||    'MOVE.w  @t3, @a3
+    ADDz.w      VF13, VF15, VF10          MR32.z  VF14, VF09  ;  t2.w = zero + a3.z    ||    'MR32.z  @t3, @a2
+
+    ADDw.x      VF14, VF15, VF07          MR32.y  VF13, VF08  ;  t3.x = zero + a0.w    ||    'MR32.y  @t2, @a1
+    NOP                  JR      VI04  ;  'NOP                  ||    'JR      @%ra2
+    ADDw.y      VF14, VF15, VF08          MOVE.z  VF13, VF09  ;  t3.y = zero + a1.w    ||    'MOVE.z  @t2, @a2
+
+end_proc_load_block:  ;  'end_proc_load_block:
+
+  ;  ~y0
+  ;  ~y1
+  ;  ~y2
+  ;  ~x0
+  ;  ~x1
+  ;  ~x2
+  ;  ~a0
+  ;  ~a1
+  ;  ~a2
+  ;  ~a3
+  ;  ~t0
+  ;  ~t1
+  ;  ~t2
+  ;  ~t3
+  ;  ~zero
+  ;  ~%start
+  ;  ~%blk
+  ;  ~%ra
+  ;  ~%proc_block
+  ;  ~%ra2
+  ;  ~%proc_load_block
+
+

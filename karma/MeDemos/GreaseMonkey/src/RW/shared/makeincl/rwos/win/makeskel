@@ -1,0 +1,10 @@
+#
+# Skeleton src files for Windows
+#
+
+ifeq ($(RWSPLASH), 1)
+SKELSRC = $(SKELPS)/splash.c
+SYSLIBS += vfw32.lib
+endif
+
+SKELOBJ = $(SKELPS)/win.res

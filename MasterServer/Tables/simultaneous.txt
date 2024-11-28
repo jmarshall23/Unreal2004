@@ -1,0 +1,9 @@
+CREATE TABLE simultaneous (
+  id int(11) NOT NULL auto_increment,
+  cdkeyid int(11),
+  ip varchar(22),
+  count int,
+  at datetime,
+  PRIMARY KEY  (id)
+);
+

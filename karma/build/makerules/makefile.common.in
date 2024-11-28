@@ -1,0 +1,903 @@
+# -*- makefile -*- vim:noet:ts=8:sw=4:ft=make:
+
+# MathEngine Toolkits shared make definitions
+
+# Assuming GNU make (=> v3.76)
+
+SHELL:=/bin/bash
+
+.EXPORT_ALL_VARIABLES:;
+
+ifeq '$(PLATFORM)' ''
+
+    ifneq '$(MAKESYS_DIR)' ''
+	SUPPORTED_PLATFORMS	:=$(subst $(MAKESYS_DIR)/makefile.defs.,,\
+				$(wildcard $(MAKESYS_DIR)/makefile.defs.*))
+    endif
+
+.DEFAULT:
+	@echo Environment variable PLATFORM unset. Unable to continue.
+	@test -z "$(SUPPORTED_PLATFORMS)" \
+	    || echo "Supported platforms are: $(SUPPORTED_PLATFORMS)"
+else
+
+# Define macros and shorthand for whitespace and...
+
+SPACE		:=$@ $@
+S		:=$@ $@
+TAB		:=$@	$@
+T		:=$@	$@
+COMMA		:=$@,$@
+C		:=$@,$@
+
+CFLAGS   	:=
+CPPFLAGS 	:=
+CXXFLAGS 	:=
+
+#####################################################################
+#
+# Useful function(s)
+#
+
+# $(call) only exists in 3.79+
+#pathsearch =$(firstword $(wildcard $(addsuffix /$(1),$(subst :, ,$(PATH)))))
+
+
+#####################################################################
+#
+# Pull in definitions, settings, and defaults
+#
+
+ifneq '$(INNER)' '1'
+    -include .dependencies
+    -include $(MAKESYS_DIR)/makefile.settings
+    -include ./makefile.settings
+    include $(MAKESYS_DIR)/makefile.defs
+    ifeq '$(OUTTYPE)' 'EXE'
+	-include $(MAKESYS_DIR)/makefile.lib
+    endif
+endif
+
+
+#####################################################################
+#
+# Clear out the implicit rule overhead that we don't require
+#
+
+.SUFFIXES:
+.SUFFIXES: .c .cpp .ec .ecpp .dsm .vsm .evsm \
+		$(S_DEP) $(S_ASM) $(S_OBJ) $(S_EXE) $(S_LIB) .cmd
+
+
+#################################################################
+#
+# Macro Definition/Undefinition Control
+#
+# This allows for easy addition and removal of macro definitions.
+# To define/undefine a set of macros across a module, assign the
+# list to define/undefine to the variable DEFINES/UNDEFINES as
+# a space-separated list, not including the -D flag.
+# To define/undefine a set of macros for only a single file,
+# assign the list of macros to define/undefine to the variable
+# DEFINE_<filename>/UNDEFINE_<filename>.
+#
+# Ex.:
+#  DEFINES 		:=_NDEBUG ROUGH_PI=3.14
+#  UNDEFINES_myFile.c 	:=_NDEBUG
+#  DEFINES_myFile.c 	:=_MECHECK
+#
+
+DEFINES		:=$(sort $(DEFINES) $(DEF_PLATFORM) \
+		    _ME_API_$(DEF_PRECISION) $(DEF_CHECK) $(DEF_PROFILING))
+UNDEFINES	:=$(sort $(UNDEFINES))
+
+DEFINE_FLAGS 	=$(strip $(addprefix $(O_DEF),$(DEFINES)) \
+		          $(addprefix $(O_DEF),$(DEFINES_$(<F))) \
+		          $(addprefix $(O_UNDEF),$(UNDEFINES)) \
+		          $(addprefix $(O_UNDEF),$(UNDEFINES_$(<F))) )
+
+DEFINE_FLAGS_OPT=$(strip $(addprefix $(O_DEF),$(DEFINES)) \
+		          $(addprefix $(O_DEF),$(DEF_INTEL_OPT)) \
+		          $(addprefix $(O_DEF),$(DEFINES_$(<F))) \
+		          $(addprefix $(O_UNDEF),$(UNDEFINES)) \
+		          $(addprefix $(O_UNDEF),$(UNDEFINES_$(<F))) )
+
+
+
+#################################################################
+#
+# Volume Control
+#
+# Determines how commands are silenced and whether some can
+# be visible while others are fully echoed. To change which 
+# classes of commands are echoed, set the variable
+# VISIBLE_COMMANDS to one of: 'none', 'all', or a colon-
+# separated list of items from the following: 
+#  'mkdir'   - show directory creations
+#  'dep'     - show dependency generation commands
+#  'compile' - show compilation cpommands
+#  'link'    - show linking or archiving commands
+#  'clean'   - show clean-up commands
+# NOTE: inclusion of 'all' or 'none' in a list overrides all
+#       other items in the list
+#
+
+ifneq '$(INNER)' '1'
+    # By default, all is silent
+
+    VIS_MKDIR		:=@
+    VIS_DEP		:=@
+    VIS_COMPILE		:=@
+    VIS_LINK		:=@
+    VIS_CLEAN		:=@
+
+    VISIBLE_COMMANDS=all
+
+    ifneq '$(VISIBLE_COMMANDS)' ''
+	VISIBLE_BITS 	:=:$(subst $S,:,$(subst $C,:,$(VISIBLE_COMMANDS))):
+
+# 	# Allow single-word switching of everything on
+	ifeq '$(findstring :all:,$(VISIBLE_BITS))' ':all:'
+	    VIS_MKDIR	:=
+	    VIS_DEP	:=
+	    VIS_COMPILE	:=
+	    VIS_LINK	:=
+	    VIS_CLEAN	:=
+	else
+#	    # Allow single-word switching of everything off
+	    ifeq '$(findstring :none:,$(VISIBLE_BITS))' ':none:'
+#		# Leave the default -- all silent
+	    else
+#		# ...or test, one by one
+
+#		# Visible directory creation?
+		ifeq '$(findstring :mkdir:,$(VISIBLE_BITS))' ':mkdir:'
+		    VIS_MKDIR :=
+		endif
+
+#		# Visible dependency generation?
+		ifeq '$(findstring :dep:,$(VISIBLE_BITS))' ':dep:'
+		    VIS_DEP :=
+		endif
+
+#		# Visible compilations?
+		ifeq '$(findstring :compile:,$(VISIBLE_BITS))' ':compile:'
+		    VIS_COMPILE :=
+		endif
+
+#		# Visible linking?
+		ifeq '$(findstring :link:,$(VISIBLE_BITS))' ':link:'
+		    VIS_LINK :=
+		endif
+
+#		# Visible cleanup?
+		ifeq '$(findstring :clean:,$(VISIBLE_BITS))' ':clean:'
+		    VIS_CLEAN :=
+		endif
+	    endif
+	endif
+    endif
+endif
+
+#=================================================================
+
+ifneq '$(INNER)' '1'
+    # Paths
+    OBJ_DIR_release		:=obj.rel
+    OBJ_DIR_check_release	:=obj.chk
+    OBJ_DIR_debug		:=obj.dbg
+
+    BIN_DIR_release		:=../bin.rel
+    BIN_DIR_check_release	:=../bin.chk
+    BIN_DIR_debug		:=../bin.dbg
+
+    LIB_DIR_release		:=$(ME_COMPONENTS_DIR)/lib.rel
+    LIB_DIR_check_release	:=$(ME_COMPONENTS_DIR)/lib.chk
+    LIB_DIR_debug		:=$(ME_COMPONENTS_DIR)/lib.dbg
+    ifeq '$(OUTTYPE)' 'EXE'
+	LIB_DIR_debug		:=$(firstword $(wildcard $(LIB_DIR_debug)) \
+				    $(LIB_DIR_check_release))
+    endif
+endif
+
+ifeq '$(INNER)' '1'
+    OBJ_DIR			:=$(OBJ_DIR_$(CONFIG_NAME))
+    BIN_DIR			:=$(BIN_DIR_$(CONFIG_NAME))
+    LIB_DIR			:=$(LIB_DIR_$(CONFIG_NAME))
+
+    OUT_SUB_DIR			:=$(PLATFORM)$(DIR_MODIFIER)
+    FULL_OBJ_DIR		:=$(OBJ_DIR)/$(OUT_SUB_DIR)
+    FULL_BIN_DIR		:=$(BIN_DIR)/$(OUT_SUB_DIR)
+    FULL_LIB_DIR		:=$(LIB_DIR)/$(OUT_SUB_DIR)
+
+    # Allow for local-directory builds during typical
+    # one-platform debug-only development cycles
+    ifeq '$(OUTTYPE)_$(BUILD_LOCAL)' 'EXE_1'
+	BIN_DIR			:=.
+	FULL_BIN_DIR		:=.
+    endif
+endif
+
+ifeq '$(OUTTYPE)' 'EXE'
+    OUTPUT_FILE			 =$(P_EXE)$(OUTNAME)$(S_EXE)
+else
+    OUTPUT_FILE			 =$(P_LIB)$(OUTNAME)$(S_LIB)
+endif
+
+ifneq '$(INNER)' '1'
+    # Flags
+    CPPFLAGS_release		 =$(CPPFLAGS_RELEASE)
+    CPPFLAGS_debug		 =$(CPPFLAGS_DEBUG)
+    CPPFLAGS_check_release	 =$(CPPFLAGS_CHECK_RELEASE)
+
+    CFLAGS_release		 =$(CFLAGS_RELEASE)
+    CFLAGS_debug		 =$(CFLAGS_DEBUG)
+    CFLAGS_check_release	 =$(CFLAGS_RELEASE)
+
+    CXXFLAGS_release		 =$(CXXFLAGS_RELEASE)
+    CXXFLAGS_debug		 =$(CXXFLAGS_DEBUG)
+    CXXFLAGS_check_release	 =$(CXXFLAGS_RELEASE)
+
+    CFLAGS_OPT_release		 =$(CFLAGS_OPT_RELEASE)
+    CFLAGS_OPT_debug		 =$(CFLAGS_OPT_DEBUG)
+    CFLAGS_OPT_check_release	 =$(CFLAGS_OPT_RELEASE)
+
+    CCLINKFLAGS_release		 =$(ME_CCLINKFLAGS_RELEASE)
+    CCLINKFLAGS_debug		 =$(ME_CCLINKFLAGS_DEBUG)
+    CCLINKFLAGS_check_release	 =$(ME_CCLINKFLAGS_RELEASE)
+
+    ASFLAGS_release		 =$(ME_ASFLAGS_RELEASE)
+    ASFLAGS_debug		 =$(ME_ASFLAGS_DEBUG)
+    ASFLAGS_check_release	 =$(ME_ASFLAGS_RELEASE)
+endif
+
+#################################################################
+#
+# Core macros for files and paths
+#
+
+SOURCES_NAMES	:=$(notdir $(SOURCES)) $(wildcard version.c)
+SOURCE_DIRS	:=$(sort $(dir $(SOURCES)))
+SOURCE_DIRS	:=$(SOURCE_DIRS:/=)
+
+ifneq '$(FULL_OBJ_DIR)' ''
+    DIR_MOD	:=/
+endif
+
+OBJECTS		:=$(SOURCES_NAMES)
+OBJECTS		:=$(OBJECTS:.c=$(S_OBJ))
+OBJECTS		:=$(OBJECTS:.cpp=$(S_OBJ))
+OBJECTS		:=$(OBJECTS:.ec=$(S_OBJ))
+OBJECTS		:=$(OBJECTS:.ecpp=$(S_OBJ))
+OBJECTS		:=$(OBJECTS:.dsm=$(S_OBJ))
+
+UNKNOWN_SOURCE	:=$(filter-out %$(S_OBJ), $(OBJECTS))
+OBJECTS		:=$(filter     %$(S_OBJ), $(OBJECTS))
+OBJECTS_REL	 =$(addprefix $(FULL_OBJ_DIR)$(DIR_MOD),$(OBJECTS))
+DEPENDENCIES	:=${addprefix ${DEPENDDIR}/,$(OBJECTS:$(S_OBJ)=$(S_DEP))}
+
+EXTRA_OBJS_REL	 =$(addprefix $(FULL_OBJ_DIR)$(DIR_MOD),$(EXTRA_OBJECTS))
+
+# Construct the include path
+#
+# To add additional include paths for a given module, assign
+# the paths as a colon-separated list of paths to the variable
+# MODULE_INCLUDE_PATH
+
+# Format and make the source/include paths relative to this directory
+# This include path is given to us by ./configure so it's not a def
+
+ME_SRC_PATH	:=$(dir $(SOURCES))
+ME_SRC_PATH	:=$(sort $(subst :, ,$(ME_SRC_PATH)))
+ME_SRC_PATH	:=$(addprefix $(T_SRC_DIR),$(ME_SRC_PATH))
+
+ME_X_INCLUDE	:=@ac_x_includes@
+ifeq '$(ME_X_INCLUDE)' 'NO'
+    ME_X_INCLUDE:=
+endif
+
+ME_X_LIB	:=@ac_x_libraries@
+ifeq '$(ME_X_LIB)' 'NO'
+    ME_X_LIB	:=
+endif
+
+ME_INC_PATH	:=$(ME_INC_PATH) $(addprefix $(T_SRC_DIR),\
+			$(subst :, ,$(SOURCE_DIRS)))
+ME_INC_PATH	:=$(patsubst .//%,/%,$(ME_INC_PATH))
+ME_INC_PATH	:=$(strip $(ME_INC_PATH)) $(ME_X_INCLUDE)
+
+ifeq '$(PLATFORM)' 'linux_hx_cc'
+ME_INC_PATH	:=$(ME_INC_PATH) /opt/x86-64/include/backward
+endif
+
+ifeq '$(PLATFORM)' 'ps2'
+    3RD_GL_LIB	:=ps2gl
+else
+    3RD_GL_LIB	:=glut
+endif
+
+UP_TREE_LIBS	:=$(wildcard $(foreach X,.. ../.. ../../.. ../../../..,\
+			 $X/3rdParty/$(3RD_GL_LIB)))
+MOD_LIBPATHS	:=$(subst :, ,$(MODULE_LIBRARY_PATH))
+MOD_LIBPATHS	:=$(subst ;;,:,$(MOD_LIBPATHS))
+PLAT_LIBPATHS	:=$(subst :, ,$(PLATFORM_LIBRARY_PATH))
+PLAT_LIBPATHS	:=$(subst ;;,:,$(PLAT_LIBPATHS))
+ME_LIB_PATH	:=$(MOD_LIBPATHS) $(wildcard $(foreach X,. .. ../..,\
+			$X/$(FULL_LIB_DIR))) $(UP_TREE_LIBS) \
+			$(PLAT_LIBPATHS) $(ME_X_LIB)
+
+INCLUDE_PATH_I	:=$(strip $(subst :, ,$(INCLUDE_PATH)))
+
+ifneq '$(INNER)' '1'
+    UP_TREE_INCLUDES	:=$(wildcard $(foreach X,\
+			    .. ../.. ../../.. ../../../..,\
+			    $X/include $X/3rdParty/$(3RD_GL_LIB)))
+
+    MODULE_INCLUDES	:=$(patsubst $(T_SRC_DIR)//_X_/%,/%, \
+			   $(patsubst $(T_SRC_DIR)//_Y_/%,%, \
+			   $(patsubst $(T_SRC_DIR)//_Z_/%,%, \
+			       $(addprefix $(T_SRC_DIR), \
+				   $(patsubst ~/%,//_Z_/~/%, \
+				   $(patsubst ../%,//_Y_/../%, \
+				   $(patsubst /%,//_X_/%, \
+				      $(MODULE_INCLUDE_PATH))))))))
+
+    INCLUDES 		:=$(strip $(UP_TREE_INCLUDES) $(INCLUDE_PATH_I) \
+			    $(MODULE_INCLUDES) $(ME_INC_PATH))
+
+    INCLUDES		:=$(subst :, ,$(INCLUDES))
+    INCLUDES		:=$(subst ;;,:,$(INCLUDES))
+    #INCLUDES		:=$(dirs $(INCLUDES))
+
+    INCLUDE_PATHLIST	:=$(INCLUDES)
+
+    INCLUDES 		:=$(addprefix -I,$(INCLUDES))
+endif
+
+#################################################################
+#
+# Search paths for various types of source or object file
+#
+# NOTE: "New" source types must have entries here if attempting to have
+#       a source file reside outside the directory that the compilation
+#       is being done in.
+#
+
+vpath %.h       $(ME_INC_PATH)
+
+vpath %.c       $(ME_SRC_PATH)
+vpath %.cpp     $(ME_SRC_PATH)
+vpath %.ec      $(ME_SRC_PATH)
+vpath %.ecpp    $(ME_SRC_PATH)
+
+vpath %.dsm     $(ME_SRC_PATH)
+vpath %.vsm     $(ME_SRC_PATH)
+vpath %.evsm    $(ME_SRC_PATH)
+
+# Force objects to be considered from only $(FULL_OBJ_DIR), avoiding 
+# problems where same-name object may reside in another module as well
+ifeq '$(INNER)' '1'
+    vpath %$(S_OBJ)
+    vpath %$(S_OBJ) $(FULL_OBJ_DIR)
+endif
+
+.PHONY:		all depend default
+.PHONY:		release debug check_release 
+.PHONY:		release_inner debug_inner check_release_inner 
+.PHONY:		cleanish clean clobber realclean
+
+#################################################################
+#
+# Default top-level rule for those including us without their own
+#
+
+all: default release
+default:
+	@echo "usage: make <release|debug|cleanish|clean|clobber|realclean>"
+
+-include $(MAKESYS_DIR)/makefile.rules.$(PLATFORM)
+
+
+#################################################################
+#
+# Generate per-file dependencies
+#
+# Each source file has its dependencies generated and stored
+# separately in its own dependency (.d) file. These files also
+# depend on their precedent file, so they will be regenerated
+# should that file change.
+# For Visual C++ users, a variation was thrown in to circumvent
+# the tool's attempt to subsume dependency generation & checking.
+# The preprocessor is invoked, and the output is then parsed
+# to determine the list of files included. This mandates the
+# availability of an implementation of AWK.
+#
+
+DEPENDDIR =dependencies/$(PLATFORM)
+
+ifeq '$(PLATFORM)' 'win32'
+    DEPENDSMSC		:=yes
+    DEPENDSSSE		:=yes
+endif
+ifeq '$(PLATFORM)' 'xbox'
+    DEPENDSMSC		:=yes
+    DEPENDSSSE		:=yes
+endif
+
+depend: ${DEPENDDIR} .dependencies \
+	    ${addprefix ${DEPENDDIR}/,$(OBJECTS:$(S_OBJ)=$(S_DEP))}
+	@echo "Dependencies verified"
+
+${DEPENDDIR}/%$(S_DEP): %.c .dependencies
+	@echo "makedepend: $<"
+ifeq '$(DEPENDSMSC)' 'yes'
+	set -e; $(ME_DEPEND) \
+	    $(ME_DEPENDFLAGS) $(DEFINE_FLAGS) $(INCLUDES) $< \
+	| awk -v DEP=$@ -v TGT=\$$\(OBJ_DIR_1\)/$(<F:.c=$(S_OBJ)) \
+	    -f $(MAKESYS_DIR)/gendep.awk > $@
+else
+	set -e; $(ME_DEPEND) $(CPPFLAGS) \
+	    $(ME_DEPENDFLAGS) $(DEFINE_FLAGS) $(INCLUDES) $< \
+	| sed > ${DEPENDDIR}/$(@F) -e 's|\\\(.\)|/\1|g' \
+	    -e 's|\($*\)\$(S_OBJ)[ :]*|\$$\(OBJ_DIR_1\)\/\1$(S_OBJ) $(subst /,\/,$(DEPENDDIR))\/$(@F) : |g'; \
+	test -s ${DEPENDDIR}/$(@F) || rm -f ${DEPENDDIR}/$(@F)
+endif
+
+ifeq '$(DEPENDSSSE)' 'yes'
+${DEPENDDIR}/%_sse$(S_DEP): %_sse.cpp .dependencies
+	@echo "makedepend: $<"
+	set -e; $(ME_DEPEND) \
+	    $(ME_DEPENDFLAGS) $(DEFINE_FLAGS) \
+	    $(O_DEF)$(DEF_INTEL_OPT) $(INCLUDES) $< \
+	| awk -v DEP=$@ -v TGT=\$$\(OBJ_DIR_1\)/$(<F:.cpp=$(S_OBJ)) \
+	    -f $(MAKESYS_DIR)/gendep.awk > $@
+endif
+
+${DEPENDDIR}/%$(S_DEP): %.cpp  .dependencies
+	@echo "makedepend: $<"
+ifeq '$(DEPENDSMSC)' 'yes'
+	set -e; $(ME_DEPEND) \
+	    $(ME_DEPENDFLAGS) $(DEFINE_FLAGS) $(INCLUDES) $< \
+	| awk -v DEP=$@ -v TGT=\$$\(OBJ_DIR_1\)/$(<F:.cpp=$(S_OBJ)) \
+	    -f $(MAKESYS_DIR)/gendep.awk > $@
+else
+	set -e; $(ME_DEPEND) \
+	    $(CPPFLAGS) $(ME_DEPENDFLAGS) $(DEFINE_FLAGS) $(INCLUDES) $< \
+	| sed > ${DEPENDDIR}/$(@F) -e 's|\\\(.\)|/\1|g' \
+	    -e 's|\($*\)\$(S_OBJ)[ :]*|\$$\(OBJ_DIR_1\)\/\1$(S_OBJ) $(subst /,\/,$(DEPENDDIR))\/$(@F) : |g'; \
+	test -s ${DEPENDDIR}/$(@F) || rm -f ${DEPENDDIR}/$(@F)
+endif
+
+ifeq '$(PLATFORM)' 'ps2'
+# .evsm presence indicated need to convert to .vsm for .dsm
+${DEPENDDIR}/%$(S_DEP): %.evsm %.vsm .dependencies
+	@echo "makedepend: $<"
+	-$(VIS_DEP)$(ME_DVPASM) --MD ${DEPENDDIR}/$(@F).1 $(INCLUDES) \
+	    $(_O_OBJ) $(@F:$(S_DEP)=$(S_OBJ)) \
+	    $(<F:.evsm=.dsm) 2>&1 >> /dev/null
+	-$(VIS_DEP)sed > ${DEPENDDIR}/$(@F) < ${DEPENDDIR}/$(@F).1 \
+	    -e 's|\($*\)\$(S_OBJ)[ :]*|\$$\(OBJ_DIR_1\)\/\1$(S_OBJ) $(subst /,\/,$(DEPENDDIR))\/$(@F) : |g'
+	-$(VIS_DEP)[ -s ${DEPENDDIR}/$(@F) ] || rm -f ${DEPENDDIR}/$(@F)
+	-$(VIS_DEP)${RM} ${DEPENDDIR}/$(@F).1 $(@F:$(S_DEP)=$(S_OBJ))
+
+# .dsm only
+${DEPENDDIR}/%$(S_DEP): %.dsm .dependencies
+	@echo "makedepend: $<"
+	-$(VIS_DEP)$(ME_DVPASM) --MD ${DEPENDDIR}/$(@F).1 $(INCLUDES)
+	    $(_O_OBJ) $(@F:$(S_DEP)=$(S_OBJ)) $< 2>&1 >> /dev/null
+	-$(VIS_DEP)sed < ${DEPENDDIR}/$(@F).1 > ${DEPENDDIR}/$(@F) \
+	    -e 's|\($*\)\$(S_OBJ)[ :]*|\$$\(OBJ_DIR_1\)\/\1$(S_OBJ) $(subst /,\/,$(DEPENDDIR))\|$(@F) : /g'
+	-$(VIS_DEP)[ -s ${DEPENDDIR}/$(@F) ] || rm -f ${DEPENDDIR}/$(@F)
+	-$(VIS_DEP)${RM} ${DEPENDDIR}/$(@F).1 $(@F:$(S_DEP)=$(S_OBJ))
+endif
+
+$(DEPENDDIR):
+	-$(VIS_MKDIR)[ -d "$@" ] || mkdir -p $@
+
+.dependencies:
+	$(VIS_MKDIR)touch $@
+	$(VIS_MKDIR)[ ! -d "$(DEPENDDIR)" ] || mkdir -p $(DEPENDDIR)
+
+#################################################################
+#
+# Inclusion of generated dependencies
+#
+
+ifeq '$(INNER)' '1'
+    OBJ_DIR_1 :=$(OBJ_DIR_release)/$(OUT_SUB_DIR)
+    include $(DEPENDENCIES)
+endif
+
+ifeq '$(INNER)' '1'
+    OBJ_DIR_1 :=$(OBJ_DIR_debug)/$(OUT_SUB_DIR)
+    include $(DEPENDENCIES)
+endif
+
+ifeq '$(INNER)' '1'
+    OBJ_DIR_1 :=$(OBJ_DIR_check_release)/$(OUT_SUB_DIR)
+    include $(DEPENDENCIES)
+endif
+
+
+#################################################################
+#
+# Debugging output
+#
+# For debugging purposes, set the variable SHOW_ME to a space-
+# separated list of items to have displayed at predefined points
+# in rule expansion/execution. 
+# Valid items are targets defined below...
+#
+
+SHOW_ME	?=
+
+show_sources_and_objects:
+	@echo SOURCES = $(SOURCES)
+	@echo OBJECTS = $(OBJECTS)
+	@echo OBJECTS_REL = $(OBJECTS_REL)
+	@echo SOURCES_NAMES = $(SOURCES_NAMES)
+	@echo SOURCE_DIRS = $(SOURCE_DIRS)
+	@echo SOURCES = $(SOURCES)
+ifeq '$(ALLOW_EAC_RULES)' '1'
+	@echo EACED_SOURCE = $(EACED_SOURCE)
+	@echo EACED_FILES = $(EACED_FILES)
+endif	
+
+show_eac_settings:
+	@echo 'ALLOW_EAC_RULES = $(ALLOW_EAC_RULES)'
+	@echo ''
+	@echo 'MODULE_MAY_CONTAIN_EAC_CODE = $(MODULE_MAY_CONTAIN_EAC_CODE)'
+	@echo ''
+	@echo 'EAC_LOCATION = $(EAC_LOCATION)'
+
+show_includes:
+	@echo 'INCLUDES = $(INCLUDES)'
+	@echo ''
+	@echo 'INCLUDE_PATH = $(INCLUDE_PATH_I)'
+	@echo ''
+	@echo 'ME_INC_PATH = $(ME_INC_PATH)'
+	@echo ''
+
+show_defines:
+	@echo 'DEFINES = $(DEFINES)'
+	@echo ''
+	@echo 'UNDEFINES = $(UNDEFINES)'
+	@echo ''
+	@echo 'DEFINE_FLAGS = $(DEFINE_FLAGS)'
+	@echo ''
+
+show_files:
+	@echo 'LIB_DIR = $(LIB_DIR)'
+	@echo ''
+	@echo 'FULL_LIB_DIR = $(FULL_LIB_DIR)'
+	@echo ''
+	@echo 'DIR_MODIFIER = $(DIR_MODIFIER)'
+	@echo ''
+	@echo 'ME_TOP_DIR = $(ME_TOP_DIR)'
+	@echo ''
+	@echo 'CONFIG_NAME = $(CONFIG_NAME)'
+	@echo ''
+	@echo 'T_SRC_DIR = $(T_SRC_DIR)'
+	@echo ''
+	@echo '(LIB_DIR_(CONFIG_NAME)) = $(LIB_DIR_$(CONFIG_NAME))'
+	@echo ''
+
+#################################################################
+#
+#  Main target rules
+#
+
+release debug check_release: $(SHOW_ME) $(DEPENDDIR) depend
+	$(VIS_MAKE)$(MAKE) INNER=1 CONFIG_NAME=$@ $@_inner
+
+ifeq '$(INNER)' '1'
+
+#ifeq '$(OUTTYPE)' 'LIB'
+ifneq '$(OUTTYPE)' 'EXE'
+$(FULL_LIB_DIR)/$(OUTPUT_FILE): $(SHOW_ME) $(OBJ_DIR) \
+	    $(FULL_OBJ_DIR) $(OBJECTS_REL) $(LIB_DIR) $(FULL_LIB_DIR)
+		@echo "Building $(CONFIG_NAME) library"
+		@echo "archiving ${OUTNAME}"
+		$(VIS_LINK)(cd $(FULL_OBJ_DIR) \
+		    && $(ME_LIBRARY) $(_O_LIB)$(@F) $(OBJECTS))
+		$(VIS_LINK)mv $(FULL_OBJ_DIR)/$(@F) $(@D)
+
+release_inner debug_inner check_release_inner: $(FULL_LIB_DIR)/$(OUTPUT_FILE)
+		@echo "finished ${OUTNAME}:$(CONFIG_NAME) build!"
+
+.gotdirs: 
+		$(VIS_MKDIR)touch .gotdirs
+		$(VIS_MKDIR)test -d $(FULL_LIB_DIR) || mkdir -p $(FULL_LIB_DIR)
+		$(VIS_MKDIR)test -d $(FULL_OBJ_DIR) || mkdir -p $(FULL_OBJ_DIR)
+
+$(LIB_DIR) $(FULL_LIB_DIR) $(OBJ_DIR) $(FULL_OBJ_DIR):
+		-$(VIS_MKDIR) mkdir -p $@
+endif
+
+ifeq '$(OUTTYPE)' 'EXE'
+	vpath $(P_LIB)%$(S_LIB) $(ME_LIB_PATH)
+
+	LIB_FILE_LIST = $(patsubst $(LIB_PREFIX)%$(LIB_SUFFIX),$(P_LIB)%$(S_LIB),\
+		$(filter-out $(LIB_NOSEARCH),$(filter-out $(LIB_SYSTEM),$(LIB_LIST))))
+
+$(FULL_BIN_DIR)/$(OUTPUT_FILE): $(SHOW_ME) $(OBJ_DIR) $(FULL_OBJ_DIR) \
+		    $(OBJECTS_REL) $(EXTRA_OBJS_REL) \
+		    $(BIN_DIR) $(FULL_BIN_DIR) #$(LIB_FILE_LIST)
+		@echo "Building $(CONFIG_NAME) executable"
+		@echo "linking $(OUTNAME)"
+		$(VIS_LINK)$(ME_LINK) \
+		    $(strip $(subst __FULL_OBJ_DIR__,$(FULL_OBJ_DIR),\
+			$(CCLINKFLAGS_$(CONFIG_NAME)))) \
+		    $(addprefix $(_L),$(ME_LIB_PATH)) \
+		    $(OBJECTS_REL) \
+		    $(LIB_LIST) \
+		    $(_O_EXE)$@
+
+release_inner debug_inner check_release_inner: $(SHOW_ME) \
+		    depend $(FULL_BIN_DIR)/$(OUTPUT_FILE)
+		@echo "finished ${OUTNAME}:$(CONFIG_NAME) build!"
+
+.gotdirs: 
+		$(VIS_MKDIR)touch .gotdirs
+		$(VIS_MKDIR)test -d $(FULL_BIN_DIR) || mkdir -p $(FULL_BIN_DIR)
+		$(VIS_MKDIR)test -d $(FULL_OBJ_DIR) || mkdir -p $(FULL_OBJ_DIR)
+
+$(sort $(BIN_DIR) $(FULL_BIN_DIR) $(OBJ_DIR) $(FULL_OBJ_DIR)):
+		-$(VIS_MKDIR) mkdir -p $@
+endif
+endif
+
+#################################################################
+#
+# MathEngine-specific pre-processing rules
+#
+ifeq '$(ALLOW_EAC_RULES)' '1'
+%.c : %.ec
+	$(VIS_COMPILE)$(EAC) $< $@
+
+%.cpp : %.ecpp
+	$(VIS_COMPILE)$(EAC) $< $@
+
+%.vsm : %.evsm
+	$(VIS_COMPILE)$(EAC) $< $@ -x micro
+endif
+
+#################################################################
+#
+# Special-purpose generalized compilation rules
+#
+
+ifeq '$(INNER)' '1'
+
+    # C --> object file (with Intel Optimizing Compiler)
+$(FULL_OBJ_DIR)/%_sse$(S_OBJ): %_sse.c .gotdirs
+	    @echo "compiling: $<"
+ifeq '$(CFLAGS_$<)' ''
+	    $(VIS_COMPILE)$(CC) $(CPPFLAGS_$(CONFIG_NAME)) \
+		$(CFLAGS_$(CONFIG_NAME)) $(CFLAGS_OPT_$(CONFIG_NAME)) \
+		$(DEFINE_FLAGS_OPT) \
+		$(INCLUDES) \
+		-c $< $(_O_OBJ)$(@)
+else
+	    $(VIS_COMPILE)$(CC) $(CPPFLAGS_$(CONFIG_NAME)) \
+		$(CFLAGS_$<) $(CFLAGS_OPT_$(CONFIG_NAME)) \
+		$(DEFINE_FLAGS_OPT) \
+		$(INCLUDES) \
+		-c $< $(_O_OBJ)$(@)
+endif
+
+    # C++ --> object file (with Intel Optimizing Compiler)
+$(FULL_OBJ_DIR)/%_sse$(S_OBJ): %_sse.cpp .gotdirs
+	    @echo "compiling: $<"
+ifeq '$(CFLAGS_$<)' ''
+	    $(VIS_COMPILE)$(CXX) $(CPPFLAGS_$(CONFIG_NAME)) \
+		$(CXXFLAGS_$(CONFIG_NAME)) $(DEFINE_FLAGS_OPT) \
+		$(CFLAGS_OPT_$(CONFIG_NAME)) \
+		$(INCLUDES) \
+		-c $< $(_O_OBJ)$(@)
+else
+	    $(VIS_COMPILE)$(CXX) $(CPPFLAGS_$(CONFIG_NAME)) \
+		$(CXXFLAGS_$<) $(DEFINE_FLAGS_OPT) \
+		$(CFLAGS_OPT_$(CONFIG_NAME)) \
+		$(INCLUDES) \
+		-c $< $(_O_OBJ)$(@)
+endif
+
+
+ifeq '$(ALLOW_EAC_RULES)' '1'
+ifneq '$(MODULE_MAY_CONTAIN_EAC_CODE)' ''
+ifeq '$(EAC_LOCATION)' 'unavailable'
+	    # if eac is unavailable, assume it's already been eaced
+
+	    # C --> object file 
+	    # (for PS2, with processing pass through Expression Assembler)
+$(FULL_OBJ_DIR)/%_ps2$(S_OBJ): %_ps2.c .gotdirs
+		    @echo "compiling: $<"
+ifeq '$(CFLAGS_$<)' ''
+		    $(VIS_COMPILE)$(CC) $(CPPFLAGS_$(CONFIG_NAME)) \
+			$(CFLAGS_$(CONFIG_NAME)) $(DEFINE_FLAGS) \
+			$(INCLUDES) \
+			-c $< $(_O_OBJ)$(@)
+else
+		    $(VIS_COMPILE)$(CC) $(CPPFLAGS_$(CONFIG_NAME)) \
+			$(CFLAGS_$<) $(DEFINE_FLAGS) \
+			$(INCLUDES)  \
+			-c $< $(_O_OBJ)$(@)
+endif
+
+	    # C++ --> object file
+	    # (for PS2, with processing pass through Expression Assembler)
+$(FULL_OBJ_DIR)/%_ps2$(S_OBJ): %_ps2.cpp .gotdirs
+		    @echo "compiling: $<"
+ifeq '$(CFLAGS_$<)' ''
+		    $(VIS_COMPILE)$(CXX) $(CPPFLAGS_$(CONFIG_NAME)) \
+			$(CXXFLAGS_$(CONFIG_NAME)) $(DEFINE_FLAGS) \
+			$(INCLUDES) \
+			-c $< $(_O_OBJ)$(@)
+else
+		    $(VIS_COMPILE)$(CXX) $(CPPFLAGS_$(CONFIG_NAME)) \
+			$(CXXFLAGS_$<) $(DEFINE_FLAGS) \
+			$(INCLUDES) \
+			-c $< $(_O_OBJ)$(@)
+endif
+
+else # EAC available, compile from origjnal source
+
+	    # C --> object file 
+	    # (for PS2, with processing pass through Expression Assembler)
+$(FULL_OBJ_DIR)/%_ps2$(S_OBJ): %_ps2.c .gotdirs
+		    @echo "compiling: $<"
+ifeq '$(CREATE_PREEACED_SOURCE)' '1'
+		    $(VIS_COMPILE)$(EAC) $< $(basename $<).eaced.c -q
+endif
+ifeq '$(CFLAGS_$<)' ''
+		    $(VIS_COMPILE)$(EAC) $< $(basename $<).eaced.c
+		    $(VIS_COMPILE)$(CC) $(CPPFLAGS_$(CONFIG_NAME)) \
+			$(CFLAGS_$(CONFIG_NAME)) $(DEFINE_FLAGS) \
+			$(INCLUDES) \
+			-c $(basename $<).eaced.c $(_O_OBJ)$(@)
+else
+		    $(VIS_COMPILE)$(EAC) $< $(basename $<).eaced.c
+		    $(VIS_COMPILE)$(CC) $(CPPFLAGS_$(CONFIG_NAME)) \
+			$(CFLAGS_$<) $(DEFINE_FLAGS) \
+			$(INCLUDES) \
+			-c $(basename $<).eaced.c $(_O_OBJ)$(@)
+endif
+
+	    # C++ --> object file
+	    # (for PS2, with processing pass through Expression Assembler)
+$(FULL_OBJ_DIR)/%_ps2$(S_OBJ): %_ps2.cpp .gotdirs
+		    @echo "compiling: $<"
+ifeq '$(CREATE_PREEACED_SOURCE)' '1'
+		    $(VIS_COMPILE)$(EAC) $< $(basename $<).eaced.cpp -q
+endif
+ifeq '$(CFLAGS_$<)' ''
+		    $(VIS_COMPILE)$(EAC) $< $(basename $<).eaced.cpp
+		    $(VIS_COMPILE)$(CXX) $(CPPFLAGS_$(CONFIG_NAME)) \
+			$(CXXFLAGS_$(CONFIG_NAME)) $(DEFINE_FLAGS) \
+			$(INCLUDES) \
+			-c $(basename $<).eaced.cpp $(_O_OBJ)$@
+else
+		    $(VIS_COMPILE)$(EAC) $< $(basename $<).eaced.cpp
+		    $(VIS_COMPILE)$(CXX) $(CPPFLAGS_$(CONFIG_NAME)) \
+			$(CXXFLAGS_$<) $(DEFINE_FLAGS) \
+			$(INCLUDES) \
+			-c $(basename $<).eaced.cpp $(_O_OBJ)$@
+endif
+
+endif
+endif
+endif
+endif
+
+
+#################################################################
+#
+# General compilation rules
+#
+
+ifeq '$(INNER)' '1'
+
+    # dsm --> object file
+$(FULL_OBJ_DIR)/%$(S_OBJ): %.dsm .gotdirs
+	    @echo "compiling: $<"
+	    $(VIS_COMPILE)$(ME_DVPASM) $(INCLUDES) $(_O_OBJ)$(@) $<
+
+
+    # C --> object file
+$(FULL_OBJ_DIR)/%$(S_OBJ): %.c .gotdirs
+	    @echo "compiling: $<"
+ifeq '$(CFLAGS_$<)' ''
+	    $(VIS_COMPILE)$(CC) $(CPPFLAGS_$(CONFIG_NAME)) \
+		$(CFLAGS_$(CONFIG_NAME)) $(DEFINE_FLAGS) \
+		$(INCLUDES) \
+		-c $< $(_O_OBJ)$(@)
+else
+	    $(VIS_COMPILE)$(CC) $(CPPFLAGS_$(CONFIG_NAME)) \
+		$(CFLAGS_$<) $(DEFINE_FLAGS) \
+		$(INCLUDES) \
+		-c $< $(_O_OBJ)$(@)
+endif
+
+    # C++ --> object file
+$(FULL_OBJ_DIR)/%$(S_OBJ): %.cpp .gotdirs
+	    @echo "compiling: $<"
+ifeq '$(CFLAGS_$<)' ''
+	    $(VIS_COMPILE)$(CXX) $(CPPFLAGS_$(CONFIG_NAME)) \
+		$(CXXFLAGS_$(CONFIG_NAME)) $(DEFINE_FLAGS) \
+		$(INCLUDES) \
+		-c $< $(_O_OBJ)$(@)
+else
+	    $(VIS_COMPILE)$(CXX) $(CPPFLAGS_$(CONFIG_NAME)) \
+		$(CXXFLAGS_$<) $(DEFINE_FLAGS) \
+		$(INCLUDES) \
+		-c $< $(_O_OBJ)$(@)
+endif
+
+$(FULL_OBJ_DIR)/app.cmd : app.cmd  .gotdirs
+	    $(VIS_COMPILE)sed -e \
+	      "s|[\t ]*crt0.o|$(subst /,\\/,$(FULL_OBJ_DIR))\/crt0.o|g" < $< > $@
+
+$(FULL_OBJ_DIR)/%.o : %.s .gotdirs
+	    $(VIS_COMPILE)echo Building $(CONFIG_NAME)
+	    $(VIS_COMPILE)$(ME_AS) $(ASFLAGS_$(CONFIG_NAME)) \
+		$(ME_INC_DIR) -o $@ $< > $(FULL_OBJ_DIR)/$*.lst
+
+endif
+
+#################################################################
+#
+# Clean-up rules
+#
+
+realclean: clobber
+	-$(VIS_CLEAN)${RM} config.* makefile.common $(EACED_SOURCE)
+ifeq '$(ALLOW_EAC_RULES)_$(MODULE_MAY_CONTAIN_EAC_CODE)_$(CREATE_PREEACED_SOURCE)_$(PLATFORM)' '1_1_1_ps2'
+	-$(VIS_CLEAN)for f in $(wildcard $(EACED_SOURCE) \
+		$(patsubst %_ps2.c,%_ps2.eaced.c,$(patsubst \
+			%_ps2.cpp,%_ps2.eaced.cpp,$(filter %_ps2.c %_ps2.cpp,\
+			$(SOURCES))))) ; do \
+	   $(RM) $$f ; done
+endif
+	@echo "dependency and 'precious' files removed!"
+
+clobber: clean cleaner
+	-$(VIS_CLEAN)${RM} ${DEPENDDIR} .dependencies
+	@echo "clobbered!"
+
+cleaner: clean
+	-$(VIS_CLEAN)$(RM) $(OBJ_DIR_release)
+	-$(VIS_CLEAN)$(RM) $(OBJ_DIR_check_release)
+	-$(VIS_CLEAN)$(RM) $(OBJ_DIR_debug)
+ifeq '$(OUTTYPE)' 'EXE'
+	-$(VIS_CLEAN)$(RM) $(BIN_DIR_release)/$(PLATFORM)*
+	-$(VIS_CLEAN)$(RM) $(BIN_DIR_check_release)/$(PLATFORM)*
+	-$(VIS_CLEAN)$(RM) $(BIN_DIR_debug)/$(PLATFORM)*
+else
+	-$(VIS_CLEAN)$(RM) $(LIB_DIR_release)/$(PLATFORM)*
+	-$(VIS_CLEAN)$(RM) $(LIB_DIR_check_release)/$(PLATFORM)*
+	-$(VIS_CLEAN)$(RM) $(LIB_DIR_debug)/$(PLATFORM)*
+endif
+	@echo "cleaned more!"
+
+clean: cleanish
+ifeq '$(OUTTYPE)' 'EXE'
+	-$(VIS_CLEAN)$(RM) $(BIN_DIR_release)/*/$(OUTPUT_FILE)
+	-$(VIS_CLEAN)$(RM) $(BIN_DIR_check_release)/*/$(OUTPUT_FILE)
+	-$(VIS_CLEAN)$(RM) $(BIN_DIR_debug)/*/$(OUTPUT_FILE)
+else
+	-$(VIS_CLEAN)$(RM) $(LIB_DIR_release)/*/$(OUTPUT_FILE)
+	-$(VIS_CLEAN)$(RM) $(LIB_DIR_check_release)/*/$(OUTPUT_FILE)
+	-$(VIS_CLEAN)$(RM) $(LIB_DIR_debug)/*/$(OUTPUT_FILE)
+endif
+	-$(VIS_CLEAN)[ ! -z "$(EXTRA_CLEANS)" ] || $(RM) $(EXTRA_CLEANS)
+	@echo "cleaned!"
+
+cleanish:
+	-$(VIS_CLEAN)${RM} *.pdb *.idb .gotdirs
+	-$(VIS_CLEAN)$(RM) $(OBJ_DIR_release)/$(PLATFORM)*
+	-$(VIS_CLEAN)$(RM) $(OBJ_DIR_check_release)/$(PLATFORM)*
+	-$(VIS_CLEAN)$(RM) $(OBJ_DIR_debug)/$(PLATFORM)*
+	@echo "intermediate files removed!"
+
+endif

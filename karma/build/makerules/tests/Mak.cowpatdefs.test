@@ -1,0 +1,45 @@
+# $Id: Mak.cowpatdefs.test,v 1.2.8.1 2002/04/11 03:45:35 jamesg Exp $
+# $Name: t-stevet-RWSpre-030110 $
+#
+# Called (many times) by Make.cowpatdefs
+
+_obselete:= \
+	CCINTEL \
+	CCINTEL_OPTS_none CCINTEL_OPTS_full \
+
+&vars:= \
+	CC \
+	CPP \
+	CXX \
+	CCPLATFORM \
+	CPPMAKEDEPS \
+	o \
+	CCOBJ \
+	CC_OPTS_none CC_OPTS_full \
+	CC_inline_none CC_inline_specified CC_inline_any \
+	CC_codegoing_intodll CC_codegoing_intoexe \
+	CC_SYMB_none CC_SYMB_all \
+	AR \
+	ARFLAGS \
+	LDFLAGS_SYMB_none LDFLAGS_SYMB_all \
+	LD \
+	mkldlibpath mklibname mkdllname mkdllimportlibname mkldlinksystemlibs mkexename \
+	andthen &lq &rq \
+
+&vars-win32:= \
+	CC_browse_none CC_browse_nonlocal CC_browse_complete \
+	CC_CRT_static CC_CRT_mthread CC_CRT_dll CC_CRT_staticd CC_CRT_mthreadd CC_CRT_dlld \
+
+&vars-linux-i686:= \
+	NASMFLAGS \
+	NASMMAKEDEPS \
+	NASM \
+
+badvars:=$(strip $(foreach v,${&vars} ${&vars-${&os}} ${&vars-${&os}-${&cpu}},$(if $(subst file,,$(origin $v)),$v)))
+ifdef badvars
+$(error These variables should be defined: [${badvars}])
+endif
+
+.PHONY: all
+all:
+	@:

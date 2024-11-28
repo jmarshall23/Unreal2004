@@ -1,0 +1,657 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="DebugSlow|Win32">
+      <Configuration>DebugSlow</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug_AMD64|Win32">
+      <Configuration>Debug_AMD64</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Profiling|Win32">
+      <Configuration>Profiling</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="ReleaseFast|Win32">
+      <Configuration>ReleaseFast</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{BCF8B4BD-E3BA-4C62-B4BB-15F012C6D331}</ProjectGuid>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug_AMD64|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Profiling|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseFast|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugSlow|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug_AMD64|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Profiling|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseFast|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='DebugSlow|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.40219.1</_ProjectFileVersion>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Debug\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Debug\</IntDir>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</LinkIncremental>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Release\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Release\</IntDir>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkIncremental>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='DebugSlow|Win32'">DebugSlow\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='DebugSlow|Win32'">DebugSlow\</IntDir>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='DebugSlow|Win32'">true</LinkIncremental>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='ReleaseFast|Win32'">ReleaseFast\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='ReleaseFast|Win32'">ReleaseFast\</IntDir>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='ReleaseFast|Win32'">false</LinkIncremental>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Profiling|Win32'">Profiling\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Profiling|Win32'">Profiling\</IntDir>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Profiling|Win32'">false</LinkIncremental>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug_AMD64|Win32'">$(Configuration)\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug_AMD64|Win32'">$(Configuration)\</IntDir>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug_AMD64|Win32'">true</LinkIncremental>
+    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='DebugSlow|Win32'">AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='DebugSlow|Win32'" />
+    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='DebugSlow|Win32'" />
+    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Debug_AMD64|Win32'">AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Debug_AMD64|Win32'" />
+    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Debug_AMD64|Win32'" />
+    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" />
+    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" />
+    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Profiling|Win32'">AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Profiling|Win32'" />
+    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Profiling|Win32'" />
+    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='ReleaseFast|Win32'">AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='ReleaseFast|Win32'" />
+    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='ReleaseFast|Win32'" />
+    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" />
+    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" />
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Midl>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MkTypLibCompatible>true</MkTypLibCompatible>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <TargetEnvironment>Win32</TargetEnvironment>
+      <TypeLibraryName>Debug\XGame.tlb</TypeLibraryName>
+    </Midl>
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>..\metoolkit\include;..\Core\Inc;..\Engine\Inc;Inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_DEBUG;XGAME_API=__declspec(dllexport);_WIN32_IE=0x0200;_WINDOWS;DEBUG;WIN32;UNICODE;DO_GUARD=1;DO_GUARD_SLOW=0;DO_CHECK=1;DO_CHECK_SLOW=1;DO_STAT=1;DO_STAT_SLOW=0;DO_CLOCK=1;DO_CLOCK_SLOW=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <StringPooling>true</StringPooling>
+      <MinimalRebuild>true</MinimalRebuild>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <StructMemberAlignment>4Bytes</StructMemberAlignment>
+      <BufferSecurityCheck>false</BufferSecurityCheck>
+      <ForceConformanceInForLoopScope>true</ForceConformanceInForLoopScope>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>XGame.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile>Debug\XGame.pch</PrecompiledHeaderOutputFile>
+      <AssemblerListingLocation>Debug\</AssemblerListingLocation>
+      <ObjectFileName>Debug\</ObjectFileName>
+      <ProgramDataBaseFileName>Debug\</ProgramDataBaseFileName>
+      <WarningLevel>Level4</WarningLevel>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <CompileAs>Default</CompileAs>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <Culture>0x0409</Culture>
+    </ResourceCompile>
+    <Link>
+      <AdditionalOptions>/MACHINE:I386 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalDependencies>Core.lib;Engine.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <ShowProgress>NotSet</ShowProgress>
+      <OutputFile>..\System\XGame.dll</OutputFile>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <AdditionalLibraryDirectories>..\Core\Debug;..\Engine\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <IgnoreSpecificDefaultLibraries>LIBCD;LIBCMTD;MSVCRTD;LIBC;LIBCMT;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <ProgramDatabaseFile>$(SolutionDir)\DebugFiles\$(ProjectName).pdb</ProgramDatabaseFile>
+      <GenerateMapFile>true</GenerateMapFile>
+      <MapFileName>$(SolutionDir)\DebugFiles\$(ProjectName).map</MapFileName>
+      <MapExports>true</MapExports>
+      <ImportLibrary>Debug\XGame.lib</ImportLibrary>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Midl>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MkTypLibCompatible>true</MkTypLibCompatible>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <TargetEnvironment>Win32</TargetEnvironment>
+      <TypeLibraryName>Release\XGame.tlb</TypeLibraryName>
+    </Midl>
+    <ClCompile>
+      <Optimization>Full</Optimization>
+      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+      <OmitFramePointers>true</OmitFramePointers>
+      <AdditionalIncludeDirectories>..\metoolkit\include;..\Core\Inc;..\Engine\Inc;Inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>XGAME_API=__declspec(dllexport);_WIN32_IE=0x0200;_WINDOWS;NDEBUG;WIN32;UNICODE;DO_GUARD=1;DO_GUARD_SLOW=0;DO_CHECK=1;DO_CHECK_SLOW=0;DO_STAT=1;DO_STAT_SLOW=0;DO_CLOCK=1;DO_CLOCK_SLOW=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <StringPooling>true</StringPooling>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <StructMemberAlignment>4Bytes</StructMemberAlignment>
+      <BufferSecurityCheck>false</BufferSecurityCheck>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <ForceConformanceInForLoopScope>true</ForceConformanceInForLoopScope>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>XGame.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile>Release\XGame.pch</PrecompiledHeaderOutputFile>
+      <AssemblerListingLocation>Release\</AssemblerListingLocation>
+      <ObjectFileName>Release\</ObjectFileName>
+      <ProgramDataBaseFileName>Release\</ProgramDataBaseFileName>
+      <WarningLevel>Level4</WarningLevel>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <CompileAs>Default</CompileAs>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <Culture>0x0409</Culture>
+    </ResourceCompile>
+    <Link>
+      <AdditionalOptions>/MACHINE:I386 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalDependencies>Core.lib;Engine.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <ShowProgress>NotSet</ShowProgress>
+      <OutputFile>..\System\XGame.dll</OutputFile>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <AdditionalLibraryDirectories>..\Core\Release;..\Engine\Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <IgnoreSpecificDefaultLibraries>LIBCD;LIBCMTD;MSVCRTD;LIBC;LIBCMT;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <ProgramDatabaseFile>$(SolutionDir)\DebugFiles\$(ProjectName).pdb</ProgramDatabaseFile>
+      <GenerateMapFile>true</GenerateMapFile>
+      <MapFileName>$(SolutionDir)\DebugFiles\$(ProjectName).map</MapFileName>
+      <MapExports>true</MapExports>
+      <ImportLibrary>Release\XGame.lib</ImportLibrary>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugSlow|Win32'">
+    <Midl>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MkTypLibCompatible>true</MkTypLibCompatible>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <TargetEnvironment>Win32</TargetEnvironment>
+      <TypeLibraryName>DebugSlow\XGame.tlb</TypeLibraryName>
+    </Midl>
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>..\metoolkit\include;..\Core\Inc;..\Engine\Inc;Inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_DEBUG;XGAME_API=__declspec(dllexport);_WIN32_IE=0x0200;_WINDOWS;DEBUG;WIN32;UNICODE;DO_GUARD=1;DO_GUARD_SLOW=1;DO_CHECK=1;DO_CHECK_SLOW=1;DO_STAT=1;DO_STAT_SLOW=0;DO_CLOCK=1;DO_CLOCK_SLOW=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <StringPooling>true</StringPooling>
+      <MinimalRebuild>true</MinimalRebuild>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <StructMemberAlignment>4Bytes</StructMemberAlignment>
+      <BufferSecurityCheck>true</BufferSecurityCheck>
+      <ForceConformanceInForLoopScope>true</ForceConformanceInForLoopScope>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>XGame.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile>DebugSlow\XGame.pch</PrecompiledHeaderOutputFile>
+      <AssemblerListingLocation>DebugSlow\</AssemblerListingLocation>
+      <ObjectFileName>DebugSlow\</ObjectFileName>
+      <ProgramDataBaseFileName>DebugSlow\</ProgramDataBaseFileName>
+      <WarningLevel>Level4</WarningLevel>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <CompileAs>Default</CompileAs>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <Culture>0x0409</Culture>
+    </ResourceCompile>
+    <Link>
+      <AdditionalOptions>/MACHINE:I386 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalDependencies>Core.lib;Engine.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <ShowProgress>NotSet</ShowProgress>
+      <OutputFile>..\System\XGame.dll</OutputFile>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <AdditionalLibraryDirectories>..\Core\DebugSlow;..\Engine\DebugSlow;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <IgnoreSpecificDefaultLibraries>LIBC;LIBCMT;MSVCRT;LIBCD;LIBCMTD;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <ProgramDatabaseFile>$(SolutionDir)\DebugFiles\$(ProjectName).pdb</ProgramDatabaseFile>
+      <GenerateMapFile>true</GenerateMapFile>
+      <MapFileName>$(SolutionDir)\DebugFiles\$(ProjectName).map</MapFileName>
+      <MapExports>true</MapExports>
+      <ImportLibrary>DebugSlow\XGame.lib</ImportLibrary>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseFast|Win32'">
+    <Midl>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MkTypLibCompatible>true</MkTypLibCompatible>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <TargetEnvironment>Win32</TargetEnvironment>
+      <TypeLibraryName>ReleaseFast\XGame.tlb</TypeLibraryName>
+    </Midl>
+    <ClCompile>
+      <Optimization>Full</Optimization>
+      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+      <OmitFramePointers>true</OmitFramePointers>
+      <AdditionalIncludeDirectories>..\..\metoolkit\include;..\Core\Inc;..\Engine\Inc;Inc;..\metoolkit\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>XGAME_API=__declspec(dllexport);_WIN32_IE=0x0200;_WINDOWS;NDEBUG;WIN32;UNICODE;DO_GUARD=0;DO_GUARD_SLOW=0;DO_CHECK=0;DO_CHECK_SLOW=0;DO_STAT=0;DO_STAT_SLOW=0;DO_CLOCK=0;DO_CLOCK_SLOW=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <StringPooling>true</StringPooling>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <StructMemberAlignment>4Bytes</StructMemberAlignment>
+      <BufferSecurityCheck>false</BufferSecurityCheck>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <ForceConformanceInForLoopScope>true</ForceConformanceInForLoopScope>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>XGame.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile>ReleaseFast\XGame.pch</PrecompiledHeaderOutputFile>
+      <AssemblerListingLocation>ReleaseFast\</AssemblerListingLocation>
+      <ObjectFileName>ReleaseFast\</ObjectFileName>
+      <ProgramDataBaseFileName>ReleaseFast\</ProgramDataBaseFileName>
+      <WarningLevel>Level4</WarningLevel>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <CompileAs>Default</CompileAs>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <Culture>0x0409</Culture>
+    </ResourceCompile>
+    <Link>
+      <AdditionalOptions>/MACHINE:I386 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalDependencies>Core.lib;Engine.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <ShowProgress>NotSet</ShowProgress>
+      <OutputFile>..\System\XGame.dll</OutputFile>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <AdditionalLibraryDirectories>..\Core\ReleaseFast;..\Engine\ReleaseFast;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <IgnoreSpecificDefaultLibraries>LIBCD;LIBCMTD;MSVCRTD;LIBC;LIBCMT;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <ProgramDatabaseFile>$(SolutionDir)\DebugFiles\$(ProjectName).pdb</ProgramDatabaseFile>
+      <GenerateMapFile>true</GenerateMapFile>
+      <MapFileName>$(SolutionDir)\DebugFiles\$(ProjectName).map</MapFileName>
+      <MapExports>true</MapExports>
+      <ImportLibrary>ReleaseFast\XGame.lib</ImportLibrary>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Profiling|Win32'">
+    <Midl>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MkTypLibCompatible>true</MkTypLibCompatible>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <TargetEnvironment>Win32</TargetEnvironment>
+      <TypeLibraryName>Profiling\XGame.tlb</TypeLibraryName>
+    </Midl>
+    <ClCompile>
+      <Optimization>Full</Optimization>
+      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+      <OmitFramePointers>true</OmitFramePointers>
+      <AdditionalIncludeDirectories>..\..\metoolkit\include;..\Core\Inc;..\Engine\Inc;Inc;..\metoolkit\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>XGAME_API=__declspec(dllexport);_WIN32_IE=0x0200;_WINDOWS;NDEBUG;WIN32;UNICODE;DO_GUARD=1;DO_GUARD_SLOW=0;DO_CHECK=1;DO_CHECK_SLOW=0;DO_STAT=1;DO_STAT_SLOW=0;DO_CLOCK=1;DO_CLOCK_SLOW=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <StringPooling>true</StringPooling>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <StructMemberAlignment>4Bytes</StructMemberAlignment>
+      <BufferSecurityCheck>false</BufferSecurityCheck>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <ForceConformanceInForLoopScope>true</ForceConformanceInForLoopScope>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>XGame.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile>Profiling\XGame.pch</PrecompiledHeaderOutputFile>
+      <AssemblerListingLocation>Profiling\</AssemblerListingLocation>
+      <ObjectFileName>Profiling\</ObjectFileName>
+      <ProgramDataBaseFileName>Profiling\</ProgramDataBaseFileName>
+      <WarningLevel>Level4</WarningLevel>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <CompileAs>Default</CompileAs>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <Culture>0x0409</Culture>
+    </ResourceCompile>
+    <Link>
+      <AdditionalOptions>/MACHINE:I386 /FIXED:no %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalDependencies>Core.lib;Engine.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <ShowProgress>NotSet</ShowProgress>
+      <OutputFile>..\System\XGame.dll</OutputFile>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <AdditionalLibraryDirectories>..\Core\Profiling;..\Engine\Profiling;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <IgnoreSpecificDefaultLibraries>LIBCD;LIBCMTD;MSVCRTD;LIBC;LIBCMT;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <ProgramDatabaseFile>$(SolutionDir)\DebugFiles\$(ProjectName).pdb</ProgramDatabaseFile>
+      <GenerateMapFile>true</GenerateMapFile>
+      <MapFileName>$(SolutionDir)\DebugFiles\$(ProjectName).map</MapFileName>
+      <MapExports>true</MapExports>
+      <ImportLibrary>Profiling\XGame.lib</ImportLibrary>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug_AMD64|Win32'">
+    <Midl>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MkTypLibCompatible>true</MkTypLibCompatible>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <TargetEnvironment>Win32</TargetEnvironment>
+      <TypeLibraryName>Debug\XGame.tlb</TypeLibraryName>
+    </Midl>
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>..\metoolkit\include;..\Core\Inc;..\Engine\Inc;Inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_DEBUG;XGAME_API=__declspec(dllexport);_WIN32_IE=0x0200;_WINDOWS;DEBUG;WIN32;UNICODE;DO_GUARD=1;DO_GUARD_SLOW=0;DO_CHECK=1;DO_CHECK_SLOW=1;DO_STAT=1;DO_STAT_SLOW=0;DO_CLOCK=1;DO_CLOCK_SLOW=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <StringPooling>true</StringPooling>
+      <MinimalRebuild>false</MinimalRebuild>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <StructMemberAlignment>4Bytes</StructMemberAlignment>
+      <BufferSecurityCheck>false</BufferSecurityCheck>
+      <ForceConformanceInForLoopScope>true</ForceConformanceInForLoopScope>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>XGame.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile>Debug\XGame.pch</PrecompiledHeaderOutputFile>
+      <AssemblerListingLocation>Debug\</AssemblerListingLocation>
+      <ObjectFileName>Debug\</ObjectFileName>
+      <ProgramDataBaseFileName>Debug\</ProgramDataBaseFileName>
+      <WarningLevel>Level4</WarningLevel>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <DebugInformationFormat>
+      </DebugInformationFormat>
+      <CompileAs>Default</CompileAs>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <Culture>0x0409</Culture>
+    </ResourceCompile>
+    <Link>
+      <AdditionalOptions>/MACHINE:AMD64 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalDependencies>Core.lib;Engine.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <ShowProgress>NotSet</ShowProgress>
+      <OutputFile>..\System\XGame.dll</OutputFile>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <AdditionalLibraryDirectories>..\Core\Debug;..\Engine\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <IgnoreSpecificDefaultLibraries>LIBCD;LIBCMTD;MSVCRTD;LIBC;LIBCMT;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <ProgramDatabaseFile>$(SolutionDir)\DebugFiles\$(ProjectName).pdb</ProgramDatabaseFile>
+      <GenerateMapFile>true</GenerateMapFile>
+      <MapFileName>$(SolutionDir)\DebugFiles\$(ProjectName).map</MapFileName>
+      <MapExports>true</MapExports>
+      <ImportLibrary>Debug\XGame.lib</ImportLibrary>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <None Include="Classes\AimedAttachment.uc" />
+    <None Include="Classes\AlienFemaleVoice.uc" />
+    <None Include="Classes\AlienMaleVoice.uc" />
+    <None Include="Classes\AttractCamera.uc" />
+    <None Include="Classes\banner_blue.uc" />
+    <None Include="Classes\banner_red.uc" />
+    <None Include="Classes\BodyEffect.uc" />
+    <None Include="Classes\BombTrail.uc" />
+    <None Include="Classes\BossDM.uc" />
+    <None Include="Classes\CachePlayers.uc" />
+    <None Include="Classes\ChampRosterFinal.uc" />
+    <None Include="Classes\ChampRosterSemiFinal.uc" />
+    <None Include="Classes\Combo.uc" />
+    <None Include="Classes\ComboBerserk.uc" />
+    <None Include="Classes\ComboDefensive.uc" />
+    <None Include="Classes\ComboInvis.uc" />
+    <None Include="Classes\ComboMessage.uc" />
+    <None Include="Classes\ComboSpeed.uc" />
+    <None Include="Classes\CrowdTrigger.uc" />
+    <None Include="Classes\DamTypeThrowDriver.uc" />
+    <None Include="Classes\DecoText.uc" />
+    <None Include="Classes\DestroyableTrigger.uc" />
+    <None Include="Classes\DMRosterBeatTeam.uc" />
+    <None Include="Classes\DMRosterConfigured.uc" />
+    <None Include="Classes\DMRosterGael.uc" />
+    <None Include="Classes\DMRosterLeviathan.uc" />
+    <None Include="Classes\DMRosterOceanic.uc" />
+    <None Include="Classes\DMRosterTrainingDay.uc" />
+    <None Include="Classes\FemRobotVoice.uc" />
+    <None Include="Classes\HealthCharger.uc" />
+    <None Include="Classes\Intro_Brock.uc" />
+    <None Include="Classes\Intro_Crowd.uc" />
+    <None Include="Classes\Intro_Fan_Brock.uc" />
+    <None Include="Classes\Intro_Fan_Gorge.uc" />
+    <None Include="Classes\Intro_Gorge.uc" />
+    <None Include="Classes\Intro_Lauren.uc" />
+    <None Include="Classes\Intro_Malcom.uc" />
+    <None Include="Classes\JuggFemaleVoice.uc" />
+    <None Include="Classes\JuggMaleVoice.uc" />
+    <None Include="Classes\LavaVolume.uc" />
+    <None Include="Classes\MercFemaleVoice.uc" />
+    <None Include="Classes\MercMaleVoice.uc" />
+    <None Include="Classes\MultiKillMessage.uc" />
+    <None Include="Classes\MutBoostDodging.uc" />
+    <None Include="Classes\MutFastWeapSwitch.uc" />
+    <None Include="Classes\MutHeliumCorpses.uc" />
+    <None Include="Classes\MutInstaGib.uc" />
+    <None Include="Classes\MutNoAdrenaline.uc" />
+    <None Include="Classes\MutQuadJump.uc" />
+    <None Include="Classes\MutRegen.uc" />
+    <None Include="Classes\MutSlomoDeath.uc" />
+    <None Include="Classes\MutSpeciesStats.uc" />
+    <None Include="Classes\MutVampire.uc" />
+    <None Include="Classes\MutZoomInstagib.uc" />
+    <None Include="Classes\NightFemaleVoice.uc" />
+    <None Include="Classes\NightMaleVoice.uc" />
+    <None Include="Classes\PlayerLight.uc" />
+    <None Include="Classes\PlayerRecordClass.uc" />
+    <None Include="Classes\ProjectileSpawner.uc" />
+    <None Include="Classes\RagDollTest.uc" />
+    <None Include="Classes\RobotVoice.uc" />
+    <None Include="Classes\ShieldCharger.uc" />
+    <None Include="Classes\SpawnerProjectile.uc" />
+    <None Include="Classes\SpecialKillMessage.uc" />
+    <None Include="Classes\SPECIES_Alien.uc" />
+    <None Include="Classes\SPECIES_Bot.uc" />
+    <None Include="Classes\SPECIES_Egypt.uc" />
+    <None Include="Classes\SPECIES_Human.uc" />
+    <None Include="Classes\SPECIES_Jugg.uc" />
+    <None Include="Classes\SPECIES_Merc.uc" />
+    <None Include="Classes\SPECIES_Night.uc" />
+    <None Include="Classes\SpeciesGameRules.uc" />
+    <None Include="Classes\SpeciesSkaarj.uc" />
+    <None Include="Classes\SpeciesType.uc" />
+    <None Include="Classes\SuperHealthCharger.uc" />
+    <None Include="Classes\SuperShieldCharger.uc" />
+    <None Include="Classes\TeamApocalypse.uc" />
+    <None Include="Classes\TeamBlackLegion.uc" />
+    <None Include="Classes\TeamBloodFists.uc" />
+    <None Include="Classes\TeamBlueConfigured.uc" />
+    <None Include="Classes\TeamBoneCrushers.uc" />
+    <None Include="Classes\TeamColdSteel.uc" />
+    <None Include="Classes\TeamCrusaders.uc" />
+    <None Include="Classes\TeamDragonBreath.uc" />
+    <None Include="Classes\TeamFirestorm.uc" />
+    <None Include="Classes\TeamIronGuard.uc" />
+    <None Include="Classes\TeamNightstalkers.uc" />
+    <None Include="Classes\TeamPainMachine.uc" />
+    <None Include="Classes\TeamRedConfigured.uc" />
+    <None Include="Classes\TeamSunBlades.uc" />
+    <None Include="Classes\TeamSupernova.uc" />
+    <None Include="Classes\TeamVenom.uc" />
+    <None Include="Classes\TeamWarCry.uc" />
+    <None Include="Classes\UDamageCharger.uc" />
+    <None Include="Classes\UDamageTimer.uc" />
+    <None Include="Classes\UT2003GameProfile.uc" />
+    <None Include="Classes\UT2003LadderInfo.uc" />
+    <None Include="Classes\UT2K4GameProfile.uc" />
+    <None Include="Classes\UT2K4LadderInfo.uc" />
+    <None Include="Classes\UT2K4MatchInfo.uc" />
+    <None Include="Classes\uTeamBanner.uc" />
+    <None Include="Classes\VampireGameRules.uc" />
+    <None Include="Classes\VehicleBase.uc" />
+    <None Include="Classes\WildcardBase.uc" />
+    <None Include="Classes\xAlienFemaleSoundGroup.uc" />
+    <None Include="Classes\xAlienMaleSoundGroup.uc" />
+    <None Include="Classes\xBlueFlag.uc" />
+    <None Include="Classes\xBlueFlagBase.uc" />
+    <None Include="Classes\xBombBase.uc" />
+    <None Include="Classes\xBombDelivery.uc" />
+    <None Include="Classes\xBombDeliveryHole.uc" />
+    <None Include="Classes\xBombFlag.uc" />
+    <None Include="Classes\xBombHUDMessage.uc" />
+    <None Include="Classes\xBombingRun.uc" />
+    <None Include="Classes\xBombMessage.uc" />
+    <None Include="Classes\xBombSpawn.uc" />
+    <None Include="Classes\xBot.uc" />
+    <None Include="Classes\xBotSoundGroup.uc" />
+    <None Include="Classes\xCannon.uc" />
+    <None Include="Classes\xCeilingCannon.uc" />
+    <None Include="Classes\xCTFBase.uc" />
+    <None Include="Classes\xCTFGame.uc" />
+    <None Include="Classes\xDeathMatch.uc" />
+    <None Include="Classes\xDeathMessage.uc" />
+    <None Include="Classes\xDMRoster.uc" />
+    <None Include="Classes\xDomA.uc" />
+    <None Include="Classes\xDomAlert.uc" />
+    <None Include="Classes\xDomB.uc" />
+    <None Include="Classes\xDomLetter.uc" />
+    <None Include="Classes\xDomMessage.uc" />
+    <None Include="Classes\xDOMMonitor.uc" />
+    <None Include="Classes\xDOMMonitorA.uc" />
+    <None Include="Classes\xDOMMonitorB.uc" />
+    <None Include="Classes\xDomPoint.uc" />
+    <None Include="Classes\xDomPointA.uc" />
+    <None Include="Classes\xDomPointB.uc" />
+    <None Include="Classes\xDomRing.uc" />
+    <None Include="Classes\xDoubleDom.uc" />
+    <None Include="Classes\xEgyptFemaleSoundGroup.uc" />
+    <None Include="Classes\xEgyptMaleSoundGroup.uc" />
+    <None Include="Classes\xFallingVolume.uc" />
+    <None Include="Classes\xFieldPlayerStart.uc" />
+    <None Include="Classes\xFloorCannon.uc" />
+    <None Include="Classes\xIntroPawn.uc" />
+    <None Include="Classes\xJuggFemaleSoundGroup.uc" />
+    <None Include="Classes\xJuggGibGroup.uc" />
+    <None Include="Classes\xJuggMaleSoundGroup.uc" />
+    <None Include="Classes\xKicker.uc" />
+    <None Include="Classes\xKillerMessagePlus.uc" />
+    <None Include="Classes\xLevelGameRules.uc" />
+    <None Include="Classes\xMercFemaleSoundGroup.uc" />
+    <None Include="Classes\xMercMaleSoundGroup.uc" />
+    <None Include="Classes\xMonitor.uc" />
+    <None Include="Classes\xMonitorA.uc" />
+    <None Include="Classes\xMonitorB.uc" />
+    <None Include="Classes\xMonitorC.uc" />
+    <None Include="Classes\xMutatorList.uc" />
+    <None Include="Classes\xNightFemaleSoundGroup.uc" />
+    <None Include="Classes\xNightMaleSoundGroup.uc" />
+    <None Include="Classes\xPawn.uc" />
+    <None Include="Classes\xPawnSoundGroup.uc" />
+    <None Include="Classes\xPlayer.uc" />
+    <None Include="Classes\xPlayerReplicationInfo.uc" />
+    <None Include="Classes\xRealCTFBase.uc" />
+    <None Include="Classes\xRedFlag.uc" />
+    <None Include="Classes\xRedFlagBase.uc" />
+    <None Include="Classes\xRosterEntry.uc" />
+    <None Include="Classes\xTeamBanner.uc" />
+    <None Include="Classes\xTeamGame.uc" />
+    <None Include="Classes\xTeamRoster.uc" />
+    <None Include="Classes\xTutGame.uc" />
+    <None Include="Classes\xTutorialInfo.uc" />
+    <None Include="Classes\xTutorialSequence.uc" />
+    <None Include="Classes\xTutPawn.uc" />
+    <None Include="Classes\xTutPlayer.uc" />
+    <None Include="Classes\xUtil.uc" />
+    <None Include="Classes\xVehicleCTFGame.uc" />
+    <None Include="Classes\xVictimMessage.uc" />
+    <None Include="Classes\xVoicePack.uc" />
+    <None Include="Classes\xWeaponAttachment.uc" />
+    <None Include="Classes\xWeaponBase.uc" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Src\XGame.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='DebugSlow|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='DebugSlow|Win32'">XGame.h</PrecompiledHeaderFile>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug_AMD64|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug_AMD64|Win32'">XGame.h</PrecompiledHeaderFile>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">XGame.h</PrecompiledHeaderFile>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Profiling|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Profiling|Win32'">XGame.h</PrecompiledHeaderFile>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='ReleaseFast|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='ReleaseFast|Win32'">XGame.h</PrecompiledHeaderFile>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">XGame.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <ClCompile Include="Src\XUtil.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Inc\AAimedAttachment.h" />
+    <ClInclude Include="Inc\XGame.h" />
+    <ClInclude Include="Inc\XGameClasses.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Engine\Src\Engine.vcxproj">
+      <Project>{f0fc2f91-1ae6-4c35-9c15-299cd354aaa4}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

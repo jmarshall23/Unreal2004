@@ -1,0 +1,37 @@
+[LevelInfo0]
+Title="Severance"
+
+[LevelSummary]
+Title="Severance"
+Description="Eons past, the inhabitants of these forgotten ruins summoned a being of elemental darkness, which they imprisoned and lulled to sleep with the blood of countless sacrifices. In the stillness between battles, one can sometimes hear the voice of this titan, roused from sleep, awaiting your blood."
+
+[Volume0]
+LocationName="Blue Base"
+
+[Volume1]
+LocationName="Red Base"
+
+[Volume2]
+LocationName="Blue Base"
+
+[Volume3]
+LocationName="Northeast Node"
+
+[Volume4]
+LocationName="Northwest Node"
+
+[Volume5]
+LocationName="Central Node"
+
+[Volume6]
+LocationName="Southeast Node"
+
+[Volume7]
+LocationName="Southwest Node"
+
+[Volume8]
+LocationName="Red Base"
+
+[ZoneInfo0]
+LocationName="Outside"
+

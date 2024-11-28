@@ -1,0 +1,268 @@
+//Microsoft Developer Studio generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "afxres.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// Neutral resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_NEU)
+#ifdef _WIN32
+LANGUAGE LANG_NEUTRAL, SUBLANG_NEUTRAL
+#pragma code_page(1252)
+#endif //_WIN32
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Menu
+//
+
+IDR_MENU MENU DISCARDABLE 
+BEGIN
+    POPUP "&Renderer"
+    BEGIN
+        MENUITEM "&Pause\tCtrl-F8",             IDM_ISPAUSED
+        MENUITEM "&Single Step\tF8",            IDM_DRAWSTEP
+        MENUITEM SEPARATOR
+        MENUITEM "&Change Display Settings\tF2", IDM_DEVDLG
+        MENUITEM "Lock Aspect &Ratio\tAlt-F9",  IDM_TOGGLEASPECTRATIO
+        , CHECKED
+        MENUITEM SEPARATOR
+        MENUITEM "&Lock Frame Rate \tF3",       IDM_TOGGLEFRAMELOCK, CHECKED
+        MENUITEM "No VSync in Fullscreen",      IDM_TOGGLEVSYNC, CHECKED
+        MENUITEM "&Display Frame Rate\tCtrl-F3", IDM_TOGGLEFPS, CHECKED
+        MENUITEM SEPARATOR
+        MENUITEM "Display Look-&At Point",      IDM_TOGGLEDISPLAYLOOKAT
+        MENUITEM "Display 2D Overlay",          IDM_TOGGLEDISPLAY2D, CHECKED
+        MENUITEM "Display Particle Systems",    IDM_TOGGLEPS, CHECKED
+        MENUITEM SEPARATOR
+        MENUITEM "Quit\tESC",                   IDM_EXIT
+    END
+    POPUP "&Shading"
+    BEGIN
+        MENUITEM "&Alpha Blending (3D)",        IDM_TOGGLEALPHABLEND
+        MENUITEM "Alpha Blending (2D)",         IDM_TOGGLEALPHABLEND2D
+        , CHECKED
+        MENUITEM SEPARATOR
+        MENUITEM "Allow Wireframe",             IDM_TOGGLEWIREFRAME, CHECKED
+        MENUITEM "&Force Wireframe\tShift-F2",  IDM_FORCEWIREFRAME
+        MENUITEM SEPARATOR
+        MENUITEM "Anti-Aliasing",               IDM_TOGGLEANTIALIAS
+    END
+    POPUP "&Textures"
+    BEGIN
+        MENUITEM "Enable Texturing (3D)\tCtrl-F2", IDM_TOGGLEENABLETEXTURES
+        , CHECKED
+        MENUITEM SEPARATOR
+        MENUITEM "Use Nearest Point Filtering", IDM_TEXPOINTFILTER
+        MENUITEM "Use Bilinear Filtering",      IDM_TEXLINEARFILTER, CHECKED
+    END
+    POPUP "&Help", HELP
+    BEGIN
+        MENUITEM "Toggle Help\tF1",             IDM_TOGGLEHELP
+    END
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_DEVDLG DIALOG DISCARDABLE  0, 0, 186, 95
+STYLE DS_MODALFRAME | DS_CENTER | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Display Device Settings"
+FONT 8, "MS Sans Serif"
+BEGIN
+    GROUPBOX        "&Device selection",-1,7,7,115,29
+    COMBOBOX        IDC_DEVICE_COMBO,14,16,105,100,CBS_DROPDOWNLIST | 
+                    WS_VSCROLL | WS_TABSTOP
+    DEFPUSHBUTTON   "OK",IDOK,129,7,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,129,25,50,14
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO DISCARDABLE 
+BEGIN
+    IDD_DEVDLG, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 179
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 88
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+#endif    // Neutral resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+/////////////////////////////////////////////////////////////////////////////
+// English (U.S.) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+#ifdef _WIN32
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+#pragma code_page(1252)
+#endif //_WIN32
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Accelerator
+//
+
+IDR_MAIN_ACCEL ACCELERATORS DISCARDABLE 
+BEGIN
+    VK_DOWN,        IDM_ARROWDOWN,          VIRTKEY, NOINVERT
+    VK_DOWN,        IDM_CTRLARROWDOWN,      VIRTKEY, CONTROL, NOINVERT
+    VK_DOWN,        IDM_SHIFTARROWDOWN,     VIRTKEY, SHIFT, NOINVERT
+    VK_ESCAPE,      IDM_EXIT,               VIRTKEY, NOINVERT
+    VK_F1,          IDM_TOGGLEHELP,         VIRTKEY, NOINVERT
+    VK_F2,          IDM_DEVDLG,             VIRTKEY, NOINVERT
+    VK_F2,          IDM_TOGGLEENABLETEXTURES, VIRTKEY, CONTROL, NOINVERT
+    VK_F2,          IDM_FORCEWIREFRAME,     VIRTKEY, SHIFT, NOINVERT
+    VK_F3,          IDM_TOGGLEFRAMELOCK,    VIRTKEY, NOINVERT
+    VK_F3,          IDM_TOGGLEFPS,          VIRTKEY, CONTROL, NOINVERT
+    VK_F8,          IDM_DRAWSTEP,           VIRTKEY, NOINVERT
+    VK_F8,          IDM_ISPAUSED,           VIRTKEY, CONTROL, NOINVERT
+    VK_F9,          IDM_TOGGLEFULLSCREEN,   VIRTKEY, NOINVERT
+    VK_F9,          IDM_RECALIBTIMER,       VIRTKEY, CONTROL, NOINVERT
+    VK_F9,          IDM_TOGGLEASPECTRATIO,  VIRTKEY, ALT, NOINVERT
+    VK_LEFT,        IDM_ARROWLEFT,          VIRTKEY, NOINVERT
+    VK_LEFT,        IDM_CTRLARROWLEFT,      VIRTKEY, CONTROL, NOINVERT
+    VK_LEFT,        IDM_SHIFTARROWLEFT,     VIRTKEY, SHIFT, NOINVERT
+    VK_RIGHT,       IDM_ARROWRIGHT,         VIRTKEY, NOINVERT
+    VK_RIGHT,       IDM_CTRLARROWRIGHT,     VIRTKEY, CONTROL, NOINVERT
+    VK_RIGHT,       IDM_SHIFTARROWRIGHT,    VIRTKEY, SHIFT, NOINVERT
+    VK_UP,          IDM_ARROWUP,            VIRTKEY, NOINVERT
+    VK_UP,          IDM_CTRLARROWUP,        VIRTKEY, CONTROL, NOINVERT
+    VK_UP,          IDM_SHIFTARROWUP,       VIRTKEY, SHIFT, NOINVERT
+    "X",            IDM_EXIT,               VIRTKEY, ALT, NOINVERT
+END
+
+#endif    // English (U.S.) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+/////////////////////////////////////////////////////////////////////////////
+// English (U.K.) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENG)
+#ifdef _WIN32
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_UK
+#pragma code_page(1252)
+#endif //_WIN32
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Menu
+//
+
+IDR_POPUP MENU DISCARDABLE 
+BEGIN
+    POPUP "Popup"
+    BEGIN
+        MENUITEM "Pause/Play\tCtrl-F8",         IDM_ISPAUSED
+        MENUITEM "Single Step\tF8",             IDM_DRAWSTEP
+        MENUITEM SEPARATOR
+        POPUP "Renderer"
+        BEGIN
+            MENUITEM "Change Display Settings\tF2", IDM_DEVDLG
+            MENUITEM "Toggle Aspect Ratio Lock\tAlt-F9", 
+                                                    IDM_TOGGLEASPECTRATIO
+            MENUITEM SEPARATOR
+            MENUITEM "Toggle Frame Rate Lock\tF3",  IDM_TOGGLEFRAMELOCK
+            MENUITEM "Toggle VSync (Fullscreen)",   IDM_TOGGLEVSYNC
+            MENUITEM "Toggle FPS Display\tCtrl-F3", IDM_TOGGLEFPS
+            MENUITEM SEPARATOR
+            MENUITEM "Toggle Look-At Point Display", IDM_TOGGLEDISPLAYLOOKAT
+            MENUITEM "Toggle 2D Overlay",           IDM_TOGGLEDISPLAY2D
+            MENUITEM "Toggle Particle Systems",     IDM_TOGGLEPS
+        END
+        POPUP "Shading"
+        BEGIN
+            MENUITEM "Toggle Alpha Blending (3D)",  IDM_TOGGLEALPHABLEND
+            MENUITEM "Toggle Alpha Blending (2D)",  IDM_TOGGLEALPHABLEND2D
+            MENUITEM "Toggle Allow Wireframe",      IDM_TOGGLEWIREFRAME
+            MENUITEM "Toggle Forced Wireframe",     IDM_FORCEWIREFRAME
+            MENUITEM "Toggle Anti-Aliasing",        IDM_TOGGLEANTIALIAS
+        END
+        POPUP "Textures"
+        BEGIN
+            MENUITEM "Toggle Texturing (3D)",       IDM_TOGGLEENABLETEXTURES
+            MENUITEM "Use Nearest Point Filtering", IDM_TEXPOINTFILTER
+            MENUITEM "Use Bilinear Filter",         IDM_TEXLINEARFILTER
+        END
+        MENUITEM SEPARATOR
+        MENUITEM "Toggle Help\tF1",             IDM_TOGGLEHELP
+        MENUITEM SEPARATOR
+        MENUITEM "Quit\tESC",                   IDM_EXIT
+    END
+END
+
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "#include ""afxres.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+IDI_ME_ICON             ICON    DISCARDABLE     "icon.ico"
+#endif    // English (U.K.) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+

@@ -1,0 +1,314 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Classes">
+      <UniqueIdentifier>{2b23bced-411b-4906-9875-eccb6f94c9e9}</UniqueIdentifier>
+      <Extensions>*.uc</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\Classes\ACTION_DisableObjective.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\ACTION_DisableThisScript.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\ACTION_GotoMenu.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\ACTION_SetObjectiveActiveStatus.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\AnnounceAdrenaline.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\AssaultPath.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\BigHeadRules.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\BlueShootSpot.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\BombingRunSquadAI.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\BombingRunTeamAI.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\BombTargetMessage.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\Bot.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\CinematicGame.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\CinematicHud.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\CinematicPlayer.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\ClassicAnnouncer.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\ConvoyGibbed.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\ConvoyPhysicsVolume.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\CTFBase.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\CTFFlag.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\CTFGame.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\CTFHUDMessage.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\CTFMessage.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\CTFSquadAI.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\CTFTeamAI.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\CustomBotConfig.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\DeathMatch.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\DemoRecSpectator.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\DestroyableObjective.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\DestroyableObjective_SM.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\DMMutator.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\DMRoster.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\DMSquad.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\DMStatsScreen.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\DominationPoint.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\DOMSquadAI.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\DOMTeamAI.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\DynamicPhysicsVolume.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\FemaleAnnouncer.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\FirstBloodMessage.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\FX_HoldObjective.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\GameObject.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\GameObjective.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\GravityTrigger.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\HoldObjective.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\HoldSpot.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\IdleKickWarningMessage.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\JumpSpot.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\KeyInventory.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\KeyPickup.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\KillingSpreeMessage.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\LastSecondMessage.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\LevelGameRules.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\LockedObjective.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\MaleAnnouncer.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\MessageTrigger.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\MutBerserk.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\MutBigHead.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\MutGameSpeed.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\MutLowGrav.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\MutMovementModifier.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\NetworkEmitter.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\NetworkTrigger.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\PickupMessagePlus.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\PlayerNameMessage.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\ProximityObjective.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\RedShootSpot.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\RestingFormation.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\RosterEntry.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\SayMessagePlus.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\SentinelController.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\SexyFemaleAnnouncer.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\ShootSpot.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\SnipingVolume.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\SquadAI.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\StartupMessage.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\StringMessagePlus.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\TeamAI.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\TeamGame.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\TeamPlayerReplicationInfo.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\TeamSayMessagePlus.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\TeamVoicePack.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\TeamVoiceReplicationInfo.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\tempvoice.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\TimerMessage.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\TranslocatorBeacon.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\TriggeredObjective.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\TurretController.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\UnrealChatRoom.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\UnrealMPGameInfo.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\UnrealPawn.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\UnrealPlayer.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\UnrealScriptedSequence.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\UnrealSecurity.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\UnrealTeamInfo.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\UnrealVoiceReplicationInfo.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\UseObjective.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\UTJumppad.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\VehicleDamageType.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\WeaponDamageType.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\WillowWhisp.uc">
+      <Filter>Classes</Filter>
+    </None>
+  </ItemGroup>
+</Project>

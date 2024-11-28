@@ -1,0 +1,208 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug_AMD64|Win32">
+      <Configuration>Debug_AMD64</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Profiling|Win32">
+      <Configuration>Profiling</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="SystemFiles|Win32">
+      <Configuration>SystemFiles</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{8862AC2F-F80D-4ACD-B976-89B4497131CC}</ProjectGuid>
+    <Keyword>MakeFileProj</Keyword>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug_AMD64|Win32'" Label="Configuration">
+    <ConfigurationType>Utility</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Profiling|Win32'" Label="Configuration">
+    <ConfigurationType>Utility</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='SystemFiles|Win32'" Label="Configuration">
+    <ConfigurationType>Utility</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug_AMD64|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Profiling|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='SystemFiles|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.40219.1</_ProjectFileVersion>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='SystemFiles|Win32'">.\.\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='SystemFiles|Win32'">.\.\</IntDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Profiling|Win32'">..\Profiling\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Profiling|Win32'">..\Profiling\</IntDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug_AMD64|Win32'">$(Configuration)\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug_AMD64|Win32'">$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <None Include="build.ini" />
+    <None Include="Default.ini" />
+    <None Include="DefaultXbox.ini" />
+    <None Include="DefUnrealEd.ini" />
+    <None Include="DefUser.ini" />
+    <None Include="DefUserXbox.ini" />
+    <None Include="UnrealEd.ini" />
+    <None Include="User.ini" />
+    <None Include="UT2004.ini" />
+    <None Include="Editor.log" />
+    <None Include="UCC.log" />
+    <None Include="ut2003.log" />
+    <None Include="makedemo.bat" />
+    <None Include="SetupUT2003_Demo.ini" />
+    <None Include="SetupUT2003_Demo.int" />
+    <None Include="SetupUT2003_Full.ini" />
+    <None Include="SetupUT2003_Full.int" />
+    <None Include="XDemoMaps.int" />
+    <None Include="doX.bat" />
+    <None Include="Soak.bat" />
+    <None Include="ALAudio.int" />
+    <None Include="Core.int" />
+    <None Include="D3DDrv.int" />
+    <None Include="Editor.int" />
+    <None Include="Engine.int" />
+    <None Include="GamePlay.int" />
+    <None Include="IpDrv.int" />
+    <None Include="Manifest.int" />
+    <None Include="Onslaught.int" />
+    <None Include="Setup.int" />
+    <None Include="Startup.int" />
+    <None Include="TeamSymbols_UT2003.int" />
+    <None Include="UC.int" />
+    <None Include="UnrealEd.int" />
+    <None Include="UnrealGame.int" />
+    <None Include="UT2003.int" />
+    <None Include="UWeb.int" />
+    <None Include="Window.int" />
+    <None Include="WinDrv.int" />
+    <None Include="XGame.int" />
+    <None Include="XGameList.int" />
+    <None Include="XInterface.int" />
+    <None Include="XMapList.int" />
+    <None Include="XMaps.int" />
+    <None Include="XPickups.int" />
+    <None Include="XPlayers.int" />
+    <None Include="XPlayersL1.int" />
+    <None Include="XWeaponList.int" />
+    <None Include="XWeapons.int" />
+    <None Include="ALAudio.frt" />
+    <None Include="Core.frt" />
+    <None Include="D3DDrv.frt" />
+    <None Include="Editor.frt" />
+    <None Include="Engine.frt" />
+    <None Include="IpDrv.frt" />
+    <None Include="Setup.frt" />
+    <None Include="SetupUT2003_Demo.frt" />
+    <None Include="SetupUT2003_Full.frt" />
+    <None Include="Startup.frt" />
+    <None Include="UnrealEd.frt" />
+    <None Include="UnrealGame.frt" />
+    <None Include="ut2003.frt" />
+    <None Include="UWeb.frt" />
+    <None Include="Window.frt" />
+    <None Include="WinDrv.frt" />
+    <None Include="XGame.frt" />
+    <None Include="XInterface.frt" />
+    <None Include="XMaps.frt" />
+    <None Include="XPickups.frt" />
+    <None Include="XPlayers.frt" />
+    <None Include="XWeapons.frt" />
+    <None Include="ALAudio.est" />
+    <None Include="Core.est" />
+    <None Include="D3DDrv.est" />
+    <None Include="Editor.est" />
+    <None Include="Engine.est" />
+    <None Include="GamePlay.est" />
+    <None Include="IpDrv.est" />
+    <None Include="Manifest.est" />
+    <None Include="Setup.est" />
+    <None Include="SetupUT2003_Demo.est" />
+    <None Include="SetupUT2003_Full.est" />
+    <None Include="Startup.est" />
+    <None Include="UnrealEd.est" />
+    <None Include="UnrealGame.est" />
+    <None Include="ut2003.est" />
+    <None Include="UWeb.est" />
+    <None Include="Window.est" />
+    <None Include="WinDrv.est" />
+    <None Include="XGame.est" />
+    <None Include="XInterface.est" />
+    <None Include="XMaps.est" />
+    <None Include="XPickups.est" />
+    <None Include="XPlayers.est" />
+    <None Include="XWeapons.est" />
+    <None Include="ALAudio.det" />
+    <None Include="Core.det" />
+    <None Include="D3DDrv.det" />
+    <None Include="Editor.det" />
+    <None Include="Engine.det" />
+    <None Include="IpDrv.det" />
+    <None Include="Setup.det" />
+    <None Include="SetupUT2003_Demo.det" />
+    <None Include="SetupUT2003_Full.det" />
+    <None Include="Startup.det" />
+    <None Include="UnrealEd.det" />
+    <None Include="UnrealGame.det" />
+    <None Include="ut2003.det" />
+    <None Include="UWeb.det" />
+    <None Include="Window.det" />
+    <None Include="WinDrv.det" />
+    <None Include="XGame.det" />
+    <None Include="XInterface.det" />
+    <None Include="XMaps.det" />
+    <None Include="XPickups.det" />
+    <None Include="XPlayers.det" />
+    <None Include="XWeapons.det" />
+    <None Include="ALAudio.itt" />
+    <None Include="Core.itt" />
+    <None Include="D3DDrv.itt" />
+    <None Include="Editor.itt" />
+    <None Include="Engine.itt" />
+    <None Include="GamePlay.itt" />
+    <None Include="IpDrv.itt" />
+    <None Include="Manifest.itt" />
+    <None Include="Setup.itt" />
+    <None Include="SetupUT2003_Demo.itt" />
+    <None Include="SetupUT2003_Full.itt" />
+    <None Include="Startup.itt" />
+    <None Include="UnrealEd.itt" />
+    <None Include="UnrealGame.itt" />
+    <None Include="ut2003.itt" />
+    <None Include="UWeb.itt" />
+    <None Include="Window.itt" />
+    <None Include="WinDrv.itt" />
+    <None Include="XGame.itt" />
+    <None Include="XInterface.itt" />
+    <None Include="XMaps.itt" />
+    <None Include="XPickups.itt" />
+    <None Include="XPlayers.itt" />
+    <None Include="Xweapons.itt" />
+    <None Include="xplayersL1.upl" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

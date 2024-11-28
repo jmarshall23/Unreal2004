@@ -1,0 +1,479 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Classes">
+      <UniqueIdentifier>{15f4cacd-5fbc-48ae-8f7c-b9ab6a67dfc4}</UniqueIdentifier>
+      <Extensions>*.uc</Extensions>
+    </Filter>
+    <Filter Include="Damage Types">
+      <UniqueIdentifier>{fe94ddb6-2efa-4ce6-8efb-97398775c121}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Classes\AssaultAmmo.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\AssaultAmmoPickup.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\AssaultAttachment.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\AssaultFire.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\AssaultGrenade.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\AssaultRifle.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\AssaultRiflePickup.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\BallAmmo.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\BallAttachment.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\BallLauncher.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\BallShoot.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\BallTarget.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\BioAmmo.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\BioAmmoPickup.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\BioAttachment.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\BioChargedFire.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\BioFire.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\BioGlob.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\BioRifle.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\BioRiflePickup.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\BlueBeacon.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\BlueSuperShockBeam.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\FlakAltFire.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\FlakAmmo.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\FlakAmmoPickup.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\FlakAttachment.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\FlakCannon.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\FlakCannonPickup.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\FlakChunk.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\FlakFire.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\FlakShell.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\FX_WeaponLocker.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\Grenade.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\GrenadeAmmo.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\HitEffect.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\HitScanBlockingVolume.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\InstantFire.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\IonCannon.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\LimitationVolume.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\LinkAltFire.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\LinkAmmo.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\LinkAmmoPickup.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\LinkAttachment.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\LinkBeamChild.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\LinkBeamEffect.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\LinkFire.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\LinkGun.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\LinkGunPickup.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\LinkPassEffect.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\LinkProjectile.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\LockerWeapon.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\Minigun.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\MinigunAltFire.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\MinigunAmmo.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\MinigunAmmoPickup.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\MinigunAttachment.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\MinigunFire.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\MinigunPickup.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\MutArena.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\MutNoSuperWeapon.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\NewLightningBolt.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\Painter.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\PainterAttachment.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\PainterBeamEffect.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\PainterFire.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\PainterPickup.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\PainterZoom.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ProjectileFire.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\RedBeacon.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\Redeemer.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\RedeemerAmmo.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\RedeemerAttachment.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\RedeemerFire.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\RedeemerGuidedFire.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\RedeemerPickup.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\RedeemerProjectile.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\RedeemerWarhead.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\RocketAmmo.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\RocketAmmoPickup.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\RocketAttachment.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\RocketFire.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\RocketLauncher.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\RocketLauncherPickup.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\RocketMultiFire.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\RocketProj.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\SeekingRocketProj.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ShieldAltFire.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ShieldAmmo.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ShieldAttachment.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ShieldEffect.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ShieldEffect3rd.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ShieldEffect3rdBLUE.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ShieldEffect3rdRed.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ShieldFire.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ShieldGun.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ShieldGunPickup.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ShockAmmo.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ShockAmmoPickup.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ShockAttachment.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\XEffects\Classes\ShockBeamCoil.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ShockBeamCoilBlue.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ShockBeamEffect.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ShockBeamFire.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ShockProjectile.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ShockProjFire.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ShockRifle.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ShockRiflePickup.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\SniperAmmo.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\SniperAmmoPickup.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\SniperAttachment.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\SniperFire.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\SniperRifle.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\SniperRiflePickup.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\SniperZoom.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\SuperShockAmmo.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\SuperShockBeamEffect.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\SuperShockBeamFire.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\SuperShockRifle.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\SuperShockRiflePickup.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\TransAmmo.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\TransAttachment.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\TransBeacon.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\TransbeaconTeleporter.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\TransDummyBeacon.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\TransFire.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\TransLauncher.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\Transpickup.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\TransRecall.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\UTAmmoPickup.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\UTWeaponPickup.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\WeaponLocker.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ZoomSuperShockBeamDamage.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ZoomSuperShockBeamFire.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ZoomSuperShockRifle.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\DamTypeAssaultBullet.uc">
+      <Filter>Damage Types</Filter>
+    </None>
+    <None Include="Classes\DamTypeAssaultGrenade.uc">
+      <Filter>Damage Types</Filter>
+    </None>
+    <None Include="Classes\DamTypeBioGlob.uc">
+      <Filter>Damage Types</Filter>
+    </None>
+    <None Include="Classes\DamTypeFlakChunk.uc">
+      <Filter>Damage Types</Filter>
+    </None>
+    <None Include="Classes\DamTypeFlakShell.uc">
+      <Filter>Damage Types</Filter>
+    </None>
+    <None Include="Classes\DamTypeIonBlast.uc">
+      <Filter>Damage Types</Filter>
+    </None>
+    <None Include="Classes\DamTypeLinkPlasma.uc">
+      <Filter>Damage Types</Filter>
+    </None>
+    <None Include="Classes\DamTypeLinkShaft.uc">
+      <Filter>Damage Types</Filter>
+    </None>
+    <None Include="Classes\DamTypeMinigunAlt.uc">
+      <Filter>Damage Types</Filter>
+    </None>
+    <None Include="Classes\DamTypeMinigunBullet.uc">
+      <Filter>Damage Types</Filter>
+    </None>
+    <None Include="Classes\DamTypeRedeemer.uc">
+      <Filter>Damage Types</Filter>
+    </None>
+    <None Include="Classes\DamTypeRocket.uc">
+      <Filter>Damage Types</Filter>
+    </None>
+    <None Include="Classes\DamTypeRocketHoming.uc">
+      <Filter>Damage Types</Filter>
+    </None>
+    <None Include="Classes\DamTypeShieldImpact.uc">
+      <Filter>Damage Types</Filter>
+    </None>
+    <None Include="Classes\DamTypeShockBall.uc">
+      <Filter>Damage Types</Filter>
+    </None>
+    <None Include="Classes\DamTypeShockBeam.uc">
+      <Filter>Damage Types</Filter>
+    </None>
+    <None Include="Classes\DamTypeShockCombo.uc">
+      <Filter>Damage Types</Filter>
+    </None>
+    <None Include="Classes\DamTypeSniperHeadShot.uc">
+      <Filter>Damage Types</Filter>
+    </None>
+    <None Include="Classes\DamTypeSniperShot.uc">
+      <Filter>Damage Types</Filter>
+    </None>
+    <None Include="Classes\DamTypeSuperShockBeam.uc">
+      <Filter>Damage Types</Filter>
+    </None>
+    <None Include="Classes\DamTypeTeleFrag.uc">
+      <Filter>Damage Types</Filter>
+    </None>
+  </ItemGroup>
+</Project>

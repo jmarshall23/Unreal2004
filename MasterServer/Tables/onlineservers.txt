@@ -1,0 +1,43 @@
+create table onlineservers
+(
+	serverid int not null,					/* servers.serverid */
+
+	/* expiry */
+	expires datetime not null,				/* when we will expire this server from the list */
+
+	/* details */
+	queryport int,
+	gspyport int,
+	servername varchar(66) not null,		/* possibly unicode, max = 32 */
+	mapname varchar(32) not null,			
+	gametype varchar(16) not null,			
+	currentplayers int,
+	maxplayers int,
+
+	/* validation stuff */
+	cdkeyid int not null,					/* server cd key */
+	servertype int,							/* 0 = dedicated server, 1 = listen */
+	
+	/* version number */
+	version int,
+
+	dedicated char(1),
+	haspassword char(1),
+	standard char(1),
+	mutators varchar(255) default "" not null,
+	bots char(1),
+	weaponstay char(1),
+	transloc char(1),
+	gamespeed float,
+	exclude char(1),
+	realcurrentplayers int,
+		
+	primary key(serverid),
+	index idx_onlineservers_cdkeyid (cdkeyid),
+	index idx_onlineservers_gametype (gametype(4))
+);
+
+// possible indices:
+create index idx_onlineservers_version on onlineservers (version);
+create index idx_onlineservers_expires on onlineservers (expires);
+create index idx_onlineservers_currentplayers on onlineservers (currentplayers);

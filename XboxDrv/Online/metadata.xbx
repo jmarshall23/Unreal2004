@@ -1,0 +1,7 @@
+[catalog]
+i_title_id=<enter your title ID>
+b_title_data="<Enter title specific data up to 64 bytes>"
+s_content_rating="<Enter Rating string>"
+s_name="<Please provide a short name for this package>"
+s_description="<Please provide a description for this package>"
+

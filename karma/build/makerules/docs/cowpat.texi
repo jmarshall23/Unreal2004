@@ -1,0 +1,415 @@
+\input texinfo
+
+@c Cowpat documentation
+@c
+@c $Id: cowpat.texi,v 1.11.8.1 2002/04/11 03:45:35 jamesg Exp $
+@c $Name: t-stevet-RWSpre-030110 $
+
+@set cp cowpat
+
+@setfilename cowpat.info
+@settitle CP/M 2000
+@afourpaper
+@setchapternewpage odd
+@paragraphindent 0
+
+
+@c Summary, Copyright -------------------------------------------------
+@ifinfo
+This is (very) basic documentation for the Cowpat Make System (CP/M)
+
+Copyright @copyright{} 2000-2001 MathEngine PLC
+@end ifinfo
+
+@c Titlepage, Copyright -----------------------------------------------
+@titlepage
+@sp 10
+@c The title is printed in a large font.
+@title The Cowpat Make System (CP/M 2000)
+@author Iestyn Walters, MathEngine PLC
+
+@c The following two commands start the copyright page.
+@page
+@vskip 0pt plus 1filll
+Copyright @copyright{} 2000-2001, MathEngine PLC
+@end titlepage
+
+@c Top node, Master Menu ----------------------------------------------
+@ifnottex
+@node Top, Introduction, , (dir)
+@c node-name, next, previous, up
+@top Main Menu
+
+@menu
+* Introduction::
+* Usage::
+* Cowpat Makefiles::
+* Reference::
+* Concept Index::
+@end menu
+@end ifnottex
+
+
+@c Body ---------------------------------------------------------------
+@node    Introduction, Usage, Top, Top
+@comment node-name,     next,          previous, up
+@chapter Introduction
+
+Cowpat is a programmer's make system. It is optimised for the
+build/edit/debug cycle. It is at least as fast as uSoft DevStudio, and
+contains a superset of DevStudio functionality (i.e., has the nice bits
+without most of its vices).
+
+@itemize @bullet
+@item Extremely small @emph{Do Nothing} time
+@item Crops Slatform (Win32, Linux, Elate, Ps2@dots{})
+@item Very small makefiles (basically just a list of source files)
+@item @emph{All} compiler temporaries go in a designated build directory
+@item Multiple builds on your hard disk @emph{at the same time}
+@item Complete, accurate, automatic per-build per-configuration
+dpendencies
+@item Supports as many CPUs as you have in your machine@footnote{try that with
+DevStudio}
+@item Works on principle of least surprise---it just does what you
+expect@footnote{Or at least, what Bill expects since he's really the only
+user}
+@item You can use it from within DevStudio---@key{F7} to compile and
+@key{F4} to goto the next error
+@end itemize
+
+@c --------------------------------------------------------------------
+
+@node Usage, Cowpat Makefiles, Introduction, Top
+@chapter Usage
+You tell Cowpat what is to be built by simply setting a bunch of make
+variables before invoking the main cowpat makefile. Cowpat will warn you
+if you've forgotten anything.
+@example
+make -f MeMakefile @var{var1}:=@var{val1} @var{var2}:=@var{val2}@dots{}
+@end example
+@samp{MeMakefile} is conventionally used as the name of a cowpat makefile,
+although you can use anything you like.
+
+Note that variables representing directories must end in a trailing slash
+character (@samp{/}).
+
+Some variables are mandatory (@pxref{Mandatory Settings}), while others
+are discretionary@footnote{Another way of saying this is that the optional
+settings have been given sensible defaults} (@pxref{Optional Settings}).
+Either way, Cowpat does some simple sanity checking and complains if is
+unhappy.
+
+@menu
+The mandatory settings include:
+* makerulesdir::	@code{@var{directory}}
+* targettype::	@code{library executable shared}
+* targetname::	@code{@var{simplename}}
+* buildcontext::	@code{karma moth standalone}
+* BUILD::	@code{free checked}
+* OPTS::	@code{none full}
+* SYMBOLS::	@code{none all}
+* PLATFORM::	@code{win32 linux elate}
+* inline::	@code{none specified any}
+* codegoing:: @code{intoexe intodll}
+* doreldefs:: @code{debug release}
+* CRT:: @code{static mthread dll staticd mthreadd dlld}
+@end menu
+
+@menu
+And some of the optional settings:
+* autodiscoverx11:: @code{yes no}
+* memakefile:: @code{@var{makefile-name}} (default: @code{MeMakefile})
+* config:: @code{@var{canned-config}}
+* builddir:: @code{@var{dir}} (default: @code{_b_$@{PLATFORM@}_b$@{BUILD@}_s$@{SYMBOLS@}_o$@{OPTS@}_p$@{PRECISION@}_$@{CRT@}/})
+* cdefs:: @code{@var{def1 def2 @dots{}}}
+* incpath:: @code{@var{incdir1 incdir2 @dots{}}}
+* libpath:: @code{@var{libdir1 libdir2 @dots{}}}
+* browse:: @code{none nonlocal complete} (win32 specific; default: @code{none})
+@end menu
+
+Fortunately, you don't have to enter 250 byte command lines to use Cowpat.
+@ref{Canned Configs} provide the neat solution.
+@menu
+* config:: @code{@var{config1} [ , @var{config2} [ , @dots{} ] ]}
+@end menu
+
+@c --------------------------------------------------------------------
+
+@node Cowpat Makefiles, Reference, Usage, yp
+@chapter Cowpat Makefiles
+A cowpat makefile simply makes one thing (a @file{.lib}, a @file{.dll} or
+@file{.exe} in windowspeak---In fact you might like to think of a cowpat
+makefile as a crops-slatform @file{.dsp}).
+
+A cowpat makefile is unusual in that it names no targets. It simply sets a
+number of make variables, and then (here's the important bit) includes
+@file{Make.rules}. For example, take the following makefile:
+@example
+targettype:=executable
+targetname:=testtgt
+SOURCES:=f1.c dir/f2.c f3.cpp
+
+# Standard cowpat invocation
+makerulesdir:=../../build/makerules/
+include $@{makerulesdir@}Make.rules
+@end example
+It's the last line that sets this makefile apart form most others---it's a
+cowpat makefile.
+
+If you try to run this makefile, you will get something like
+@example
+$ make
+../../build/makerules/Make.standalone.platform:30: *** $PLATFORM must be one of [linux-sa1100|linux-i686|win32|elate].  Stop.
+@end example
+These complaints will continue until you provide cowpat with the correct
+parameters. Something like
+@example
+$ make  PLATFORM:=win32 BUILD:=free OPTS:=none inline:=none SYMBOLS:=all doreldefs:=release profiling:=no CRT=dll
+cowpat: Creating _w
+cowpat: testtgt - genmaks .mak in _w for f1.c
+cowpat: testtgt - genmaks .mak in _w for dir/f2.c
+cowpat: testtgt - genmaks .mak in _w for f3.cpp
+.
+.
+.
+@end example
+should do the trick. See @ref{Canned Configs} to find a more convenient command-line.
+
+@node Canned Configs, , , Cowpat Makefiles
+@section Canned Configs
+
+A Cowpat invocation might look like:
+@example
+make PLATFORM:=win32 BUILD:=free OPTS:=none inline:=none SYMBOLS:=all doreldefs:=release profiling:=no CRT=dll
+@end example
+What a mouthful! Fortunately you can do:
+@example
+make config:=idw
+@end example
+All you have to do is to put as many (or as few) definitions as you like
+in @file{$@{@var{makerulesdir}@}configs/Make.canned.@var{config-name}}
+(@file{Make.canned.idw} in this case). That file might look like:
+@example
+buildcontext?=moth
+BUILD?=free
+CRT?=dll
+OPTS?=full
+SYMBOLS?=none
+inline?=specified
+doreldefs?=release
+profiling?=no
+@end example
+Of course, during cowpat invocation you can still override any of these
+definitions on the command-line:
+@example
+make config:=idw BUILD:=checked
+@end example
+
+@section Chaining Configs
+You can chain configs so that they inherit from eachother:
+@example
+make config:=mothstd,win32,idw
+@end example
+You have flexibility here in whether later definitions (in
+@file{Make.canned.win32}) override or defer to earlier ones (those in
+@file{Make.canned.mothstd}). The secret is understanding the three make
+assignment operators:
+@itemize @bullet
+@item @samp{?=}
+@item @samp{:=}
+@item @samp{=}
+@end itemize
+If you use the @samp{?=} assignement operator, make will only assign the
+variable if it was previously undefined (defer to earlier canned configs).
+@samp{:=} evaluates its right-hand side and assigns it to the left (like
+variable assignment in most programming languages). @samp{=} assigns its
+r.h. side @emph{as-is}---evaluation is delayed unil the l.h. side is
+dereferenced (other versions of make only have this lazy evaluation sort
+of variable).
+
+@section Conditional Makefiles
+Consider:
+@example
+SOURCES:=f1.c f2.c
+
+ifeq
+
+@end example
+
+
+@c --------------------------------------------------------------------
+
+@node Reference, Mandatory Settings, Cowpat Makefiles, Top
+@chapter Reference
+The operation of a Cowpat run is controlled by the setting of a dozen or
+so make variables. These can be set on the command line, in a makefile, or
+even in the environment (this latter one is @emph{not} recommended).
+
+Surprisingly, @emph{all} of the required settings can be done on the
+command line: you don't even need a makefile to do a cowpat run (gosh).
+
+@menu
+* Mandatory Settings::
+* Optional Settings::
+@end menu
+
+@c --------------------------------------------------------------------
+
+@node Mandatory Settings, Optional Settings, Reference, Reference
+@section Mandatory Settings
+These variables @emph{must} be set---they have no default values. Cowpat
+will complain unless they are correctly set.
+
+@multitable @columnfractions .2 .2 .6
+
+@item Variable @tab Possible@*Values @tab Notes
+@item @anchor{makerulesdir}@code{makerulesdir} @tab @code{@var{dir}}@footnote{Please ensure
+that @code{@var{dir}} ends in a @samp{/}}
+@tab @code{@var{dir}} is the dectory that contains @file{Make.rules} (the
+main Cowpat driver file).  Cowpat needs to know where its files are
+stored. There is no facility in @command{make} to determine this, so it's
+left to you, gentle reader.  
+
+@item @anchor{targettype}@code{targettype} @tab @code{library@*executable@*shared}
+@tab Rather like a VisualC++ .dsp, you have to declare what you are
+building. 
+
+@item @anchor{targetname}@code{targetname} @tab @code{@var{simplename}}
+@tab Does what's necessary to build @code{@var{simplename}} (it will end
+up in the @code{@var{builddir}}). Note that @code{@var{simplename}} is the
+simple name of the target, e.g., @file{Zenon}. This allows Cowpat to choose
+the final name based on other settings. (i.e., @file{Zenon.dll},
+@file{libZenon.so}, @file{Zenon.exe}, @file{Zenon.00}, @file{libZenon.a}
+etc.@: etc.)
+
+@item @anchor{buildcontext}@code{buildcontext}@footnote{deprecated} @tab @code{karma@*moth@*standalone}
+@tab Historically Cowpat was used to build the toolkit or Zenon. Each
+project imposes certain constraints (e.g., the project include path,
+standard #defines etc.).
+
+@item @anchor{BUILD}@code{BUILD} @tab @code{free@*checked}
+@tab A checked build has extra code in it that is not present in the standard
+release image---Things such as extra parameter validation; extra error
+reporting; more verbose messages etc. Note that a @code{checked} build is
+@emph{not} synonymous with @emph{debug} build. Debug normally signifies a
+build with symbols and no optimisation. This is catered for elsewhere in
+cowpat.
+
+@item @anchor{OPTS}@code{OPTS} @tab @code{none@*full}
+@tab You have a simple choice between no optimisations and full optimisation.
+
+@item @anchor{SYMBOLS}@code{SYMBOLS} @tab @code{none@*all}
+@tab Produces debugger symbols for your platform.
+
+@item @anchor{PLATFORM}@code{PLATFORM} @tab @code{win32@*linux@*elate}
+@tab Sets up everything about the compiler, and things like shared library
+names (e.g., @file{libblah.so} on linux or @file{blah.dll} on windows)
+
+@item @anchor{inline}@code{inline} @tab @code{none@*specified@*any}
+@tab Tell the compiler what to do with functions specified as
+inline@footnote{If left to its own devices, VisualC++ tends to make
+appalling decisions about what it should inline. On windows,
+@code{specified} is generally much better than @code{any}}
+
+@item @anchor{codegoing}@code{codegoing} @tab @code{intoexe@*intodll}
+@tab Linux needs to generate position independant code for shared
+libraries, but not for executables. PIC code is rumoured to be a lot
+slower than non-PIC code@footnote{This is a Piercarlo generated statement.
+Treat it with the respect it deserves} If you are building a static lib,
+will the code ultimately be linked into a shared library or an executable?
+
+@item @anchor{doreldefs}@code{doreldefs} @tab @code{debug@*release}
+@tab The presence of asserts etc. are controlled by pre-processor
+definitions in many compilers. (If you want to change the C runtime
+library that the application links with @pxref{CRT})
+
+@item @anchor{profiling}@code{profiling} @tab @code{no} @tab Not yet used
+
+@item @anchor{CRT}@code{CRT} @tab @code{static@*mthread@*dll@*staticd@*mthreadd@*dlld}
+@tab Windows has `Debug' builds of the various C runtime libraries
+
+@end multitable
+
+@c --------------------------------------------------------------------
+
+@node Optional Settings, , Mandatory Settings, Reference
+@section Optional Settings
+These variables have reasonable defaults. If you do choose to set them, Cowpat
+will still complain if you do this incorrectly.
+
+@multitable @columnfractions .25 .2 .55
+@item Variable @tab Possible@*Values @tab Notes
+
+@item @anchor{autodiscoverx11}@code{autodiscoverx11} @tab @code{yes@*no}
+@tab Allows cowpat to guess where the x11 headers/libs are on your cowpat
+system. Cowpat prints out where it finds these headers, and a suggestion
+that you set @code{xincdir} and @code{xlibdir} from now on. 
+
+@item @anchor{memakefile}@code{memakefile} @tab @code{@var{MeMakefile}}
+@tab Cowpat issues a depency on the name of the current Makefile. (This
+forces a relink if you change the contents of the makefile, amongst other
+things.) Unfortunately, @command{make} has no way of finding out the name
+of this file. It assumes that the current Makefile is named @file{MeMakefile}. Set
+@code{memakefile} appropriately if this is not so.
+
+@item @anchor{config}@code{config} @tab
+	@code{@var{cfg1}}[@code{,@var{cfg2}}@dots{}]
+@tab Reads variable definitions from a canned configuration file.
+Configs may be chained by separating them with a comma. @xref{Canned
+Configs}.
+
+@item @anchor{builddir}@code{builddir} @tab @code{@var{dir}}
+@tab @emph{All} temporary files (Makefiles, dependency files, object
+files, symbol files, the target file, etc.@: etc.) go in
+@code{@var{dir}}@footnote{Since the contents of @code{@var{dir}} are all
+generated by Cowpat, you may delete this directory whenever you feel like
+it.} You are thus able to have many many simultaneous builds on your
+hard disk.  The default is currently the mouthfull:@*
+@hfill@llap{@code{_b_$@{PLATFORM@}_b$@{BUILD@}_s$@{SYMBOLS@}_o$@{OPTS@}_p$@{PRECISION@}_$@{CRT@}/}}.
+@footnote{Since @samp{_b_win32_bfree_sall_onone_psingle_dlld} is a pretty
+dire thing to have to type to other shell commands, you had better have
+tab-completion in your shell (or use something simpler, like
+@samp{builddir:=_w/} for instance).}
+
+@c @multitable @columnfractions .25 .2 .55
+
+@item @anchor{cdefs}@code{cdefs}[@code{$@{MAKELEVEL@}}] @tab @code{@var{def1 def2}}@dots{}
+@tab Adds the definitions to the compiler as @code{#define}s.
+@code{@var{def1}} is a simple name of the form @code{MZDEBUG} or @code{MZMEM=0x4000}.
+On the command-line use @code{cdefs:=@var{def}},
+but inside a makefile use @code{cdefs$@{MAKELEVEL@}:=@var{def}}.
+
+@item @anchor{incpath}@code{incpath}[@code{$@{MAKELEVEL@}}] @tab @code{@var{dir1 dir2}}@dots{}
+@tab Adds the directories to the compiler include path.
+On the command-line use @code{incpath:=@var{dir}},
+but inside a makefile use @code{incpath$@{MAKELEVEL@}:=@var{dir}}.
+
+@item @anchor{libpath}@code{libpath}[@code{$@{MAKELEVEL@}}] @tab @code{@var{dir1 dir2}}@dots{}
+@tab Adds the directories to the compiler link path.
+On the command-line use @code{libpath:=@var{dir}},
+but inside a makefile use @code{libpath$@{MAKELEVEL@}:=@var{dir}}.
+
+@item @anchor{browse}@code{browse} @tab @code{none@*nonlocal@*complete}
+@tab Generates compile time source browser database files for Win32 (this
+is a @emph{really} neat feature). The @file{.sbr} files end up in
+@file{lib/@var{builddir}/browse} for @emph{any} cowpat compile (i.e., if
+two cowpat runs share the same setting of @code{@var{builddir}}, their
+@file{.sbr} files will all be put into the same directory). At the
+moment you have to run @command{bscmake} manually in order to compile the
+@file{.sbr} files into the @file{.bsc} file.@footnote{One recipe for this
+is "@code{bscmake /n /o @var{file}.bsc *.sbr}". The @code{/n} leaves the
+@file{.sbr} files intact. You tell VisualC++ to use @samp{@var{file}.bsc}
+in @emph{Project/Settings@dots{}}; @emph{General}; @emph{Browse info file name}.}
+
+@end multitable
+
+@c End ----------------------------------------------------------------
+@node    Concept Index,    ,  , Top
+@unnumbered Concept Index
+@printindex cp
+
+@contents
+
+
+
+@bye

@@ -1,0 +1,9 @@
+@ECHO OFF
+
+:StartSoakRun
+IF EXIST RUNNING.INI DEL RUNNING.INI
+UT2003.exe -soaking
+IF NOT EXIST RUNNING.INI GOTO StopSoak
+GOTO StartSoakRun
+
+:StopSoak

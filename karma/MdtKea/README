@@ -1,0 +1,223 @@
+
+All matrices are stored by columns.
+
+CHECK that, when setting up joints:
+	all joined bodies must have been created and have their correct
+	initial positions and rotations.
+	all positions supplied to joint constructors are in ABSOLUTE coords
+	just give positions and axes once, in absolute coords, not twice in
+	body relative coords. saves time and is more intuitive
+
+NOTE on making joint classes - whenever the user reads joint data we should
+call startStepIfTouched(), because startStep() may not have been called
+at *all* if step() has not been called for the first time yet.
+
+------------------------------------------------------------------------------
+TODO
+
+name consistency: e.g. setPos() vs setPosition()
+
+Currently dynamics.cpp assumes bodies with dynamical symmetry, which
+means a constant mass matrix (constant transformed inertia tensors) and
+no Coriolis force.
+
+instead of forming full J, use known sparse structure of system to quickly
+form product J*inv(M)*J', or just go straight to baraff/sparse methods that
+use the full [M J'; J 0] matrix.
+
+look at all big matrix multiplications and see if A*B' should be used instead
+of A*B, as it is much quicker (cache performance).
+
+invert A+epsilon rather than adding epsilon to A, i.e. just add epsilon
+for the inversion not for other uses of A?
+
+lcp speed improvements:
+	- multiplication by symmetric matrices
+	- caching solved-for dx vectors
+	- remember starting index sets (warm starting each iteration)
+	- jump from factored A(~I,~I) to larger or smaller index sets
+	- just generally clean up and optimize matrix handling code
+
+optimizations: unroll loops of 6 or less.
+
+allow non-diagonal inertia tensors!!!
+	- currently the mass matrix (invm and invI) is not updated after the
+	position update at the end of each time step. it should be - the
+	current scheme will only work for dynamically symmetric systems.
+
+check updating of quanternions from w - just update by dq/dt and normalize,
+or should be actually rotate the quanternion by w*h ? this will make a
+difference for large h.
+
+check the validity of all dynamics:
+	constraint validity tests
+	conservation of energy tests (asymptotic with small h?)
+	maybe compare motion to other library?
+	simple and slow ways to compute all quantities - the same?
+	compare dense and sparse (baraff) results
+
+keaSetZero should memset to zero if this gets Float==0.0 (faster).
+
+allow rotation difference between 2 bodies in prismatic joint class.
+
+add in condition estimator indicator so we know how singular we're getting.
+
+hinge joint limits that go through more than 1/2 a cycle (necessary on 911
+head links).
+
+problems with dynamics
+	willy: when wheel speeds up a lot it violates the hinge orthogonality
+	condition. possible problem due to qrot update?
+
+instrumentation: what the LCP is doing
+
+documentation: units for all physical quantities in interface
+
+keaContact: option for linked list OR contiguous array, when passing to step()
+
+error handling, set what happens when keaDebug etc etc called.
+
+handle cleanup of bodies and joints in 911 and wild willy.
+
+coverage analysis, profiling, optimization
+
+check creation of all joint types with non-identity rotation matrix
+
+have default joint constructors, so you have to explicitly attach the
+joint to a system. joint functions should check for sys!=0 and when
+connecting to bodies check that they are in the same system.
+
+check the amount that startStep() is called on joints. probably called
+needlessly because, e.g. joint is touched when actuator velocity changed
+but this doesnt affect angle computation. more intelligent touching scheme!
+
+make sure add AND delete bodies/joints works ok.
+
+rationalize use of large (blas) / small (inline) matrix multiplies.
+consider optimized unrolled code for small multiplies and solves.
+
+test keaSystem::findTree() with terminal constraints, cycles and islands.
+
+in step(), attach/detach collision objects from system manually, dont
+let collision objects do this themselves
+
+disallow constraints that are not connected to any bodies.
+
+add contacts to the END of the body neighbour lists, somehow, to help ensure
+that if there are cycles then the contacts will go in clist instead of the
+normal hinges (is this true ???)
+
+better scheme for handling keaContact touching. at the moment the user can
+freely set its internal data, and the touch flag is not updated. this is
+not a problem for the normal contact handling scheme where all contacts
+are detached and reattached each iteration, but for other schemes it will
+be a problem. perhaps something that treats keaContacts specially?
+
+look at distribution of work in baraff algorithm. should we (a) put as little
+as possible in the dense matrix and do LCP on the whole thing, or (b) move all
+the bounded-multiplier stuff from the sparse matrix into the dense matrix and
+just do LCP on the dense matrix? which is faster? i think (b) might be, but
+it is annoying to code.
+
+the chain testing code hasnt been the same as the matlab prototype since the
+2-body contact generation and jacobian code was changed. who is right?
+
+check if we can put terminal (contact and pin) constraints in the sparse
+matrix (baraff O(n) factorization) if their diagonal blocks are slightly
+nonzero (e.g. +epsilon). there are some numerical accuracy issues here
+because we get the inverse of that diagonal block and it is mixed in with
+the other stuff, but it might be worth a try.
+
+look at speed of small matrix operations. multiplies and cholesky
+decompositions. take advantage of symmetry, do atlas-like optimizations.
+
+baraff factorization: we're probably doing redundant inverses (of mass matrix)
+for leaf nodes. also, we're doing actual inverses when we should be doing
+chol/cholsolve.
+
+enforce constraint num_ce <= 6, as we allocate some temporary space in the
+baraff factorizer of fixed size 6*6.
+
+optimizations:
+	compare the speed of memcpy to for-loop copy for arrays of double.
+
+check for correct behavior when blist or clist is empty.
+
+alligned alloca's for fast access on some architectures? perhaps we'd better
+use a custom stack instead of the system stack?
+
+factorization: precision problems with putting the terminal constraints
+first, we need a better ordering that reduces error at the expense of a
+few fillins.
+
+possible unnecessary transposes, i.e. transpose when J put into main matrix
+then multiply by its transpose in sparse matrix multiplication.
+
+faster implementation of A*X=B (not just A*x=b) for sparse matrices. this is
+useful in the LCP code where we solve for multiple dx vectors at once.
+
+testing: compare lambdas from sparse and dense methods.
+
+rationalize interface to matrix functions, esp order of arguments in some
+factorizer routines.
+
+LCP solver, does LU for Q but quicker factorization may be possible since its
+positive definite. worthwhile?
+
+in mathstuff, consistent use of row-wise or column-wise matrices, esp for
+factorizers (?)
+
+for marek: for contacts, separate out physical parameters from geometry
+info, have pointer in keaContact structure to physical parameter info.
+
+collision primitive centers should be centers of mass, for convenience.
+
+allow object COM to be adjusted, must adjust surrounding constraints too.
+
+implement non-stack alloca and check for mem leaks.
+
+collision: allowing user to directly change parameters like cyl length is
+bad, because this may affect the farfield representation of the object.
+either have, e.g. changeValue() functions or an updateFarField() function.
+
+function that given a rigid body, splits it into 2 pieces and returns the
+new piece. the state and mass stuff are updated appropriately. useful in
+the harvester for cutting trees.
+
+------------------------------------------------------------------------------
+DONE
+
+consistency checking on all arguments, e.g. joint arguments,
+contact information (that body pointers are valid) etc
+
+check for consistency of body and joint lists each iteration:
+	correct linked list? items only appear once, no cycles.
+	all items linked to the correct system
+	joints refer to correct bodies which are in the same system
+
+enfore calling order of initialize(), apply-forces, step().
+	...doesnt apply anymore, single step() function.
+
+look at creation order stuff: ensure that proper body info is set before
+joint constructors start to use it.
+	...user's problem for now, one case handled by 'touch' mechanism
+
+rationalize object ownership. body/joint objects assumed to be on heap
+by keaSystem? default constructors. etc etc.
+	...kea does no memory management at all!!!
+
+classify all functions as callable between timesteps or during a timestep.
+	...all functions callable at any time
+
+single step() -> step() loop. make sure we can change everything about bodies
+and joints between steps, especially number of constraints in joint (eg from
+powered to nonpowered etc).
+
+problems with dynamics
+	harvester link3-headrack joint, when powered it causes a jump in
+	other joints. also it appears to slow down the simulation a lot when
+	we activate this joint. also it causes regular pauses of the app when
+	in a certain oscillation mode.
+
+lcp speed improvements:
+	- caching solved-for dx vectors

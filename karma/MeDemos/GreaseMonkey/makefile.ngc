@@ -1,0 +1,270 @@
+# -*- makefile -*- vim:noet:ts=8:sw=4:ft=make:
+SHELL		= /bin/sh
+
+METOP		:=../..
+RWTOP		:=$(subst \,/,${RW3})
+
+ifdef DEBUG
+    BUILD	:=dbg
+    TARGET	:=GreaseMonkey_debug
+else
+    BUILD	:=rel
+    TARGET	:=GreaseMonkey
+endif
+
+PROCESSOR	:=gekko
+ARCH_TARGET	:=HW2
+
+CWTOP		:=$(subst \,/,${CWFOLDER})
+NGCTOP		:=$(subst \,/,${DOLPHIN_ROOT})
+
+ME_COMPILE	:=mwcceppc
+ME_COMPILE_C	:=mwcceppc
+ME_COMPILE_CXX	:=mwcceppc
+ME_ASSEMBLE	:=mwasmeppc
+ME_LIBRARY	:=mwldeppc
+ME_LINK		:=mwldeppc
+ME_CMD		:=loadrun
+
+ME_DEPEND	:=mwcceppc
+ME_AS		:=mwasmeppc
+
+INCLUDE_PATH	:=$(strip $(INCLUDE_PATH))
+INCLUDE_PATH	:=$(subst :, ,$(INCLUDE_PATH))
+INCLUDE_PATH	:=$(addprefix -I,$(INCLUDE_PATH))
+
+LIBRARY_PATH	:=$(strip $(LIBRARY_PATH))
+LIBRARY_PATH	:=$(subst :, ,$(LIBRARY_PATH))
+LIBRARY_PATH	:=$(addprefix -L,$(LIBRARY_PATH))
+
+MEINC	 	:=$(METOP)/platform_globals/include
+MEINC		+=$(METOP)/Mcd/include
+MEINC		+=$(METOP)/Mcd/include
+MEINC		+=$(METOP)/Mdt/include
+MEINC		+=$(METOP)/MeGlobals/include
+MEINC		+=$(METOP)/MdtKea/include
+MEINC		+=$(METOP)/Mst/include
+MEINC		+=$(METOP)/MdtBcl/include
+MEINC		:=$(addprefix -I,$(MEINC))
+
+MELIB		:=-L$(METOP)/lib.$(BUILD)/$(PLATFORM)
+MELIBS		:=-lMst -lMcdPrimitives \
+		  -lMcdCommon -lMcdFrame -lMcdCommon \
+		  -lMdt -lMdtBcl -lMdtKea -lMeGlobals
+
+export RWTOP
+
+RWINC		:=-I$$RWTOP/include/gcn
+ifdef DEBUG
+    RWLIB	:=-L$$RWTOP/lib/gcn/debug
+else
+    RWLIB	:=-L$$RWTOP/lib/gcn/release
+endif
+RWLIBS		:=-lrt2d -lrtbmp -lrplogo -lrtcharse \
+		  -lrtslerp -lrtimport -lrpcollis -lrtintsec \
+		  -lrpworld -lrwcore -lrtpng \
+
+########################################################################
+export NGCTOP
+
+NGCTOP	:=$(subst \,/,${NGCTOP})
+
+NGC_INC		:=$$NGCTOP/include
+NGC_LIB		:=$$NGCTOP/$(ARCH_TARGET)/lib
+LIB_NGC		:=base os exi si db mtx dvd vi demo pad ai ar ax \
+		  axfx mix sp am axart syn seq dsp dtk card hio \
+		  mcc gx G2D texPalette fileCache support perf
+LIB_NGC		+=amcstubs odemustubs
+
+export CWNGC_INC
+export CWNGC_INCXX
+export CWNGC_PPCINC
+export CWNGC_RTINC
+export CWNGC_STATD
+
+export CWNGC_TRK
+export CWNGC_LIBC
+export CWNGC_LIBCXX
+export CWNGC_RTLIB
+
+MWDIR		:=$(subst \,/,${CWFOLDER})
+
+CWNGC_TRK	:=$(MWDIR)/PowerPC_EABI_Support/MetroTRK
+CWNGC_MSL	:=$(MWDIR)/PowerPC_EABI_Support/Msl
+
+CWNGC_RTINC	:=$(MWDIR)/PowerPC_EABI_Support/Runtime/Inc
+CWNGC_PPCINC	:=$(CWNGC_MSL)/MSL_C/PPC_EABI/Include
+CWNGC_INC	:=$(CWNGC_MSL)/MSL_C/MSL_Common/Include
+CWNGC_INCXX	:=$(CWNGC_MSL)/MSL_C++/MSL_Common/Include
+
+CWNGC_RTLIB	:=$(MWDIR)/PowerPC_EABI_Support/Runtime/Lib
+CWNGC_LIBC	:=$(CWNGC_MSL)/MSL_C/PPC_EABI/LIB
+CWNGC_LIBCXX	:=$(CWNGC_MSL)/MSL_C++/PPC_EABI/LIB
+
+CWNGC_STATD	:=$(MWDIR)/Stationery/GAMECUBE_$(ARCH_TARGET)_SDK_01-22-2001
+
+CWNGC_PREFIX	:=C/$(ARCH_TARGET)_prefix.h
+CWNGC_LCF	:=dolphin/eppc.$(ARCH_TARGET).lcf
+
+CWNGC_LIBSC	:=MSL_C.PPCEABI.bare.H.a
+CWNGC_LIBSCXX	:=MSL_C++.PPCEABI.bare.H.a
+
+CWNGC_RT	:=Runtime.PPCEABI.H.a
+CWNGC_MATH	:=fdlibm.PPCEABI.H.a sp_mathlib.H.a
+CWNGC_MINNOW	:=TRK_MINNOW_DOLPHIN.a
+
+FLAGSCW		:=-nodefaults -proc $(PROCESSOR)
+FLAGSFP		:=-fp hardware
+
+CFLAGS_CW	:=$(FLAGSCW) $(FLAGSFP) -align powerpc -enum int \
+	          -I$$CWNGC_STATD -prefix $(CWNGC_PREFIX) -I-
+
+CFLAGS_RELEASE	:=$(CFLAGS_CW) -O4,p -inline auto
+CFLAGS_DEBUG	:=$(CFLAGS_CW) -g -opt off -inline off
+
+ME_DEPENDFLAGS	:=$(CFLAGS_CW) -M -DDEPENDENCY_PHASE
+
+ME_CCLINKFLAGS_RELEASE	:=$(FLAGSCW) $(FLAGSFP) -lcf $$NGC_INC/$(CWNGC_LCF)
+ME_CCLINKFLAGS_DEBUG	:=$(ME_CCLINKFLAGS_RELEASE) -g
+
+########################################################################
+
+NGCINC		:=$(addprefix -I,$(NGC_INC))
+NGCLIB		:=
+NGCLIBS		:=$(addprefix $$NGC_LIB/,$(LIB_NGC))
+ifeq '$(findstring NDEBUG,$(DEFINES))' ''
+    NGCLIBS	:=$(addsuffix .a,$(NGCLIBS))
+else
+    NGCLIBS	:=$(addsuffix D.a,$(NGCLIBS))
+endif
+
+CWINC		:=$(addprefix -I,$$CWNGC_INCXX)
+CWINC		+=$(addprefix -I,$$CWNGC_INC)
+CWINC		+=$(addprefix -I,$$CWNGC_RTINC)
+CWINC		+=$(addprefix -I,$$CWNGC_PPCINC)
+CWLIB		:=
+CWLIBS		:=$(addprefix $$CWNGC_LIBCXX/,$(CWNGC_LIBSCXX))
+CWLIBS		+=$(addprefix $$CWNGC_LIBC/,$(CWNGC_LIBSC))
+CWLIBS		+=$(addprefix $$CWNGC_LIBC/,$(CWNGC_MATH))
+CWLIBS		+=$(addprefix $$CWNGC_RTLIB/,$(CWNGC_RT))
+CWLIBS		+=$(addprefix $$CWNGC_TRK/,$(CWNGC_MINNOW))
+
+PLINC		:=$(CWINC) $(NGCINC)
+PLLIB		:=$(NGCLIB) $(CWLIB)
+PLLIBS		:=$(NGCLIBS) $(CWLIBS)
+
+SRC	 	:=src
+OBJ		:=obj-$(PLATFORM)-$(BUILD)
+
+GMINC           :=$(SRC)/RW/shared/skel
+GMINC		+=$(SRC)/Karma/app
+GMINC		+=$(SRC)/Karma/plat
+GMINC		+=$(SRC)/RW/shared/democom
+GMINC		:=$(addprefix -I,$(GMINC))
+
+GMLIB		:=
+GMLIBS		:=
+
+SRCS		:=$(SRC)/Karma/app/MdtCar.cpp \
+		  $(SRC)/Karma/app/RwFuncs.cpp \
+		  $(SRC)/Karma/app/car.cpp \
+		  $(SRC)/Karma/app/carAPI.cpp \
+		  $(SRC)/Karma/app/control.cpp \
+		  $(SRC)/Karma/app/driver.cpp \
+		  $(SRC)/Karma/app/events.cpp \
+		  $(SRC)/Karma/app/init.cpp \
+		  $(SRC)/Karma/app/parser.cpp \
+		  $(SRC)/Karma/app/smoke.cpp \
+		  $(SRC)/Karma/app/utils.cpp \
+		\
+		  $(SRC)/RW/shared/skel/skeleton.c \
+		  $(SRC)/RW/shared/democom/camera.c \
+		  $(SRC)/RW/shared/skel/sky/sky.c \
+		  $(SRC)/RW/shared/skel/sky/skyextra.c \
+		  $(SRC)/RW/shared/skel/sky/skyfs.c \
+		\
+		  $(SRC)/RW/OldRW/padmap.c
+
+OBJS		:=$(OBJ)/MdtCar.o \
+		  $(OBJ)/RwFuncs.o \
+		  $(OBJ)/car.o \
+		  $(OBJ)/carAPI.o \
+		  $(OBJ)/control.o \
+		  $(OBJ)/driver.o \
+		  $(OBJ)/events.o \
+		  $(OBJ)/init.o \
+		  $(OBJ)/parser.o \
+		  $(OBJ)/smoke.o \
+		  $(OBJ)/utils.o \
+		\
+		  $(OBJ)/skeleton.o \
+	 	  $(OBJ)/camera.o \
+		  $(OBJ)/sky.o \
+		  $(OBJ)/skyextra.o \
+		  $(OBJ)/skyfs.o \
+		\
+	 	  $(OBJ)/padmap.o 
+
+CC		:=$(ME_COMPILE_C)
+LD		:=$(ME_LINK)
+RUN		:=$(ME_CMD)
+
+RM		:=rm -f
+MKDIR		:=mkdir
+RMDIR		:=rmdir
+
+#-DPERFORMANCE_METRICS
+#-DRWLOGO
+CFLAGSGM	:=
+
+CFLAGSPL	:=-DNGC -DGCN
+LDFLAGSPL	:=
+
+ifdef DEBUG
+    CFLAGSPL	+=$(CFLAGS_DEBUG) -D_MECHECK -D_DEBUG -DRWDEBUG
+    LDFLAGSPL	+=$(ME_CCLINKFLAGS_DEBUG)
+else
+    CFLAGSPL	+=$(CFLAGS_RELEASE) -DNDEBUG -URWDEBUG
+    LDFLAGSPL	+=$(ME_CCLINKFLAGS_RELEASE)
+endif
+
+CFLAGSINC	:=$(INCLUDE_PATH) $(PLINC) $(RWINC) $(MEINC) $(GMINC)
+LDFLAGSLIB	:=$(GMLIB) $(MELIB) $(RWLIB) $(PLLIB) $(LIBRARY_PATH)
+LDFLAGSLIBS	:=$(GMLIBS) $(MELIBS) $(RWLIBS) $(PLLIBS)
+
+CFLAGS		:=$(CFLAGSPL) $(CFLAGSGM) $(CFLAGSINC) 
+LDFLAGS		:=$(LDFLAGSPL)
+LDFLAGS2	:=$(LDFLAGSLIB) $(LDFLAGSLIBS)
+
+all:		$(OBJ) $(TARGET).elf
+
+$(OBJ):
+	-$(MKDIR) $@
+
+$(OBJ)/%.o:	$(SRC)/Karma/plat/%.c 
+	$(CC) $(CFLAGS) -c $< -o $@
+
+$(OBJ)/%.o:	$(SRC)/RW/shared/skel/%.c
+	$(CC) $(CFLAGS) -c $< -o $@
+
+$(OBJ)/%.o:	$(SRC)/RW/shared/skel/sky/%.c
+	$(CC) $(CFLAGS) -c $< -o $@
+
+$(OBJ)/%.o:	$(SRC)/RW/shared/democom/%.c
+	$(CC) $(CFLAGS) -c $< -o $@
+
+$(OBJ)/%.o:	$(SRC)/RW/OldRW/%.c
+	$(CC) $(CFLAGS) -c $< -o $@
+
+$(OBJ)/%.o:	$(SRC)/Karma/app/%.cpp 
+	$(CC) $(CFLAGS) -c $< -o $@
+
+$(TARGET).elf:	$(OBJS) $(OBJ)
+	$(LD) $(LDFLAGS) $(OBJS) $(LDFLAGS2) -o $@
+
+run:		all
+	$(RUN) $(TARGET).elf
+
+clean:
+	$(RM) $(OBJS) $(TARGET).elf
+	-$(RMDIR) $(OBJ)

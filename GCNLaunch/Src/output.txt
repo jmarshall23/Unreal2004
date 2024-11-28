@@ -1,0 +1,128 @@
+Name subsystem initialized
+Loaded module psx2game.umd: 0 -1612462685/-1612462685 1/1 290578425/290578425
+Version: 752
+Compiled: Oct 15 2001 17:04:29
+Command line: coyote5tstd INI=gcngame.ini USERINI=gcnuser.ini
+Base directory: System
+Character set: ANSI
+Object subsystem initialized
+Can't find module gcntpl.umd
+Loaded module psx2game.umd: 0 -1612462685/-1612462685 1/1 290578425/290578425
+Unreal engine initialized
+Initializing memory card library
+GCNClient initialized.
+Initializing Gamecube rendering [DOUBLE SIZE 8, 8]
+LoadMap: Entry
+endLoad: 1, 0
+endLoad: 1659, 0
+endLoad: 1676, 0
+endLoad: 2243, 0
+endLoad: 218, 0
+endLoad: 8, 0
+Game class is 'GameInfo'
+Spawning GameInfo Entry.GameInfo0 and setting owner to 0 [NULL]
+Level is Level Entry.MyLevel
+Bringing Level Entry.MyLevel up for play (0)...
+InitGame: 
+Spawning Mutator Entry.Mutator0 and setting owner to 0 [NULL]
+Spawning BroadcastHandler Entry.BroadcastHandler0 and setting owner to 0 [NULL]
+Spawning AccessControl Entry.AccessControl0 and setting owner to 0 [NULL]
+Spawning GameRules Entry.GameRules0 and setting owner to 0 [NULL]
+Base Mutator is Entry.Mutator0
+Spawning GameReplicationInfo Entry.GameReplicationInfo0 and setting owner to 0 [NULL]
+Browse: coyote5tstd?Name=Player?Class=Warriors.WarCOGgrunt?team=255?skin=SoldierSkins.blkt?Face=SoldierSkins.Othello
+LoadMap: coyote5tstd?Name=Player?Class=Warriors.WarCOGgrunt?team=255?skin=SoldierSkins.blkt?Face=SoldierSkins.Othello
+endLoad: 1, 0
+endLoad: 1881, 0
+endLoad: 1903, 0
+*****************Sizeof IceTexture: 300, 208, 232, 20, 84
+Offsets: 232, 245, 252, 296
+Offsets: 84, 136, 144, 148, 152, 156, 157, 160, 164, 172, 184, 188
+endLoad: 830, 0
+endLoad: 741, 0
+endLoad: 268, 0
+endLoad: 38, 0
+endLoad: 22, 0
+endLoad: 20, 0
+endLoad: 20, 0
+endLoad: 18, 0
+endLoad: 14, 0
+endLoad: 11, 0
+endLoad: 10, 0
+endLoad: 8, 0
+endLoad: 8, 0
+endLoad: 8, 0
+endLoad: 8, 0
+endLoad: 8, 0
+endLoad: 6, 0
+endLoad: 1, 0
+1308 ?= 1308
+Collecting garbage
+Purging garbage
+Garbage: objects: 11925->11898; refs: 199651
+Game class is 'GameInfo'
+Spawning GameInfo coyote5tstd.GameInfo1 and setting owner to 0 [NULL]
+Level is Level coyote5tstd.MyLevel
+*** WARNING - PATHS MAY NOT BE VALID ***
+Bringing Level coyote5tstd.MyLevel up for play (0)...
+InitGame: ?Name=Player?Class=Warriors.WarCOGgrunt?team=255?skin=SoldierSkins.blkt?Face=SoldierSkins.Othello
+Spawning Mutator coyote5tstd.Mutator1 and setting owner to 0 [NULL]
+Spawning BroadcastHandler coyote5tstd.BroadcastHandler1 and setting owner to 0 [NULL]
+Spawning AccessControl coyote5tstd.AccessControl1 and setting owner to 0 [NULL]
+Spawning GameRules coyote5tstd.GameRules1 and setting owner to 0 [NULL]
+Base Mutator is coyote5tstd.Mutator1
+Spawning GameReplicationInfo coyote5tstd.GameReplicationInfo1 and setting owner to 0 [NULL]
+Team 255
+Login: Player
+Spawning PlayerController coyote5tstd.PlayerController0 and setting owner to 0 [NULL]
+Spawning PlayerReplicationInfo coyote5tstd.PlayerReplicationInfo0 and setting owner to b774600 [PlayerController coyote5tstd.PlayerController0]
+coyote5tstd.PlayerController0 waiting
+coyote5tstd.PlayerController0 not waiting
+endLoad: 2, 0
+endLoad: 104, 0
+endLoad: 5, 0
+endLoad: 3, 0
+Spawning WarCOGGrunt coyote5tstd.WarCOGGrunt0 and setting owner to 0 [NULL]
+Spawning PlayerShadow coyote5tstd.PlayerShadow0 and setting owner to bbd5170 [WarCOGGrunt coyote5tstd.WarCOGGrunt0]
+Possessed PlayerPawn: PlayerController coyote5tstd.PlayerController0
+PlayerController0 got player GCNViewport0
+Failed to load 'NULL': Can't resolve package name
+Failed to load 'Class None.': Can't resolve package name
+Spawning HUD coyote5tstd.HUD0 and setting owner to b774600 [PlayerController coyote5tstd.PlayerController0]
+Input system initialized for GCNViewport0
+Loaded render device class.
+Initializing Gamecube rendering [DOUBLE SIZE 8, 8]
+GCN audio subsystem initialized.
+Cleaning up audio memory...
+Game engine initialized
+Startup time: 18.907000 seconds
+Initializing texture: 128 x 128 x 3
+Initializing texture: 128 x 64 x 2
+Initializing texture: 128 x 128 x 3
+Initializing texture: 128 x 128 x 3
+Initializing texture: 128 x 128 x 3
+Initializing texture: 128 x 128 x 3
+Initializing texture: 128 x 128 x 3
+Initializing texture: 128 x 128 x 3
+Initializing texture: 128 x 128 x 3
+Initializing texture: 16 x 16 x 0
+Initializing texture: 64 x 128 x 2
+Initializing texture: 128 x 128 x 3
+Initializing texture: 128 x 64 x 2
+Initializing texture: 128 x 128 x 3
+Initializing texture: 64 x 128 x 2
+Initializing texture: 128 x 128 x 3
+Initializing texture: 128 x 128 x 3
+Initializing texture: 256 x 128 x 0
+Initializing texture: 16 x 16 x 0
+Behindview is True
+Initializing texture: 128 x 128 x 3
+Initializing texture: 128 x 128 x 3
+Initializing texture: 128 x 128 x 3
+Initializing texture: 128 x 128 x 3
+Initializing texture: 128 x 128 x 3
+Initializing texture: 128 x 128 x 3
+Preprocessing:  Vertex buffer vertices: 2303 Orig wedges: 2303
+Initializing texture: 512 x 512 x 4
+Initializing texture: 512 x 256 x 4
+Initializing texture: 256 x 256 x 4

@@ -1,0 +1,634 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="DebugSlow|Win32">
+      <Configuration>DebugSlow</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug_AMD64|Win32">
+      <Configuration>Debug_AMD64</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Profiling|Win32">
+      <Configuration>Profiling</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="ReleaseFast|Win32">
+      <Configuration>ReleaseFast</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{52C097E2-6E42-4C7D-8ECB-90F5AFD0569B}</ProjectGuid>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug_AMD64|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Profiling|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseFast|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugSlow|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug_AMD64|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Profiling|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseFast|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='DebugSlow|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.40219.1</_ProjectFileVersion>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Debug\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Debug\</IntDir>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</LinkIncremental>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Release\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Release\</IntDir>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkIncremental>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='DebugSlow|Win32'">DebugSlow\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='DebugSlow|Win32'">DebugSlow\</IntDir>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='DebugSlow|Win32'">true</LinkIncremental>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='ReleaseFast|Win32'">ReleaseFast\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='ReleaseFast|Win32'">ReleaseFast\</IntDir>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='ReleaseFast|Win32'">false</LinkIncremental>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Profiling|Win32'">Profiling\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Profiling|Win32'">Profiling\</IntDir>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Profiling|Win32'">false</LinkIncremental>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug_AMD64|Win32'">$(Configuration)\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug_AMD64|Win32'">$(Configuration)\</IntDir>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug_AMD64|Win32'">true</LinkIncremental>
+    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='DebugSlow|Win32'">AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='DebugSlow|Win32'" />
+    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='DebugSlow|Win32'" />
+    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Debug_AMD64|Win32'">AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Debug_AMD64|Win32'" />
+    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Debug_AMD64|Win32'" />
+    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" />
+    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" />
+    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Profiling|Win32'">AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Profiling|Win32'" />
+    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Profiling|Win32'" />
+    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='ReleaseFast|Win32'">AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='ReleaseFast|Win32'" />
+    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='ReleaseFast|Win32'" />
+    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" />
+    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" />
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Midl>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MkTypLibCompatible>true</MkTypLibCompatible>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <TargetEnvironment>Win32</TargetEnvironment>
+      <TypeLibraryName>Debug\GUI2K4.tlb</TypeLibraryName>
+    </Midl>
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>..\metoolkit\include;..\Core\Inc;..\Engine\Inc;Inc;..\xgame\inc;..\IpDrv\Inc;..\xinterface\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_DEBUG;GUI2K4_API=__declspec(dllexport);_WINDOWS;DEBUG;WIN32;UNICODE;DO_GUARD=1;DO_GUARD_SLOW=0;DO_CHECK=1;DO_CHECK_SLOW=1;DO_STAT=1;DO_STAT_SLOW=0;DO_CLOCK=1;DO_CLOCK_SLOW=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <StringPooling>true</StringPooling>
+      <MinimalRebuild>true</MinimalRebuild>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <StructMemberAlignment>4Bytes</StructMemberAlignment>
+      <BufferSecurityCheck>false</BufferSecurityCheck>
+      <ForceConformanceInForLoopScope>true</ForceConformanceInForLoopScope>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>GUI2K4.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile>Debug\GUI2K4.pch</PrecompiledHeaderOutputFile>
+      <AssemblerListingLocation>Debug\</AssemblerListingLocation>
+      <ObjectFileName>Debug\</ObjectFileName>
+      <ProgramDataBaseFileName>Debug\</ProgramDataBaseFileName>
+      <WarningLevel>Level4</WarningLevel>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <CompileAs>Default</CompileAs>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <Culture>0x0409</Culture>
+    </ResourceCompile>
+    <Link>
+      <AdditionalOptions>/MACHINE:I386 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalDependencies>Core.lib;Engine.lib;XGame.lib;IpDrv.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <ShowProgress>NotSet</ShowProgress>
+      <OutputFile>..\System\GUI2K4.dll</OutputFile>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <AdditionalLibraryDirectories>..\Core\Debug;..\Engine\Debug;..\XGame\Debug;..\IpDrv\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <IgnoreSpecificDefaultLibraries>LIBCD;LIBCMTD;MSVCRTD;LIBC;LIBCMT;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <ProgramDatabaseFile>Debug\GUI2K4.pdb</ProgramDatabaseFile>
+      <GenerateMapFile>true</GenerateMapFile>
+      <MapFileName>..\DebugFiles\$(ProjectName).map</MapFileName>
+      <ImportLibrary>Debug\GUI2K4.lib</ImportLibrary>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Midl>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MkTypLibCompatible>true</MkTypLibCompatible>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <TargetEnvironment>Win32</TargetEnvironment>
+      <TypeLibraryName>Release\GUI2K4.tlb</TypeLibraryName>
+    </Midl>
+    <ClCompile>
+      <Optimization>Full</Optimization>
+      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+      <OmitFramePointers>true</OmitFramePointers>
+      <AdditionalIncludeDirectories>..\..\metoolkit\include;..\metoolkit\include;..\Core\Inc;..\Engine\Inc;Inc;..\xgame\inc;..\IpDrv\Inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>GUI2K4_API=__declspec(dllexport);_WIN32_IE=0x0200;_WINDOWS;NDEBUG;WIN32;UNICODE;DO_GUARD=1;DO_GUARD_SLOW=0;DO_CHECK=1;DO_CHECK_SLOW=0;DO_STAT=1;DO_STAT_SLOW=0;DO_CLOCK=1;DO_CLOCK_SLOW=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <StringPooling>true</StringPooling>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <StructMemberAlignment>4Bytes</StructMemberAlignment>
+      <BufferSecurityCheck>false</BufferSecurityCheck>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <ForceConformanceInForLoopScope>true</ForceConformanceInForLoopScope>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <PrecompiledHeaderOutputFile>Release\GUI2K4.pch</PrecompiledHeaderOutputFile>
+      <AssemblerListingLocation>Release\</AssemblerListingLocation>
+      <ObjectFileName>Release\</ObjectFileName>
+      <ProgramDataBaseFileName>Release\</ProgramDataBaseFileName>
+      <WarningLevel>Level4</WarningLevel>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <CompileAs>Default</CompileAs>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <Culture>0x0409</Culture>
+    </ResourceCompile>
+    <Link>
+      <AdditionalOptions>/MACHINE:I386 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalDependencies>Core.lib;Engine.lib;XGame.lib;IpDrv.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <ShowProgress>NotSet</ShowProgress>
+      <OutputFile>..\System\GUI2K4.dll</OutputFile>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <AdditionalLibraryDirectories>..\Core\Release;..\Engine\Release;..\XGame\Release;..\IpDrv\Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <IgnoreSpecificDefaultLibraries>LIBCD;LIBCMTD;MSVCRTD;LIBC;LIBCMT;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <ProgramDatabaseFile>..\..\DebugFiles\$(ProjectName).pdb</ProgramDatabaseFile>
+      <GenerateMapFile>true</GenerateMapFile>
+      <MapFileName>..\..\DebugFiles\$(ProjectName).map</MapFileName>
+      <MapExports>true</MapExports>
+      <ImportLibrary>Release\GUI2K4.lib</ImportLibrary>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugSlow|Win32'">
+    <Midl>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MkTypLibCompatible>true</MkTypLibCompatible>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <TargetEnvironment>Win32</TargetEnvironment>
+      <TypeLibraryName>DebugSlow\GUI2K4.tlb</TypeLibraryName>
+    </Midl>
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>..\metoolkit\include;..\Core\Inc;..\Engine\Inc;Inc;..\xgame\inc;..\IpDrv\Inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_DEBUG;GUI2K4_API=__declspec(dllexport);_WIN32_IE=0x0200;_WINDOWS;DEBUG;WIN32;UNICODE;DO_GUARD=1;DO_GUARD_SLOW=1;DO_CHECK=1;DO_CHECK_SLOW=1;DO_STAT=1;DO_STAT_SLOW=0;DO_CLOCK=1;DO_CLOCK_SLOW=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <StringPooling>true</StringPooling>
+      <MinimalRebuild>true</MinimalRebuild>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <StructMemberAlignment>4Bytes</StructMemberAlignment>
+      <BufferSecurityCheck>true</BufferSecurityCheck>
+      <ForceConformanceInForLoopScope>true</ForceConformanceInForLoopScope>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>GUI2K4.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile>DebugSlow\GUI2K4.pch</PrecompiledHeaderOutputFile>
+      <AssemblerListingLocation>DebugSlow\</AssemblerListingLocation>
+      <ObjectFileName>DebugSlow\</ObjectFileName>
+      <ProgramDataBaseFileName>DebugSlow\</ProgramDataBaseFileName>
+      <WarningLevel>Level4</WarningLevel>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <CompileAs>Default</CompileAs>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <Culture>0x0409</Culture>
+    </ResourceCompile>
+    <Link>
+      <AdditionalOptions>/MACHINE:I386 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalDependencies>Core.lib;Engine.lib;XGame.lib;IpDrv.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <ShowProgress>NotSet</ShowProgress>
+      <OutputFile>..\System\GUI2K4.dll</OutputFile>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <AdditionalLibraryDirectories>..\Core\DebugSlow;..\Engine\DebugSlow;..\XGame\DebugSlow;..\IpDrv\DebugSlow;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <IgnoreSpecificDefaultLibraries>LIBC;LIBCMT;MSVCRT;LIBCD;LIBCMTD;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <ProgramDatabaseFile>DebugSlow\GUI2K4.pdb</ProgramDatabaseFile>
+      <GenerateMapFile>true</GenerateMapFile>
+      <MapFileName>..\DebugFiles\$(ProjectName).map</MapFileName>
+      <ImportLibrary>DebugSlow\GUI2K4.lib</ImportLibrary>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseFast|Win32'">
+    <Midl>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MkTypLibCompatible>true</MkTypLibCompatible>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <TargetEnvironment>Win32</TargetEnvironment>
+      <TypeLibraryName>ReleaseFast\GUI2K4.tlb</TypeLibraryName>
+    </Midl>
+    <ClCompile>
+      <Optimization>Full</Optimization>
+      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+      <OmitFramePointers>true</OmitFramePointers>
+      <AdditionalIncludeDirectories>..\..\metoolkit\include;..\metoolkit\include;..\Core\Inc;..\Engine\Inc;Inc;..\xgame\inc;..\IpDrv\Inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>GUI2K4_API=__declspec(dllexport);_WIN32_IE=0x0200;_WINDOWS;NDEBUG;WIN32;UNICODE;DO_GUARD=0;DO_GUARD_SLOW=0;DO_CHECK=0;DO_CHECK_SLOW=0;DO_STAT=0;DO_STAT_SLOW=0;DO_CLOCK=0;DO_CLOCK_SLOW=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <StringPooling>true</StringPooling>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <StructMemberAlignment>4Bytes</StructMemberAlignment>
+      <BufferSecurityCheck>false</BufferSecurityCheck>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <ForceConformanceInForLoopScope>true</ForceConformanceInForLoopScope>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <PrecompiledHeaderOutputFile>ReleaseFast\GUI2K4.pch</PrecompiledHeaderOutputFile>
+      <AssemblerListingLocation>ReleaseFast\</AssemblerListingLocation>
+      <ObjectFileName>ReleaseFast\</ObjectFileName>
+      <ProgramDataBaseFileName>ReleaseFast\</ProgramDataBaseFileName>
+      <WarningLevel>Level4</WarningLevel>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <CompileAs>Default</CompileAs>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <Culture>0x0409</Culture>
+    </ResourceCompile>
+    <Link>
+      <AdditionalOptions>/MACHINE:I386 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalDependencies>Core.lib;Engine.lib;XGame.lib;IpDrv.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <ShowProgress>NotSet</ShowProgress>
+      <OutputFile>..\System\GUI2K4.dll</OutputFile>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <AdditionalLibraryDirectories>..\Core\ReleaseFast;..\Engine\ReleaseFast;..\XGame\ReleaseFast;..\IpDrv\ReleaseFast;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <IgnoreSpecificDefaultLibraries>LIBCD;LIBCMTD;MSVCRTD;LIBC;LIBCMT;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <ProgramDatabaseFile>ReleaseFast\GUI2K4.pdb</ProgramDatabaseFile>
+      <GenerateMapFile>true</GenerateMapFile>
+      <MapFileName>..\DebugFiles\$(ProjectName).map</MapFileName>
+      <ImportLibrary>ReleaseFast\GUI2K4.lib</ImportLibrary>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Profiling|Win32'">
+    <Midl>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MkTypLibCompatible>true</MkTypLibCompatible>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <TargetEnvironment>Win32</TargetEnvironment>
+      <TypeLibraryName>Profiling\GUI2K4.tlb</TypeLibraryName>
+    </Midl>
+    <ClCompile>
+      <Optimization>Full</Optimization>
+      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+      <OmitFramePointers>true</OmitFramePointers>
+      <AdditionalIncludeDirectories>..\..\metoolkit\include;..\metoolkit\include;..\Core\Inc;..\Engine\Inc;Inc;..\xgame\inc;..\IpDrv\Inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>GUI2K4_API=__declspec(dllexport);_WIN32_IE=0x0200;_WINDOWS;NDEBUG;WIN32;UNICODE;DO_GUARD=1;DO_GUARD_SLOW=0;DO_CHECK=1;DO_CHECK_SLOW=0;DO_STAT=1;DO_STAT_SLOW=0;DO_CLOCK=1;DO_CLOCK_SLOW=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <StringPooling>true</StringPooling>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <StructMemberAlignment>4Bytes</StructMemberAlignment>
+      <BufferSecurityCheck>false</BufferSecurityCheck>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <ForceConformanceInForLoopScope>true</ForceConformanceInForLoopScope>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <PrecompiledHeaderOutputFile>Profiling\GUI2K4.pch</PrecompiledHeaderOutputFile>
+      <AssemblerListingLocation>Profiling\</AssemblerListingLocation>
+      <ObjectFileName>Profiling\</ObjectFileName>
+      <ProgramDataBaseFileName>Profiling\</ProgramDataBaseFileName>
+      <WarningLevel>Level4</WarningLevel>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <CompileAs>Default</CompileAs>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <Culture>0x0409</Culture>
+    </ResourceCompile>
+    <Link>
+      <AdditionalOptions>/MACHINE:I386 /FIXED:no %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalDependencies>Core.lib;Engine.lib;XGame.lib;IpDrv.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <ShowProgress>NotSet</ShowProgress>
+      <OutputFile>..\System\GUI2K4.dll</OutputFile>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <AdditionalLibraryDirectories>..\Core\Profiling;..\Engine\Profiling;..\XGame\Profiling;..\IpDrv\Profiling;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <IgnoreSpecificDefaultLibraries>LIBCD;LIBCMTD;MSVCRTD;LIBC;LIBCMT;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <ProgramDatabaseFile>$(OutDir)$(ProjectName).pdb</ProgramDatabaseFile>
+      <GenerateMapFile>true</GenerateMapFile>
+      <MapFileName>..\DebugFiles\$(ProjectName).map</MapFileName>
+      <ImportLibrary>Profiling\GUI2K4.lib</ImportLibrary>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug_AMD64|Win32'">
+    <Midl>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MkTypLibCompatible>true</MkTypLibCompatible>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <TargetEnvironment>Win32</TargetEnvironment>
+      <TypeLibraryName>Debug\GUI2K4.tlb</TypeLibraryName>
+    </Midl>
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>..\metoolkit\include;..\Core\Inc;..\Engine\Inc;Inc;..\xgame\inc;..\IpDrv\Inc;..\xinterface\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_DEBUG;GUI2K4_API=__declspec(dllexport);_WINDOWS;DEBUG;WIN32;UNICODE;DO_GUARD=1;DO_GUARD_SLOW=0;DO_CHECK=1;DO_CHECK_SLOW=1;DO_STAT=1;DO_STAT_SLOW=0;DO_CLOCK=1;DO_CLOCK_SLOW=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <StringPooling>true</StringPooling>
+      <MinimalRebuild>true</MinimalRebuild>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <StructMemberAlignment>4Bytes</StructMemberAlignment>
+      <BufferSecurityCheck>false</BufferSecurityCheck>
+      <ForceConformanceInForLoopScope>true</ForceConformanceInForLoopScope>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>GUI2K4.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile>Debug\GUI2K4.pch</PrecompiledHeaderOutputFile>
+      <AssemblerListingLocation>Debug\</AssemblerListingLocation>
+      <ObjectFileName>Debug\</ObjectFileName>
+      <ProgramDataBaseFileName>Debug\</ProgramDataBaseFileName>
+      <WarningLevel>Level4</WarningLevel>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <CompileAs>Default</CompileAs>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <Culture>0x0409</Culture>
+    </ResourceCompile>
+    <Link>
+      <AdditionalOptions>/MACHINE:I386 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalDependencies>Core.lib;Engine.lib;XGame.lib;IpDrv.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <ShowProgress>NotSet</ShowProgress>
+      <OutputFile>..\System\GUI2K4.dll</OutputFile>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <AdditionalLibraryDirectories>..\Core\Debug;..\Engine\Debug;..\XGame\Debug;..\IpDrv\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <IgnoreSpecificDefaultLibraries>LIBCD;LIBCMTD;MSVCRTD;LIBC;LIBCMT;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <ProgramDatabaseFile>Debug\GUI2K4.pdb</ProgramDatabaseFile>
+      <GenerateMapFile>true</GenerateMapFile>
+      <MapFileName>..\DebugFiles\$(ProjectName).map</MapFileName>
+      <ImportLibrary>Debug\GUI2K4.lib</ImportLibrary>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <None Include="Classes\UT2K4GUIController.uc" />
+    <None Include="Classes\CustomHUDMenuAssault.uc" />
+    <None Include="Classes\CustomHUDMenuOnslaught.uc" />
+    <None Include="Classes\Settings_Tabs.uc" />
+    <None Include="Classes\UT2K4CustomHUDMenu.uc" />
+    <None Include="Classes\UT2K4Tab_AudioSettings.uc" />
+    <None Include="Classes\UT2K4Tab_ControlSettings.uc" />
+    <None Include="Classes\UT2K4Tab_DetailSettings.uc" />
+    <None Include="Classes\UT2K4Tab_GameSettings.uc" />
+    <None Include="Classes\UT2K4Tab_HudSettings.uc" />
+    <None Include="Classes\UT2K4Tab_IForceSettings.uc" />
+    <None Include="Classes\UT2K4Tab_NetworkSettings.uc" />
+    <None Include="Classes\UT2K4Tab_PlayerSettings.uc" />
+    <None Include="Classes\UT2K4Tab_SpeechBinder.uc" />
+    <None Include="Classes\UT2K4Tab_WeaponPref.uc" />
+    <None Include="Classes\FilterPageBase.uc" />
+    <None Include="Classes\GameTypesPage.uc" />
+    <None Include="Classes\NewFilterPage.uc" />
+    <None Include="Classes\UT2K4ArenaConfig.uc" />
+    <None Include="Classes\UT2k4Browser_AddBuddy.uc" />
+    <None Include="Classes\UT2k4Browser_OpenIP.uc" />
+    <None Include="Classes\UT2K4InstantActionPage.uc" />
+    <None Include="Classes\UT2k4IRC_NewNick.uc" />
+    <None Include="Classes\UT2K4LoadingPageBase.uc" />
+    <None Include="Classes\UT2K4LoadingWeapons.uc" />
+    <None Include="Classes\UT2K4LoadingWeaponsArena.uc" />
+    <None Include="Classes\UT2k4MainMenu.uc" />
+    <None Include="Classes\UT2k4MainPage.uc" />
+    <None Include="Classes\UT2K4MultiplayerHostPage.uc" />
+    <None Include="Classes\UT2K4NetworkStatusMsg.uc" />
+    <None Include="Classes\UT2K4QuitPage.uc" />
+    <None Include="Classes\UT2k4ServerBrowser.uc" />
+    <None Include="Classes\UT2K4ServerLoading.uc" />
+    <None Include="Classes\UT2K4SettingsPage.uc" />
+    <None Include="Classes\UT2K4SP_DraftEventPage.uc" />
+    <None Include="Classes\UT2K4SP_LadderEventPage.uc" />
+    <None Include="Classes\UT2K4SP_LadderLoading.uc" />
+    <None Include="Classes\UT2K4SP_PlayerTradePage.uc" />
+    <None Include="Classes\STY2ArrowLeft.uc" />
+    <None Include="Classes\STY2ArrowRight.uc" />
+    <None Include="Classes\STY2BindBox.uc" />
+    <None Include="Classes\STY2BottomTabButton.uc" />
+    <None Include="Classes\STY2BrowserButton.uc" />
+    <None Include="Classes\STY2BrowserListSel.uc" />
+    <None Include="Classes\STY2CharButton.uc" />
+    <None Include="Classes\STY2CheckBox.uc" />
+    <None Include="Classes\STY2CheckBoxCheck.uc" />
+    <None Include="Classes\STY2ComboListBox.uc" />
+    <None Include="Classes\STY2ContextMenu.uc" />
+    <None Include="Classes\STY2EditBox.uc" />
+    <None Include="Classes\STY2Footer.uc" />
+    <None Include="Classes\STY2GraphicTextButton.uc" />
+    <None Include="Classes\STY2Header.uc" />
+    <None Include="Classes\STY2IRCEntry.uc" />
+    <None Include="Classes\STY2IRCText.uc" />
+    <None Include="Classes\STY2ItemOutline.uc" />
+    <None Include="Classes\STY2LadderButton.uc" />
+    <None Include="Classes\STY2LadderButtonActive.uc" />
+    <None Include="Classes\STY2LadderButtonHi.uc" />
+    <None Include="Classes\STY2ListBox.uc" />
+    <None Include="Classes\STY2ListHighlight.uc" />
+    <None Include="Classes\STY2ListSectionHeader.uc" />
+    <None Include="Classes\STY2ListSelection.uc" />
+    <None Include="Classes\STY2MidGameButton.uc" />
+    <None Include="Classes\STY2MouseOverLabel.uc" />
+    <None Include="Classes\STY2NoBackground.uc" />
+    <None Include="Classes\STY2Page.uc" />
+    <None Include="Classes\STY2RosterButton.uc" />
+    <None Include="Classes\STY2RoundButton.uc" />
+    <None Include="Classes\STY2RoundScaledButton.uc" />
+    <None Include="Classes\STY2ScrollZone.uc" />
+    <None Include="Classes\STY2ServerBrowserGrid.uc" />
+    <None Include="Classes\STY2ServerBrowserGridHeader.uc" />
+    <None Include="Classes\STY2ServerListContextMenu.uc" />
+    <None Include="Classes\STY2SliderCaption.uc" />
+    <None Include="Classes\STY2SliderKnob.uc" />
+    <None Include="Classes\STY2SquareBar.uc" />
+    <None Include="Classes\STY2SquareButton.uc" />
+    <None Include="Classes\STY2SquareMenuButton.uc" />
+    <None Include="Classes\STY2TabBackground.uc" />
+    <None Include="Classes\STY2TabButton.uc" />
+    <None Include="Classes\STY2TextButton.uc" />
+    <None Include="Classes\STY2TextLabel.uc" />
+    <None Include="Classes\STY2UT2K4MMClose.uc" />
+    <None Include="Classes\STY2UT2K4MMConfig.uc" />
+    <None Include="Classes\STY2UT2K4MMHost.uc" />
+    <None Include="Classes\STY2UT2K4MMInstantAction.uc" />
+    <None Include="Classes\STY2UT2K4MMJoin.uc" />
+    <None Include="Classes\STY2UT2K4MMTournament.uc" />
+    <None Include="Classes\fntUT2k4Default.uc" />
+    <None Include="Classes\fntUT2k4Header.uc" />
+    <None Include="Classes\fntUT2k4IRC.uc" />
+    <None Include="Classes\fntUT2k4Large.uc" />
+    <None Include="Classes\fntUT2k4Menu.uc" />
+    <None Include="Classes\fntUT2k4MidGame.uc" />
+    <None Include="Classes\fntUT2k4ServerList.uc" />
+    <None Include="Classes\fntUT2k4Small.uc" />
+    <None Include="Classes\fntUT2k4SmallHeader.uc" />
+    <None Include="Classes\UT2k4Browser_IRC.uc" />
+    <None Include="Classes\UT2k4Browser_MOTD.uc" />
+    <None Include="Classes\UT2k4Browser_Page.uc" />
+    <None Include="Classes\UT2k4Browser_ServerListPageBase.uc" />
+    <None Include="Classes\UT2k4Browser_ServerListPageBuddy.uc" />
+    <None Include="Classes\UT2k4Browser_ServerListPageFavorites.uc" />
+    <None Include="Classes\UT2k4Browser_ServerListPageInternet.uc" />
+    <None Include="Classes\UT2k4Browser_ServerListPageLAN.uc" />
+    <None Include="Classes\UT2k4Browser_ServerListPageMS.uc" />
+    <None Include="Classes\UT2k4IRC_Channel.uc" />
+    <None Include="Classes\UT2k4IRC_Page.uc" />
+    <None Include="Classes\UT2k4IRC_Panel.uc" />
+    <None Include="Classes\UT2k4IRC_Private.uc" />
+    <None Include="Classes\UT2k4IRC_System.uc" />
+    <None Include="Classes\BrowserFilters.uc" />
+    <None Include="Classes\CustomFilter.uc" />
+    <None Include="Classes\FilterSetNamePage.uc" />
+    <None Include="Classes\GUIFilterPanel.uc" />
+    <None Include="Classes\PlayInfoFilter.uc" />
+    <None Include="Classes\SimpleFilterPage.uc" />
+    <None Include="Classes\SimpleFilterPanel.uc" />
+    <None Include="Classes\UT2k4Browser_Filter.uc" />
+    <None Include="Classes\UT2K4CustomFilterPage.uc" />
+    <None Include="Classes\UT2K4CustomRulesPanel.uc" />
+    <None Include="Classes\UT2K4FilterControlPanel.uc" />
+    <None Include="Classes\UT2K4FilterRulesPanel.uc" />
+    <None Include="Classes\UT2K4FilterSummaryPanel.uc" />
+    <None Include="Classes\UT2K4SinglePlayerMain.uc" />
+    <None Include="Classes\UT2K4SP_Main.uc" />
+    <None Include="Classes\UT2K4SPTab_Base.uc" />
+    <None Include="Classes\UT2K4SPTab_Ladder.uc" />
+    <None Include="Classes\UT2K4SPTab_LadderBase.uc" />
+    <None Include="Classes\UT2K4SPTab_Profile.uc" />
+    <None Include="Classes\UT2K4SPTab_ProfileNew.uc" />
+    <None Include="Classes\UT2K4SPTab_Qualification.uc" />
+    <None Include="Classes\UT2K4SPTab_SingleLadder.uc" />
+    <None Include="Classes\UT2K4SPTab_TeamQualification.uc" />
+    <None Include="Classes\UT2K4SPTab_Tutorials.uc" />
+    <None Include="Classes\UT2K4Tab_SPLadderBase.uc" />
+    <None Include="Classes\UT2K4Tab_SPLadderQualify.uc" />
+    <None Include="Classes\UT2K4Tab_SPLadderTeam.uc" />
+    <None Include="Classes\UT2K4Tab_SPPanelBase.uc" />
+    <None Include="Classes\UT2K4Tab_SPProfileLoad.uc" />
+    <None Include="Classes\UT2K4Tab_SPProfileNew.uc" />
+    <None Include="Classes\UT2K4Tab_SPRoster.uc" />
+    <None Include="Classes\UT2K4Tab_SPTutorials.uc" />
+    <None Include="Classes\UT2K4MidGameMenu.uc" />
+    <None Include="Classes\UT2K4OnslaughtLoginMenu.uc" />
+    <None Include="Classes\UT2K4PlayerLoginMenu.uc" />
+    <None Include="Classes\UT2K4PlayerLoginMenuOnslaught.uc" />
+    <None Include="Classes\UT2K4Tab_InstantActionGameType.uc" />
+    <None Include="Classes\UT2K4Tab_OnslaughtMap.uc" />
+    <None Include="Classes\UT2K4Tab_PlayerLoginControls.uc" />
+    <None Include="Classes\UT2K4Tab_PlayerLoginControlsOnslaught.uc" />
+    <None Include="Classes\UT2K4Tab_ServerInfo.uc" />
+    <None Include="Classes\UT2K4Tab_ServerMOTD.uc" />
+    <None Include="Classes\IAMultiColumnRulesPanel.uc" />
+    <None Include="Classes\InstantAction_Tabs.uc" />
+    <None Include="Classes\InstantActionRulesPanel.uc" />
+    <None Include="Classes\UT2K4BotInfoPage.uc" />
+    <None Include="Classes\UT2K4Tab_InstantActionBotConfig.uc" />
+    <None Include="Classes\UT2K4Tab_InstantActionMain.uc" />
+    <None Include="Classes\UT2K4Tab_InstantActionMapList.uc" />
+    <None Include="Classes\UT2K4Tab_InstantActionMutators.uc" />
+    <None Include="Classes\UT2K4Tab_InstantActionRules.uc" />
+    <None Include="Classes\UT2K4Tab_ServerRulesPanel.uc" />
+    <None Include="Classes\MySubTestPanelA.uc" />
+    <None Include="Classes\MySubTestPanelB.uc" />
+    <None Include="Classes\MyTest2Page.uc" />
+    <None Include="Classes\MyTestMultiColumnList.uc" />
+    <None Include="Classes\MyTestPage.uc" />
+    <None Include="Classes\MyTestPanelA.uc" />
+    <None Include="Classes\MyTestPanelB.uc" />
+    <None Include="Classes\MyTestPanelC.uc" />
+    <None Include="Classes\GUIMapList.uc" />
+    <None Include="Classes\MapListBox.uc" />
+    <None Include="Classes\PlayInfoList.uc" />
+    <None Include="Classes\PlayInfoListBox.uc" />
+    <None Include="Classes\ServerBrowserMCList.uc" />
+    <None Include="Classes\ServerBrowserMCListBox.uc" />
+    <None Include="Classes\UT2k4Browser_BuddyList.uc" />
+    <None Include="Classes\UT2k4Browser_BuddyListBox.uc" />
+    <None Include="Classes\UT2k4Browser_Footer.uc" />
+    <None Include="Classes\UT2k4Browser_PlayersList.uc" />
+    <None Include="Classes\UT2k4Browser_PlayersListBox.uc" />
+    <None Include="Classes\UT2k4Browser_RulesList.uc" />
+    <None Include="Classes\UT2k4Browser_RulesListBox.uc" />
+    <None Include="Classes\UT2k4Browser_ServerListBox.uc" />
+    <None Include="Classes\UT2k4Browser_ServersList.uc" />
+    <None Include="Classes\UT2K4FilterSummaryList.uc" />
+    <None Include="Classes\UT2K4FilterSummaryListBox.uc" />
+    <None Include="Classes\UT2K4IRCLink.uc" />
+    <None Include="Classes\UT2K4LadderButton.uc" />
+    <None Include="Classes\UT2K4PlayInfoPanel.uc" />
+    <None Include="Classes\UT2K4Tab_AdminPlayerList.uc" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

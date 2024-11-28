@@ -1,0 +1,24 @@
+# Assuming GNU make (>v3.76)
+# $Header: /proj/Toolkits/Mst/src/MeMakefile,v 1.8 2001/01/31 12:47:20 jamesrf Exp $
+# ($Name: t-stevet-RWSpre-030110 $)
+
+# vim:syntax=make:
+
+#------------------------------
+# Mst
+#------------------------------
+
+# What's to be built
+targetname:=Mst
+targettype:=library
+
+SOURCES:=\
+	MstBridge.c \
+	MstModelDynamics.c \
+	MstUniverse.c \
+	MstUtils.c
+
+# Standard incantation
+makerulesdir:=../../build/makerules/
+include ${makerulesdir}Make.rules
+

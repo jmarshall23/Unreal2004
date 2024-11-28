@@ -1,0 +1,152 @@
+Microsoft Developer Studio Workspace File, Format Version 6.00
+# WARNING: DO NOT EDIT OR DELETE THIS WORKSPACE FILE!
+
+###############################################################################
+
+Project: "MeApp"=..\..\MeApp\src\MeApp.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "MeGlobals"=..\..\MeGlobals\src\MeGlobals.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "MeViewer2"=..\..\MeViewer2\src\MeViewer2.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Mop"=..\..\Mop\src\Mop.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "MopCloth"=..\..\MeTests\MopCloth\MopCloth.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name MeGlobals
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name MeViewer2
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name Mop
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "MopKarma"=..\..\MeTests\MopKarma\MopKarma.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name MeApp
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name MeGlobals
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name MeViewer2
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name Mop
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "MopRope"=..\..\MeTests\MopRope\MopRope.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name MeGlobals
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name MeViewer2
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name Mop
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "MopTest"=..\..\MeTests\MopTest\MopTest.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name MeGlobals
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name MeViewer2
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name Mop
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Global:
+
+Package=<5>
+{{{
+}}}
+
+Package=<3>
+{{{
+}}}
+
+###############################################################################
+

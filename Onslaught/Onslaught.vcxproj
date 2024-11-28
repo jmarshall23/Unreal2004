@@ -1,0 +1,680 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="DebugSlow|Win32">
+      <Configuration>DebugSlow</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug_AMD64|Win32">
+      <Configuration>Debug_AMD64</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Profiling|Win32">
+      <Configuration>Profiling</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="ReleaseFast|Win32">
+      <Configuration>ReleaseFast</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{40AE6ED3-87C3-4695-BEA6-B713531CC3B8}</ProjectGuid>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug_AMD64|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Profiling|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseFast|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugSlow|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug_AMD64|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Profiling|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseFast|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='DebugSlow|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.40219.1</_ProjectFileVersion>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Debug\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Debug\</IntDir>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</LinkIncremental>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Release\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Release\</IntDir>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkIncremental>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='DebugSlow|Win32'">DebugSlow\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='DebugSlow|Win32'">DebugSlow\</IntDir>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='DebugSlow|Win32'">true</LinkIncremental>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='ReleaseFast|Win32'">ReleaseFast\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='ReleaseFast|Win32'">ReleaseFast\</IntDir>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='ReleaseFast|Win32'">false</LinkIncremental>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Profiling|Win32'">Profiling\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Profiling|Win32'">Profiling\</IntDir>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Profiling|Win32'">false</LinkIncremental>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug_AMD64|Win32'">$(Configuration)\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug_AMD64|Win32'">$(Configuration)\</IntDir>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug_AMD64|Win32'">true</LinkIncremental>
+    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='DebugSlow|Win32'">AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='DebugSlow|Win32'" />
+    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='DebugSlow|Win32'" />
+    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Debug_AMD64|Win32'">AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Debug_AMD64|Win32'" />
+    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Debug_AMD64|Win32'" />
+    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" />
+    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" />
+    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Profiling|Win32'">AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Profiling|Win32'" />
+    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Profiling|Win32'" />
+    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='ReleaseFast|Win32'">AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='ReleaseFast|Win32'" />
+    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='ReleaseFast|Win32'" />
+    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" />
+    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" />
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Midl>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MkTypLibCompatible>true</MkTypLibCompatible>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <TargetEnvironment>Win32</TargetEnvironment>
+      <TypeLibraryName>Debug\Onslaught.tlb</TypeLibraryName>
+    </Midl>
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>..\metoolkit\include;..\Core\Inc;..\Engine\Inc;Inc;..\xgame\inc;..\IpDrv\Inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_DEBUG;ONSLAUGHT_API=__declspec(dllexport);_WINDOWS;DEBUG;WIN32;UNICODE;DO_GUARD=1;DO_GUARD_SLOW=0;DO_CHECK=1;DO_CHECK_SLOW=1;DO_STAT=1;DO_STAT_SLOW=0;DO_CLOCK=1;DO_CLOCK_SLOW=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <StringPooling>true</StringPooling>
+      <MinimalRebuild>true</MinimalRebuild>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <StructMemberAlignment>4Bytes</StructMemberAlignment>
+      <BufferSecurityCheck>false</BufferSecurityCheck>
+      <ForceConformanceInForLoopScope>true</ForceConformanceInForLoopScope>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>OnslaughtPrivate.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile>Debug\Onslaught.pch</PrecompiledHeaderOutputFile>
+      <AssemblerListingLocation>Debug\</AssemblerListingLocation>
+      <ObjectFileName>Debug\</ObjectFileName>
+      <ProgramDataBaseFileName>Debug\</ProgramDataBaseFileName>
+      <WarningLevel>Level4</WarningLevel>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <CompileAs>Default</CompileAs>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <Culture>0x0409</Culture>
+    </ResourceCompile>
+    <Link>
+      <AdditionalOptions>/MACHINE:I386 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalDependencies>Core.lib;Engine.lib;XGame.lib;IpDrv.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <ShowProgress>NotSet</ShowProgress>
+      <OutputFile>..\System\Onslaught.dll</OutputFile>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <AdditionalLibraryDirectories>..\Core\Debug;..\Engine\Debug;..\XGame\Debug;..\IpDrv\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <IgnoreSpecificDefaultLibraries>LIBCD;LIBCMTD;MSVCRTD;LIBC;LIBCMT;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <ProgramDatabaseFile>$(SolutionDir)\DebugFiles\$(ProjectName).pdb</ProgramDatabaseFile>
+      <GenerateMapFile>true</GenerateMapFile>
+      <MapFileName>$(SolutionDir)\DebugFiles\$(ProjectName).map</MapFileName>
+      <MapExports>true</MapExports>
+      <ImportLibrary>Debug\Onslaught.lib</ImportLibrary>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Midl>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MkTypLibCompatible>true</MkTypLibCompatible>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <TargetEnvironment>Win32</TargetEnvironment>
+      <TypeLibraryName>Release\Onslaught.tlb</TypeLibraryName>
+    </Midl>
+    <ClCompile>
+      <Optimization>Full</Optimization>
+      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+      <OmitFramePointers>true</OmitFramePointers>
+      <AdditionalIncludeDirectories>..\..\metoolkit\include;..\metoolkit\include;..\Core\Inc;..\Engine\Inc;Inc;..\xgame\inc;..\IpDrv\Inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>ONSLAUGHT_API=__declspec(dllexport);_WIN32_IE=0x0200;_WINDOWS;NDEBUG;WIN32;UNICODE;DO_GUARD=1;DO_GUARD_SLOW=0;DO_CHECK=1;DO_CHECK_SLOW=0;DO_STAT=1;DO_STAT_SLOW=0;DO_CLOCK=1;DO_CLOCK_SLOW=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <StringPooling>true</StringPooling>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <StructMemberAlignment>4Bytes</StructMemberAlignment>
+      <BufferSecurityCheck>false</BufferSecurityCheck>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <ForceConformanceInForLoopScope>true</ForceConformanceInForLoopScope>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <PrecompiledHeaderOutputFile>Release\Onslaught.pch</PrecompiledHeaderOutputFile>
+      <AssemblerListingLocation>Release\</AssemblerListingLocation>
+      <ObjectFileName>Release\</ObjectFileName>
+      <ProgramDataBaseFileName>Release\</ProgramDataBaseFileName>
+      <WarningLevel>Level4</WarningLevel>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <CompileAs>Default</CompileAs>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <Culture>0x0409</Culture>
+    </ResourceCompile>
+    <Link>
+      <AdditionalOptions>/MACHINE:I386 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalDependencies>Core.lib;Engine.lib;XGame.lib;IpDrv.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <ShowProgress>NotSet</ShowProgress>
+      <OutputFile>..\System\Onslaught.dll</OutputFile>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <AdditionalLibraryDirectories>..\Core\Release;..\Engine\Release;..\XGame\Release;..\IpDrv\Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <IgnoreSpecificDefaultLibraries>LIBCD;LIBCMTD;MSVCRTD;LIBC;LIBCMT;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <ProgramDatabaseFile>$(SolutionDir)\DebugFiles\$(ProjectName).pdb</ProgramDatabaseFile>
+      <GenerateMapFile>true</GenerateMapFile>
+      <MapFileName>$(SolutionDir)\DebugFiles\$(ProjectName).map</MapFileName>
+      <MapExports>true</MapExports>
+      <ImportLibrary>Release\Onslaught.lib</ImportLibrary>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugSlow|Win32'">
+    <Midl>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MkTypLibCompatible>true</MkTypLibCompatible>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <TargetEnvironment>Win32</TargetEnvironment>
+      <TypeLibraryName>DebugSlow\Onslaught.tlb</TypeLibraryName>
+    </Midl>
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>..\metoolkit\include;..\Core\Inc;..\Engine\Inc;Inc;..\xgame\inc;..\IpDrv\Inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_DEBUG;ONSLAUGHT_API=__declspec(dllexport);_WIN32_IE=0x0200;_WINDOWS;DEBUG;WIN32;UNICODE;DO_GUARD=1;DO_GUARD_SLOW=1;DO_CHECK=1;DO_CHECK_SLOW=1;DO_STAT=1;DO_STAT_SLOW=0;DO_CLOCK=1;DO_CLOCK_SLOW=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <StringPooling>true</StringPooling>
+      <MinimalRebuild>true</MinimalRebuild>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <StructMemberAlignment>4Bytes</StructMemberAlignment>
+      <BufferSecurityCheck>true</BufferSecurityCheck>
+      <ForceConformanceInForLoopScope>true</ForceConformanceInForLoopScope>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>OnslaughtPrivate.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile>DebugSlow\Onslaught.pch</PrecompiledHeaderOutputFile>
+      <AssemblerListingLocation>DebugSlow\</AssemblerListingLocation>
+      <ObjectFileName>DebugSlow\</ObjectFileName>
+      <ProgramDataBaseFileName>DebugSlow\</ProgramDataBaseFileName>
+      <WarningLevel>Level4</WarningLevel>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <CompileAs>Default</CompileAs>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <Culture>0x0409</Culture>
+    </ResourceCompile>
+    <Link>
+      <AdditionalOptions>/MACHINE:I386 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalDependencies>Core.lib;Engine.lib;XGame.lib;IpDrv.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <ShowProgress>NotSet</ShowProgress>
+      <OutputFile>..\System\Onslaught.dll</OutputFile>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <AdditionalLibraryDirectories>..\Core\DebugSlow;..\Engine\DebugSlow;..\XGame\DebugSlow;..\IpDrv\DebugSlow;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <IgnoreSpecificDefaultLibraries>LIBC;LIBCMT;MSVCRT;LIBCD;LIBCMTD;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <ProgramDatabaseFile>$(SolutionDir)\DebugFiles\$(ProjectName).pdb</ProgramDatabaseFile>
+      <GenerateMapFile>true</GenerateMapFile>
+      <MapFileName>$(SolutionDir)\DebugFiles\$(ProjectName).map</MapFileName>
+      <MapExports>true</MapExports>
+      <ImportLibrary>DebugSlow\Onslaught.lib</ImportLibrary>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseFast|Win32'">
+    <Midl>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MkTypLibCompatible>true</MkTypLibCompatible>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <TargetEnvironment>Win32</TargetEnvironment>
+      <TypeLibraryName>ReleaseFast\Onslaught.tlb</TypeLibraryName>
+    </Midl>
+    <ClCompile>
+      <Optimization>Full</Optimization>
+      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+      <OmitFramePointers>true</OmitFramePointers>
+      <AdditionalIncludeDirectories>..\..\metoolkit\include;..\metoolkit\include;..\Core\Inc;..\Engine\Inc;Inc;..\xgame\inc;..\IpDrv\Inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>ONSLAUGHT_API=__declspec(dllexport);_WIN32_IE=0x0200;_WINDOWS;NDEBUG;WIN32;UNICODE;DO_GUARD=0;DO_GUARD_SLOW=0;DO_CHECK=0;DO_CHECK_SLOW=0;DO_STAT=0;DO_STAT_SLOW=0;DO_CLOCK=0;DO_CLOCK_SLOW=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <StringPooling>true</StringPooling>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <StructMemberAlignment>4Bytes</StructMemberAlignment>
+      <BufferSecurityCheck>false</BufferSecurityCheck>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <ForceConformanceInForLoopScope>true</ForceConformanceInForLoopScope>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <PrecompiledHeaderOutputFile>ReleaseFast\Onslaught.pch</PrecompiledHeaderOutputFile>
+      <AssemblerListingLocation>ReleaseFast\</AssemblerListingLocation>
+      <ObjectFileName>ReleaseFast\</ObjectFileName>
+      <ProgramDataBaseFileName>ReleaseFast\</ProgramDataBaseFileName>
+      <WarningLevel>Level4</WarningLevel>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <CompileAs>Default</CompileAs>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <Culture>0x0409</Culture>
+    </ResourceCompile>
+    <Link>
+      <AdditionalOptions>/MACHINE:I386 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalDependencies>Core.lib;Engine.lib;XGame.lib;IpDrv.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <ShowProgress>NotSet</ShowProgress>
+      <OutputFile>..\System\Onslaught.dll</OutputFile>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <AdditionalLibraryDirectories>..\Core\ReleaseFast;..\Engine\ReleaseFast;..\XGame\ReleaseFast;..\IpDrv\ReleaseFast;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <IgnoreSpecificDefaultLibraries>LIBCD;LIBCMTD;MSVCRTD;LIBC;LIBCMT;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <ProgramDatabaseFile>$(SolutionDir)\DebugFiles\$(ProjectName).pdb</ProgramDatabaseFile>
+      <GenerateMapFile>true</GenerateMapFile>
+      <MapFileName>$(SolutionDir)\DebugFiles\$(ProjectName).map</MapFileName>
+      <MapExports>true</MapExports>
+      <ImportLibrary>ReleaseFast\Onslaught.lib</ImportLibrary>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Profiling|Win32'">
+    <Midl>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MkTypLibCompatible>true</MkTypLibCompatible>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <TargetEnvironment>Win32</TargetEnvironment>
+      <TypeLibraryName>Profiling\Onslaught.tlb</TypeLibraryName>
+    </Midl>
+    <ClCompile>
+      <Optimization>Full</Optimization>
+      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+      <OmitFramePointers>true</OmitFramePointers>
+      <AdditionalIncludeDirectories>..\..\metoolkit\include;..\metoolkit\include;..\Core\Inc;..\Engine\Inc;Inc;..\xgame\inc;..\IpDrv\Inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>ONSLAUGHT_API=__declspec(dllexport);_WIN32_IE=0x0200;_WINDOWS;NDEBUG;WIN32;UNICODE;DO_GUARD=1;DO_GUARD_SLOW=0;DO_CHECK=1;DO_CHECK_SLOW=0;DO_STAT=1;DO_STAT_SLOW=0;DO_CLOCK=1;DO_CLOCK_SLOW=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <StringPooling>true</StringPooling>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <StructMemberAlignment>4Bytes</StructMemberAlignment>
+      <BufferSecurityCheck>false</BufferSecurityCheck>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <ForceConformanceInForLoopScope>true</ForceConformanceInForLoopScope>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <PrecompiledHeaderOutputFile>Profiling\Onslaught.pch</PrecompiledHeaderOutputFile>
+      <AssemblerListingLocation>Profiling\</AssemblerListingLocation>
+      <ObjectFileName>Profiling\</ObjectFileName>
+      <ProgramDataBaseFileName>Profiling\</ProgramDataBaseFileName>
+      <WarningLevel>Level4</WarningLevel>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <CompileAs>Default</CompileAs>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <Culture>0x0409</Culture>
+    </ResourceCompile>
+    <Link>
+      <AdditionalOptions>/MACHINE:I386 /FIXED:no %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalDependencies>Core.lib;Engine.lib;XGame.lib;IpDrv.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <ShowProgress>NotSet</ShowProgress>
+      <OutputFile>..\System\Onslaught.dll</OutputFile>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <AdditionalLibraryDirectories>..\Core\Profiling;..\Engine\Profiling;..\XGame\Profiling;..\IpDrv\Profiling;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <IgnoreSpecificDefaultLibraries>LIBCD;LIBCMTD;MSVCRTD;LIBC;LIBCMT;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <ProgramDatabaseFile>$(SolutionDir)\DebugFiles\$(ProjectName).pdb</ProgramDatabaseFile>
+      <GenerateMapFile>true</GenerateMapFile>
+      <MapFileName>$(SolutionDir)\DebugFiles\$(ProjectName).map</MapFileName>
+      <MapExports>true</MapExports>
+      <ImportLibrary>Profiling\Onslaught.lib</ImportLibrary>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug_AMD64|Win32'">
+    <Midl>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MkTypLibCompatible>true</MkTypLibCompatible>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <TargetEnvironment>Win32</TargetEnvironment>
+      <TypeLibraryName>Debug\Onslaught.tlb</TypeLibraryName>
+    </Midl>
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>..\metoolkit\include;..\Core\Inc;..\Engine\Inc;Inc;..\xgame\inc;..\IpDrv\Inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_DEBUG;ONSLAUGHT_API=__declspec(dllexport);_WINDOWS;DEBUG;WIN32;UNICODE;DO_GUARD=1;DO_GUARD_SLOW=0;DO_CHECK=1;DO_CHECK_SLOW=1;DO_STAT=1;DO_STAT_SLOW=0;DO_CLOCK=1;DO_CLOCK_SLOW=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <StringPooling>true</StringPooling>
+      <MinimalRebuild>false</MinimalRebuild>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <StructMemberAlignment>4Bytes</StructMemberAlignment>
+      <BufferSecurityCheck>false</BufferSecurityCheck>
+      <ForceConformanceInForLoopScope>true</ForceConformanceInForLoopScope>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>OnslaughtPrivate.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile>Debug\Onslaught.pch</PrecompiledHeaderOutputFile>
+      <AssemblerListingLocation>Debug\</AssemblerListingLocation>
+      <ObjectFileName>Debug\</ObjectFileName>
+      <ProgramDataBaseFileName>Debug\</ProgramDataBaseFileName>
+      <WarningLevel>Level4</WarningLevel>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <DebugInformationFormat>
+      </DebugInformationFormat>
+      <CompileAs>Default</CompileAs>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <Culture>0x0409</Culture>
+    </ResourceCompile>
+    <Link>
+      <AdditionalOptions>/MACHINE:AMD64 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalDependencies>Core.lib;Engine.lib;XGame.lib;IpDrv.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <ShowProgress>NotSet</ShowProgress>
+      <OutputFile>..\System\Onslaught.dll</OutputFile>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <AdditionalLibraryDirectories>..\Core\Debug;..\Engine\Debug;..\XGame\Debug;..\IpDrv\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <IgnoreSpecificDefaultLibraries>LIBCD;LIBCMTD;MSVCRTD;LIBC;LIBCMT;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <ProgramDatabaseFile>$(SolutionDir)\DebugFiles\$(ProjectName).pdb</ProgramDatabaseFile>
+      <GenerateMapFile>true</GenerateMapFile>
+      <MapFileName>$(SolutionDir)\DebugFiles\$(ProjectName).map</MapFileName>
+      <MapExports>true</MapExports>
+      <ImportLibrary>Debug\Onslaught.lib</ImportLibrary>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="Src\ONSChopperCraft.cpp" />
+    <ClCompile Include="Src\ONSHoverCraft.cpp" />
+    <ClCompile Include="Src\Onslaught.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug_AMD64|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="Src\ONSPlaneCraft.cpp" />
+    <ClCompile Include="Src\ONSTreadCraft.cpp" />
+    <ClCompile Include="Src\ONSVehicle.cpp" />
+    <ClCompile Include="Src\ONSWeapon.cpp" />
+    <ClCompile Include="Src\ONSWheeledCraft.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Classes\BigWheelsRules.uc" />
+    <None Include="Classes\DamTypeAttackCraftMissle.uc" />
+    <None Include="Classes\DamTypeAttackCraftPlasma.uc" />
+    <None Include="Classes\DamTypeChargingBeam.uc" />
+    <None Include="Classes\DamTypeHoverBikeHeadshot.uc" />
+    <None Include="Classes\DamTypeHoverBikePlasma.uc" />
+    <None Include="Classes\DamTypeONSAVRiLRocket.uc" />
+    <None Include="Classes\DamTypeONSChainGun.uc" />
+    <None Include="Classes\DamTypeONSGrenade.uc" />
+    <None Include="Classes\DamTypeONSMine.uc" />
+    <None Include="Classes\DamTypeONSRocket.uc" />
+    <None Include="Classes\DamTypeONSRVBlade.uc" />
+    <None Include="Classes\DamTypeONSVehicle.uc" />
+    <None Include="Classes\DamTypeONSVehicleExplosion.uc" />
+    <None Include="Classes\DamTypeONSWeb.uc" />
+    <None Include="Classes\DamTypePancake.uc" />
+    <None Include="Classes\DamTypePRVCombo.uc" />
+    <None Include="Classes\DamTypePRVLaser.uc" />
+    <None Include="Classes\DamTypePRVPlasma.uc" />
+    <None Include="Classes\DamTypeRoadkill.uc" />
+    <None Include="Classes\DamTypeSkyMine.uc" />
+    <None Include="Classes\DamTypeTankShell.uc" />
+    <None Include="Classes\DamTypeTurretBeam.uc" />
+    <None Include="Classes\MutBigWheels.uc" />
+    <None Include="Classes\MutLightweightVehicles.uc" />
+    <None Include="Classes\MutOnslaughtWeapons.uc" />
+    <None Include="Classes\MutWheeledVehicleStunts.uc" />
+    <None Include="Classes\ONSAttackCraft.uc" />
+    <None Include="Classes\ONSAttackCraftBlue.uc" />
+    <None Include="Classes\ONSAttackCraftExhaust.uc" />
+    <None Include="Classes\ONSAttackCraftExplosionEffect.uc" />
+    <None Include="Classes\ONSAttackCraftFactory.uc" />
+    <None Include="Classes\ONSAttackCraftGun.uc" />
+    <None Include="Classes\ONSAttackCraftMissle.uc" />
+    <None Include="Classes\ONSAttackCraftPlasmaProjectileBlue.uc" />
+    <None Include="Classes\ONSAttackCraftPlasmaProjectileRed.uc" />
+    <None Include="Classes\ONSAttackCraftRed.uc" />
+    <None Include="Classes\ONSAttackCraftStreamer.uc" />
+    <None Include="Classes\ONSAttackCraftTrailEffect.uc" />
+    <None Include="Classes\ONSAutoPlasmaGun.uc" />
+    <None Include="Classes\ONSAutoPlasmaGunPawn.uc" />
+    <None Include="Classes\ONSAutoRocketBattery.uc" />
+    <None Include="Classes\ONSAutoRocketBatteryPawn.uc" />
+    <None Include="Classes\ONSAVRiL.uc" />
+    <None Include="Classes\ONSAVRiLAltFire.uc" />
+    <None Include="Classes\ONSAVRiLAmmo.uc" />
+    <None Include="Classes\ONSAVRiLAmmoPickup.uc" />
+    <None Include="Classes\ONSAVRiLAttachment.uc" />
+    <None Include="Classes\ONSAVRiLFire.uc" />
+    <None Include="Classes\ONSAVRiLPickup.uc" />
+    <None Include="Classes\ONSAVRiLRocket.uc" />
+    <None Include="Classes\ONSAVRiLRocketExplosion.uc" />
+    <None Include="Classes\ONSAvrilSmokeTrail.uc" />
+    <None Include="Classes\ONSBlueEnergyEffect.uc" />
+    <None Include="Classes\ONSBluePlasmaFireEffect.uc" />
+    <None Include="Classes\ONSBluePlasmaSmallFireEffect.uc" />
+    <None Include="Classes\ONSBomberBlue.uc" />
+    <None Include="Classes\ONSBomberRed.uc" />
+    <None Include="Classes\ONSBrakelightCorona.uc" />
+    <None Include="Classes\ONSChainGunFire.uc" />
+    <None Include="Classes\ONSChargeBeamEffect.uc" />
+    <None Include="Classes\ONSChopperCraft.uc" />
+    <None Include="Classes\ONSDamagedEffect.uc" />
+    <None Include="Classes\ONSDaredevilMessage.uc" />
+    <None Include="Classes\ONSDefaultMut.uc" />
+    <None Include="Classes\ONSDestroyedAttackCraft.uc" />
+    <None Include="Classes\ONSDestroyedHoverBike.uc" />
+    <None Include="Classes\ONSDestroyedPRV.uc" />
+    <None Include="Classes\ONSDestroyedRV.uc" />
+    <None Include="Classes\ONSDestroyedTank.uc" />
+    <None Include="Classes\ONSDestroyedVehicle.uc" />
+    <None Include="Classes\ONSDirtSlipEffect.uc" />
+    <None Include="Classes\ONSFreeRoamingEnergyEffect.uc" />
+    <None Include="Classes\ONSGreenPlasmaFireEffect.uc" />
+    <None Include="Classes\ONSGreenPlasmaSmallFireEffect.uc" />
+    <None Include="Classes\ONSGrenadeAltFire.uc" />
+    <None Include="Classes\ONSGrenadeAmmo.uc" />
+    <None Include="Classes\ONSGrenadeAmmoPickup.uc" />
+    <None Include="Classes\ONSGrenadeAttachment.uc" />
+    <None Include="Classes\ONSGrenadeBeaconBlue.uc" />
+    <None Include="Classes\ONSGrenadeBeaconRed.uc" />
+    <None Include="Classes\ONSGrenadeExplosionEffect.uc" />
+    <None Include="Classes\ONSGrenadeFire.uc" />
+    <None Include="Classes\ONSGrenadeLauncher.uc" />
+    <None Include="Classes\ONSGrenadePickup.uc" />
+    <None Include="Classes\ONSGrenadeProjectile.uc" />
+    <None Include="Classes\ONSHeadlightCorona.uc" />
+    <None Include="Classes\ONSHeadlightProjector.uc" />
+    <None Include="Classes\ONSHoverBike.uc" />
+    <None Include="Classes\ONSHoverBikeBurstDust.uc" />
+    <None Include="Classes\ONSHoverBikeDuckEffect.uc" />
+    <None Include="Classes\ONSHoverBikeHoverDust.uc" />
+    <None Include="Classes\ONSHoverBikeJumpEffect.uc" />
+    <None Include="Classes\ONSHoverBikePlasmaFire.uc" />
+    <None Include="Classes\ONSHoverBikePlasmaGun.uc" />
+    <None Include="Classes\ONSHoverBikePlasmaProjectile.uc" />
+    <None Include="Classes\ONSHoverCraft.uc" />
+    <None Include="Classes\ONSHoverCraftFactory.uc" />
+    <None Include="Classes\ONSHoverTank.uc" />
+    <None Include="Classes\ONSHoverTankCannon.uc" />
+    <None Include="Classes\ONSHUDOnslaught.uc" />
+    <None Include="Classes\ONSImpactSparks.uc" />
+    <None Include="Classes\ONSInstantFire.uc" />
+    <None Include="Classes\ONSIonTank.uc" />
+    <None Include="Classes\ONSLinkDesignMessage.uc" />
+    <None Include="Classes\ONSManualGun.uc" />
+    <None Include="Classes\ONSManualGunBlue.uc" />
+    <None Include="Classes\ONSManualGunPawn.uc" />
+    <None Include="Classes\ONSManualGunPlasmaProjectile.uc" />
+    <None Include="Classes\ONSManualGunRed.uc" />
+    <None Include="Classes\ONSMapListOnslaught.uc" />
+    <None Include="Classes\ONSMineAmmo.uc" />
+    <None Include="Classes\ONSMineAmmoPickup.uc" />
+    <None Include="Classes\ONSMineLayer.uc" />
+    <None Include="Classes\ONSMineLayerAltFire.uc" />
+    <None Include="Classes\ONSMineLayerAttachment.uc" />
+    <None Include="Classes\ONSMineLayerPickup.uc" />
+    <None Include="Classes\ONSMineLayerTargetBeamEffect.uc" />
+    <None Include="Classes\ONSMineProjectile.uc" />
+    <None Include="Classes\ONSMineProjectileBLUE.uc" />
+    <None Include="Classes\ONSMineProjectileRED.uc" />
+    <None Include="Classes\ONSMineThrowFire.uc" />
+    <None Include="Classes\ONSOnslaughtGame.uc" />
+    <None Include="Classes\ONSOnslaughtMessage.uc" />
+    <None Include="Classes\ONSPlaneCraft.uc" />
+    <None Include="Classes\ONSPlasmaHitBlue.uc" />
+    <None Include="Classes\ONSPlasmaHitGreen.uc" />
+    <None Include="Classes\ONSPlasmaHitPurple.uc" />
+    <None Include="Classes\ONSPlasmaHitRed.uc" />
+    <None Include="Classes\ONSPlasmaProjectile.uc" />
+    <None Include="Classes\ONSPlayer.uc" />
+    <None Include="Classes\ONSPlayerReplicationInfo.uc" />
+    <None Include="Classes\ONSPowerCore.uc" />
+    <None Include="Classes\ONSPowerCoreBlue.uc" />
+    <None Include="Classes\ONSPowerCoreBreachEffect.uc" />
+    <None Include="Classes\ONSPowerCoreEnergy.uc" />
+    <None Include="Classes\ONSPowerCoreEnergyBlue.uc" />
+    <None Include="Classes\ONSPowerCoreEnergyRed.uc" />
+    <None Include="Classes\ONSPowerCoreRed.uc" />
+    <None Include="Classes\ONSPowerCoreShield.uc" />
+    <None Include="Classes\ONSPowerLinkCustomSetup.uc" />
+    <None Include="Classes\ONSPowerLinkOfficialSetup.uc" />
+    <None Include="Classes\ONSPowerNode.uc" />
+    <None Include="Classes\ONSPowerNodeEnergySphere.uc" />
+    <None Include="Classes\ONSPowerNodeNeutral.uc" />
+    <None Include="Classes\ONSPowerNodeShield.uc" />
+    <None Include="Classes\ONSProjectileFire.uc" />
+    <None Include="Classes\ONSPRV.uc" />
+    <None Include="Classes\ONSPRVBlue.uc" />
+    <None Include="Classes\ONSPRVChainGun.uc" />
+    <None Include="Classes\ONSPRVChainGunPawn.uc" />
+    <None Include="Classes\ONSPRVComboEffect.uc" />
+    <None Include="Classes\ONSPRVFactory.uc" />
+    <None Include="Classes\ONSPRVRearGun.uc" />
+    <None Include="Classes\ONSPRVRearGunCharge.uc" />
+    <None Include="Classes\ONSPRVRearGunPawn.uc" />
+    <None Include="Classes\ONSPRVRearGunProjectile.uc" />
+    <None Include="Classes\ONSPRVRed.uc" />
+    <None Include="Classes\ONSPRVSideGun.uc" />
+    <None Include="Classes\ONSPRVSideGunMuzzleFlash.uc" />
+    <None Include="Classes\ONSPRVSideGunPawn.uc" />
+    <None Include="Classes\ONSPurplePlasmaSmallFireEffect.uc" />
+    <None Include="Classes\ONSRedEnergyEffect.uc" />
+    <None Include="Classes\ONSRedPlasmaFireEffect.uc" />
+    <None Include="Classes\ONSRedPlasmaSmallFireEffect.uc" />
+    <None Include="Classes\ONSRocketBatteryProj.uc" />
+    <None Include="Classes\ONSRocketProjectile.uc" />
+    <None Include="Classes\ONSRV.uc" />
+    <None Include="Classes\ONSRVBlue.uc" />
+    <None Include="Classes\ONSRVChainGunFireEffect.uc" />
+    <None Include="Classes\ONSRVFactory.uc" />
+    <None Include="Classes\ONSRVLeftBladeBreakOffEffect.uc" />
+    <None Include="Classes\ONSRVRed.uc" />
+    <None Include="Classes\ONSRVRightBladeBreakOffEffect.uc" />
+    <None Include="Classes\ONSRVWebLauncher.uc" />
+    <None Include="Classes\ONSRVWebLauncherMuzzleFlash.uc" />
+    <None Include="Classes\ONSRVWebProjectile.uc" />
+    <None Include="Classes\ONSRVWebProjectileEffect.uc" />
+    <None Include="Classes\ONSRVWebProjectileLeader.uc" />
+    <None Include="Classes\ONSSkyMine.uc" />
+    <None Include="Classes\ONSSkyMineEffect.uc" />
+    <None Include="Classes\ONSSmallVehicleExplosionEffect.uc" />
+    <None Include="Classes\ONSSquadAI.uc" />
+    <None Include="Classes\ONSStationaryWeaponPawn.uc" />
+    <None Include="Classes\ONSTankExplosionEffect.uc" />
+    <None Include="Classes\ONSTankFactory.uc" />
+    <None Include="Classes\ONSTankFireEffect.uc" />
+    <None Include="Classes\ONSTankFireTrailEffect.uc" />
+    <None Include="Classes\ONSTankHitRockEffect.uc" />
+    <None Include="Classes\ONSTankSecondaryTurret.uc" />
+    <None Include="Classes\ONSTankSecondaryTurretPawn.uc" />
+    <None Include="Classes\ONSTeamAI.uc" />
+    <None Include="Classes\ONSTeleportPad.uc" />
+    <None Include="Classes\ONSTreadCraft.uc" />
+    <None Include="Classes\ONSTurretBeamEffect.uc" />
+    <None Include="Classes\ONSTurretBeamEffectBlue.uc" />
+    <None Include="Classes\ONSTurretBeamEffectRed.uc" />
+    <None Include="Classes\ONSTurretController.uc" />
+    <None Include="Classes\ONSVehDeathAttackCraft.uc" />
+    <None Include="Classes\ONSVehDeathHoverBike.uc" />
+    <None Include="Classes\ONSVehDeathHoverTank.uc" />
+    <None Include="Classes\ONSVehDeathPRV.uc" />
+    <None Include="Classes\ONSVehDeathRV.uc" />
+    <None Include="Classes\ONSVehicle.uc" />
+    <None Include="Classes\ONSVehicleBuildEffect.uc" />
+    <None Include="Classes\ONSVehicleExplosionEffect.uc" />
+    <None Include="Classes\ONSVehicleFactory.uc" />
+    <None Include="Classes\ONSVehicleIonExplosionEffect.uc" />
+    <None Include="Classes\ONSVehicleKillMessage.uc" />
+    <None Include="Classes\ONSWeapon.uc" />
+    <None Include="Classes\ONSWeaponAmbientEmitter.uc" />
+    <None Include="Classes\ONSWeaponPawn.uc" />
+    <None Include="Classes\ONSWeaponTrigger.uc" />
+    <None Include="Classes\ONSWheeledCraft.uc" />
+    <None Include="Classes\ONSWheeledVehicleExplosionEffect.uc" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Inc\OnslaughtClasses.h" />
+    <ClInclude Include="Inc\OnslaughtPrivate.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

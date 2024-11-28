@@ -1,0 +1,1 @@
+<tr><td class="nabg"><%PlayerName%></td><td class="text" align="center"><%Kills%></td><td class="text" align="center"><%Deaths%></td><td class="text" align="center"><%Suicides%></td><td class="text" align="center"><%Sprees%></td><td class="text" align="center"><%MultiKills%></td></tr>

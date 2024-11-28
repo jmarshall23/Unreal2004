@@ -1,0 +1,49 @@
+# Assuming GNU make (>v3.76)
+# $Header: /proj/Toolkits/MeSamples/MeMakefile,v 1.9 2001/11/08 14:56:53 harveyt Exp $
+# ($Name: t-stevet-RWSpre-030110 $)
+
+# vim:syntax=make:
+
+#------------------------------
+# Top-level recursive makefile
+#------------------------------
+
+# Packages that don't work at the moment because they haven't been
+# updated to use MeViewer2:
+#	Bridge \
+#	Cubes \
+
+
+PACKAGES :=\
+	BallMan \
+	BallnChain \
+	ConvexStairs \
+	Cradle \
+	JetSkiTest \
+	ManyPendulums \
+	MeshChain \
+	RainbowChain \
+	SceneLoader \
+	Topple \
+	Wheelies \
+	Particles\
+	SamsToy \
+
+# Get list of requested packages from the command line
+packages:=$(filter ${PACKAGES},${MAKECMDGOALS})
+nonpackages:=$(filter-out ${PACKAGES},${MAKECMDGOALS})
+
+ifeq '' "${packages}"
+packages:=${PACKAGES}# default to all
+endif
+
+# Make all _other_ command-line targets legal (they will be passed on to the sub-makes)
+# .PHONY: Since the packages exist already as directories, make won't try to make them. 
+.PHONY all ${nonpackages}: ${packages}
+
+# Note: -R (--no-builtin-variables) is best here, but we are restricted to
+# -r (--no-builtin-rules) as make 3.76 doesn't support -R (sigh!)
+
+# We should really pass ${nonpackages} one at a time
+${packages}:
+	${MAKE} -C$@ --no-print-directory -R -f MeMakefile ${nonpackages}

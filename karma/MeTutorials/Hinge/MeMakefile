@@ -1,0 +1,20 @@
+# Assuming GNU make (>v3.76)
+# $Header$
+# ($Name$)
+
+# vim:syntax=make:
+
+#------------------------------
+# Mdt
+#------------------------------
+
+# What's to be built
+targetname:=Hinge
+targettype:=executeable
+
+SOURCES	:= Hinge.c
+
+# Standard incantation
+makerulesdir:=../../build/makerules/
+include ${makerulesdir}Make.rules
+

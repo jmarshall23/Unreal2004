@@ -1,0 +1,12 @@
+# -*- makefile -*- vim:noet:ts=8:sw=4:ft=make:
+
+# "CW" or "PRODG"
+TOOLCHAIN	?=CW
+
+# Rules related to linking NGC apps
+
+ifeq '$(TOOLCHAIN)' 'CW'
+endif
+
+ifeq '$(TOOLCHAIN)' 'PRODG'
+endif

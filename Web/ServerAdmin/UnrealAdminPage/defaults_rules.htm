@@ -1,0 +1,25 @@
+<!-- #include file="header.inc" -->
+<form method="post" action="<%PostAction%>">
+
+<table>
+<colgroup>
+<col width="10%" />
+<col width="89%" />
+<col width="1%" />
+</colgroup>
+<tr>
+	<th class="left">Setting</th>
+	<th>Value</th>
+	<th class="right" nowrap="nowrap">Sec. Level</th>
+</tr>
+<%TableContent%>
+</table><br>
+<input class="button" type="submit" name="Save" value="<%SubmitValue%>"><input class="button" type="reset" value="reset">
+<input type="hidden" name="GameType" value="<%GameType%>">
+<input type="hidden" name="Filter" value="<%Filter%>">
+	
+<br />
+<br />
+Note: item prefixed with <!-- #include file="defaults_mark.inc" -->may affect more than one game type.
+</form>
+<!-- #include file="footer.inc" -->

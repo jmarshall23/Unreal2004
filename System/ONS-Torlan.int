@@ -1,0 +1,52 @@
+[LevelInfo0]
+Title="Torlan"
+
+[LevelSummary]
+Title="Torlan"
+Description="Set on the dried outskirts of a lush jungle continent, two factions clash in fierce combat for control of a major communications tower and its adjacent power supply. With the dam holding back the waters from the nearby jungle, the dried out riverbed running across the battlefield allows for an easy attack route into enemy territory and could provide a decisive victor with ownership of the enormous Comm-tower as the reward."
+
+[Volume0]
+LocationName="Blue Base"
+
+[Volume1]
+LocationName="Central Canyon"
+
+[Volume10]
+LocationName="Central Spawn"
+
+[Volume11]
+LocationName="Central Canyon"
+
+[Volume12]
+LocationName="Red 1st Power Node"
+
+[Volume13]
+LocationName="Tower Bridge"
+
+[Volume2]
+LocationName="Red Base"
+
+[Volume3]
+LocationName="Blue Tower"
+
+[Volume4]
+LocationName="Red Tower"
+
+[Volume5]
+LocationName="Central Power Node"
+
+[Volume6]
+LocationName="Red 2nd Power Node"
+
+[Volume7]
+LocationName="Blue 2nd Power Node"
+
+[Volume8]
+LocationName="Blue 1st Power Node"
+
+[Volume9]
+LocationName="Central Tower"
+
+[ZoneInfo0]
+LocationName="Outside"
+

@@ -1,0 +1,42 @@
+# Assuming GNU make {>v3.76}
+# $Header$
+# ($Name$)
+
+# vim:syntax=make:
+
+#------------------------------
+#Platform independent Makefile
+#------------------------------
+
+# What's to be built
+targetname:=McdFrame
+targettype:=library
+
+SOURCES:=\
+	frame/McdCompositeModel.cpp \
+	frame/McdEach.cpp \
+	frame/McdFrame.cpp \
+	frame/McdGeometry.cpp \
+	frame/McdInteractionTable.cpp \
+	frame/McdInteractions.cpp \
+	frame/McdIntersectResult.cpp \
+	frame/McdLineSegIntersect.cpp \
+	frame/McdMessage.cpp \
+	frame/McdModel.cpp \
+	frame/McdModelPair.cpp \
+	frame/McdModelPairContainer.cpp \
+	frame/McduConvexMeshIO.cpp \
+	frame/McduRGHeightFieldIO.cpp \
+	frame/McduRequestTable.cpp \
+	frame/McduTriangleMeshIO.cpp \
+
+# SOURCES_COMMON are to be put in a separate library: McdCommon.[lib,a]
+
+# accumulate groups of sources into the SOURCES variable
+#SOURCES:=$(SOURCES_FRAME)
+#SOURCES += $(SOURCES_COMMON)
+
+# Standard incantation
+makerulesdir:=../../build/makerules/
+include ${makerulesdir}Make.rules
+

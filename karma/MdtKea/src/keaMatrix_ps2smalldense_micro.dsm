@@ -1,0 +1,18 @@
+.include "vumacros.h"
+
+.global small_chol_microcode
+.global small_chol_microcode_end
+.global solve_only
+
+small_chol_microcode:
+
+DMAcnt *
+    MPG 0, *
+        .include "keaMatrix_ps2smalldense_micro.vsm"
+    .EndMPG
+
+.EndDmaData
+
+DMAend
+
+small_chol_microcode_end:

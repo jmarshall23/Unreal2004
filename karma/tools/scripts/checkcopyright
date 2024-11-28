@@ -1,0 +1,69 @@
+DIR=../../
+#../../Mcd/include
+#../../MeGlobals/include
+
+FIND=/usr/bin/find
+
+FILES=".*\.[ch]\(pp\)?"
+
+# Other variations used
+#
+# Mcd
+# Copyright 2000-2001, MathEngine Canada, Inc.
+# Copyright MathEngine PLC 2000-2001. All rights reserved.
+# (c) 1999-2001 MathEngine, Inc.
+#
+
+if [ $1 = SEARCH ]; then
+
+$FIND $DIR -regex $FILES -print0 | xargs -0 perl -n -e 'print $_ if m#Copyright MathEngine PLC 2000-2001#;'
+
+elif [ $1 = REPLACE ]; then
+
+$FIND $DIR -regex $FILES -print0 | xargs -0 perl -pi.bak -e 's#Copyright MathEngine PLC 2000-2001#NewCopyright#g'
+
+elif [ $1 = DIFF ]; then
+
+$FIND $DIR -regex $FILES -print0 | xargs -0 perl -e 'foreach my $arg (@ARGV) {system("diff $arg.bak $arg") if -f "$arg.bak";}'
+
+elif [ $1 = RESET ]; then
+
+$FIND $DIR -regex $FILES -print0 | xargs -0 perl -e 'foreach my $arg (@ARGV) {print "Reseting $arg\n"; system("cp $arg.bak $arg") if -f "$arg.bak";}'
+
+elif [ $1 = MISSING ]; then
+
+$FIND $DIR -regex $FILES -print0 | xargs -0 grep -L -i -e 'copyright.*mathengine' | grep -v 3rdParty
+
+elif [ $1 = IN ]; then
+
+$FIND $DIR -regex $FILES -print0 | xargs -0 grep -i -e 'copyright.*mathengine'
+
+elif [ $1 = ALT1 ]; then
+
+$FIND $DIR -regex $FILES -print0 | xargs -0 grep '(c) 1999-2001 MathEngine, Inc.'
+
+elif [ $1 = ALT2 ]; then
+
+$FIND $DIR -regex $FILES -print0 | xargs -0 grep 'Copyright MathEngine PLC 2000-2001. All rights reserved.'
+
+elif [ $1 = ALT3 ]; then
+
+$FIND $DIR -regex $FILES -print0 | xargs -0 grep 'Copyright 2000-2001, MathEngine Canada, Inc.'
+
+else
+
+echo "USAGE: $0 SEARCH"
+echo ""
+echo "For each $FILES files, recursively from current directory"
+echo ""
+echo "$0 SEARCH:  To search for copyright"
+echo "$0 REPLACE: To replace copyright with new copyright"
+echo "$0 DIFF:    Compare file with file.bak"
+echo "$0 RESET:   Reset file back to file.bak"
+echo "$0 MISSING: Show all files not containing copyright"
+echo "$0 IN:      Show all files containing copyright"
+echo ""
+exit
+
+fi
+

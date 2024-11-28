@@ -1,0 +1,17 @@
+# $Id: Make.canned.simplebuilddir,v 1.1.10.1 2002/04/11 03:45:35 jamesg Exp $
+# $Name: t-stevet-RWSpre-030110 $
+#
+# vim:syntax=make:
+#
+
+# Simple ${builddir} based on first word of ${PLATFORM}
+#
+# Assumes PLATFORM is set by now
+
+_bd_elate:=_e/
+_bd_linux:=_l/
+_bd_win32:=_w/
+
+ifndef builddir
+builddir:=${_bd_$(firstword $(subst -, ,${PLATFORM}))}
+endif

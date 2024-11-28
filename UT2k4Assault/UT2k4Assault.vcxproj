@@ -1,0 +1,226 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug_AMD64|Win32">
+      <Configuration>Debug_AMD64</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{A563148B-23B7-475E-AB1C-B24AAAB673EA}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug_AMD64|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug_AMD64|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.40219.1</_ProjectFileVersion>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Debug\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Debug\</IntDir>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</LinkIncremental>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Release\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Release\</IntDir>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkIncremental>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug_AMD64|Win32'">$(Configuration)\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug_AMD64|Win32'">$(Configuration)\</IntDir>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug_AMD64|Win32'">true</LinkIncremental>
+    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Debug_AMD64|Win32'">AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Debug_AMD64|Win32'" />
+    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Debug_AMD64|Win32'" />
+    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" />
+    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" />
+    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" />
+    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" />
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>true</MinimalRebuild>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <OutputFile>$(OutDir)UT2k4Assault.exe</OutputFile>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <ProgramDatabaseFile>$(OutDir)UTClassic.pdb</ProgramDatabaseFile>
+      <SubSystem>Windows</SubSystem>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <Optimization>MaxSpeed</Optimization>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <OmitFramePointers>true</OmitFramePointers>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <StringPooling>true</StringPooling>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <OutputFile>$(OutDir)UT2k4Assault.exe</OutputFile>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug_AMD64|Win32'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>true</MinimalRebuild>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <OutputFile>$(OutDir)UT2k4Assault.exe</OutputFile>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <ProgramDatabaseFile>$(OutDir)UTClassic.pdb</ProgramDatabaseFile>
+      <SubSystem>Windows</SubSystem>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <None Include="classes\ACTION_ASOpenSentinel.uc" />
+    <None Include="classes\ACTION_ASSetPlayerSpawnArea.uc" />
+    <None Include="classes\ACTION_ASTeleportToSpawnArea.uc" />
+    <None Include="classes\ACTION_PlayerViewShake.uc" />
+    <None Include="classes\ACTION_PlayExplosionSound.uc" />
+    <None Include="classes\ASCinematic_Camera.uc" />
+    <None Include="classes\ASCinematic_SceneManager.uc" />
+    <None Include="classes\ASCriticalObjectiveVolume.uc" />
+    <None Include="classes\ASGameInfo.uc" />
+    <None Include="classes\ASGameReplicationInfo.uc" />
+    <None Include="classes\ASMapList.uc" />
+    <None Include="classes\ASMutator.uc" />
+    <None Include="classes\ASOBJ_EnergyCore_Delivery.uc" />
+    <None Include="classes\ASOBJ_EnergyCore_Spawn.uc" />
+    <None Include="classes\ASPlayerReplicationInfo.uc" />
+    <None Include="classes\AssaultSquadAI.uc" />
+    <None Include="classes\ASSentinelController.uc" />
+    <None Include="classes\ASTeamAI.uc" />
+    <None Include="classes\DamTypeExploBarrel.uc" />
+    <None Include="classes\DestroyVehicleObjective.uc" />
+    <None Include="classes\GameObject_EnergyCore.uc" />
+    <None Include="classes\HUD_Assault.uc" />
+    <None Include="classes\InfoPod.uc" />
+    <None Include="classes\LeavingBattleFieldVolume.uc" />
+    <None Include="classes\Message_ASKillMessages.uc" />
+    <None Include="classes\Message_AssaultTeamRole.uc" />
+    <None Include="classes\Message_Awards.uc" />
+    <None Include="classes\Message_PowerCore.uc" />
+    <None Include="classes\ObjectivePointingArrow.uc" />
+    <None Include="classes\ObjectiveProgressDisplay.uc" />
+    <None Include="classes\PlayerSpawnManager.uc" />
+    <None Include="classes\ScoreBoard_Assault.uc" />
+    <None Include="classes\Ammo_Dummy.uc" />
+    <None Include="classes\DamTypeMinigunTurretBullet.uc" />
+    <None Include="classes\DamTypeSentinelLaser.uc" />
+    <None Include="classes\FM_Sentinel_Fire.uc" />
+    <None Include="classes\FM_Turret_Minigun_AltFire.uc" />
+    <None Include="classes\FM_Turret_Minigun_Fire.uc" />
+    <None Include="classes\PROJ_Sentinel_Laser.uc" />
+    <None Include="classes\PROJ_Sentinel_Laser_Red.uc" />
+    <None Include="classes\WA_Sentinel.uc" />
+    <None Include="classes\WA_Turret_Minigun.uc" />
+    <None Include="classes\Weapon_Sentinel.uc" />
+    <None Include="classes\Weapon_Turret_Minigun.uc" />
+    <None Include="classes\FX_ASVehicleBuildEffect.uc" />
+    <None Include="classes\FX_ExplodingBarrel.uc" />
+    <None Include="classes\FX_Laser_Blue.uc" />
+    <None Include="classes\FX_Minigun_ShellSpewer.uc" />
+    <None Include="classes\FX_PlasmaImpact.uc" />
+    <None Include="classes\FX_SpaceFighter_3rdpMuzzle.uc" />
+    <None Include="classes\FX_SpaceFighter_Explosion.uc" />
+    <None Include="classes\FX_SpaceFighter_Explosion_Directional.uc" />
+    <None Include="classes\FX_SpaceFighter_Trail_Red.uc" />
+    <None Include="classes\FX_TurretControlPanel_Lights.uc" />
+    <None Include="classes\Trigger_ASForcePlayerRespawn.uc" />
+    <None Include="classes\Trigger_ASForceTeamRespawn.uc" />
+    <None Include="classes\Trigger_ASMessageTrigger.uc" />
+    <None Include="classes\Trigger_ASRoundEnd.uc" />
+    <None Include="classes\Trigger_ASTeam.uc" />
+    <None Include="classes\Trigger_ASTeamUseTrigger.uc" />
+    <None Include="classes\Trigger_ASTouchDamage.uc" />
+    <None Include="classes\Trigger_ASTurretControlPanel.uc" />
+    <None Include="classes\Trigger_ASUseAndPossess.uc" />
+    <None Include="classes\Trigger_ASUseAndRespawn.uc" />
+    <None Include="classes\Trigger_SetObjectiveStatus.uc" />
+    <None Include="classes\ASTurret.uc" />
+    <None Include="classes\ASTurret_Base.uc" />
+    <None Include="classes\ASTurret_Minigun.uc" />
+    <None Include="classes\ASTurret_Minigun_Base.uc" />
+    <None Include="classes\ASTurret_Minigun_Swivel.uc" />
+    <None Include="classes\ASVehicle.uc" />
+    <None Include="classes\ASVehicle_Sentinel.uc" />
+    <None Include="classes\ASVehicle_Sentinel_Ceiling.uc" />
+    <None Include="classes\ASVehicle_Sentinel_Ceiling_Swivel.uc" />
+    <None Include="classes\ASVehicle_Sentinel_Floor.uc" />
+    <None Include="classes\ASVehicle_Sentinel_Floor_Base.uc" />
+    <None Include="classes\ASVehicle_Sentinel_Floor_Swivel.uc" />
+    <None Include="classes\ASVehicle_SpaceFighter.uc" />
+    <None Include="classes\ASVehicleFactory.uc" />
+    <None Include="classes\ASVehicleFactory_LinkTurret.uc" />
+    <None Include="classes\ASVehicleFactory_MinigunTurret.uc" />
+    <None Include="classes\ASVehicleFactory_SentinelCeiling.uc" />
+    <None Include="classes\ASVehicleFactory_SentinelFloor.uc" />
+    <None Include="classes\ASVehicleFactory_Turret.uc" />
+    <None Include="classes\DECO_Convoy_BoxStraps.uc" />
+    <None Include="classes\DECO_ConvoyFlag.uc" />
+    <None Include="classes\DECO_ExplodingBarrel.uc" />
+    <None Include="classes\DECO_SpaceFighter.uc" />
+    <None Include="classes\DECO_SpaceFighter_Skaarj.uc" />
+    <None Include="classes\DECO_TurretControlPanel.uc" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

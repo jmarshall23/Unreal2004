@@ -1,0 +1,165 @@
+Developers Developers Developers Developers!
+--------------------------------------------
+
+- get more IP addresses!!!
+
+UI:
+
+- have post-draw of StringList fuck up the active areas based on MaxsizeX
+
+- IRC menu
+    - first few lines of system output don't show up immedately for some reason
+    - need to implement options button
+    - need to implement leave button
+    - need to implement join button
+    - need to be able to double-click on a user to open private chat
+    
+- server-browser
+
+    - ping-all needs to work
+
+    - need context menu:
+        - add to/delete from favourites
+        - server info (brings up detailed dialog)
+
+    - need LAN browser tab
+
+    - polish resolution variations
+
+    - manually fuck up the active areas
+
+- friendly fire is broken?
+- menu option for UseCompressedLightmaps
+
+- fix install-order so that XMapList.int is installed after the maps or touch XMapList.int after install?
+- XMapList.int doesn't get updated when you delete a map! 
+     
+- numBots=4?SpectatorOnly=true adds 5 bots
+- unicode madness!
+- make reset-to-defaults button work in settings menu
+- virtual keyboard menu polish /asp
+- virtual keyboard doesn't support case /asp
+
+Unimplemented UI hooks:
+- bNoVoiceMessages bNoVoiceTaunts bNoAutoTaunts
+- bNoMatureLanguage
+- ToggleSpectatorCam NextSpectatorCam PrevSpectatorCam
+- make gore-reduction setting work
+- make weapon handedness work (left hand!)
+- AutoAim isn't hooked up at all for UT2003.
+
+Misc:
+- why is the effects volume effecting music?
+- low-detail sound generation
+- sound emitters are not positional in editor
+- should sound precaching be on?
+- 64 bot cap - whah
+- xTimerMessage replication - just poke client once and simulate countdown
+- use UC autoaim for UT2 as well
+- shell case collision/sound performance
+
+Gameplay:
+- Tutorial and hints
+- Wind affected shit
+- Water force actor
+- BR (tuning and polish)
+- Lava volumes and pain volumes (what do we use?)
+- CTF one of the flags is messed (alpha screwed up)
+- Put in new team banners and flag variants
+- Gametype specific player stats -  extend playerstats.uc
+- BR scoring effect and stargate effect /sjs
+- BR support rotation of bomb goal
+- MP restart the game at the end of match
+- Host, bug, host... disconnect... host again -  clients won't see you
+- MP can't see multiple servers hosted from same machine
+- MP admin logs in, switchlevel, kicks all client the game is now standalone
+- MP admin cheat codes don't work
+- Fish and bird in levels ... ambient creatures
+- H/L hud damage indicator
+- FriendlyFireScale>0 then hitsounds on for teammates
+- error sound for trying to throw non-throwable weapons
+
+BR:
+-bomb gravity
+-renaming ball/bomb/bombflag/hasflag/assass
+-remove ballproj
+-bomb seeking pass
+-takedamage should add vel to bomb
+-block bomb with shield
+-try attaching larger actor to ball for catching & decrease ball collision
+
+Player Info:
+-draw teambeacon as a sprite instead of drawtile
+-teambeacon - show armor too?
+-crosshair over info
+
+Game End:
+-match is over indication!
+-can shoot
+-wait is too long
+-no winner message
+
+In Game Stats:
+-hook these up again
+-add damage in/min, damage out/min
+-help mouse over?
+
+UDamage:
+-udamage moves with dropped weapon of pawn for next player to pickup
+-fix shock overlay/shader conflict
+-implement udamage sound effect when firing
+
+Spectator problems:
+-consistant spec mode for players (in spec mode) vs. specOnlys
+-move spectating functionality up to attractmode
+-spectator should default to attract mode cams;
+    -fire: toggle between behindview cams
+    -altfire: go back to attract mode cams
+
+Weapons & Effects:
+- 1st person translocator effects
+- Hover bomb super-weapon
+- Crap for explosion effect
+- Surface types for particle effects
+- Water effects, splashes and bubbles
+
+
+Single-Player:
+- show team stats from edit menu (amb)
+- ability for player to select map in (teamsize=1 maps only, use above mutators) (amb)
+- no power ups mutator (amb)
+- no super weapons mutator (amb)
+- rate game - don't use goalscore (amb)
+- auto assign reward to player (amb)
+- DM challenge rewards (amb)
+- mega reward for kicking ass - new player (amb)
+- more bot personality by adjusting stats on league creation (amb)
+- mutator reward application to one team only (amb)
+- power up selection (amb)
+- reset priority functionality
+- reset positions hookup
+- in-game order (changes) are remembered for bots
+- savegame naming bug (amb)
+- multi-del crash
+- add difficulty info to savegame info in load screen
+- team full dialog for when trying to select more than 6 players
+- stats persistence -  accumulate into the player profile, viewable from team management
+- weapon replacement based on difficulty
+- hide all (SinglePlayer) vars before we ship!
+
+
+New Sounds Needed:
+- "You've won the match!"
+- "You've lost the match!"
+- "Half-Time!"
+- "5 Minutes Remaining!"
+- "2 Minutes Remaining!"
+- "1 Minute Remaining!"
+- "30 Seconds Left!"
+- "Flawless Victory"
+- "Opponent Eliminated"
+- challenge sound effect
+- you've made the play-offs fanfare
+- you've won the league effect
+- won all leagues
+

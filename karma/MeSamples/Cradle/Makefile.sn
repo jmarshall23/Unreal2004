@@ -1,0 +1,49 @@
+CC       = ee-gcc
+LD       = ps2link
+EEDIR    = /usr/local/sce/ee
+EELIBDIR = $(EEDIR)/lib
+
+CFLAGS  = -O6 -I$(EEDIR)/include
+
+LDFLAGS = -l $(EEDIR)/lib -l $(EEDIR)/lib -l $(EEDIR)/gcc/lib/gcc-lib/ee/2.9-ee-990721 -l $(EEDIR)/gcc/ee/lib
+
+TARGET  = lsolver
+
+OBJS    = block_cholesky.o  \
+          lsolver.o  \
+          debug.o  \
+          matrixdata.o  \
+          crt0.o
+          
+LIBS    = $(EELIBDIR)/libgraph.a  \
+          $(EELIBDIR)/libdma.a  \
+          $(EELIBDIR)/libdev.a  \
+          $(EELIBDIR)/libpkt.a  \
+          $(EELIBDIR)/libvu0.a  \
+          $(EELIBDIR)/libpc.a
+
+
+AS = ee-gcc
+ASFLAGS = -c -xassembler-with-cpp -Wa,-al
+LCFILE  = $(EELIBDIR)/ps2.lk
+
+all: $(TARGET)
+
+clean:
+	rm -f $(TARGET) $(OBJS)
+
+run: $(TARGET)
+	dsedb -d tool -r run $(TARGET)
+
+$(TARGET): $(OBJS) $(LIBS)
+	$(LD) $(LDFLAGS) $(OBJS) $(LIBS) @$(LCFILE),$(TARGET).elf,$(TARGET).map
+
+.SUFFIXES:
+.SUFFIXES: .c .o
+
+.c.o:
+	$(CC) -x c $(CFLAGS) -c $<
+
+crt0.o: $(EELIBDIR)/crt0.s
+	$(AS) $(ASFLAGS) -o $@ $< > $*.lst
+

@@ -1,0 +1,12 @@
+This heirarchy should be overlaid at the top level of the Karma package.
+
+Files included:
+
+[toplevel]
+ |_index.html
+ |_[doc]
+    |_issues.html
+    |_overview.html
+    |_points.html
+    |_[images]
+       |_karmaLogo.gif

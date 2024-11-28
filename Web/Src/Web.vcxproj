@@ -1,0 +1,477 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug_AMD64|Win32">
+      <Configuration>Debug_AMD64</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="UnrealScript|Win32">
+      <Configuration>UnrealScript</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{A6B4ECDC-50C2-4086-85F7-CB8AA44C16A1}</ProjectGuid>
+    <Keyword>MakeFileProj</Keyword>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug_AMD64|Win32'" Label="Configuration">
+    <ConfigurationType>Utility</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='UnrealScript|Win32'" Label="Configuration">
+    <ConfigurationType>Utility</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug_AMD64|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='UnrealScript|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.40219.1</_ProjectFileVersion>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='UnrealScript|Win32'">.\.\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='UnrealScript|Win32'">.\.\</IntDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug_AMD64|Win32'">$(Configuration)\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug_AMD64|Win32'">$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <None Include="todo.txt" />
+    <None Include="..\ServerAdmin\admins_priv_table.inc" />
+    <None Include="..\ServerAdmin\cell_center.inc" />
+    <None Include="..\ServerAdmin\cell_center_nowrap.inc" />
+    <None Include="..\ServerAdmin\cell_colspan.inc" />
+    <None Include="..\ServerAdmin\cell_left.inc" />
+    <None Include="..\ServerAdmin\cell_left_nowrap.inc" />
+    <None Include="..\ServerAdmin\cell_right.inc" />
+    <None Include="..\ServerAdmin\cell_right_nowrap.inc" />
+    <None Include="..\ServerAdmin\checkbox.inc" />
+    <None Include="..\ServerAdmin\ClassicUT\checkbox.inc" />
+    <None Include="..\ServerAdmin\current_game_stat_table.inc" />
+    <None Include="..\ServerAdmin\current_game_stat_table_row.inc" />
+    <None Include="..\ServerAdmin\defaults_row_check.inc" />
+    <None Include="..\ServerAdmin\defaults_row_select.inc" />
+    <None Include="..\ServerAdmin\defaults_row_text.inc" />
+    <None Include="..\ServerAdmin\footer.inc" />
+    <None Include="..\ServerAdmin\frame_header.inc" />
+    <None Include="..\ServerAdmin\header.inc" />
+    <None Include="..\ServerAdmin\hidden.inc" />
+    <None Include="..\ServerAdmin\mainmenu.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\ServerAdmin\mainmenu_item.inc" />
+    <None Include="..\ServerAdmin\mainmenu_itemd.inc" />
+    <None Include="..\ServerAdmin\mainmenu_items.inc" />
+    <None Include="..\ServerAdmin\menufooter.inc" />
+    <None Include="..\ServerAdmin\menuheader.inc" />
+    <None Include="..\ServerAdmin\message.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\ServerAdmin\radio_button.inc" />
+    <None Include="..\ServerAdmin\reset_button.inc" />
+    <None Include="..\ServerAdmin\rootframe.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\ServerAdmin\row_center.inc" />
+    <None Include="..\ServerAdmin\row_left.inc" />
+    <None Include="..\ServerAdmin\select.inc" />
+    <None Include="..\ServerAdmin\server_restart.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\ServerAdmin\server_restart_row.inc" />
+    <None Include="..\ServerAdmin\submit_button.inc" />
+    <None Include="..\ServerAdmin\textbox.inc" />
+    <None Include="..\ServerAdmin\ut2003.css" />
+    <None Include="..\ServerAdmin\UT2K3Stats\cell_center.inc" />
+    <None Include="..\ServerAdmin\UT2K3Stats\cell_center_nowrap.inc" />
+    <None Include="..\ServerAdmin\UT2K3Stats\cell_colspan.inc" />
+    <None Include="..\ServerAdmin\UT2K3Stats\cell_left.inc" />
+    <None Include="..\ServerAdmin\UT2K3Stats\cell_left_nowrap.inc" />
+    <None Include="..\ServerAdmin\UT2K3Stats\cell_right.inc" />
+    <None Include="..\ServerAdmin\UT2K3Stats\cell_right_nowrap.inc" />
+    <None Include="..\ServerAdmin\UT2K3Stats\checkbox.inc" />
+    <None Include="..\ServerAdmin\UT2K3Stats\ClassicUT\checkbox.inc" />
+    <None Include="..\ServerAdmin\UT2K3Stats\footer.inc" />
+    <None Include="..\ServerAdmin\UT2K3Stats\frame_header.inc" />
+    <None Include="..\ServerAdmin\UT2K3Stats\header.inc" />
+    <None Include="..\ServerAdmin\UT2K3Stats\hidden.inc" />
+    <None Include="..\ServerAdmin\UT2K3Stats\mainmenu.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\ServerAdmin\UT2K3Stats\mainmenu_item.inc" />
+    <None Include="..\ServerAdmin\UT2K3Stats\mainmenu_itemd.inc" />
+    <None Include="..\ServerAdmin\UT2K3Stats\mainmenu_items.inc" />
+    <None Include="..\ServerAdmin\UT2K3Stats\menufooter.inc" />
+    <None Include="..\ServerAdmin\UT2K3Stats\menuheader.inc" />
+    <None Include="..\ServerAdmin\UT2K3Stats\message.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\ServerAdmin\UT2K3Stats\radio_button.inc" />
+    <None Include="..\ServerAdmin\UT2K3Stats\reset_button.inc" />
+    <None Include="..\ServerAdmin\UT2K3Stats\rootframe.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\ServerAdmin\UT2K3Stats\row_center.inc" />
+    <None Include="..\ServerAdmin\UT2K3Stats\row_left.inc" />
+    <None Include="..\ServerAdmin\UT2K3Stats\select.inc" />
+    <None Include="..\ServerAdmin\UT2K3Stats\server_restart.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\ServerAdmin\UT2K3Stats\server_restart_row.inc" />
+    <None Include="..\ServerAdmin\UT2K3Stats\submit_button.inc" />
+    <None Include="..\ServerAdmin\UT2K3Stats\textbox.inc" />
+    <None Include="..\ServerAdmin\UT2K3Stats\ut2003stats.css" />
+    <None Include="..\ServerAdmin\ClassicUT\cell_center.inc" />
+    <None Include="..\ServerAdmin\ClassicUT\cell_center_nowrap.inc" />
+    <None Include="..\ServerAdmin\ClassicUT\cell_colspan.inc" />
+    <None Include="..\ServerAdmin\ClassicUT\cell_left.inc" />
+    <None Include="..\ServerAdmin\ClassicUT\cell_left_nowrap.inc" />
+    <None Include="..\ServerAdmin\ClassicUT\cell_right.inc" />
+    <None Include="..\ServerAdmin\ClassicUT\cell_right_nowrap.inc" />
+    <None Include="..\ServerAdmin\ClassicUT\classicut.css" />
+    <None Include="..\ServerAdmin\ClassicUT\footer.inc" />
+    <None Include="..\ServerAdmin\ClassicUT\frame_header.inc" />
+    <None Include="..\ServerAdmin\ClassicUT\header.inc" />
+    <None Include="..\ServerAdmin\ClassicUT\hidden.inc" />
+    <None Include="..\ServerAdmin\ClassicUT\mainmenu.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\ServerAdmin\ClassicUT\mainmenu_item.inc" />
+    <None Include="..\ServerAdmin\ClassicUT\mainmenu_itemd.inc" />
+    <None Include="..\ServerAdmin\ClassicUT\mainmenu_items.inc" />
+    <None Include="..\ServerAdmin\ClassicUT\menufooter.inc" />
+    <None Include="..\ServerAdmin\ClassicUT\menuheader.inc" />
+    <None Include="..\ServerAdmin\ClassicUT\message.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\ServerAdmin\ClassicUT\radio_button.inc" />
+    <None Include="..\ServerAdmin\ClassicUT\reset_button.inc" />
+    <None Include="..\ServerAdmin\ClassicUT\rootframe.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\ServerAdmin\ClassicUT\row_center.inc" />
+    <None Include="..\ServerAdmin\ClassicUT\row_left.inc" />
+    <None Include="..\ServerAdmin\ClassicUT\select.inc" />
+    <None Include="..\ServerAdmin\ClassicUT\server_restart.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\ServerAdmin\ClassicUT\server_restart_row.inc" />
+    <None Include="..\ServerAdmin\ClassicUT\submit_button.inc" />
+    <None Include="..\ServerAdmin\ClassicUT\textbox.inc" />
+    <None Include="..\ServerAdmin\current_bots.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\ServerAdmin\current_bots_row.inc" />
+    <None Include="..\ServerAdmin\current_bots_row_sel.inc" />
+    <None Include="..\ServerAdmin\current_bots_species.inc" />
+    <None Include="..\ServerAdmin\current_console.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\ServerAdmin\current_console_log.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\ServerAdmin\current_console_send.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\ServerAdmin\current_game.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\ServerAdmin\current_menu.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\ServerAdmin\current_mutators.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\ServerAdmin\current_mutators_group.inc" />
+    <None Include="..\ServerAdmin\current_mutators_group_row.inc" />
+    <None Include="..\ServerAdmin\current_mutators_row.inc" />
+    <None Include="..\ServerAdmin\current_mutators_selected.inc" />
+    <None Include="..\ServerAdmin\current_mutators_table.inc" />
+    <None Include="..\ServerAdmin\current_players.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\ServerAdmin\current_players_ban_col.inc" />
+    <None Include="..\ServerAdmin\current_players_empty_col.inc" />
+    <None Include="..\ServerAdmin\current_players_kick_col.inc" />
+    <None Include="..\ServerAdmin\current_players_list_head.inc" />
+    <None Include="..\ServerAdmin\current_players_list_head_link.inc" />
+    <None Include="..\ServerAdmin\current_players_minp.inc" />
+    <None Include="..\ServerAdmin\currentframe.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\ServerAdmin\UT2K3Stats\current_bots.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\ServerAdmin\UT2K3Stats\current_bots_row.inc" />
+    <None Include="..\ServerAdmin\UT2K3Stats\current_bots_row_sel.inc" />
+    <None Include="..\ServerAdmin\UT2K3Stats\current_bots_species.inc" />
+    <None Include="..\ServerAdmin\UT2K3Stats\current_console.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\ServerAdmin\UT2K3Stats\current_console_log.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\ServerAdmin\UT2K3Stats\current_console_send.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\ServerAdmin\UT2K3Stats\current_game.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\ServerAdmin\UT2K3Stats\current_menu.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\ServerAdmin\UT2K3Stats\current_mutators.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\ServerAdmin\UT2K3Stats\current_mutators_group.inc" />
+    <None Include="..\ServerAdmin\UT2K3Stats\current_mutators_group_row.inc" />
+    <None Include="..\ServerAdmin\UT2K3Stats\current_mutators_row.inc" />
+    <None Include="..\ServerAdmin\UT2K3Stats\current_mutators_selected.inc" />
+    <None Include="..\ServerAdmin\UT2K3Stats\current_mutators_table.inc" />
+    <None Include="..\ServerAdmin\UT2K3Stats\current_players.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\ServerAdmin\UT2K3Stats\current_players_ban_col.inc" />
+    <None Include="..\ServerAdmin\UT2K3Stats\current_players_empty_col.inc" />
+    <None Include="..\ServerAdmin\UT2K3Stats\current_players_kick_col.inc" />
+    <None Include="..\ServerAdmin\UT2K3Stats\current_players_list_head.inc" />
+    <None Include="..\ServerAdmin\UT2K3Stats\current_players_list_head_link.inc" />
+    <None Include="..\ServerAdmin\UT2K3Stats\current_players_minp.inc" />
+    <None Include="..\ServerAdmin\UT2K3Stats\currentframe.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\ServerAdmin\ClassicUT\current_bots.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\ServerAdmin\ClassicUT\current_bots_row.inc" />
+    <None Include="..\ServerAdmin\ClassicUT\current_bots_row_sel.inc" />
+    <None Include="..\ServerAdmin\ClassicUT\current_bots_species.inc" />
+    <None Include="..\ServerAdmin\ClassicUT\current_console.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\ServerAdmin\ClassicUT\current_console_log.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\ServerAdmin\ClassicUT\current_console_send.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\ServerAdmin\ClassicUT\current_game.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\ServerAdmin\ClassicUT\current_menu.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\ServerAdmin\ClassicUT\current_mutators.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\ServerAdmin\ClassicUT\current_mutators_group.inc" />
+    <None Include="..\ServerAdmin\ClassicUT\current_mutators_group_row.inc" />
+    <None Include="..\ServerAdmin\ClassicUT\current_mutators_row.inc" />
+    <None Include="..\ServerAdmin\ClassicUT\current_mutators_selected.inc" />
+    <None Include="..\ServerAdmin\ClassicUT\current_mutators_table.inc" />
+    <None Include="..\ServerAdmin\ClassicUT\current_players.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\ServerAdmin\ClassicUT\current_players_ban_col.inc" />
+    <None Include="..\ServerAdmin\ClassicUT\current_players_empty_col.inc" />
+    <None Include="..\ServerAdmin\ClassicUT\current_players_kick_col.inc" />
+    <None Include="..\ServerAdmin\ClassicUT\current_players_list_head.inc" />
+    <None Include="..\ServerAdmin\ClassicUT\current_players_list_head_link.inc" />
+    <None Include="..\ServerAdmin\ClassicUT\current_players_minp.inc" />
+    <None Include="..\ServerAdmin\ClassicUT\currentframe.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\ServerAdmin\defaults_header.inc" />
+    <None Include="..\ServerAdmin\defaults_ippolicy.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\ServerAdmin\defaults_ippolicy_row.inc" />
+    <None Include="..\ServerAdmin\defaults_maps.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\ServerAdmin\defaults_mark.inc" />
+    <None Include="..\ServerAdmin\defaults_menu.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\ServerAdmin\defaults_menu_row.inc" />
+    <None Include="..\ServerAdmin\defaults_row.inc" />
+    <None Include="..\ServerAdmin\defaults_rules.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\ServerAdmin\defaultsframe.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\ServerAdmin\UT2K3Stats\defaults_header.inc" />
+    <None Include="..\ServerAdmin\UT2K3Stats\defaults_ippolicy.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\ServerAdmin\UT2K3Stats\defaults_ippolicy_row.inc" />
+    <None Include="..\ServerAdmin\UT2K3Stats\defaults_maps.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\ServerAdmin\UT2K3Stats\defaults_mark.inc" />
+    <None Include="..\ServerAdmin\UT2K3Stats\defaults_menu.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\ServerAdmin\UT2K3Stats\defaults_menu_row.inc" />
+    <None Include="..\ServerAdmin\UT2K3Stats\defaults_row.inc" />
+    <None Include="..\ServerAdmin\UT2K3Stats\defaults_rules.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\ServerAdmin\UT2K3Stats\defaultsframe.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\ServerAdmin\ClassicUT\defaults_header.inc" />
+    <None Include="..\ServerAdmin\ClassicUT\defaults_ippolicy.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\ServerAdmin\ClassicUT\defaults_ippolicy_row.inc" />
+    <None Include="..\ServerAdmin\ClassicUT\defaults_maps.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\ServerAdmin\ClassicUT\defaults_mark.inc" />
+    <None Include="..\ServerAdmin\ClassicUT\defaults_menu.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\ServerAdmin\ClassicUT\defaults_menu_row.inc" />
+    <None Include="..\ServerAdmin\ClassicUT\defaults_row.inc" />
+    <None Include="..\ServerAdmin\ClassicUT\defaults_rules.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\ServerAdmin\ClassicUT\defaultsframe.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\ServerAdmin\admins_account.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\ServerAdmin\admins_home.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\ServerAdmin\admins_menu.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\ServerAdmin\adminsframe.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\ServerAdmin\groups_add.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\ServerAdmin\groups_browse.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\ServerAdmin\groups_edit.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\ServerAdmin\groups_row.inc" />
+    <None Include="..\ServerAdmin\privs_element.inc" />
+    <None Include="..\ServerAdmin\privs_element_ro.inc" />
+    <None Include="..\ServerAdmin\privs_header.inc" />
+    <None Include="..\ServerAdmin\privs_header_chk.inc" />
+    <None Include="..\ServerAdmin\users_add.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\ServerAdmin\users_browse.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\ServerAdmin\users_edit.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\ServerAdmin\users_groups.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\ServerAdmin\users_groups_row.inc" />
+    <None Include="..\ServerAdmin\users_row.inc" />
+    <None Include="..\ServerAdmin\UT2K3Stats\admins_account.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\ServerAdmin\UT2K3Stats\admins_home.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\ServerAdmin\UT2K3Stats\admins_menu.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\ServerAdmin\UT2K3Stats\adminsframe.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\ServerAdmin\UT2K3Stats\groups_add.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\ServerAdmin\UT2K3Stats\groups_browse.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\ServerAdmin\UT2K3Stats\groups_edit.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\ServerAdmin\UT2K3Stats\groups_row.inc" />
+    <None Include="..\ServerAdmin\UT2K3Stats\privs_element.inc" />
+    <None Include="..\ServerAdmin\UT2K3Stats\privs_element_ro.inc" />
+    <None Include="..\ServerAdmin\UT2K3Stats\privs_header.inc" />
+    <None Include="..\ServerAdmin\UT2K3Stats\privs_header_chk.inc" />
+    <None Include="..\ServerAdmin\UT2K3Stats\users_add.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\ServerAdmin\UT2K3Stats\users_browse.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\ServerAdmin\UT2K3Stats\users_edit.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\ServerAdmin\UT2K3Stats\users_groups.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\ServerAdmin\UT2K3Stats\users_groups_row.inc" />
+    <None Include="..\ServerAdmin\UT2K3Stats\users_row.inc" />
+    <None Include="..\ServerAdmin\ClassicUT\admins_account.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\ServerAdmin\ClassicUT\admins_home.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\ServerAdmin\ClassicUT\admins_menu.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\ServerAdmin\ClassicUT\adminsframe.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\ServerAdmin\ClassicUT\groups_add.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\ServerAdmin\ClassicUT\groups_browse.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\ServerAdmin\ClassicUT\groups_edit.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\ServerAdmin\ClassicUT\groups_row.inc" />
+    <None Include="..\ServerAdmin\ClassicUT\privs_element.inc" />
+    <None Include="..\ServerAdmin\ClassicUT\privs_element_ro.inc" />
+    <None Include="..\ServerAdmin\ClassicUT\privs_header.inc" />
+    <None Include="..\ServerAdmin\ClassicUT\privs_header_chk.inc" />
+    <None Include="..\ServerAdmin\ClassicUT\users_add.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\ServerAdmin\ClassicUT\users_browse.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\ServerAdmin\ClassicUT\users_edit.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\ServerAdmin\ClassicUT\users_groups.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\ServerAdmin\ClassicUT\users_groups_row.inc" />
+    <None Include="..\ServerAdmin\ClassicUT\users_row.inc" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

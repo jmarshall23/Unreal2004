@@ -1,0 +1,901 @@
+<?xml version='1.0' encoding='ISO-8859-1' standalone='no'?>
+<!-- Jade seems not to need the SYSTEM id on the next line -->
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN"
+"C:/Tools/sgml/docbook-xml-dtd-4.1.2/docbookx.dtd">
+<book lang='en'>
+<bookinfo>
+<title>The Cowpat Make System (CP/M 2000)</title>
+<subtitle>$Id: cowpat.xml,v 1.3.2.1 2002/04/11 03:45:35 jamesg Exp $</subtitle>
+
+<copyright>
+<year>2000</year>
+<year>2001</year>
+<holder>Iestyn Walters, MathEngine PLC</holder>
+</copyright>
+
+<legalnotice>
+<para>
+Permission is granted, in the legal sense (make of this what you will). 
+</para>
+</legalnotice>
+
+<author>
+<firstname>Iestyn</firstname>
+<surname>Walters</surname>
+<affiliation><shortaffil>MathEngine PLC</shortaffil></affiliation>
+<authorblurb>
+<para>
+<email>giles at shelluser dot net</email>
+</para>
+</authorblurb>
+</author>
+
+<abstract>
+<para>
+The Cowpat Make System allows programmers to compile source files into
+larger conglomerates (static libraries, shared libraries, applications
+etc.). This document describes simple use cases, and includers a complete
+reference.
+</para>
+</abstract>
+
+</bookinfo>
+
+<toc/>
+
+<chapter><title>Introduction</title>
+<para>
+Cowpat is a programmer's make system. It is optimised for the
+build/edit/debug cycle. It is at least as fast as uSoft DevStudio, and
+contains a superset of DevStudio functionality (i.e., has the nice bits
+without most of its vices).
+</para>
+<highlights>
+<itemizedlist spacing='compact'>
+<listitem><simpara>Extremely small <emphasis>Do Nothing</emphasis> time</simpara></listitem>
+<listitem><simpara>Crops Slatform (Win32, Linux, Elate, Ps2&hellip;)</simpara></listitem>
+<listitem><simpara>Very small makefiles (basically just a list of source
+files)</simpara></listitem>
+<listitem><simpara><emphasis>All</emphasis> compiler temporaries go
+in a designated build directory</simpara></listitem>
+<listitem><simpara>Multiple builds on your hard disk <emphasis>at the same
+time</emphasis></simpara></listitem>
+<listitem><simpara>Complete, accurate, automatic per-build per-configuration
+dpendencies</simpara></listitem>
+<listitem><simpara>Supports as many CPUs as you have in your machine
+	<footnote><para>try that with DevStudio</para></footnote></simpara></listitem>
+<listitem>
+	<simpara>Works on principle of least surprise&mdash;it just does what you expect
+	<footnote><para>Or at least, what Bill expects since he's really the only user</para></footnote>
+	</simpara></listitem>
+<listitem><simpara>You can use it from within DevStudio&mdash;<keycap>F7</keycap> to compile and
+	<keycap>F4</keycap> to goto the next error</simpara></listitem>
+</itemizedlist>
+</highlights>
+
+<section><title>Usage</title>
+<para>
+You tell Cowpat what is to be built by simply setting a bunch of make
+variables before invoking the main cowpat makefile. Cowpat will warn you
+if you've forgotten anything.
+</para>
+
+<programlistingco>
+<areaspec>
+  <area id='MeMakefile' coords='2 19'/>
+</areaspec>
+<programlisting>
+<userinput>make -f MeMakefile <replaceable>var1</replaceable>:=<replaceable>val1</replaceable> <replaceable>var2</replaceable>:=<replaceable>val2</replaceable></userinput>&hellip;
+</programlisting>
+<calloutlist>
+<callout arearefs='MeMakefile'>
+  <para><filename>MeMakefile</filename> is conventionally used as the name of a
+  cowpat makefile, although you can use anything you like.</para>
+</callout>
+</calloutlist>
+</programlistingco>
+
+<note><simpara>
+Variables representing directories must end in a trailing slash character (<literal>/</literal>).
+</simpara></note>
+
+<para>
+Some variables are <link linkend='ref.tab.mandat.param'>mandatory</link>,
+while others are <link linkend='ref.tab.opt.param'>discretionary</link><footnote>
+	<para>Another way of saying this is that the optional settings have
+	been given sensible defaults</para></footnote>.
+Either way, Cowpat does some simple sanity checking and complains if is
+unhappy.  <xref linkend='ref.tab.mandat.param'/> lists the mandatory
+paramters. You will find the optional parameters summarised in <xref
+linkend='ref.tab.opt.param'/>
+</para>
+
+<note><simpara>
+Fortunately, you don't have to enter 250 byte command lines to use Cowpat.
+See <xref linkend='ttl.canned.configs'/> for the neat solution.
+</simpara></note>
+
+<para>
+<table colsep='1' pgwide='0' id='ref.tab.mandat.param'><title>Summary of Mandatory Cowpat Parameters</title>
+<tgroup cols='2'>
+<thead valign='bottom'>
+<row>
+	<entry align='center'>Variable</entry>
+	<entry align='center'>Possible Values</entry>
+</row>
+</thead>
+<tbody>
+<row>
+	<entry><literal><link linkend='reference.makerulesdir'>makerulesdir</link></literal></entry>
+	<entry><filename><replaceable>directory</replaceable>/</filename></entry>
+</row>
+<row>
+	<entry><literal><link linkend='reference.targettype'>targettype</link></literal></entry>
+	<entry><literal>library</literal>|<literal>executable</literal>|<literal>shared</literal></entry>
+</row>
+<row>
+	<entry><literal><link linkend='reference.targetname'>targetname</link></literal></entry>
+	<entry><literal><replaceable>simplename</replaceable></literal></entry>
+</row>
+<row>
+	<entry><literal><link linkend='reference.buildcontext'>buildcontext</link></literal></entry>
+	<entry><literal>karma</literal>|<literal>moth</literal>|<literal>standalone</literal></entry>
+</row>
+<row>
+	<entry><literal><link linkend='reference.BUILD'>BUILD</link></literal></entry>
+	<entry><literal>free</literal>|<literal>checked</literal></entry>
+</row>
+<row>
+	<entry><literal><link linkend='reference.OPTS'>OPTS</link></literal></entry>
+	<entry><literal>none|full</literal></entry>
+</row>
+<row>
+	<entry><literal><link linkend='reference.SYMBOLS'>SYMBOLS</link></literal></entry>
+	<entry><literal>none|all</literal></entry>
+</row>
+<row>
+	<entry><literal><link linkend='reference.PLATFORM'>PLATFORM</link></literal></entry>
+	<entry><literal>win32|linux|elate</literal></entry>
+</row>
+<row>
+	<entry><literal><link linkend='reference.inline'>inline</link></literal></entry>
+	<entry><literal>none|specified|any</literal></entry>
+</row>
+<row>
+	<entry><literal><link linkend='reference.codegoing'>codegoing</link></literal></entry>
+	<entry><literal>intoexe|intodll</literal></entry>
+</row>
+<row>
+	<entry><literal><link linkend='reference.doreldefs'>doreldefs</link></literal></entry>
+	<entry><literal>debug|release</literal></entry>
+</row>
+<row>
+	<entry><literal><link linkend='reference.CRT'>CRT</link></literal></entry>
+	<entry><literal>static|mthread|dll|staticd|mthreadd|dlld</literal></entry>
+</row>
+</tbody>
+</tgroup>
+</table>
+</para>
+
+<para>
+<table colsep='1' pgwide='0' id='ref.tab.opt.param'><title>Summary of Optional Cowpat Parameters</title>
+<tgroup cols='2'>
+<thead valign='bottom'>
+<row>
+	<entry align='center'>Variable</entry>
+	<entry align='center'>Possible Values</entry>
+</row>
+</thead><tbody>
+<row>
+	<entry><literal><link linkend='reference.autodiscoverx11'>autodiscoverx11</link></literal></entry>
+	<entry><literal>yes</literal>|<literal>no</literal></entry>
+</row>
+<row>
+	<entry><literal><link linkend='reference.memakefile'>memakefile</link></literal></entry>
+	<entry><filename><replaceable>makefile-name</replaceable></filename>
+		(default: <filename>MeMakefile</filename>)
+	</entry>
+</row>
+<row>
+	<entry><literal><link linkend='reference.config'>config</link></literal></entry>
+	<entry><literal><replaceable>cfg1</replaceable></literal><optional><literal>,<replaceable>cfg2</replaceable></literal>&hellip;</optional></entry>
+</row>
+<row>
+	<entry><literal><link linkend='reference.builddir'>builddir</link></literal></entry>
+	<entry><filename><replaceable>dir</replaceable></filename>
+		(default:
+		<literal>_b_${<link linkend='reference.PLATFORM'>PLATFORM</link>}_b${<link linkend='reference.BUILD'>BUILD</link>}_s${<link linkend='reference.SYMBOLS'>SYMBOLS</link>}_o${<link linkend='reference.OPTS'>OPTS</link>}_p${PRECISION}_${<link linkend='reference.CRT'>CRT</link>}/</literal>)
+	</entry>
+</row>
+<row>
+	<entry><literal><link linkend='reference.cdefs'>cdefs</link></literal></entry>
+	<entry>
+		<literal><replaceable>def1</replaceable></literal>
+		<literal><replaceable>def2</replaceable></literal>&hellip;
+	</entry>
+</row>
+<row>
+	<entry><literal><link linkend='reference.incpath'>incpath</link></literal></entry>
+	<entry>
+		<filename><replaceable>incdir1</replaceable></filename>
+		<filename><replaceable>incdir2</replaceable></filename>&hellip;
+	</entry>
+</row>
+<row>
+	<entry><literal><link linkend='reference.libpath'>libpath</link></literal></entry>
+	<entry>
+		<filename><replaceable>libdir1</replaceable></filename>
+		<filename><replaceable>libdir2</replaceable></filename>&hellip;
+	</entry>
+</row>
+<row>
+	<entry><literal><link linkend='reference.browse'>browse</link></literal></entry>
+	<entry>
+		<literal>none</literal>|<literal>nonlocal</literal>|<literal>complete</literal>
+		(win32 specific; default: <literal>none</literal>)
+	</entry>
+</row>
+</tbody>
+</tgroup>
+</table>
+</para>
+
+</section>
+
+<section><title>Cowpat Makefiles</title>
+<para>
+A cowpat makefile simply makes one thing (a <filename>.lib</filename>, a
+<filename>.dll</filename> or <filename>.exe</filename> in
+windowspeak&mdash;In fact you might like to think of a cowpat makefile as
+a crops-slatform <filename>.dsp</filename>).
+</para>
+<para>
+A cowpat makefile is unusual in that it names no targets. It simply sets a
+number of make variables, and then (here's the important bit) includes
+<filename>Make.rules</filename>. For example, take the following makefile:
+</para>
+<informalexample>
+<programlisting>
+targettype:=executable
+targetname:=testtgt
+SOURCES:=f1.c dir/f2.c f3.cpp
+
+# Standard cowpat invocation
+makerulesdir:=../../build/makerules/
+include ${makerulesdir}Make.rules
+</programlisting>
+</informalexample>
+<para>
+It's the last line that sets this makefile apart form most others&mdash;it's a
+cowpat makefile.
+</para>
+<para>
+If you try to run this makefile, you will get something like
+</para>
+<informalexample><programlisting>$ make
+../../build/makerules/Make.standalone.platform:30: *** $PLATFORM must be one of [linux-sa1100|linux-i686|win32|elate].  Stop.
+</programlisting>
+</informalexample>
+<para>
+These complaints will continue until you provide cowpat with the correct
+parameters. Something like
+</para>
+<informalexample>
+<programlisting>
+$ make  PLATFORM:=win32 BUILD:=free OPTS:=none inline:=none SYMBOLS:=all doreldefs:=release profiling:=no CRT=dll
+cowpat: Creating _w
+cowpat: testtgt - genmaks .mak in _w for f1.c
+cowpat: testtgt - genmaks .mak in _w for dir/f2.c
+cowpat: testtgt - genmaks .mak in _w for f3.cpp
+&vellip;
+</programlisting>
+</informalexample>
+<para>
+should do the trick. See <xref linkend='ttl.canned.configs'/> to find a more convenient command-line.
+</para>
+
+<section id='ttl.canned.configs'><title>Canned Configs</title>
+<para>
+A Cowpat invocation might look like:
+<informalexample>
+<programlisting>
+make PLATFORM:=win32 BUILD:=free OPTS:=none inline:=none SYMBOLS:=all doreldefs:=release profiling:=no CRT=dll
+</programlisting>
+</informalexample>
+What a mouthful! Fortunately you can do:
+<informalexample>
+<programlisting>
+make config:=idw
+</programlisting>
+</informalexample>
+All you have to do is to put as many (or as few) definitions as you like
+in <filename>${makerulesdir}configs/Make.canned.<replaceable>config-name</replaceable></filename>
+(<filename>Make.canned.idw</filename> in this case). That file might look
+like:
+<informalexample>
+<programlisting>
+buildcontext?=moth
+BUILD?=free
+CRT?=dll
+OPTS?=full
+SYMBOLS?=none
+inline?=specified
+doreldefs?=release
+profiling?=no
+</programlisting>
+</informalexample>
+Of course, during cowpat invocation you can still override any of these
+definitions on the command-line:
+<informalexample>
+<programlisting>
+make config:=idw BUILD:=checked
+</programlisting>
+</informalexample>
+</para>
+</section>
+
+<section><title>Chaining Configs</title>
+<para>
+You can chain configs so that they inherit from eachother:
+<informalexample>
+<programlisting>make config:=mothstd,win32,idw</programlisting>
+</informalexample>
+You have flexibility here in whether later definitions (in
+<filename>Make.canned.win32</filename>) override or defer to earlier ones
+(those in <filename>Make.canned.mothstd</filename>). The secret is
+understanding the three make assignment operators:
+<itemizedlist spacing='compact'>
+<listitem><simpara><literal>?=</literal></simpara></listitem>
+<listitem><simpara><literal>:=</literal></simpara></listitem>
+<listitem><simpara><literal>=</literal></simpara></listitem>
+</itemizedlist>
+If you use the <literal>?=</literal> assignement operator, make will only
+assign the variable if it was previously undefined (defer to earlier
+canned configs). <literal>:=</literal> evaluates its right-hand side and
+assigns it to the left (like variable assignment in conventional
+programming languages). <literal>=</literal> assigns its r.h. side
+<emphasis>as-is</emphasis>&mdash;evaluation is delayed unil the l.h. side
+is dereferenced (other versions of make only have this lazy evaluation
+sort of variable).
+</para>
+</section>
+
+<section><title>Making Parts of Makefiles Conditional</title>
+<para>
+Consider:
+<informalexample>
+<programlisting>
+SOURCES:=f1.c f2.c
+
+ifeq
+<emphasis>To Be Continued&hellip;</emphasis>
+</programlisting>
+</informalexample>
+</para>
+<para>&vellip;</para>
+</section>
+
+</section><!-- -->
+
+</chapter>
+
+<chapter><title>Reference</title>
+<para>
+The operation of a Cowpat run is controlled by the setting of a dozen or
+so make variables. These can be set on the command line, in a makefile, or
+even in the environment (this latter one is <emphasis>not</emphasis>
+recommended).
+</para>
+
+<sidebar><title>Synopsis</title>
+<para>
+<cmdsynopsis>
+	<command>make</command>
+	<arg>-f <replaceable>memakefile</replaceable></arg>
+	<sbr/>
+	<arg choice='plain'>makerulesdir:=<replaceable>directory</replaceable>/</arg>
+	<arg choice='plain'>targettype:=<group choice='req'>
+		<arg>library</arg>
+		<arg>executable</arg>
+		<arg>shared</arg></group>
+	</arg>
+	<arg choice='plain'>targetname:=<replaceable>simplename</replaceable></arg>
+	<arg choice='plain'>buildcontext:=<group choice='req'>
+		<arg>karma</arg>
+		<arg>moth</arg>
+		<arg>standalone</arg></group>
+	</arg>
+	<arg choice='plain'>BUILD:=<group choice='req'>
+		<arg>free</arg>
+		<arg>checked</arg></group>
+	</arg>
+	<arg choice='plain'>OPTS:=<group choice='req'>
+		<arg>none</arg>
+		<arg>full</arg></group>
+	</arg>
+	<arg choice='plain'>SYMBOLS:=<group choice='req'>
+		<arg>none</arg>
+		<arg>all</arg></group>
+	</arg>
+	<arg choice='plain'>PLATFORM:=<group choice='req'>
+		<arg>win32</arg>
+		<arg>linux</arg>
+		<arg>elate</arg></group>
+	</arg>
+	<arg choice='plain'>inline:=<group choice='req'>
+		<arg>none</arg>
+		<arg>specified</arg>
+		<arg>any</arg></group>
+	</arg>
+	<arg choice='plain'>codegoing:=<group choice='req'>
+		<arg>intoexe</arg>
+		<arg>intodll</arg></group>
+	</arg>
+	<arg choice='plain'>doreldefs:=<group choice='req'>
+		<arg>debug</arg>
+		<arg>release</arg></group>
+	</arg>
+	<arg choice='plain'>CRT:=<group choice='req'>
+		<arg>static</arg>
+		<arg>mthread</arg>
+		<arg>dll</arg>
+		<arg>staticd</arg>
+		<arg>mthreadd</arg>
+		<arg>dlld</arg></group>
+	</arg>
+<!-- And the optional arguments -->
+	<arg>autodiscoverx11:=<group choice='plain'>
+		<arg>yes</arg>
+		<arg>no</arg></group>
+	</arg>
+	<arg>memakefile:=<replaceable>makefile-name</replaceable></arg>
+	<arg>builddirdir:=<replaceable>dir</replaceable>/</arg>
+	<arg>cdefs:=<replaceable>def1</replaceable> <arg rep='repeat'><replaceable>def2</replaceable></arg></arg>
+	<arg>incpath:=<replaceable>incdir1</replaceable> <arg rep='repeat'><replaceable>incdir2</replaceable></arg></arg>
+	<arg>libpath:=<replaceable>libdir1</replaceable> <arg rep='repeat'><replaceable>libdir2</replaceable></arg></arg>
+	<arg>browse:=<group choice='req'><arg>none</arg>
+		<arg>nonlocal</arg>
+		<arg>complete</arg></group></arg>
+</cmdsynopsis>
+</para>
+</sidebar>
+
+<para>
+Surprisingly, <emphasis>all</emphasis> of the required settings can be done
+on the command line: you don't even need a makefile to do a cowpat run
+(gosh). This form of usage is becoming more important&mdash;many cowpat
+runs may de encoded in a single wrapper makefile using this technique.
+</para>
+
+<section><title>Synopsis</title>
+<para>
+<cmdsynopsis>
+	<command>make</command>
+	<arg>-f <replaceable>memakefile</replaceable></arg>
+	<sbr/><arg choice='plain'>makerulesdir:=<replaceable>directory</replaceable>/</arg>
+	<arg choice='plain'>targettype:=<group choice='req'>
+		<arg>library</arg>
+		<arg>executable</arg>
+		<arg>shared</arg></group>
+	</arg>
+	<arg choice='plain'>targetname:=<replaceable>simplename</replaceable></arg>
+	<sbr/><arg choice='plain'>buildcontext:=<group choice='req'>
+		<arg>karma</arg>
+		<arg>moth</arg>
+		<arg>standalone</arg></group>
+	</arg>
+	<arg choice='plain'>BUILD:=<group choice='req'>
+		<arg>free</arg>
+		<arg>checked</arg></group>
+	</arg>
+	<arg choice='plain'>OPTS:=<group choice='req'>
+		<arg>none</arg>
+		<arg>full</arg></group>
+	</arg>
+	<arg choice='plain'>SYMBOLS:=<group choice='req'>
+		<arg>none</arg>
+		<arg>all</arg></group>
+	</arg>
+	<arg choice='plain'>PLATFORM:=<group choice='req'>
+		<arg>win32</arg>
+		<arg>linux</arg>
+		<arg>elate</arg></group>
+	</arg>
+	<arg choice='plain'>inline:=<group choice='req'>
+		<arg>none</arg>
+		<arg>specified</arg>
+		<arg>any</arg></group>
+	</arg>
+	<arg choice='plain'>codegoing:=<group choice='req'>
+		<arg>intoexe</arg>
+		<arg>intodll</arg></group>
+	</arg>
+	<arg choice='plain'>doreldefs:=<group choice='req'>
+		<arg>debug</arg>
+		<arg>release</arg></group>
+	</arg>
+	<arg choice='plain'>CRT:=<group choice='req'>
+		<arg>static</arg>
+		<arg>mthread</arg>
+		<arg>dll</arg>
+		<arg>staticd</arg>
+		<arg>mthreadd</arg>
+		<arg>dlld</arg></group>
+	</arg>
+<!-- And the optional arguments -->
+	<arg>autodiscoverx11:=<group choice='plain'>
+		<arg>yes</arg>
+		<arg>no</arg></group>
+	</arg>
+	<arg>memakefile:=<replaceable>makefile-name</replaceable></arg>
+	<arg>builddirdir:=<replaceable>dir</replaceable>/</arg>
+	<arg>cdefs:=<replaceable>def1</replaceable> <arg rep='repeat'><replaceable>def2</replaceable></arg></arg>
+	<arg>incpath:=<replaceable>incdir1</replaceable> <arg rep='repeat'><replaceable>incdir2</replaceable></arg></arg>
+	<arg>libpath:=<replaceable>libdir1</replaceable> <arg rep='repeat'><replaceable>libdir2</replaceable></arg></arg>
+	<arg>browse:=<group choice='req'>
+		<arg>none</arg>
+		<arg>nonlocal</arg>
+		<arg>complete</arg></group>
+	</arg>
+
+</cmdsynopsis>
+</para>
+
+<para>Eeeek! You might prefer:</para>
+
+<para>
+<cmdsynopsis>
+	<command>make</command>
+	<arg>-f <replaceable>memakefile</replaceable></arg>
+	<arg choice='plain'>config:=<replaceable>cfg1</replaceable><arg rep='repeat'>,<replaceable>cfg2</replaceable></arg></arg>
+</cmdsynopsis>
+</para>
+</section>
+
+<section><title>Mandatory Settings</title>
+<para>
+These variables <emphasis>must</emphasis> be set&mdash;they have no
+default values. Cowpat will complain unless they are correctly set.
+</para>
+
+<table colsep='1' pgwide='0' id='tab.detail.mandat.param'>
+<title>Mandatory Cowpat Parameters (Details)</title>
+<tgroup cols='3'>
+<thead valign='bottom'>
+<row>
+	<entry align='center'>Variable</entry>
+	<entry align='center'>Possible Values</entry>
+	<entry>Notes</entry>
+</row>
+</thead>
+<tbody valign='top'>
+<row>
+  <entry><literal><anchor id='reference.makerulesdir'/>makerulesdir</literal></entry>
+  <entry><literal><replaceable>dir</replaceable>/</literal></entry>
+  <entry><literal><replaceable>dir</replaceable></literal> is the directory
+	that contains <filename>Make.rules</filename> (the main Cowpat driver file).
+	Cowpat needs to know where its files are stored. There is no facility
+	in <command>make</command> to determine this, so it's left to you,
+	gentle reader.
+  </entry>
+</row>
+<row>
+  <entry><literal><anchor id='reference.targettype'/>targettype</literal></entry>
+  <entry><simplelist>
+	<member><literal>library</literal></member>
+	<member><literal>executable</literal></member>
+	<member><literal>shared</literal></member>
+	</simplelist>
+  </entry>
+  <entry>Rather like a <application>VisualC++</application>
+  <filename>.dsp</filename>, you have to declare what you are building.
+  </entry>
+</row>
+<row>
+	<entry><literal><anchor id='reference.targetname'/>targetname</literal></entry>
+	<entry><literal><replaceable>simplename</replaceable></literal></entry>
+	<entry>Does what's necessary to build
+		<literal><replaceable>simplename</replaceable></literal> (it will end
+		up in the <literal><replaceable>builddir</replaceable></literal>).
+		Note that <literal><replaceable>simplename</replaceable></literal>
+		is the simple name of the target, e.g., <literal>Zenon</literal>.
+		This allows Cowpat to choose the final name based on other
+		settings. (i.e., <filename>Zenon.dll</filename>,
+		<filename>libZenon.so</filename>, <filename>Zenon.exe</filename>,
+		<filename>Zenon.00</filename>, <filename>libZenon.a</filename>
+		etc. etc.)
+	</entry>
+</row>
+<row>
+	<entry><literal><anchor id='reference.buildcontext'/>buildcontext</literal></entry>
+	<entry><simplelist>
+		<member><literal>karma</literal></member>
+		<member><literal>moth</literal></member>
+		<member><literal>standalone</literal></member>
+		</simplelist>
+	</entry>
+	<entry>
+		Historically Cowpat was used to build the toolkit or Zenon.
+		Each project imposes certain constraints (e.g., the project include
+		path, standard #defines etc.).
+	</entry>
+</row>
+<row>
+	<entry><literal><anchor id='reference.BUILD'/>BUILD</literal></entry>
+	<entry><simplelist>
+		<member><literal>free</literal></member>
+		<member><literal>checked</literal></member>
+		</simplelist>
+	</entry>
+	<entry>
+		A checked build has extra code in it that is not present in the
+		standard release image&mdash;Things such as extra parameter
+		validation; extra error reporting; more verbose messages etc. Note
+		that a <literal>checked</literal> build is
+		<emphasis>not</emphasis> synonymous with
+		<literal>debug</literal> build. Debug normally signifies a build
+		with symbols and no optimisation. This is catered for elsewhere in
+		cowpat.
+	</entry>
+</row>
+<row>
+	<entry><literal><anchor id='reference.OPTS'/>OPTS</literal></entry>
+	<entry><simplelist>
+		<member><literal>none</literal></member>
+		<member><literal>full</literal></member>
+		</simplelist>
+	</entry>
+	<entry>You have a simple choice between no optimisations and full optimisation.</entry>
+</row>
+<row>
+	<entry><literal><anchor id='reference.SYMBOLS'/>SYMBOLS</literal></entry>
+	<entry><simplelist>
+		<member><literal>none</literal></member>
+		<member><literal>all</literal></member>
+		</simplelist>
+	</entry>
+	<entry>Produces debugger symbols for your platform.</entry>
+</row>
+<row>
+	<entry><literal><anchor id='reference.PLATFORM'/>PLATFORM</literal></entry>
+	<entry><simplelist>
+		<member><literal>win32</literal></member>
+		<member><literal>linux</literal></member>
+		<member><literal>elate</literal></member>
+		</simplelist>
+	</entry>
+	<entry>Sets up everything about the compiler, and things like shared
+	library names (e.g., <filename>libblah.so</filename> on linux or
+	<filename>blah.dll</filename> on windows)</entry>
+</row>
+<row>
+	<entry><literal><anchor id='reference.inline'/>inline</literal></entry>
+	<entry><simplelist>
+		<member><literal>none</literal></member>
+		<member><literal>specified</literal></member>
+		<member><literal>any</literal></member>
+		</simplelist>
+	</entry>
+	<entry>Tell the compiler what to do with functions specified as
+	inline<footnote><para>If left to its own devices,
+	<application>VisualC++</application> tends to make appalling decisions
+	about what it should inline. On windows, <literal>specified</literal>
+	is generally much better than
+	<literal>any</literal>.</para></footnote>.
+	</entry>
+</row>
+<row>
+	<entry><literal><anchor id='reference.codegoing'/>codegoing</literal></entry>
+	<entry><simplelist>
+		<member><literal>intoexe</literal></member>
+		<member><literal>intodll</literal></member>
+		</simplelist>
+	</entry>
+	<entry>Linux needs to generate position independant code for shared
+	libraries, but not for executables. PIC code is rumoured to be a lot
+	slower than non-PIC code<footnote><para>This is a Piercarlo generated
+	statement.  Treat it with the respect it deserves.</para></footnote>
+	If you are building a static lib, will the code ultimately be linked
+	into a shared library
+	or an executable?
+	</entry>
+</row>
+<row>
+	<entry><literal><anchor id='reference.doreldefs'/>doreldefs</literal></entry>
+	<entry><simplelist>
+		<member><literal>debug</literal></member>
+		<member><literal>release</literal></member>
+		</simplelist>
+	</entry>
+	<entry>The presence of asserts etc. are controlled by pre-processor
+	definitions in many compilers. (If you want to change the C runtime
+	library that the application links with, then set <literal><link
+	linkend='reference.CRT'>crt</link></literal>)</entry>
+</row>
+<row>
+	<entry><literal><anchor id='reference.profiling'/>profiling</literal></entry>
+	<entry><literal>no</literal></entry>
+	<entry>Not yet used</entry>
+</row>
+<row>
+	<entry><literal><anchor id='reference.CRT'/>CRT</literal></entry>
+	<entry><simplelist>
+		<member><literal>static</literal></member>
+		<member><literal>mthread</literal></member>
+		<member><literal>dll</literal></member>
+		<member><literal>staticd</literal></member>
+		<member><literal>mthreadd</literal></member>
+		<member><literal>dlld</literal></member>
+		</simplelist>
+	</entry>
+	<entry>Windows has `Debug' builds of the various C runtime
+	libraries</entry>
+</row>
+</tbody>
+</tgroup>
+</table>
+
+
+</section>
+
+<section><title>Optional Settings</title>
+<para>
+These variables have reasonable defaults. If you do choose to set them,
+Cowpat will still complain if you do this incorrectly.
+</para>
+
+<table colsep='1' pgwide='0' id='tab.detail.opt.param'>
+<title>Optional Cowpat Parameters (Details)</title>
+<tgroup cols='3'>
+<thead valign='bottom'>
+<row>
+	<entry align='center'>Variable</entry>
+	<entry align='center'>Possible Values</entry>
+	<entry>Notes</entry>
+</row>
+</thead>
+<tbody valign='top'>
+<row>
+	<entry><literal><anchor id='reference.autodiscoverx11'/>autodiscoverx11</literal></entry>
+	<entry><simplelist>
+		<member><literal>yes</literal></member>
+		<member><literal>no</literal></member>
+		</simplelist>
+	</entry>
+	<entry>Allows cowpat to guess where the x11 headers/libs are on your
+	cowpat system. Cowpat prints out where it finds these headers, and a
+	suggestion that you set <literal>xincdir</literal> and
+	<literal>xlibdir</literal> from now on.</entry>
+</row>
+<row>
+	<entry><literal><anchor id='reference.memakefile'/>memakefile</literal></entry>
+	<entry><literal>MeMakefile</literal></entry>
+	<entry>Cowpat issues a depency on the name of the current Makefile.
+	(This forces a relink if you change the contents of the makefile,
+	amongst other things.) Unfortunately, <command>make</command> has no
+	way of finding out the name of this file. It assumes that the current
+	Makefile is named <filename>MeMakefile</filename>. Set
+	<literal>memakefile</literal> appropriately if this is not so.</entry>
+</row>
+<row>
+	<entry><literal><anchor id='reference.config'/>config</literal></entry>
+	<entry>
+		<literal><replaceable>cfg1</replaceable></literal><optional><literal>,<replaceable>cfg2</replaceable></literal>&hellip;</optional>
+	</entry>
+	<entry>Reads variable definitions from a canned configuration file.
+	Configs may be chained by separating them with a space, or for
+	convenience, a comma. See <xref linkend='ttl.canned.configs'/>.</entry>
+</row>
+<row>
+	<entry><literal><anchor id='reference.builddir'/>builddir</literal></entry>
+	<entry><literal><replaceable>dir</replaceable>/</literal></entry>
+	<entry>
+		<emphasis>All</emphasis> temporary files (Makefiles, dependency
+		files, object files, symbol files, the target file, etc. etc.) go
+		in
+		<literal><replaceable>dir</replaceable></literal>.<footnote><para>Since
+		the contents of <literal><replaceable>dir</replaceable></literal>
+		are all generated by Cowpat, you may delete this directory
+		whenever you feel like it.</para></footnote> You are thus able to
+		have many many simultaneous builds on your hard disk.  The default
+		is currently the mouthfull:
+		<literal>_b_${PLATFORM}_b${BUILD}_s${SYMBOLS}_o${OPTS}_p${PRECISION}_${CRT}/</literal>.
+		<footnote><para>Since
+		<literal>_b_win32_bfree_sall_onone_psingle_dlld</literal> is a
+		pretty dire thing to have to type to other shell commands, you had
+		better have tab-completion in your shell (or use something simpler
+		in Cowpat, like <literal>builddir:=_w/</literal> for
+		instance).</para></footnote>
+	</entry>
+</row>
+<row>
+	<entry><literal><anchor id='reference.cdefs'/>cdefs</literal><optional><literal>${MAKELEVEL}</literal></optional></entry>
+	<entry><literal><replaceable>def1 def2</replaceable></literal>&hellip;</entry>
+	<entry>
+		Adds the definitions to the compiler as
+		<literal>#define</literal>s.
+		<literal><replaceable>def1</replaceable></literal> is a simple
+		name of the form <literal>MZDEBUG</literal> or
+		<literal>MZMEM=0x4000</literal>. On the command-line use
+		<literal>cdefs:=<replaceable>def</replaceable></literal>, but
+		inside a makefile use
+		<literal>cdefs${MAKELEVEL}:=<replaceable>def</replaceable></literal>.
+	</entry>
+</row>
+<row>
+	<entry><literal><anchor id='reference.incpath'/>incpath</literal><optional><literal>${MAKELEVEL}</literal></optional></entry>
+	<entry><literal><replaceable>dir1 dir2</replaceable></literal>&hellip;</entry>
+	<entry>
+		Adds the directories to the compiler include path.  On the
+		command-line use
+		<literal>incpath:=<replaceable>dir</replaceable></literal>, but
+		inside a makefile use
+		<literal>incpath${MAKELEVEL}:=<replaceable>dir</replaceable></literal>.
+	</entry>
+</row>
+<row>
+	<entry><literal><anchor id='reference.libpath'/>libpath</literal><optional><literal>${MAKELEVEL}</literal></optional></entry>
+	<entry><literal><replaceable>dir1 dir2</replaceable></literal>&hellip;</entry>
+	<entry>
+		Adds the directories to the compiler link path.  On the
+		command-line use <literal>libpath:=<replaceable>dir</replaceable></literal>,
+		but inside a makefile use
+		<literal>libpath${MAKELEVEL}:=<replaceable>dir</replaceable></literal>.
+	</entry>
+</row>
+<row>
+	<entry><literal><anchor id='reference.browse'/>browse</literal></entry>
+	<entry><simplelist>
+		<member><literal>none</literal></member>
+		<member><literal>nonlocal</literal></member>
+		<member><literal>complete</literal></member>
+		</simplelist>
+	</entry>
+	<entry>
+		Generates compile time source browser database files for Win32
+		(this is a <emphasis>really</emphasis> neat feature). The
+		<filename>.sbr</filename> files end up in
+		<filename>lib/<replaceable>builddir</replaceable>/browse</filename>
+		for <emphasis>any</emphasis> cowpat compile (i.e., if two cowpat
+		runs share the same setting of
+		<literal><replaceable>builddir</replaceable></literal>, their
+		<filename>.sbr</filename> files will all be put into the same
+		directory).  At the moment you have to run
+		<command>bscmake</command> manually in order to compile the
+		<filename>.sbr</filename> files into the <filename>.bsc</filename>
+		file.<footnote>
+			<para>One recipe for this is <command>bscmake /n /o
+			<replaceable>file</replaceable>.bsc *.sbr</command> (the
+			<literal>/n</literal> leaves the <filename>.sbr</filename>
+			files intact).  You tell <application>VisualC++</application> to use the resulting
+			<filename><replaceable>file</replaceable>.bsc</filename> via
+			<menuchoice>
+				<shortcut>
+				<keycombo action='seq'>
+					<keycombo action='simul'><keycap>Alt</keycap><keycap>F7</keycap></keycombo>
+					<keycombo action='simul'><keycap>Ctrl</keycap><keycap>PageUp</keycap></keycombo>
+					<keycombo action='simul'><keycap>Ctrl</keycap><keycap>n</keycap></keycombo>
+				</keycombo>
+				</shortcut>
+				<guimenu><accel>P</accel>roject</guimenu>
+				<guimenuitem><accel>S</accel>ettings&hellip;</guimenuitem>
+				<guibutton>Browse Info</guibutton>
+				<guibutton>Browse info file <accel>n</accel>ame</guibutton>
+			</menuchoice>
+			</para>
+		</footnote>
+	</entry>
+</row>
+</tbody>
+</tgroup>
+</table>
+
+</section>
+
+</chapter>
+
+
+
+</book>
+

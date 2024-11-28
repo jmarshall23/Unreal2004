@@ -1,0 +1,85 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Classes">
+      <UniqueIdentifier>{10e41254-fa87-4d78-9005-15aa7c188fdd}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Classes\DefaultMapListLoader.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\KickInfoPage.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\KickVoteMultiColumnList.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\KickVoteMultiColumnListBox.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\KickVotingPage.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\MapInfoPage.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\MapListLoader.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\MapVoteCountMultiColumnList.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\MapVoteCountMultiColumnListBox.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\MapVoteGameConfigPage.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\MapVoteHistory.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\MapVoteHistory_INI.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\MapVoteMapListConfigPage.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\MapVoteMultiColumnList.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\MapVoteMultiColumnListBox.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\MapVotingPage.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\MatchConfig.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\MatchSetupLoginPage.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\MatchSetupPage.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\PlayerInfoMultiColumnList.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\PlayerInfoMultiColumnListBox.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\VotingPage.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\VotingReplicationInfo.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\xVoting.upkg">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\xVotingHandler.uc">
+      <Filter>Classes</Filter>
+    </None>
+  </ItemGroup>
+</Project>

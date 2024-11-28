@@ -1,0 +1,2064 @@
+Log file open, 11/20/24 10:07:42
+----------------------------Core - Release----------------------------
+---------------------------Engine - Release---------------------------
+----------------------------Fire - Release----------------------------
+---------------------------Editor - Release---------------------------
+--------------------------UnrealEd - Release--------------------------
+---------------------------IpDrv - Release----------------------------
+----------------------------UWeb - Release----------------------------
+--------------------------GamePlay - Release--------------------------
+-------------------------UnrealGame - Release-------------------------
+--------------------------XGame_rc - Release--------------------------
+--------------------------XEffects - Release--------------------------
+------------------------XWeapons_rc - Release-------------------------
+------------------------XPickups_rc - Release-------------------------
+--------------------------XPickups - Release--------------------------
+---------------------------XGame - Release----------------------------
+--------------------------XWeapons - Release--------------------------
+-------------------------XInterface - Release-------------------------
+---------------------------XAdmin - Release---------------------------
+-------------------------XWebAdmin - Release--------------------------
+--------------------------Vehicles - Release--------------------------
+-------------------------BonusPack - Release--------------------------
+-----------------------SkaarjPack_rc - Release------------------------
+-------------------------SkaarjPack - Release-------------------------
+-------------------------UTClassic - Release--------------------------
+------------------------UT2k4Assault - Release------------------------
+-------------------------Onslaught - Release--------------------------
+Analyzing...
+Parsing ONSPlayerReplicationInfo
+Parsing ONSSquadAI
+Parsing ONSDefaultMut
+Parsing MutBigWheels
+Parsing MutLightweightVehicles
+Parsing MutOnslaughtWeapons
+Parsing MutWheeledVehicleStunts
+Parsing ONSOnslaughtGame
+Parsing ActionMessage_ONS
+Parsing ONSOnslaughtMessage
+Parsing ONSDaredevilMessage
+Parsing ONSLinkDesignMessage
+Parsing ONSVehicleKillMessage
+Parsing ONSMapListOnslaught
+Parsing BigWheelsRules
+Parsing ONSTeamAI
+Parsing PowerLink
+Parsing ONSVehicle
+Parsing ONSWheeledCraft
+Parsing ONSPRV
+Parsing ONSRV
+Parsing ONSTreadCraft
+Parsing ONSHoverTank
+Parsing ONSPlaneCraft
+Parsing ONSHoverCraft
+Parsing ONSHoverBike
+Parsing ONSChopperCraft
+Parsing ONSAttackCraft
+Parsing ONSWeaponPawn
+Parsing ONSStationaryWeaponPawn
+Parsing ONSManualGunPawn
+Parsing ONSPRVRearGunPawn
+Parsing ONSPRVSideGunPawn
+Parsing ONSTankSecondaryTurretPawn
+Parsing ONSRocketScorch
+Parsing ONSHeadlightProjector
+Parsing ONSWeaponAmbientEmitter
+Parsing ONSRVChainGunFireEffect
+Parsing ONSImpactSparks
+Parsing ONSDamagedEffect
+Parsing ONSVehicleBuildEffect
+Parsing ONSAttackCraftBuildEffectBlue
+Parsing ONSAttackCraftBuildEffectRed
+Parsing ONSHoverBikeBuildEffectBlue
+Parsing ONSHoverBikeBuildEffectRed
+Parsing ONSPRVBuildEffectBlue
+Parsing ONSPRVBuildEffectRed
+Parsing ONSRVBuildEffectBlue
+Parsing ONSRVBuildEffectRed
+Parsing ONSTankBuildEffectBlue
+Parsing ONSTankBuildEffectRed
+Parsing ONSAttackCraftExhaust
+Parsing ONSAttackCraftStreamer
+Parsing ONSAVRiLRocketExplosion
+Parsing ONSAvrilSmokeTrail
+Parsing ONSBlueEnergyEffect
+Parsing ONSBluePlasmaFireEffect
+Parsing ONSBluePlasmaSmallFireEffect
+Parsing ONSChargeBeamEffect
+Parsing ONSDirtSlipEffect
+Parsing ONSFreeRoamingEnergyEffect
+Parsing ONSGreenPlasmaFireEffect
+Parsing ONSGreenPlasmaSmallFireEffect
+Parsing ONSGrenadeBeaconBlue
+Parsing ONSGrenadeBeaconRed
+Parsing ONSGrenadeExplosionEffect
+Parsing ONSHoverBikeDuckEffect
+Parsing ONSHoverBikeHoverDust
+Parsing ONSHoverBikeJumpEffect
+Parsing ONSMineLayerTargetBeamEffect
+Parsing ONSNodeBeamBlueEffect
+Parsing ONSNodeBeamRedEffect
+Parsing ONSNodeHealEffect
+Parsing ONSPlasmaHitBlue
+Parsing ONSPlasmaHitGreen
+Parsing ONSPlasmaHitPurple
+Parsing ONSPlasmaHitRed
+Parsing ONSPowerCoreBreachEffect
+Parsing ONSPRVComboEffect
+Parsing ONSPRVRearGunCharge
+Parsing ONSPRVSideGunMuzzleFlash
+Parsing ONSPurplePlasmaSmallFireEffect
+Parsing ONSRedEnergyEffect
+Parsing ONSRedPlasmaFireEffect
+Parsing ONSRedPlasmaSmallFireEffect
+Parsing ONSRVLeftBladeBreakOffEffect
+Parsing ONSRVRightBladeBreakOffEffect
+Parsing ONSRVWebLauncherMuzzleFlash
+Parsing ONSRVWebProjectileEffect
+Parsing ONSSkyMineEffect
+Parsing ONSSmallVehicleExplosionEffect
+Parsing ONSTankFireEffect
+Parsing ONSTankFireTrailEffect
+Parsing ONSTankHitRockEffect
+Parsing ONSTurretBeamEffect
+Parsing ONSTurretBeamEffectBlue
+Parsing ONSVehDeathAttackCraft
+Parsing ONSVehDeathHoverBike
+Parsing ONSVehDeathHoverTank
+Parsing ONSVehDeathPRV
+Parsing ONSVehDeathRV
+Parsing ONSVehicleExplosionEffect
+Parsing ONSWheeledVehicleExplosionEffect
+Parsing ONSVehicleIonExplosionEffect
+Parsing ONSPowerCore
+Parsing ONSPowerCoreBlue
+Parsing ONSPowerCoreRed
+Parsing ONSPowerNode
+Parsing ONSPowerNodeNeutral
+Parsing ONSPCTeleportTrigger
+Parsing ONSAVRiLAttachment
+Parsing ONSGrenadeAttachment
+Parsing ONSMineLayerAttachment
+Parsing DamTypeAttackCraftMissle
+Parsing DamTypeAttackCraftPlasma
+Parsing DamTypeRoadkill
+Parsing DamTypePancake
+Parsing DamTypeAttackCraftPancake
+Parsing DamTypeHoverBikePancake
+Parsing DamTypePRVPancake
+Parsing DamTypeRVPancake
+Parsing DamTypeTankPancake
+Parsing DamTypeAttackCraftRoadkill
+Parsing DamTypeHoverBikeHeadshot
+Parsing DamTypePRVRoadkill
+Parsing DamTypeRVRoadkill
+Parsing DamTypeTankRoadkill
+Parsing DamTypeChargingBeam
+Parsing DamTypeHoverBikePlasma
+Parsing DamTypeONSChainGun
+Parsing DamTypeONSRVBlade
+Parsing DamTypeONSWeb
+Parsing DamTypePRVCombo
+Parsing DamTypePRVLaser
+Parsing DamTypeSkyMine
+Parsing DamTypeTankShell
+Parsing DamTypeTurretBeam
+Parsing DamTypeONSAVRiLRocket
+Parsing DamTypeONSGrenade
+Parsing DamTypeONSMine
+Parsing DamTypeDestroyedVehicleRoadKill
+Parsing DamTypeONSVehicle
+Parsing DamTypeONSVehicleExplosion
+Parsing ONSVehicleFactory
+Parsing ONSAttackCraftFactory
+Parsing ONSHoverCraftFactory
+Parsing ONSPRVFactory
+Parsing ONSRVFactory
+Parsing ONSTankFactory
+Parsing ONSTurretController
+Parsing ONSAVRiLAmmo
+Parsing ONSGrenadeAmmo
+Parsing ONSMineAmmo
+Parsing ONSAVRiL
+Parsing ONSGrenadeLauncher
+Parsing ONSMineLayer
+Parsing ONSAVRiLAmmoPickup
+Parsing ONSGrenadeAmmoPickup
+Parsing ONSMineAmmoPickup
+Parsing ONSAVRiLPickup
+Parsing ONSGrenadePickup
+Parsing ONSMineLayerPickup
+Parsing ONSHUDOnslaught
+Parsing ONSSkyMine
+Parsing ONSRVWebProjectile
+Parsing ONSRVWebProjectileLeader
+Parsing ONSAttackCraftMissle
+Parsing ONSPlasmaProjectile
+Parsing ONSAttackCraftPlasmaProjectileBlue
+Parsing ONSAttackCraftPlasmaProjectileRed
+Parsing ONSHoverBikePlasmaProjectile
+Parsing ONSManualGunPlasmaProjectile
+Parsing ONSAVRiLRocket
+Parsing ONSGrenadeProjectile
+Parsing ONSMineProjectile
+Parsing ONSMineProjectileBLUE
+Parsing ONSMineProjectileRED
+Parsing ONSRocketProjectile
+Parsing ONSHeadlightCorona
+Parsing ONSBrakelightCorona
+Parsing ONSWeapon
+Parsing ONSAttackCraftGun
+Parsing ONSHoverBikePlasmaGun
+Parsing ONSHoverTankCannon
+Parsing ONSManualGun
+Parsing ONSPRVRearGun
+Parsing ONSPRVSideGun
+Parsing ONSRVWebLauncher
+Parsing ONSTankSecondaryTurret
+Parsing ONSHUDOverlay
+Parsing ONSManualGunOverlay
+Parsing ONSPowerCoreEnergy
+Parsing ONSPowerCoreEnergyBlue
+Parsing ONSPowerCoreEnergyRed
+Parsing ONSPowerCoreShield
+Parsing ONSPowerNodeShield
+Parsing ONSPowerLinkOfficialSetup
+Parsing ONSPowerNodeEnergySphere
+Parsing ONSTeleportPad
+Parsing ONSCrosshairs
+Parsing ONSGrenadeFire
+Parsing ONSMineThrowFire
+Parsing ONSAVRiLFire
+Parsing ONSAVRiLAltFire
+Parsing ONSGrenadeAltFire
+Parsing ONSMineLayerAltFire
+Parsing ONSPowerLinkCustomSetup
+Compiling ONSPlayerReplicationInfo
+Compiling ONSSquadAI
+Compiling ONSDefaultMut
+Compiling MutBigWheels
+Compiling MutLightweightVehicles
+Compiling MutOnslaughtWeapons
+Compiling MutWheeledVehicleStunts
+Compiling ONSOnslaughtGame
+Compiling ActionMessage_ONS
+Compiling ONSOnslaughtMessage
+Compiling ONSDaredevilMessage
+Compiling ONSLinkDesignMessage
+Compiling ONSVehicleKillMessage
+Compiling ONSMapListOnslaught
+Compiling BigWheelsRules
+Compiling ONSTeamAI
+Compiling PowerLink
+Compiling ONSVehicle
+Compiling ONSWheeledCraft
+Compiling ONSPRV
+Compiling ONSRV
+Compiling ONSTreadCraft
+Compiling ONSHoverTank
+Compiling ONSPlaneCraft
+Compiling ONSHoverCraft
+Compiling ONSHoverBike
+Compiling ONSChopperCraft
+Compiling ONSAttackCraft
+Compiling ONSWeaponPawn
+Compiling ONSStationaryWeaponPawn
+Compiling ONSManualGunPawn
+Compiling ONSPRVRearGunPawn
+Compiling ONSPRVSideGunPawn
+Compiling ONSTankSecondaryTurretPawn
+Compiling ONSRocketScorch
+Compiling ONSHeadlightProjector
+Compiling ONSWeaponAmbientEmitter
+Compiling ONSRVChainGunFireEffect
+Compiling ONSImpactSparks
+Compiling ONSDamagedEffect
+Compiling ONSVehicleBuildEffect
+Compiling ONSAttackCraftBuildEffectBlue
+Compiling ONSAttackCraftBuildEffectRed
+Compiling ONSHoverBikeBuildEffectBlue
+Compiling ONSHoverBikeBuildEffectRed
+Compiling ONSPRVBuildEffectBlue
+Compiling ONSPRVBuildEffectRed
+Compiling ONSRVBuildEffectBlue
+Compiling ONSRVBuildEffectRed
+Compiling ONSTankBuildEffectBlue
+Compiling ONSTankBuildEffectRed
+Compiling ONSAttackCraftExhaust
+Compiling ONSAttackCraftStreamer
+Compiling ONSAVRiLRocketExplosion
+Compiling ONSAvrilSmokeTrail
+Compiling ONSBlueEnergyEffect
+Compiling ONSBluePlasmaFireEffect
+Compiling ONSBluePlasmaSmallFireEffect
+Compiling ONSChargeBeamEffect
+Compiling ONSDirtSlipEffect
+Compiling ONSFreeRoamingEnergyEffect
+Compiling ONSGreenPlasmaFireEffect
+Compiling ONSGreenPlasmaSmallFireEffect
+Compiling ONSGrenadeBeaconBlue
+Compiling ONSGrenadeBeaconRed
+Compiling ONSGrenadeExplosionEffect
+Compiling ONSHoverBikeDuckEffect
+Compiling ONSHoverBikeHoverDust
+Compiling ONSHoverBikeJumpEffect
+Compiling ONSMineLayerTargetBeamEffect
+Compiling ONSNodeBeamBlueEffect
+Compiling ONSNodeBeamRedEffect
+Compiling ONSNodeHealEffect
+Compiling ONSPlasmaHitBlue
+Compiling ONSPlasmaHitGreen
+Compiling ONSPlasmaHitPurple
+Compiling ONSPlasmaHitRed
+Compiling ONSPowerCoreBreachEffect
+Compiling ONSPRVComboEffect
+Compiling ONSPRVRearGunCharge
+Compiling ONSPRVSideGunMuzzleFlash
+Compiling ONSPurplePlasmaSmallFireEffect
+Compiling ONSRedEnergyEffect
+Compiling ONSRedPlasmaFireEffect
+Compiling ONSRedPlasmaSmallFireEffect
+Compiling ONSRVLeftBladeBreakOffEffect
+Compiling ONSRVRightBladeBreakOffEffect
+Compiling ONSRVWebLauncherMuzzleFlash
+Compiling ONSRVWebProjectileEffect
+Compiling ONSSkyMineEffect
+Compiling ONSSmallVehicleExplosionEffect
+Compiling ONSTankFireEffect
+Compiling ONSTankFireTrailEffect
+Compiling ONSTankHitRockEffect
+Compiling ONSTurretBeamEffect
+Compiling ONSTurretBeamEffectBlue
+Compiling ONSVehDeathAttackCraft
+Compiling ONSVehDeathHoverBike
+Compiling ONSVehDeathHoverTank
+Compiling ONSVehDeathPRV
+Compiling ONSVehDeathRV
+Compiling ONSVehicleExplosionEffect
+Compiling ONSWheeledVehicleExplosionEffect
+Compiling ONSVehicleIonExplosionEffect
+Compiling ONSPowerCore
+Compiling ONSPowerCoreBlue
+Compiling ONSPowerCoreRed
+Compiling ONSPowerNode
+Compiling ONSPowerNodeNeutral
+Compiling ONSPCTeleportTrigger
+Compiling ONSAVRiLAttachment
+Compiling ONSGrenadeAttachment
+Compiling ONSMineLayerAttachment
+Compiling DamTypeAttackCraftMissle
+Compiling DamTypeAttackCraftPlasma
+Compiling DamTypeRoadkill
+Compiling DamTypePancake
+Compiling DamTypeAttackCraftPancake
+Compiling DamTypeHoverBikePancake
+Compiling DamTypePRVPancake
+Compiling DamTypeRVPancake
+Compiling DamTypeTankPancake
+Compiling DamTypeAttackCraftRoadkill
+Compiling DamTypeHoverBikeHeadshot
+Compiling DamTypePRVRoadkill
+Compiling DamTypeRVRoadkill
+Compiling DamTypeTankRoadkill
+Compiling DamTypeChargingBeam
+Compiling DamTypeHoverBikePlasma
+Compiling DamTypeONSChainGun
+Compiling DamTypeONSRVBlade
+Compiling DamTypeONSWeb
+Compiling DamTypePRVCombo
+Compiling DamTypePRVLaser
+Compiling DamTypeSkyMine
+Compiling DamTypeTankShell
+Compiling DamTypeTurretBeam
+Compiling DamTypeONSAVRiLRocket
+Compiling DamTypeONSGrenade
+Compiling DamTypeONSMine
+Compiling DamTypeDestroyedVehicleRoadKill
+Compiling DamTypeONSVehicle
+Compiling DamTypeONSVehicleExplosion
+Compiling ONSVehicleFactory
+Compiling ONSAttackCraftFactory
+Compiling ONSHoverCraftFactory
+Compiling ONSPRVFactory
+Compiling ONSRVFactory
+Compiling ONSTankFactory
+Compiling ONSTurretController
+Compiling ONSAVRiLAmmo
+Compiling ONSGrenadeAmmo
+Compiling ONSMineAmmo
+Compiling ONSAVRiL
+Compiling ONSGrenadeLauncher
+Compiling ONSMineLayer
+Compiling ONSAVRiLAmmoPickup
+Compiling ONSGrenadeAmmoPickup
+Compiling ONSMineAmmoPickup
+Compiling ONSAVRiLPickup
+Compiling ONSGrenadePickup
+Compiling ONSMineLayerPickup
+Compiling ONSHUDOnslaught
+Compiling ONSSkyMine
+Compiling ONSRVWebProjectile
+Compiling ONSRVWebProjectileLeader
+Compiling ONSAttackCraftMissle
+Compiling ONSPlasmaProjectile
+Compiling ONSAttackCraftPlasmaProjectileBlue
+Compiling ONSAttackCraftPlasmaProjectileRed
+Compiling ONSHoverBikePlasmaProjectile
+Compiling ONSManualGunPlasmaProjectile
+Compiling ONSAVRiLRocket
+Compiling ONSGrenadeProjectile
+Compiling ONSMineProjectile
+Compiling ONSMineProjectileBLUE
+Compiling ONSMineProjectileRED
+Compiling ONSRocketProjectile
+Compiling ONSHeadlightCorona
+Compiling ONSBrakelightCorona
+Compiling ONSWeapon
+Compiling ONSAttackCraftGun
+Compiling ONSHoverBikePlasmaGun
+Compiling ONSHoverTankCannon
+Compiling ONSManualGun
+Compiling ONSPRVRearGun
+Compiling ONSPRVSideGun
+Compiling ONSRVWebLauncher
+Compiling ONSTankSecondaryTurret
+Compiling ONSHUDOverlay
+Compiling ONSManualGunOverlay
+Compiling ONSPowerCoreEnergy
+Compiling ONSPowerCoreEnergyBlue
+Compiling ONSPowerCoreEnergyRed
+Compiling ONSPowerCoreShield
+Compiling ONSPowerNodeShield
+Compiling ONSPowerLinkOfficialSetup
+Compiling ONSPowerNodeEnergySphere
+Compiling ONSTeleportPad
+Compiling ONSCrosshairs
+Compiling ONSGrenadeFire
+Compiling ONSMineThrowFire
+Compiling ONSAVRiLFire
+Compiling ONSAVRiLAltFire
+Compiling ONSGrenadeAltFire
+Compiling ONSMineLayerAltFire
+Compiling ONSPowerLinkCustomSetup
+Importing Defaults for ONSPlayerReplicationInfo
+Importing Defaults for ONSSquadAI
+Importing Defaults for ONSDefaultMut
+Importing Defaults for MutBigWheels
+Importing Defaults for MutLightweightVehicles
+Importing Defaults for MutOnslaughtWeapons
+Importing Defaults for MutWheeledVehicleStunts
+Importing Defaults for ONSOnslaughtGame
+Importing Defaults for ActionMessage_ONS
+Importing Defaults for ONSOnslaughtMessage
+Importing Defaults for ONSDaredevilMessage
+Importing Defaults for ONSLinkDesignMessage
+Importing Defaults for ONSVehicleKillMessage
+Importing Defaults for ONSMapListOnslaught
+Importing Defaults for BigWheelsRules
+Importing Defaults for ONSTeamAI
+Importing Defaults for PowerLink
+Importing Defaults for ONSVehicle
+Importing Defaults for ONSWheeledCraft
+Importing Defaults for ONSPRV
+Importing Defaults for ONSRV
+Importing Defaults for ONSTreadCraft
+Importing Defaults for ONSHoverTank
+Importing Defaults for ONSPlaneCraft
+Importing Defaults for ONSHoverCraft
+Importing Defaults for ONSHoverBike
+Importing Defaults for ONSChopperCraft
+Importing Defaults for ONSAttackCraft
+Importing Defaults for ONSWeaponPawn
+Importing Defaults for ONSStationaryWeaponPawn
+Importing Defaults for ONSManualGunPawn
+Importing Defaults for ONSPRVRearGunPawn
+Importing Defaults for ONSPRVSideGunPawn
+Importing Defaults for ONSTankSecondaryTurretPawn
+Importing Defaults for ONSRocketScorch
+Importing Defaults for ONSHeadlightProjector
+Importing Defaults for ONSWeaponAmbientEmitter
+Importing Defaults for ONSRVChainGunFireEffect
+Importing Defaults for ONSImpactSparks
+Importing Defaults for ONSDamagedEffect
+Importing Defaults for ONSVehicleBuildEffect
+Importing Defaults for ONSAttackCraftBuildEffectBlue
+Importing Defaults for ONSAttackCraftBuildEffectRed
+Importing Defaults for ONSHoverBikeBuildEffectBlue
+Importing Defaults for ONSHoverBikeBuildEffectRed
+Importing Defaults for ONSPRVBuildEffectBlue
+Importing Defaults for ONSPRVBuildEffectRed
+Importing Defaults for ONSRVBuildEffectBlue
+Importing Defaults for ONSRVBuildEffectRed
+Importing Defaults for ONSTankBuildEffectBlue
+Importing Defaults for ONSTankBuildEffectRed
+Importing Defaults for ONSAttackCraftExhaust
+Importing Defaults for ONSAttackCraftStreamer
+Importing Defaults for ONSAVRiLRocketExplosion
+Importing Defaults for ONSAvrilSmokeTrail
+Importing Defaults for ONSBlueEnergyEffect
+Importing Defaults for ONSBluePlasmaFireEffect
+Importing Defaults for ONSBluePlasmaSmallFireEffect
+Importing Defaults for ONSChargeBeamEffect
+Importing Defaults for ONSDirtSlipEffect
+Importing Defaults for ONSFreeRoamingEnergyEffect
+Importing Defaults for ONSGreenPlasmaFireEffect
+Importing Defaults for ONSGreenPlasmaSmallFireEffect
+Importing Defaults for ONSGrenadeBeaconBlue
+Importing Defaults for ONSGrenadeBeaconRed
+Importing Defaults for ONSGrenadeExplosionEffect
+Importing Defaults for ONSHoverBikeDuckEffect
+Importing Defaults for ONSHoverBikeHoverDust
+Importing Defaults for ONSHoverBikeJumpEffect
+Importing Defaults for ONSMineLayerTargetBeamEffect
+Importing Defaults for ONSNodeBeamBlueEffect
+Importing Defaults for ONSNodeBeamRedEffect
+Importing Defaults for ONSNodeHealEffect
+Importing Defaults for ONSPlasmaHitBlue
+Importing Defaults for ONSPlasmaHitGreen
+Importing Defaults for ONSPlasmaHitPurple
+Importing Defaults for ONSPlasmaHitRed
+Importing Defaults for ONSPowerCoreBreachEffect
+Importing Defaults for ONSPRVComboEffect
+Importing Defaults for ONSPRVRearGunCharge
+Importing Defaults for ONSPRVSideGunMuzzleFlash
+Importing Defaults for ONSPurplePlasmaSmallFireEffect
+Importing Defaults for ONSRedEnergyEffect
+Importing Defaults for ONSRedPlasmaFireEffect
+Importing Defaults for ONSRedPlasmaSmallFireEffect
+Importing Defaults for ONSRVLeftBladeBreakOffEffect
+Importing Defaults for ONSRVRightBladeBreakOffEffect
+Importing Defaults for ONSRVWebLauncherMuzzleFlash
+Importing Defaults for ONSRVWebProjectileEffect
+Importing Defaults for ONSSkyMineEffect
+Importing Defaults for ONSSmallVehicleExplosionEffect
+Importing Defaults for ONSTankFireEffect
+Importing Defaults for ONSTankFireTrailEffect
+Importing Defaults for ONSTankHitRockEffect
+Importing Defaults for ONSTurretBeamEffect
+Importing Defaults for ONSTurretBeamEffectBlue
+Importing Defaults for ONSVehDeathAttackCraft
+Importing Defaults for ONSVehDeathHoverBike
+Importing Defaults for ONSVehDeathHoverTank
+Importing Defaults for ONSVehDeathPRV
+Importing Defaults for ONSVehDeathRV
+Importing Defaults for ONSVehicleExplosionEffect
+Importing Defaults for ONSWheeledVehicleExplosionEffect
+Importing Defaults for ONSVehicleIonExplosionEffect
+Importing Defaults for ONSPowerCore
+Importing Defaults for ONSPowerCoreBlue
+Importing Defaults for ONSPowerCoreRed
+Importing Defaults for ONSPowerNode
+Importing Defaults for ONSPowerNodeNeutral
+Importing Defaults for ONSPCTeleportTrigger
+Importing Defaults for ONSAVRiLAttachment
+Importing Defaults for ONSGrenadeAttachment
+Importing Defaults for ONSMineLayerAttachment
+Importing Defaults for DamTypeAttackCraftMissle
+Importing Defaults for DamTypeAttackCraftPlasma
+Importing Defaults for DamTypeRoadkill
+Importing Defaults for DamTypePancake
+Importing Defaults for DamTypeAttackCraftPancake
+Importing Defaults for DamTypeHoverBikePancake
+Importing Defaults for DamTypePRVPancake
+Importing Defaults for DamTypeRVPancake
+Importing Defaults for DamTypeTankPancake
+Importing Defaults for DamTypeAttackCraftRoadkill
+Importing Defaults for DamTypeHoverBikeHeadshot
+Importing Defaults for DamTypePRVRoadkill
+Importing Defaults for DamTypeRVRoadkill
+Importing Defaults for DamTypeTankRoadkill
+Importing Defaults for DamTypeChargingBeam
+Importing Defaults for DamTypeHoverBikePlasma
+Importing Defaults for DamTypeONSChainGun
+Importing Defaults for DamTypeONSRVBlade
+Importing Defaults for DamTypeONSWeb
+Importing Defaults for DamTypePRVCombo
+Importing Defaults for DamTypePRVLaser
+Importing Defaults for DamTypeSkyMine
+Importing Defaults for DamTypeTankShell
+Importing Defaults for DamTypeTurretBeam
+Importing Defaults for DamTypeONSAVRiLRocket
+Importing Defaults for DamTypeONSGrenade
+Importing Defaults for DamTypeONSMine
+Importing Defaults for DamTypeDestroyedVehicleRoadKill
+Importing Defaults for DamTypeONSVehicle
+Importing Defaults for DamTypeONSVehicleExplosion
+Importing Defaults for ONSVehicleFactory
+Importing Defaults for ONSAttackCraftFactory
+Importing Defaults for ONSHoverCraftFactory
+Importing Defaults for ONSPRVFactory
+Importing Defaults for ONSRVFactory
+Importing Defaults for ONSTankFactory
+Importing Defaults for ONSTurretController
+Importing Defaults for ONSAVRiLAmmo
+Importing Defaults for ONSGrenadeAmmo
+Importing Defaults for ONSMineAmmo
+Importing Defaults for ONSAVRiL
+Importing Defaults for ONSGrenadeLauncher
+Importing Defaults for ONSMineLayer
+Importing Defaults for ONSAVRiLAmmoPickup
+Importing Defaults for ONSGrenadeAmmoPickup
+Importing Defaults for ONSMineAmmoPickup
+Importing Defaults for ONSAVRiLPickup
+Importing Defaults for ONSGrenadePickup
+Importing Defaults for ONSMineLayerPickup
+Importing Defaults for ONSHUDOnslaught
+Importing Defaults for ONSSkyMine
+Importing Defaults for ONSRVWebProjectile
+Importing Defaults for ONSRVWebProjectileLeader
+Importing Defaults for ONSAttackCraftMissle
+Importing Defaults for ONSPlasmaProjectile
+Importing Defaults for ONSAttackCraftPlasmaProjectileBlue
+Importing Defaults for ONSAttackCraftPlasmaProjectileRed
+Importing Defaults for ONSHoverBikePlasmaProjectile
+Importing Defaults for ONSManualGunPlasmaProjectile
+Importing Defaults for ONSAVRiLRocket
+Importing Defaults for ONSGrenadeProjectile
+Importing Defaults for ONSMineProjectile
+Importing Defaults for ONSMineProjectileBLUE
+Importing Defaults for ONSMineProjectileRED
+Importing Defaults for ONSRocketProjectile
+Importing Defaults for ONSHeadlightCorona
+Importing Defaults for ONSBrakelightCorona
+Importing Defaults for ONSWeapon
+Importing Defaults for ONSAttackCraftGun
+Importing Defaults for ONSHoverBikePlasmaGun
+Importing Defaults for ONSHoverTankCannon
+Importing Defaults for ONSManualGun
+Importing Defaults for ONSPRVRearGun
+Importing Defaults for ONSPRVSideGun
+Importing Defaults for ONSRVWebLauncher
+Importing Defaults for ONSTankSecondaryTurret
+Importing Defaults for ONSHUDOverlay
+Importing Defaults for ONSManualGunOverlay
+Importing Defaults for ONSPowerCoreEnergy
+Importing Defaults for ONSPowerCoreEnergyBlue
+Importing Defaults for ONSPowerCoreEnergyRed
+Importing Defaults for ONSPowerCoreShield
+Importing Defaults for ONSPowerNodeShield
+Importing Defaults for ONSPowerLinkOfficialSetup
+Importing Defaults for ONSPowerNodeEnergySphere
+Importing Defaults for ONSTeleportPad
+Importing Defaults for ONSCrosshairs
+Importing Defaults for ONSGrenadeFire
+Importing Defaults for ONSMineThrowFire
+Importing Defaults for ONSAVRiLFire
+Importing Defaults for ONSAVRiLAltFire
+Importing Defaults for ONSGrenadeAltFire
+Importing Defaults for ONSMineLayerAltFire
+Importing Defaults for ONSPowerLinkCustomSetup
+---------------------------GUI2K4 - Release---------------------------
+Analyzing...
+Parsing StreamDirectoryNode
+Parsing UT2K4GUIController
+Parsing UT2K4IRCLink
+Parsing UT2K4LoadingPageBase
+Parsing UT2K4ServerLoading
+Parsing UT2K4SP_LadderLoading
+Parsing MySubTestPanelA
+Parsing MySubTestPanelB
+Parsing MyTestPanelA
+Parsing MyTestPanelB
+Parsing MyTestPanelC
+Parsing UT2K4PlayInfoPanel
+Parsing CustomFilter
+Parsing GUIFilterPanel
+Parsing UT2K4CustomRulesPanel
+Parsing UT2K4FilterRulesPanel
+Parsing UT2K4FilterSummaryPanel
+Parsing IAMultiColumnRulesPanel
+Parsing UT2K4Tab_ServerRulesPanel
+Parsing InstantActionRulesPanel
+Parsing RemotePlayInfoPanel
+Parsing MidGamePanel
+Parsing UT2K4Tab_ServerMapList
+Parsing UT2K4Tab_IAMaplist
+Parsing UT2K4Tab_MidGameHelp
+Parsing UT2K4Tab_MidGameRulesCombo
+Parsing UT2K4Tab_MidGameVoiceChat
+Parsing UT2K4Tab_OnslaughtMap
+Parsing UT2K4Tab_PlayerLoginControls
+Parsing UT2K4Tab_PlayerLoginControlsInvasion
+Parsing UT2K4Tab_PlayerLoginControlsOnslaught
+Parsing UT2K4Tab_SinglePlayerLoginControls
+Parsing UT2K4Tab_ServerInfo
+Parsing UT2K4Tab_ServerMOTD
+Parsing ModsAndDemosTabs
+Parsing Ut2K4Community
+Parsing UT2K4Demos
+Parsing UT2K4Ownage
+Parsing UT2K4UserMods
+Parsing Settings_Tabs
+Parsing UT2K4Tab_AudioSettings
+Parsing UT2K4Tab_DetailSettings
+Parsing UT2K4Tab_GameSettings
+Parsing UT2K4Tab_GUISettings
+Parsing UT2K4Tab_HudSettings
+Parsing UT2K4Tab_IForceSettings
+Parsing UT2K4Tab_PlayerSettings
+Parsing UT2K4Tab_WeaponPref
+Parsing UT2K4Browser_Page
+Parsing UT2k4Browser_IRC
+Parsing UT2k4Browser_MOTD
+Parsing UT2k4Browser_ServerListPageBase
+Parsing UT2K4Browser_ServerListPageMS
+Parsing UT2k4Browser_ServerListPageBuddy
+Parsing UT2k4Browser_ServerListPageInternet
+Parsing UT2k4Browser_ServerListPageFavorites
+Parsing UT2k4Browser_ServerListPageLAN
+Parsing UT2K4GameTabBase
+Parsing UT2K4Tab_BotConfigBase
+Parsing UT2K4Tab_BotConfigMP
+Parsing UT2K4Tab_BotConfigSP
+Parsing UT2K4Tab_GameTypeBase
+Parsing UT2K4Tab_GameTypeMP
+Parsing UT2K4Tab_GameTypeSP
+Parsing UT2K4Tab_MainBase
+Parsing UT2K4Tab_MainMP
+Parsing UT2K4Tab_MainSP
+Parsing UT2K4Tab_MutatorBase
+Parsing UT2K4Tab_MutatorMP
+Parsing UT2K4Tab_MutatorSP
+Parsing UT2K4Tab_RulesBase
+Parsing UT2K4IRC_Page
+Parsing UT2k4IRC_Channel
+Parsing UT2k4IRC_Private
+Parsing UT2k4IRC_System
+Parsing UT2K4SPTab_Base
+Parsing UT2K4SPTab_DetailEnemies
+Parsing UT2K4SPTab_DetailMatch
+Parsing UT2K4SPTab_DetailPhantom
+Parsing UT2K4SPTab_ExtraLadder
+Parsing UT2K4SPTab_LadderBase
+Parsing UT2K4SPTab_SingleLadder
+Parsing UT2K4SPTab_CustomLadder
+Parsing UT2K4SPTab_Qualification
+Parsing UT2K4SPTab_TeamQualification
+Parsing UT2K4SPTab_Ladder
+Parsing UT2K4SPTab_Profile
+Parsing UT2K4SPTab_ProfileNew
+Parsing UT2K4SPTab_TeamManagement
+Parsing UT2K4SPTab_Tutorials
+Parsing UT2K4Tab_AdminPlayerList
+Parsing AdminPanelBase
+Parsing AdminPanelLogin
+Parsing AdminPanelMaps
+Parsing AdminPanelPlayers
+Parsing AdminPanelRules
+Parsing SimpleFilterPanel
+Parsing UT2K4FilterControlPanel
+Parsing UT2k4IRC_Panel
+Parsing AnimatedEditBox
+Parsing ButtonFooter
+Parsing UT2k4Browser_Footer
+Parsing UT2K4GameFooter
+Parsing UT2K4ModFooter
+Parsing UT2K4Settings_Footer
+Parsing UT2K4StatsPrompt
+Parsing GUI2K4QuestionPage
+Parsing MyTest2Page
+Parsing MyTestPage
+Parsing PopupPageBase
+Parsing MessageWindow
+Parsing BlackoutWindow
+Parsing UT2K4ArenaConfig
+Parsing UT2K4BadCDKeyMsg
+Parsing UT2K4DisconnectOptionPage
+Parsing UT2K4QuitPage
+Parsing UT2K4GenericMessageBox
+Parsing UT2K4GetDataMenu
+Parsing UT2k4Browser_OpenIP
+Parsing EditFavoritePage
+Parsing UT2K4ChatPassword
+Parsing UT2K4GetPassword
+Parsing UT2K4IRC_ChanKey
+Parsing UT2k4IRC_NewNick
+Parsing UT2K4PerformWarn
+Parsing UT2K4VideoChangeOK
+Parsing UT2K4InternetSettingsPage
+Parsing FloatingWindow
+Parsing LargeWindow
+Parsing UT2K4CustomHUDMenu
+Parsing CustomHUDMenuAssault
+Parsing CustomHUDMenuOnslaught
+Parsing FilterPageBase
+Parsing SimpleFilterPage
+Parsing UT2K4CustomFilterPage
+Parsing RemoteAdmin
+Parsing UT2K4OnslaughtPowerLinkDesigner
+Parsing UT2K4QuickPlay
+Parsing UT2K4SP_CGBloodRites
+Parsing UT2K4SP_CGBRUnTrade
+Parsing UT2K4SP_CGBRTrade
+Parsing UT2K4SP_CGManoEMano
+Parsing UT2K4SP_Challenge
+Parsing UT2K4SP_DetailsTeam
+Parsing UT2K4SP_Injury
+Parsing UT2K4SP_MapChallenge
+Parsing UT2K4SP_PictureMessage
+Parsing UT2K4SP_TeamRoles
+Parsing VoiceChatKeyBindPage
+Parsing LockedFloatingWindow
+Parsing KeyBindMenu
+Parsing ControlBinder
+Parsing SpeechBinder
+Parsing GUICustomPropertyPage
+Parsing GUIArrayPropPage
+Parsing GUIDynArrayPage
+Parsing MOTDConfigPage
+Parsing UT2K4InvasionWaveConfig
+Parsing VoiceChatConfig
+Parsing MutatorConfigMenu
+Parsing TeamSymbolConfig
+Parsing UT2K4BotConfigPage
+Parsing UT2K4BotInfoPage
+Parsing UT2K4Demo2AVI
+Parsing UT2k4ModelSelect
+Parsing UT2K4NetworkStatusMsg
+Parsing ID3TagEditor
+Parsing MaplistEditor
+Parsing StreamPlayer
+Parsing StreamPlaylistEditor
+Parsing UT2K4InGameChat
+Parsing UT2K4PlayerLoginMenu
+Parsing UT2K4InvasionLoginMenu
+Parsing UT2K4OnslaughtLoginMenu
+Parsing UT2K4SinglePlayerLoginMenu
+Parsing UT2K4DemoPlayback
+Parsing UT2k4MainPage
+Parsing UT2K4GamePageBase
+Parsing UT2K4GamePageMP
+Parsing UT2K4GamePageSP
+Parsing UT2K4ModsAndDemos
+Parsing UT2k4ServerBrowser
+Parsing UT2K4SettingsPage
+Parsing UT2K4SP_Details
+Parsing UT2K4SP_Main
+Parsing UT2k4MainMenu
+Parsing UT2K4MidGameMenu
+Parsing UT2K4ServerInfo
+Parsing UT2K4SP_HighScores
+Parsing UT2K4SP_Message
+Parsing GUI2K4MultiColumnListBox
+Parsing PlayInfoListBox
+Parsing ServerBrowserMCListBox
+Parsing UT2k4Browser_BuddyListBox
+Parsing UT2k4Browser_PlayersListBox
+Parsing UT2k4Browser_RulesListBox
+Parsing UT2k4Browser_ServerListBox
+Parsing UT2K4FilterSummaryListBox
+Parsing MapListBox
+Parsing DirectoryTreeListBox
+Parsing ComponentGroup
+Parsing UT2K4LadderButton
+Parsing UT2K4LadderVButton
+Parsing UT2K4LadderHButton
+Parsing AltSectionBackground
+Parsing GUI2K4MultiColumnList
+Parsing MyTestMultiColumnList
+Parsing PlayInfoList
+Parsing ServerBrowserMCList
+Parsing UT2k4Browser_BuddyList
+Parsing UT2k4Browser_PlayersList
+Parsing UT2k4Browser_RulesList
+Parsing UT2k4Browser_ServersList
+Parsing UT2K4FilterSummaryList
+Parsing DirectoryTreeList
+Parsing STY2ListSelection
+Parsing STY2BrowserListSel
+Parsing STY2ListHighlight
+Parsing GUI2Styles
+Parsing STY2ComboButton
+Parsing STY2AltComboButton
+Parsing STY2RoundButton
+Parsing STY2ArrowLeft
+Parsing STY2ArrowLeftDbl
+Parsing STY2ArrowRight
+Parsing STY2ArrowRightDbl
+Parsing STY2RoundScaledButton
+Parsing STY2SliderKnob
+Parsing STY2SquareBar
+Parsing STY2NoBackground
+Parsing STY2BindBox
+Parsing STY2TabButton
+Parsing STY2BottomTabButton
+Parsing STY2FooterButton
+Parsing STY2BrowserButton
+Parsing STY2CharButton
+Parsing STY2CheckBox
+Parsing STY2CheckBoxCheck
+Parsing STY2CloseButton
+Parsing STY2CoolScroll
+Parsing STY2TextLabel
+Parsing STY2DarkTextLabel
+Parsing STY2EditBox
+Parsing STY2Footer
+Parsing STY2Header
+Parsing STY2IRCEntry
+Parsing STY2IRCText
+Parsing STY2ItemOutline
+Parsing STY2LadderButton
+Parsing STY2LadderButtonActive
+Parsing STY2LadderButtonHi
+Parsing STY2SquareButton
+Parsing STY2ListBox
+Parsing STY2ComboListBox
+Parsing STY2ContextMenu
+Parsing STY2ServerListContextMenu
+Parsing STY2SquareMenuButton
+Parsing STY2MidGameButton
+Parsing STY2SliderBar
+Parsing STY2ListSectionHeader
+Parsing STY2MouseOverLabel
+Parsing STY2Page
+Parsing STY2RosterButton
+Parsing STY2ScrollZone
+Parsing STY2SectionHeaderBar
+Parsing STY2SectionHeaderText
+Parsing STY2SectionHeaderTop
+Parsing STY2ServerBrowserGrid
+Parsing STY2ServerBrowserGridHeader
+Parsing STY2SliderCaption
+Parsing STY2Spinner
+Parsing STY2TabBackground
+Parsing STY2TextButton
+Parsing STY2TextButtonEffect
+Parsing STY2VertDownButton
+Parsing STY2VertGrip
+Parsing STY2VertUpButton
+Parsing fntUT2k4Default
+Parsing fntUT2k4Header
+Parsing fntUT2k4IRC
+Parsing fntUT2k4Large
+Parsing fntUT2k4MainMenu
+Parsing fntUT2K4Medium
+Parsing fntUT2k4Menu
+Parsing fntUT2k4MidGame
+Parsing fntUT2k4ServerList
+Parsing fntUT2k4Small
+Parsing fntUT2k4SmallHeader
+Parsing GUIUserModInfo
+Parsing UT2K4DefaultGame
+Parsing BrowserFilters
+Parsing PlayInfoFilter
+Parsing SPHighScoreBase
+Parsing SPHighScore
+Parsing SPProfileExporter
+Compiling StreamDirectoryNode
+Compiling UT2K4GUIController
+Compiling UT2K4IRCLink
+Compiling UT2K4LoadingPageBase
+Compiling UT2K4ServerLoading
+Compiling UT2K4SP_LadderLoading
+Compiling MySubTestPanelA
+Compiling MySubTestPanelB
+Compiling MyTestPanelA
+Compiling MyTestPanelB
+Compiling MyTestPanelC
+Compiling UT2K4PlayInfoPanel
+Compiling GUIFilterPanel
+Compiling UT2K4CustomRulesPanel
+Compiling UT2K4FilterRulesPanel
+Compiling UT2K4FilterSummaryPanel
+Compiling IAMultiColumnRulesPanel
+Compiling UT2K4Tab_ServerRulesPanel
+Compiling InstantActionRulesPanel
+Compiling RemotePlayInfoPanel
+Compiling MidGamePanel
+Compiling UT2K4Tab_ServerMapList
+Compiling UT2K4Tab_IAMaplist
+Compiling UT2K4Tab_MidGameHelp
+Compiling UT2K4Tab_MidGameRulesCombo
+Compiling UT2K4Tab_MidGameVoiceChat
+Compiling UT2K4Tab_OnslaughtMap
+Compiling UT2K4Tab_PlayerLoginControls
+Compiling UT2K4Tab_PlayerLoginControlsInvasion
+Compiling UT2K4Tab_PlayerLoginControlsOnslaught
+Compiling UT2K4Tab_SinglePlayerLoginControls
+Compiling UT2K4Tab_ServerInfo
+Compiling UT2K4Tab_ServerMOTD
+Compiling ModsAndDemosTabs
+Compiling Ut2K4Community
+Compiling UT2K4Demos
+Compiling UT2K4Ownage
+Compiling UT2K4UserMods
+Compiling Settings_Tabs
+Compiling UT2K4Tab_AudioSettings
+Compiling UT2K4Tab_DetailSettings
+Compiling UT2K4Tab_GameSettings
+Compiling UT2K4Tab_GUISettings
+Compiling UT2K4Tab_HudSettings
+Compiling UT2K4Tab_IForceSettings
+Compiling UT2K4Tab_PlayerSettings
+Compiling UT2K4Tab_WeaponPref
+Compiling UT2K4Browser_Page
+Compiling UT2k4Browser_IRC
+Compiling UT2k4Browser_MOTD
+Compiling UT2k4Browser_ServerListPageBase
+Compiling UT2K4Browser_ServerListPageMS
+Compiling UT2k4Browser_ServerListPageBuddy
+Compiling UT2k4Browser_ServerListPageInternet
+Compiling UT2k4Browser_ServerListPageFavorites
+Compiling UT2k4Browser_ServerListPageLAN
+Compiling UT2K4GameTabBase
+Compiling UT2K4Tab_BotConfigBase
+Compiling UT2K4Tab_BotConfigMP
+Compiling UT2K4Tab_BotConfigSP
+Compiling UT2K4Tab_GameTypeBase
+Compiling UT2K4Tab_GameTypeMP
+Compiling UT2K4Tab_GameTypeSP
+Compiling UT2K4Tab_MainBase
+Compiling UT2K4Tab_MainMP
+Compiling UT2K4Tab_MainSP
+Compiling UT2K4Tab_MutatorBase
+Compiling UT2K4Tab_MutatorMP
+Compiling UT2K4Tab_MutatorSP
+Compiling UT2K4Tab_RulesBase
+Compiling UT2K4IRC_Page
+Compiling UT2k4IRC_Channel
+Compiling UT2k4IRC_Private
+Compiling UT2k4IRC_System
+Compiling UT2K4SPTab_Base
+Compiling UT2K4SPTab_DetailEnemies
+Compiling UT2K4SPTab_DetailMatch
+Compiling UT2K4SPTab_DetailPhantom
+Compiling UT2K4SPTab_ExtraLadder
+Compiling UT2K4SPTab_LadderBase
+Compiling UT2K4SPTab_SingleLadder
+Compiling UT2K4SPTab_CustomLadder
+Compiling UT2K4SPTab_Qualification
+Compiling UT2K4SPTab_TeamQualification
+Compiling UT2K4SPTab_Ladder
+Compiling UT2K4SPTab_Profile
+Compiling UT2K4SPTab_ProfileNew
+Compiling UT2K4SPTab_TeamManagement
+Compiling UT2K4SPTab_Tutorials
+Compiling UT2K4Tab_AdminPlayerList
+Compiling AdminPanelBase
+Compiling AdminPanelLogin
+Compiling AdminPanelMaps
+Compiling AdminPanelPlayers
+Compiling AdminPanelRules
+Compiling SimpleFilterPanel
+Compiling UT2K4FilterControlPanel
+Compiling UT2k4IRC_Panel
+Compiling AnimatedEditBox
+Compiling ButtonFooter
+Compiling UT2k4Browser_Footer
+Compiling UT2K4GameFooter
+Compiling UT2K4ModFooter
+Compiling UT2K4Settings_Footer
+Compiling UT2K4StatsPrompt
+Compiling GUI2K4QuestionPage
+Compiling MyTest2Page
+Compiling MyTestPage
+Compiling PopupPageBase
+Compiling MessageWindow
+Compiling BlackoutWindow
+Compiling UT2K4ArenaConfig
+Compiling UT2K4BadCDKeyMsg
+Compiling UT2K4DisconnectOptionPage
+Compiling UT2K4QuitPage
+Compiling UT2K4GenericMessageBox
+Compiling UT2K4GetDataMenu
+Compiling UT2k4Browser_OpenIP
+Compiling EditFavoritePage
+Compiling UT2K4ChatPassword
+Compiling UT2K4GetPassword
+Compiling UT2K4IRC_ChanKey
+Compiling UT2k4IRC_NewNick
+Compiling UT2K4PerformWarn
+Compiling UT2K4VideoChangeOK
+Compiling UT2K4InternetSettingsPage
+Compiling FloatingWindow
+Compiling LargeWindow
+Compiling UT2K4CustomHUDMenu
+Compiling CustomHUDMenuAssault
+Compiling CustomHUDMenuOnslaught
+Compiling FilterPageBase
+Compiling SimpleFilterPage
+Compiling UT2K4CustomFilterPage
+Compiling RemoteAdmin
+Compiling UT2K4OnslaughtPowerLinkDesigner
+Compiling UT2K4QuickPlay
+Compiling UT2K4SP_CGBloodRites
+Compiling UT2K4SP_CGBRUnTrade
+Compiling UT2K4SP_CGBRTrade
+Compiling UT2K4SP_CGManoEMano
+Compiling UT2K4SP_Challenge
+Compiling UT2K4SP_DetailsTeam
+Compiling UT2K4SP_Injury
+Compiling UT2K4SP_MapChallenge
+Compiling UT2K4SP_PictureMessage
+Compiling UT2K4SP_TeamRoles
+Compiling VoiceChatKeyBindPage
+Compiling LockedFloatingWindow
+Compiling KeyBindMenu
+Compiling ControlBinder
+Compiling SpeechBinder
+Compiling GUICustomPropertyPage
+Compiling GUIArrayPropPage
+Compiling GUIDynArrayPage
+Compiling MOTDConfigPage
+Compiling UT2K4InvasionWaveConfig
+Compiling VoiceChatConfig
+Compiling MutatorConfigMenu
+Compiling TeamSymbolConfig
+Compiling UT2K4BotConfigPage
+Compiling UT2K4BotInfoPage
+Compiling UT2K4Demo2AVI
+Compiling UT2k4ModelSelect
+Compiling UT2K4NetworkStatusMsg
+Compiling ID3TagEditor
+Compiling MaplistEditor
+Compiling StreamPlayer
+Compiling StreamPlaylistEditor
+Compiling UT2K4InGameChat
+Compiling UT2K4PlayerLoginMenu
+Compiling UT2K4InvasionLoginMenu
+Compiling UT2K4OnslaughtLoginMenu
+Compiling UT2K4SinglePlayerLoginMenu
+Compiling UT2K4DemoPlayback
+Compiling UT2k4MainPage
+Compiling UT2K4GamePageBase
+Compiling UT2K4GamePageMP
+Compiling UT2K4GamePageSP
+Compiling UT2K4ModsAndDemos
+Compiling UT2k4ServerBrowser
+Compiling UT2K4SettingsPage
+Compiling UT2K4SP_Details
+Compiling UT2K4SP_Main
+Compiling UT2k4MainMenu
+Compiling UT2K4MidGameMenu
+Compiling UT2K4ServerInfo
+Compiling UT2K4SP_HighScores
+Compiling UT2K4SP_Message
+Compiling GUI2K4MultiColumnListBox
+Compiling PlayInfoListBox
+Compiling ServerBrowserMCListBox
+Compiling UT2k4Browser_BuddyListBox
+Compiling UT2k4Browser_PlayersListBox
+Compiling UT2k4Browser_RulesListBox
+Compiling UT2k4Browser_ServerListBox
+Compiling UT2K4FilterSummaryListBox
+Compiling MapListBox
+Compiling DirectoryTreeListBox
+Compiling ComponentGroup
+Compiling UT2K4LadderButton
+Compiling UT2K4LadderVButton
+Compiling UT2K4LadderHButton
+Compiling AltSectionBackground
+Compiling GUI2K4MultiColumnList
+Compiling MyTestMultiColumnList
+Compiling PlayInfoList
+Compiling ServerBrowserMCList
+Compiling UT2k4Browser_BuddyList
+Compiling UT2k4Browser_PlayersList
+Compiling UT2k4Browser_RulesList
+Compiling UT2k4Browser_ServersList
+Compiling UT2K4FilterSummaryList
+Compiling DirectoryTreeList
+Compiling STY2ListSelection
+Compiling STY2BrowserListSel
+Compiling STY2ListHighlight
+Compiling GUI2Styles
+Compiling STY2ComboButton
+Compiling STY2AltComboButton
+Compiling STY2RoundButton
+Compiling STY2ArrowLeft
+Compiling STY2ArrowLeftDbl
+Compiling STY2ArrowRight
+Compiling STY2ArrowRightDbl
+Compiling STY2RoundScaledButton
+Compiling STY2SliderKnob
+Compiling STY2SquareBar
+Compiling STY2NoBackground
+Compiling STY2BindBox
+Compiling STY2TabButton
+Compiling STY2BottomTabButton
+Compiling STY2FooterButton
+Compiling STY2BrowserButton
+Compiling STY2CharButton
+Compiling STY2CheckBox
+Compiling STY2CheckBoxCheck
+Compiling STY2CloseButton
+Compiling STY2CoolScroll
+Compiling STY2TextLabel
+Compiling STY2DarkTextLabel
+Compiling STY2EditBox
+Compiling STY2Footer
+Compiling STY2Header
+Compiling STY2IRCEntry
+Compiling STY2IRCText
+Compiling STY2ItemOutline
+Compiling STY2LadderButton
+Compiling STY2LadderButtonActive
+Compiling STY2LadderButtonHi
+Compiling STY2SquareButton
+Compiling STY2ListBox
+Compiling STY2ComboListBox
+Compiling STY2ContextMenu
+Compiling STY2ServerListContextMenu
+Compiling STY2SquareMenuButton
+Compiling STY2MidGameButton
+Compiling STY2SliderBar
+Compiling STY2ListSectionHeader
+Compiling STY2MouseOverLabel
+Compiling STY2Page
+Compiling STY2RosterButton
+Compiling STY2ScrollZone
+Compiling STY2SectionHeaderBar
+Compiling STY2SectionHeaderText
+Compiling STY2SectionHeaderTop
+Compiling STY2ServerBrowserGrid
+Compiling STY2ServerBrowserGridHeader
+Compiling STY2SliderCaption
+Compiling STY2Spinner
+Compiling STY2TabBackground
+Compiling STY2TextButton
+Compiling STY2TextButtonEffect
+Compiling STY2VertDownButton
+Compiling STY2VertGrip
+Compiling STY2VertUpButton
+Compiling fntUT2k4Default
+Compiling fntUT2k4Header
+Compiling fntUT2k4IRC
+Compiling fntUT2k4Large
+Compiling fntUT2k4MainMenu
+Compiling fntUT2K4Medium
+Compiling fntUT2k4Menu
+Compiling fntUT2k4MidGame
+Compiling fntUT2k4ServerList
+Compiling fntUT2k4Small
+Compiling fntUT2k4SmallHeader
+Compiling GUIUserModInfo
+Compiling UT2K4DefaultGame
+Compiling BrowserFilters
+Compiling PlayInfoFilter
+Compiling CustomFilter
+Compiling SPHighScoreBase
+Compiling SPHighScore
+Compiling SPProfileExporter
+Importing Defaults for StreamDirectoryNode
+Importing Defaults for UT2K4GUIController
+... deferring
+Importing Defaults for UT2K4IRCLink
+Importing Defaults for UT2K4LoadingPageBase
+Importing Defaults for UT2K4ServerLoading
+Importing Defaults for UT2K4SP_LadderLoading
+Importing Defaults for MySubTestPanelA
+Importing Defaults for MySubTestPanelB
+Importing Defaults for MyTestPanelA
+Importing Defaults for MyTestPanelB
+Importing Defaults for MyTestPanelC
+Importing Defaults for UT2K4PlayInfoPanel
+Importing Defaults for GUIFilterPanel
+Importing Defaults for UT2K4CustomRulesPanel
+Importing Defaults for UT2K4FilterRulesPanel
+Importing Defaults for UT2K4FilterSummaryPanel
+... deferring
+Importing Defaults for IAMultiColumnRulesPanel
+Importing Defaults for UT2K4Tab_ServerRulesPanel
+Importing Defaults for InstantActionRulesPanel
+Importing Defaults for RemotePlayInfoPanel
+Importing Defaults for MidGamePanel
+Importing Defaults for UT2K4Tab_ServerMapList
+Importing Defaults for UT2K4Tab_IAMaplist
+... deferring
+Importing Defaults for UT2K4Tab_MidGameHelp
+... deferring
+Importing Defaults for UT2K4Tab_MidGameRulesCombo
+... deferring
+Importing Defaults for UT2K4Tab_MidGameVoiceChat
+... deferring
+Importing Defaults for UT2K4Tab_OnslaughtMap
+Importing Defaults for UT2K4Tab_PlayerLoginControls
+... deferring
+Importing Defaults for UT2K4Tab_ServerInfo
+Importing Defaults for UT2K4Tab_ServerMOTD
+... deferring
+Importing Defaults for ModsAndDemosTabs
+Importing Defaults for Ut2K4Community
+Importing Defaults for UT2K4Demos
+... deferring
+Importing Defaults for UT2K4Ownage
+... deferring
+Importing Defaults for UT2K4UserMods
+... deferring
+Importing Defaults for Settings_Tabs
+Importing Defaults for UT2K4Tab_AudioSettings
+Importing Defaults for UT2K4Tab_DetailSettings
+Importing Defaults for UT2K4Tab_GameSettings
+Importing Defaults for UT2K4Tab_GUISettings
+Importing Defaults for UT2K4Tab_HudSettings
+Importing Defaults for UT2K4Tab_IForceSettings
+Importing Defaults for UT2K4Tab_PlayerSettings
+Importing Defaults for UT2K4Tab_WeaponPref
+Importing Defaults for UT2K4Browser_Page
+Importing Defaults for UT2k4Browser_IRC
+Importing Defaults for UT2k4Browser_MOTD
+Importing Defaults for UT2k4Browser_ServerListPageBase
+Importing Defaults for UT2K4Browser_ServerListPageMS
+Importing Defaults for UT2k4Browser_ServerListPageBuddy
+Importing Defaults for UT2k4Browser_ServerListPageInternet
+Importing Defaults for UT2k4Browser_ServerListPageFavorites
+Importing Defaults for UT2k4Browser_ServerListPageLAN
+Importing Defaults for UT2K4GameTabBase
+Importing Defaults for UT2K4Tab_BotConfigBase
+... deferring
+Importing Defaults for UT2K4Tab_GameTypeBase
+... deferring
+Importing Defaults for UT2K4Tab_MainBase
+Importing Defaults for UT2K4Tab_MainMP
+Importing Defaults for UT2K4Tab_MainSP
+... deferring
+Importing Defaults for UT2K4Tab_MutatorBase
+Importing Defaults for UT2K4Tab_MutatorMP
+Importing Defaults for UT2K4Tab_MutatorSP
+Importing Defaults for UT2K4Tab_RulesBase
+Importing Defaults for UT2K4IRC_Page
+Importing Defaults for UT2k4IRC_Channel
+Importing Defaults for UT2k4IRC_Private
+Importing Defaults for UT2k4IRC_System
+Importing Defaults for UT2K4SPTab_Base
+Importing Defaults for UT2K4SPTab_DetailEnemies
+... deferring
+Importing Defaults for UT2K4SPTab_DetailMatch
+... deferring
+Importing Defaults for UT2K4SPTab_DetailPhantom
+Importing Defaults for UT2K4SPTab_ExtraLadder
+Importing Defaults for UT2K4SPTab_LadderBase
+... deferring
+Importing Defaults for UT2K4SPTab_Profile
+... deferring
+Importing Defaults for UT2K4SPTab_ProfileNew
+Importing Defaults for UT2K4SPTab_TeamManagement
+... deferring
+Importing Defaults for UT2K4SPTab_Tutorials
+Importing Defaults for UT2K4Tab_AdminPlayerList
+Importing Defaults for AdminPanelBase
+Importing Defaults for AdminPanelLogin
+Importing Defaults for AdminPanelMaps
+... deferring
+Importing Defaults for AdminPanelPlayers
+Importing Defaults for AdminPanelRules
+Importing Defaults for SimpleFilterPanel
+... deferring
+Importing Defaults for UT2K4FilterControlPanel
+Importing Defaults for UT2k4IRC_Panel
+Importing Defaults for AnimatedEditBox
+Importing Defaults for ButtonFooter
+Importing Defaults for UT2k4Browser_Footer
+Importing Defaults for UT2K4GameFooter
+Importing Defaults for UT2K4ModFooter
+Importing Defaults for UT2K4Settings_Footer
+Importing Defaults for UT2K4StatsPrompt
+Importing Defaults for GUI2K4QuestionPage
+Importing Defaults for MyTest2Page
+Importing Defaults for MyTestPage
+Importing Defaults for PopupPageBase
+Importing Defaults for MessageWindow
+Importing Defaults for BlackoutWindow
+Importing Defaults for UT2K4ArenaConfig
+Importing Defaults for UT2K4BadCDKeyMsg
+Importing Defaults for UT2K4DisconnectOptionPage
+Importing Defaults for UT2K4QuitPage
+Importing Defaults for UT2K4GenericMessageBox
+Importing Defaults for UT2K4GetDataMenu
+Importing Defaults for UT2k4Browser_OpenIP
+Importing Defaults for EditFavoritePage
+Importing Defaults for UT2K4ChatPassword
+Importing Defaults for UT2K4GetPassword
+Importing Defaults for UT2K4IRC_ChanKey
+Importing Defaults for UT2k4IRC_NewNick
+Importing Defaults for UT2K4PerformWarn
+Importing Defaults for UT2K4VideoChangeOK
+Importing Defaults for UT2K4InternetSettingsPage
+Importing Defaults for FloatingWindow
+Importing Defaults for LargeWindow
+Importing Defaults for UT2K4CustomHUDMenu
+Importing Defaults for CustomHUDMenuAssault
+Importing Defaults for CustomHUDMenuOnslaught
+Importing Defaults for FilterPageBase
+Importing Defaults for SimpleFilterPage
+Importing Defaults for UT2K4CustomFilterPage
+Importing Defaults for RemoteAdmin
+Importing Defaults for UT2K4OnslaughtPowerLinkDesigner
+Importing Defaults for UT2K4QuickPlay
+Importing Defaults for UT2K4SP_CGBloodRites
+Importing Defaults for UT2K4SP_CGBRUnTrade
+Importing Defaults for UT2K4SP_CGBRTrade
+Importing Defaults for UT2K4SP_CGManoEMano
+Importing Defaults for UT2K4SP_Challenge
+Importing Defaults for UT2K4SP_DetailsTeam
+Importing Defaults for UT2K4SP_Injury
+Importing Defaults for UT2K4SP_MapChallenge
+Importing Defaults for UT2K4SP_PictureMessage
+Importing Defaults for UT2K4SP_TeamRoles
+Importing Defaults for VoiceChatKeyBindPage
+Importing Defaults for LockedFloatingWindow
+... deferring
+Importing Defaults for ID3TagEditor
+Importing Defaults for MaplistEditor
+... deferring
+Importing Defaults for StreamPlayer
+... deferring
+Importing Defaults for StreamPlaylistEditor
+... deferring
+Importing Defaults for UT2K4InGameChat
+... deferring
+Importing Defaults for UT2K4PlayerLoginMenu
+Importing Defaults for UT2K4InvasionLoginMenu
+Importing Defaults for UT2K4OnslaughtLoginMenu
+Importing Defaults for UT2K4SinglePlayerLoginMenu
+Importing Defaults for UT2K4DemoPlayback
+Importing Defaults for UT2k4MainPage
+Importing Defaults for UT2K4GamePageBase
+Importing Defaults for UT2K4GamePageMP
+Importing Defaults for UT2K4GamePageSP
+Importing Defaults for UT2K4ModsAndDemos
+Importing Defaults for UT2k4ServerBrowser
+Importing Defaults for UT2K4SettingsPage
+Importing Defaults for UT2K4SP_Details
+Importing Defaults for UT2K4SP_Main
+Importing Defaults for UT2k4MainMenu
+Importing Defaults for UT2K4MidGameMenu
+Importing Defaults for UT2K4ServerInfo
+Importing Defaults for UT2K4SP_HighScores
+Importing Defaults for UT2K4SP_Message
+Importing Defaults for GUI2K4MultiColumnListBox
+Importing Defaults for PlayInfoListBox
+Importing Defaults for ServerBrowserMCListBox
+Importing Defaults for UT2k4Browser_BuddyListBox
+Importing Defaults for UT2k4Browser_PlayersListBox
+Importing Defaults for UT2k4Browser_RulesListBox
+Importing Defaults for UT2k4Browser_ServerListBox
+Importing Defaults for UT2K4FilterSummaryListBox
+Importing Defaults for MapListBox
+Importing Defaults for DirectoryTreeListBox
+Importing Defaults for ComponentGroup
+Importing Defaults for UT2K4LadderButton
+Importing Defaults for UT2K4LadderVButton
+Importing Defaults for UT2K4LadderHButton
+Importing Defaults for AltSectionBackground
+Importing Defaults for GUI2K4MultiColumnList
+Importing Defaults for MyTestMultiColumnList
+Importing Defaults for PlayInfoList
+Importing Defaults for ServerBrowserMCList
+Importing Defaults for UT2k4Browser_BuddyList
+Importing Defaults for UT2k4Browser_PlayersList
+Importing Defaults for UT2k4Browser_RulesList
+Importing Defaults for UT2k4Browser_ServersList
+Importing Defaults for UT2K4FilterSummaryList
+Importing Defaults for DirectoryTreeList
+Importing Defaults for STY2ListSelection
+Importing Defaults for STY2BrowserListSel
+Importing Defaults for STY2ListHighlight
+Importing Defaults for GUI2Styles
+Importing Defaults for STY2ComboButton
+Importing Defaults for STY2AltComboButton
+Importing Defaults for STY2RoundButton
+Importing Defaults for STY2ArrowLeft
+Importing Defaults for STY2ArrowLeftDbl
+Importing Defaults for STY2ArrowRight
+Importing Defaults for STY2ArrowRightDbl
+Importing Defaults for STY2RoundScaledButton
+Importing Defaults for STY2SliderKnob
+Importing Defaults for STY2SquareBar
+Importing Defaults for STY2NoBackground
+Importing Defaults for STY2BindBox
+Importing Defaults for STY2TabButton
+Importing Defaults for STY2BottomTabButton
+Importing Defaults for STY2FooterButton
+Importing Defaults for STY2BrowserButton
+Importing Defaults for STY2CharButton
+Importing Defaults for STY2CheckBox
+Importing Defaults for STY2CheckBoxCheck
+Importing Defaults for STY2CloseButton
+Importing Defaults for STY2CoolScroll
+Importing Defaults for STY2TextLabel
+Importing Defaults for STY2DarkTextLabel
+Importing Defaults for STY2EditBox
+Importing Defaults for STY2Footer
+Importing Defaults for STY2Header
+Importing Defaults for STY2IRCEntry
+Importing Defaults for STY2IRCText
+Importing Defaults for STY2ItemOutline
+Importing Defaults for STY2LadderButton
+Importing Defaults for STY2LadderButtonActive
+Importing Defaults for STY2LadderButtonHi
+Importing Defaults for STY2SquareButton
+Importing Defaults for STY2ListBox
+Importing Defaults for STY2ComboListBox
+Importing Defaults for STY2ContextMenu
+Importing Defaults for STY2ServerListContextMenu
+Importing Defaults for STY2SquareMenuButton
+Importing Defaults for STY2MidGameButton
+Importing Defaults for STY2SliderBar
+Importing Defaults for STY2ListSectionHeader
+Importing Defaults for STY2MouseOverLabel
+Importing Defaults for STY2Page
+Importing Defaults for STY2RosterButton
+Importing Defaults for STY2ScrollZone
+Importing Defaults for STY2SectionHeaderBar
+Importing Defaults for STY2SectionHeaderText
+Importing Defaults for STY2SectionHeaderTop
+Importing Defaults for STY2ServerBrowserGrid
+Importing Defaults for STY2ServerBrowserGridHeader
+Importing Defaults for STY2SliderCaption
+Importing Defaults for STY2Spinner
+Importing Defaults for STY2TabBackground
+Importing Defaults for STY2TextButton
+Importing Defaults for STY2TextButtonEffect
+Importing Defaults for STY2VertDownButton
+Importing Defaults for STY2VertGrip
+Importing Defaults for STY2VertUpButton
+Importing Defaults for fntUT2k4Default
+Importing Defaults for fntUT2k4Header
+Importing Defaults for fntUT2k4IRC
+Importing Defaults for fntUT2k4Large
+Importing Defaults for fntUT2k4MainMenu
+Importing Defaults for fntUT2K4Medium
+Importing Defaults for fntUT2k4Menu
+Importing Defaults for fntUT2k4MidGame
+Importing Defaults for fntUT2k4ServerList
+Importing Defaults for fntUT2k4Small
+Importing Defaults for fntUT2k4SmallHeader
+Importing Defaults for GUIUserModInfo
+Importing Defaults for UT2K4DefaultGame
+Importing Defaults for BrowserFilters
+Importing Defaults for PlayInfoFilter
+Importing Defaults for CustomFilter
+Importing Defaults for SPHighScoreBase
+Importing Defaults for SPHighScore
+Importing Defaults for SPProfileExporter
+Importing Defaults for UT2K4GUIController
+Importing Defaults for UT2K4FilterSummaryPanel
+Importing Defaults for UT2K4Tab_IAMaplist
+Importing Defaults for UT2K4Tab_MidGameHelp
+Importing Defaults for UT2K4Tab_MidGameRulesCombo
+Importing Defaults for UT2K4Tab_MidGameVoiceChat
+Importing Defaults for UT2K4Tab_PlayerLoginControls
+Importing Defaults for UT2K4Tab_PlayerLoginControlsInvasion
+Importing Defaults for UT2K4Tab_PlayerLoginControlsOnslaught
+Importing Defaults for UT2K4Tab_SinglePlayerLoginControls
+Importing Defaults for UT2K4Tab_ServerMOTD
+Importing Defaults for UT2K4Demos
+Importing Defaults for UT2K4Ownage
+Importing Defaults for UT2K4UserMods
+Importing Defaults for UT2K4Tab_BotConfigBase
+Importing Defaults for UT2K4Tab_BotConfigMP
+Importing Defaults for UT2K4Tab_BotConfigSP
+Importing Defaults for UT2K4Tab_GameTypeBase
+Importing Defaults for UT2K4Tab_GameTypeMP
+Importing Defaults for UT2K4Tab_GameTypeSP
+Importing Defaults for UT2K4Tab_MainSP
+Importing Defaults for UT2K4SPTab_DetailEnemies
+Importing Defaults for UT2K4SPTab_DetailMatch
+Importing Defaults for UT2K4SPTab_LadderBase
+Importing Defaults for UT2K4SPTab_SingleLadder
+Importing Defaults for UT2K4SPTab_CustomLadder
+Importing Defaults for UT2K4SPTab_Qualification
+Importing Defaults for UT2K4SPTab_TeamQualification
+Importing Defaults for UT2K4SPTab_Ladder
+Importing Defaults for UT2K4SPTab_Profile
+Importing Defaults for UT2K4SPTab_TeamManagement
+Importing Defaults for AdminPanelMaps
+Importing Defaults for SimpleFilterPanel
+Importing Defaults for LockedFloatingWindow
+Importing Defaults for KeyBindMenu
+Importing Defaults for ControlBinder
+Importing Defaults for SpeechBinder
+Importing Defaults for GUICustomPropertyPage
+Importing Defaults for GUIArrayPropPage
+Importing Defaults for GUIDynArrayPage
+Importing Defaults for MOTDConfigPage
+Importing Defaults for UT2K4InvasionWaveConfig
+Importing Defaults for VoiceChatConfig
+Importing Defaults for MutatorConfigMenu
+Importing Defaults for TeamSymbolConfig
+Importing Defaults for UT2K4BotConfigPage
+Importing Defaults for UT2K4BotInfoPage
+Importing Defaults for UT2K4Demo2AVI
+Importing Defaults for UT2k4ModelSelect
+Importing Defaults for UT2K4NetworkStatusMsg
+Importing Defaults for MaplistEditor
+Importing Defaults for StreamPlayer
+Importing Defaults for StreamPlaylistEditor
+Importing Defaults for UT2K4InGameChat
+----------------------UT2k4AssaultFull - Release----------------------
+Analyzing...
+Parsing ASVehicle_SpaceFighter_Human
+Parsing ASVehicle_SpaceFighter_Skaarj
+Parsing ASTurret_BallTurret
+Parsing ASTurret_IonCannon
+Parsing ASTurret_LinkTurret
+Parsing FX_LinkTurret_GreenPlasma
+Parsing FX_NewIonCore
+Parsing FX_NewIonPlasmaBeam
+Parsing FX_SpaceFighter_Rocket_Trail
+Parsing FX_SpaceFighter_ShotDownEmitter
+Parsing FX_SpaceFighter_SkaarjPlasma
+Parsing FX_Turret_IonCannon_BeamExplosion
+Parsing FX_Turret_IonCannon_ChargeBeam
+Parsing FX_Turret_IonCannon_LaserBeam
+Parsing WA_LinkTurret
+Parsing WA_SpaceFighter
+Parsing WA_Turret
+Parsing WA_Turret_IonCannon
+Parsing DamTypeBallTurretPlasma
+Parsing DamTypeIonCannonBlast
+Parsing DamTypeLinkTurretBeam
+Parsing DamTypeLinkTurretPlasma
+Parsing DamTypeSpaceFighterLaser
+Parsing DamTypeSpaceFighterLaser_Skaarj
+Parsing DamTypeSpaceFighterMissile
+Parsing DamTypeSpaceFighterMissileSkaarj
+Parsing ASVehicleFactory_IonCannon
+Parsing LinkTurretController
+Parsing Ammo_BallTurret
+Parsing Weapon_LinkTurret
+Parsing Weapon_SpaceFighter
+Parsing Weapon_SpaceFighter_Skaarj
+Parsing Weapon_Turret
+Parsing Weapon_Turret_IonCannon
+Parsing FX_SpaceFighter_InstantHitLaser
+Parsing PROJ_LinkTurret_Plasma
+Parsing PROJ_SpaceFighter_Rocket
+Parsing PROJ_TurretSkaarjPlasma
+Parsing PROJ_TurretSkaarjPlasma_Red
+Parsing FX_LinkTurret_BeamEffect
+Parsing ASTurret_IonCannon_Swivel
+Parsing ASTurret_LinkTurret_Swivel
+Parsing ASTurret_BallTurret_Base
+Parsing ASTurret_IonCannon_Base
+Parsing ASTurret_LinkTurret_Base
+Parsing FX_BallTurret_Shield
+Parsing FX_LinkTurretShield
+Parsing FX_LinkTurretShield_Red
+Parsing FX_SpaceFighter_Shield
+Parsing FX_SpaceFighter_Shield_Red
+Parsing FX_Turret_IonCannon_BeamFire
+Parsing FX_Turret_IonCannon_FireEffect
+Parsing FM_LinkTurret_AltFire
+Parsing FM_BallTurret_Fire
+Parsing FM_LinkTurret_Fire
+Parsing FM_SpaceFighter_AltFire
+Parsing FM_SpaceFighter_InstantHitLaser
+Parsing FM_Turret_IonCannon_Fire
+Parsing FM_Turret_AltFire_Shield
+Compiling ASVehicle_SpaceFighter_Human
+Compiling ASVehicle_SpaceFighter_Skaarj
+Compiling ASTurret_BallTurret
+Compiling ASTurret_IonCannon
+Compiling ASTurret_LinkTurret
+Compiling FX_LinkTurret_GreenPlasma
+Compiling FX_NewIonCore
+Compiling FX_NewIonPlasmaBeam
+Compiling FX_SpaceFighter_Rocket_Trail
+Compiling FX_SpaceFighter_ShotDownEmitter
+Compiling FX_SpaceFighter_SkaarjPlasma
+Compiling FX_Turret_IonCannon_BeamExplosion
+Compiling FX_Turret_IonCannon_ChargeBeam
+Compiling FX_Turret_IonCannon_LaserBeam
+Compiling WA_LinkTurret
+Compiling WA_SpaceFighter
+Compiling WA_Turret
+Compiling WA_Turret_IonCannon
+Compiling DamTypeBallTurretPlasma
+Compiling DamTypeIonCannonBlast
+Compiling DamTypeLinkTurretBeam
+Compiling DamTypeLinkTurretPlasma
+Compiling DamTypeSpaceFighterLaser
+Compiling DamTypeSpaceFighterLaser_Skaarj
+Compiling DamTypeSpaceFighterMissile
+Compiling DamTypeSpaceFighterMissileSkaarj
+Compiling ASVehicleFactory_IonCannon
+Compiling LinkTurretController
+Compiling Ammo_BallTurret
+Compiling Weapon_LinkTurret
+Compiling Weapon_SpaceFighter
+Compiling Weapon_SpaceFighter_Skaarj
+Compiling Weapon_Turret
+Compiling Weapon_Turret_IonCannon
+Compiling FX_SpaceFighter_InstantHitLaser
+Compiling PROJ_LinkTurret_Plasma
+Compiling PROJ_SpaceFighter_Rocket
+Compiling PROJ_TurretSkaarjPlasma
+Compiling PROJ_TurretSkaarjPlasma_Red
+Compiling FX_LinkTurret_BeamEffect
+Compiling ASTurret_IonCannon_Swivel
+Compiling ASTurret_LinkTurret_Swivel
+Compiling ASTurret_BallTurret_Base
+Compiling ASTurret_IonCannon_Base
+Compiling ASTurret_LinkTurret_Base
+Compiling FX_BallTurret_Shield
+Compiling FX_LinkTurretShield
+Compiling FX_LinkTurretShield_Red
+Compiling FX_SpaceFighter_Shield
+Compiling FX_SpaceFighter_Shield_Red
+Compiling FX_Turret_IonCannon_BeamFire
+Compiling FX_Turret_IonCannon_FireEffect
+Compiling FM_LinkTurret_AltFire
+Compiling FM_BallTurret_Fire
+Compiling FM_LinkTurret_Fire
+Compiling FM_SpaceFighter_AltFire
+Compiling FM_SpaceFighter_InstantHitLaser
+Compiling FM_Turret_IonCannon_Fire
+Compiling FM_Turret_AltFire_Shield
+Importing Defaults for ASVehicle_SpaceFighter_Human
+Importing Defaults for ASVehicle_SpaceFighter_Skaarj
+Importing Defaults for ASTurret_BallTurret
+Importing Defaults for ASTurret_IonCannon
+Importing Defaults for ASTurret_LinkTurret
+Importing Defaults for FX_LinkTurret_GreenPlasma
+Importing Defaults for FX_NewIonCore
+Importing Defaults for FX_NewIonPlasmaBeam
+Importing Defaults for FX_SpaceFighter_Rocket_Trail
+Importing Defaults for FX_SpaceFighter_ShotDownEmitter
+Importing Defaults for FX_SpaceFighter_SkaarjPlasma
+Importing Defaults for FX_Turret_IonCannon_BeamExplosion
+Importing Defaults for FX_Turret_IonCannon_ChargeBeam
+Importing Defaults for FX_Turret_IonCannon_LaserBeam
+Importing Defaults for WA_LinkTurret
+Importing Defaults for WA_SpaceFighter
+Importing Defaults for WA_Turret
+Importing Defaults for WA_Turret_IonCannon
+Importing Defaults for DamTypeBallTurretPlasma
+Importing Defaults for DamTypeIonCannonBlast
+Importing Defaults for DamTypeLinkTurretBeam
+Importing Defaults for DamTypeLinkTurretPlasma
+Importing Defaults for DamTypeSpaceFighterLaser
+Importing Defaults for DamTypeSpaceFighterLaser_Skaarj
+Importing Defaults for DamTypeSpaceFighterMissile
+Importing Defaults for DamTypeSpaceFighterMissileSkaarj
+Importing Defaults for ASVehicleFactory_IonCannon
+Importing Defaults for LinkTurretController
+Importing Defaults for Ammo_BallTurret
+Importing Defaults for Weapon_LinkTurret
+Importing Defaults for Weapon_SpaceFighter
+Importing Defaults for Weapon_SpaceFighter_Skaarj
+Importing Defaults for Weapon_Turret
+Importing Defaults for Weapon_Turret_IonCannon
+Importing Defaults for FX_SpaceFighter_InstantHitLaser
+Importing Defaults for PROJ_LinkTurret_Plasma
+Importing Defaults for PROJ_SpaceFighter_Rocket
+Importing Defaults for PROJ_TurretSkaarjPlasma
+Importing Defaults for PROJ_TurretSkaarjPlasma_Red
+Importing Defaults for FX_LinkTurret_BeamEffect
+Importing Defaults for ASTurret_IonCannon_Swivel
+Importing Defaults for ASTurret_LinkTurret_Swivel
+Importing Defaults for ASTurret_BallTurret_Base
+Importing Defaults for ASTurret_IonCannon_Base
+Importing Defaults for ASTurret_LinkTurret_Base
+Importing Defaults for FX_BallTurret_Shield
+Importing Defaults for FX_LinkTurretShield
+Importing Defaults for FX_LinkTurretShield_Red
+Importing Defaults for FX_SpaceFighter_Shield
+Importing Defaults for FX_SpaceFighter_Shield_Red
+Importing Defaults for FX_Turret_IonCannon_BeamFire
+Importing Defaults for FX_Turret_IonCannon_FireEffect
+Importing Defaults for FM_LinkTurret_AltFire
+Importing Defaults for FM_BallTurret_Fire
+Importing Defaults for FM_LinkTurret_Fire
+Importing Defaults for FM_SpaceFighter_AltFire
+Importing Defaults for FM_SpaceFighter_InstantHitLaser
+Importing Defaults for FM_Turret_IonCannon_Fire
+Importing Defaults for FM_Turret_AltFire_Shield
+-----------------------OnslaughtFull - Release------------------------
+Analyzing...
+Parsing MutVehicleArena
+Parsing ONSGenericSD
+Parsing ONSMobileAssaultStation
+Parsing ONSHoverTank_IonPlasma
+Parsing ONSBomber
+Parsing ONSTankSecondaryTurretPawn_IonPlasma
+Parsing ONSMASSideGunPawn
+Parsing ONSMASBuildEffectBlue
+Parsing ONSMASBuildEffectRed
+Parsing FX_IonPlasmaTank_AimLaser
+Parsing FX_IonPlasmaTank_ShockWave
+Parsing ONSAutoBomberBombExplosion
+Parsing ONSAutoBomberDeathFlames
+Parsing ONSAutoBomberWarpEffect
+Parsing ONSMASCannonBeamEffect
+Parsing ONSMASCannonImplosionEffect
+Parsing ONSMASRocketTrailEffect
+Parsing ONSVehDeathMAS
+Parsing ONSPainterAttachment
+Parsing DamTypeIonTankPancake
+Parsing DamTypeMASPancake
+Parsing DamTypeIonTankRoadkill
+Parsing DamTypeMASRoadkill
+Parsing DamTypeIonTankBlast
+Parsing DamTypeMASCannon
+Parsing DamTypeMASPlasma
+Parsing ONSBomberFactory
+Parsing ONSMASFactory
+Parsing ONSPainter
+Parsing ONSPainterPickup
+Parsing ONSAutoBomberBomb
+Parsing ONSMASPlasmaProjectile
+Parsing ONSBomb
+Parsing ONSBomberRocketProjectile
+Parsing ONSMASRocketProjectile
+Parsing ONSBombDropExplosion
+Parsing ONSHoverTank_IonPlasma_Weapon
+Parsing ONSTankSecondaryTurret_IonPlasma
+Parsing ONSBombDropper
+Parsing ONSMASCannon
+Parsing ONSMASRocketPack
+Parsing ONSMASSideGun
+Parsing ONSHoverTank_IonPlasma_BeamFire
+Parsing ONSAutoBomber
+Parsing ONSPainterFire
+Compiling MutVehicleArena
+Compiling ONSGenericSD
+Compiling ONSMobileAssaultStation
+Compiling ONSHoverTank_IonPlasma
+Compiling ONSBomber
+Compiling ONSTankSecondaryTurretPawn_IonPlasma
+Compiling ONSMASSideGunPawn
+Compiling ONSMASBuildEffectBlue
+Compiling ONSMASBuildEffectRed
+Compiling FX_IonPlasmaTank_AimLaser
+Compiling FX_IonPlasmaTank_ShockWave
+Compiling ONSAutoBomberBombExplosion
+Compiling ONSAutoBomberDeathFlames
+Compiling ONSAutoBomberWarpEffect
+Compiling ONSMASCannonBeamEffect
+Compiling ONSMASCannonImplosionEffect
+Compiling ONSMASRocketTrailEffect
+Compiling ONSVehDeathMAS
+Compiling ONSPainterAttachment
+Compiling DamTypeIonTankPancake
+Compiling DamTypeMASPancake
+Compiling DamTypeIonTankRoadkill
+Compiling DamTypeMASRoadkill
+Compiling DamTypeIonTankBlast
+Compiling DamTypeMASCannon
+Compiling DamTypeMASPlasma
+Compiling ONSBomberFactory
+Compiling ONSMASFactory
+Compiling ONSPainter
+Compiling ONSPainterPickup
+Compiling ONSAutoBomberBomb
+Compiling ONSMASPlasmaProjectile
+Compiling ONSBomb
+Compiling ONSBomberRocketProjectile
+Compiling ONSMASRocketProjectile
+Compiling ONSBombDropExplosion
+Compiling ONSHoverTank_IonPlasma_Weapon
+Compiling ONSTankSecondaryTurret_IonPlasma
+Compiling ONSBombDropper
+Compiling ONSMASCannon
+Compiling ONSMASRocketPack
+Compiling ONSMASSideGun
+Compiling ONSHoverTank_IonPlasma_BeamFire
+Compiling ONSAutoBomber
+Compiling ONSPainterFire
+Importing Defaults for MutVehicleArena
+Importing Defaults for ONSGenericSD
+Importing Defaults for ONSMobileAssaultStation
+Importing Defaults for ONSHoverTank_IonPlasma
+Importing Defaults for ONSBomber
+Importing Defaults for ONSTankSecondaryTurretPawn_IonPlasma
+Importing Defaults for ONSMASSideGunPawn
+Importing Defaults for ONSMASBuildEffectBlue
+Importing Defaults for ONSMASBuildEffectRed
+Importing Defaults for FX_IonPlasmaTank_AimLaser
+Importing Defaults for FX_IonPlasmaTank_ShockWave
+Importing Defaults for ONSAutoBomberBombExplosion
+Importing Defaults for ONSAutoBomberDeathFlames
+Importing Defaults for ONSAutoBomberWarpEffect
+Importing Defaults for ONSMASCannonBeamEffect
+Importing Defaults for ONSMASCannonImplosionEffect
+Importing Defaults for ONSMASRocketTrailEffect
+Importing Defaults for ONSVehDeathMAS
+Importing Defaults for ONSPainterAttachment
+Importing Defaults for DamTypeIonTankPancake
+Importing Defaults for DamTypeMASPancake
+Importing Defaults for DamTypeIonTankRoadkill
+Importing Defaults for DamTypeMASRoadkill
+Importing Defaults for DamTypeIonTankBlast
+Importing Defaults for DamTypeMASCannon
+Importing Defaults for DamTypeMASPlasma
+Importing Defaults for ONSBomberFactory
+Importing Defaults for ONSMASFactory
+Importing Defaults for ONSPainter
+Importing Defaults for ONSPainterPickup
+Importing Defaults for ONSAutoBomberBomb
+Importing Defaults for ONSMASPlasmaProjectile
+Importing Defaults for ONSBomb
+Importing Defaults for ONSBomberRocketProjectile
+Importing Defaults for ONSMASRocketProjectile
+Importing Defaults for ONSBombDropExplosion
+Importing Defaults for ONSHoverTank_IonPlasma_Weapon
+Importing Defaults for ONSTankSecondaryTurret_IonPlasma
+Importing Defaults for ONSBombDropper
+Importing Defaults for ONSMASCannon
+Importing Defaults for ONSMASRocketPack
+Importing Defaults for ONSMASSideGun
+Importing Defaults for ONSHoverTank_IonPlasma_BeamFire
+Importing Defaults for ONSAutoBomber
+Importing Defaults for ONSPainterFire
+--------------------------xVoting - Release---------------------------
+Analyzing...
+Parsing xVotingHandler
+Parsing VotingReplicationInfo
+Parsing MapListLoader
+Parsing DefaultMapListLoader
+Parsing MatchSetupPanelBase
+Parsing MatchSetupLoginPanel
+Parsing MatchSetupMain
+Parsing MatchSetupMaps
+Parsing MatchSetupMutator
+Parsing MatchSetupRules
+Parsing MapVoteFooter
+Parsing KickInfoPage
+Parsing VotingPage
+Parsing KickVotingPage
+Parsing MapVotingPage
+Parsing MatchConfigPage
+Parsing MatchSetupPage
+Parsing MapInfoPage
+Parsing MatchSetupLoginPage
+Parsing MapVoteGameConfigPage
+Parsing MapVoteMapListConfigPage
+Parsing KickVoteMultiColumnListBox
+Parsing MapVoteCountMultiColumnListBox
+Parsing MapVoteMultiColumnListBox
+Parsing PlayerInfoMultiColumnListBox
+Parsing KickVoteMultiColumnList
+Parsing MapVoteCountMultiColumnList
+Parsing MapVoteMultiColumnList
+Parsing PlayerInfoMultiColumnList
+Parsing MapVoteHistory
+Parsing MapVoteHistory_INI
+Parsing MatchConfig
+Compiling VotingReplicationInfo
+Compiling xVotingHandler
+Compiling MapListLoader
+Compiling DefaultMapListLoader
+Compiling MatchSetupPanelBase
+Compiling MatchSetupLoginPanel
+Compiling MatchSetupMain
+Compiling MatchSetupMaps
+Compiling MatchSetupMutator
+Compiling MatchSetupRules
+Compiling MapVoteFooter
+Compiling KickInfoPage
+Compiling VotingPage
+Compiling KickVotingPage
+Compiling MapVotingPage
+Compiling MatchConfigPage
+Compiling MatchSetupPage
+Compiling MapInfoPage
+Compiling MatchSetupLoginPage
+Compiling MapVoteGameConfigPage
+Compiling MapVoteMapListConfigPage
+Compiling KickVoteMultiColumnListBox
+Compiling MapVoteCountMultiColumnListBox
+Compiling MapVoteMultiColumnListBox
+Compiling PlayerInfoMultiColumnListBox
+Compiling KickVoteMultiColumnList
+Compiling MapVoteCountMultiColumnList
+Compiling MapVoteMultiColumnList
+Compiling PlayerInfoMultiColumnList
+Compiling MapVoteHistory
+Compiling MapVoteHistory_INI
+Compiling MatchConfig
+Importing Defaults for VotingReplicationInfo
+Importing Defaults for xVotingHandler
+Importing Defaults for MapListLoader
+Importing Defaults for DefaultMapListLoader
+Importing Defaults for MatchSetupPanelBase
+Importing Defaults for MatchSetupLoginPanel
+Importing Defaults for MatchSetupMain
+Importing Defaults for MatchSetupMaps
+Importing Defaults for MatchSetupMutator
+Importing Defaults for MatchSetupRules
+Importing Defaults for MapVoteFooter
+Importing Defaults for KickInfoPage
+... deferring
+Importing Defaults for VotingPage
+Importing Defaults for KickVotingPage
+... deferring
+Importing Defaults for MapVotingPage
+... deferring
+Importing Defaults for MatchConfigPage
+Importing Defaults for MatchSetupPage
+Importing Defaults for MapInfoPage
+Importing Defaults for MatchSetupLoginPage
+Importing Defaults for MapVoteGameConfigPage
+Importing Defaults for MapVoteMapListConfigPage
+Importing Defaults for KickVoteMultiColumnListBox
+Importing Defaults for MapVoteCountMultiColumnListBox
+Importing Defaults for MapVoteMultiColumnListBox
+Importing Defaults for PlayerInfoMultiColumnListBox
+Importing Defaults for KickVoteMultiColumnList
+Importing Defaults for MapVoteCountMultiColumnList
+Importing Defaults for MapVoteMultiColumnList
+Importing Defaults for PlayerInfoMultiColumnList
+Importing Defaults for MapVoteHistory
+Importing Defaults for MapVoteHistory_INI
+Importing Defaults for MatchConfig
+Importing Defaults for KickInfoPage
+Importing Defaults for KickVotingPage
+Importing Defaults for MapVotingPage
+------------------------StreamlineFX - Release------------------------
+Analyzing...
+Parsing STR_dripping_green_blood
+Parsing STR_dripping_red_blood
+Parsing STR_green_blood_puff
+Parsing STR_linkgunfire
+Parsing STR_minigunshell_spewer
+Parsing STR_minigun_flash
+Parsing STR_red_blood_puff
+Parsing STR_assualt_muzzleflash
+Parsing STR_minigun_muzzleflash
+Compiling STR_dripping_green_blood
+Compiling STR_dripping_red_blood
+Compiling STR_green_blood_puff
+Compiling STR_linkgunfire
+Compiling STR_minigunshell_spewer
+Compiling STR_minigun_flash
+Compiling STR_red_blood_puff
+Compiling STR_assualt_muzzleflash
+Compiling STR_minigun_muzzleflash
+Importing Defaults for STR_dripping_green_blood
+Importing Defaults for STR_dripping_red_blood
+Importing Defaults for STR_green_blood_puff
+Importing Defaults for STR_linkgunfire
+Importing Defaults for STR_minigunshell_spewer
+Importing Defaults for STR_minigun_flash
+Importing Defaults for STR_red_blood_puff
+Importing Defaults for STR_assualt_muzzleflash
+Importing Defaults for STR_minigun_muzzleflash
+--------------------------UTV2004c - Release--------------------------
+Analyzing...
+Parsing utvInteraction
+Parsing utvReplication
+Parsing utvInputPage
+Parsing utvPrimaryMenu
+Parsing utvWatcherMenu
+Compiling utvInteraction
+Compiling utvReplication
+Compiling utvInputPage
+Compiling utvPrimaryMenu
+Compiling utvWatcherMenu
+Importing Defaults for utvInteraction
+Importing Defaults for utvReplication
+Importing Defaults for utvInputPage
+Importing Defaults for utvPrimaryMenu
+Importing Defaults for utvWatcherMenu
+--------------------------UTV2004s - Release--------------------------
+Analyzing...
+Parsing utvMutator
+Parsing utvSpectator
+Compiling utvMutator
+Compiling utvSpectator
+Importing Defaults for utvMutator
+Importing Defaults for utvSpectator
+Success - 0 error(s), 0 warning(s)
+Log file closed, 11/20/24 10:07:53

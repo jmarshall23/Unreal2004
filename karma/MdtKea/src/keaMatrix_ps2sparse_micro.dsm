@@ -1,0 +1,22 @@
+.include "vumacros.h"
+
+.global sgemv_dma_start
+.global sgemv_dma_end
+.global sgemvSubNoTrans
+.global sgemvSubTrans
+.global strsv
+.global strsvTrans
+.global trmuladd
+
+sgemv_dma_start:
+
+DMAcnt *
+    MPG 0, *
+        .include "keaMatrix_ps2sparse_micro.vsm"
+    .EndMPG
+
+.EndDmaData
+
+DMAend
+
+sgemv_dma_end:

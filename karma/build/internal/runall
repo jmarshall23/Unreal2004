@@ -1,0 +1,38 @@
+export EXAMPLES=../../MeSamples/bin
+export TUTORIALS=../../MeTutorials/bin
+
+export RUN_DIRS="$EXAMPLES $TUTORIALS"
+
+for dir in $RUN_DIRS ; do
+	echo ---------------------------------
+	echo Running examples from $dir
+	echo ---------------------------------
+	echo Running RELEASE examples
+	echo ---------------------------------
+	for file in `ls $dir/*.exe | grep -v _debug | grep -v _check` ; do
+		echo ---------------------------------
+		echo Running $file
+		echo ---------------------------------
+		$file -gl -timeout 60
+	done
+	
+	echo ---------------------------------
+	echo Running DEBUG examples
+	echo ---------------------------------
+	for file in `ls $dir/*.exe | grep _debug ` ; do
+		echo ---------------------------------
+		echo Running $file
+		echo ---------------------------------
+		$file -gl -timeout 60
+	done
+	
+	echo ---------------------------------
+	echo Running CHECK examples
+	echo ---------------------------------
+	for file in `ls $dir/*.exe | grep _check ` ; do
+		echo ---------------------------------
+		echo Running $file
+		echo ---------------------------------
+		$file -gl -timeout 60
+	done
+done

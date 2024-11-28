@@ -1,0 +1,13 @@
+CREATE TABLE statsline (
+  slid int NOT NULL auto_increment,
+
+  matchid int NOT NULL default '0',
+  serverid int NOT NULL default '0',
+
+  line TEXT NOT NULL,
+
+  PRIMARY KEY (slid)
+);
+
+create index idx_statsline_matchid on statsline(matchid);
+

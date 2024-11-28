@@ -1,0 +1,78 @@
+# -*- makefile -*- vim:noet:ts=8:sw=4:ft=make:
+
+######################################################################### LINUX
+
+# AC_MSG_RESULT(configuring for $PLATFORM)
+
+DEF_PLATFORM            := LINUX
+
+###################
+#
+#  File name elements (prefix & suffix)
+#
+
+S_OBJ                   := .o
+S_EXE                   := 
+P_LIB                   := lib
+S_LIB                   := .a
+S_DEP                   := .d
+S_ASM                   := .s
+
+###################
+#
+# Basic Options
+#
+
+O_DEF                   := -D
+O_UNDEF                 := -U
+_O_EXE                  := -o$S
+_O_OBJ                  := -o$S
+_O_LIB                  := -r$S
+_L			:= -L
+
+#############################
+#
+# Tool and flag-set definitions
+#
+
+ME_COMPILE              := g++
+ME_COMPILE_C            := gcc
+ME_COMPILE_CXX          := g++
+ME_ASSEMBLE             := as
+ME_LIBRARY              := ar
+ME_LINK			:= $(ME_COMPILE) -Wl,-noinhibit-exec
+
+ME_DEPEND               := gcc
+ME_AS                   :=
+ME_DVPASM               :=
+
+ME_DEPENDFLAGS          := -w -M -DDEPENDENCY_PHASE
+
+CPPFLAGS_RELEASE        := -DNDEBUG -Wno-cast-qual
+CPPFLAGS_CHECK_RELEASE  := -D_MECHECK -DMCDCHECK
+CPPFLAGS_DEBUG          := $(CPPFLAGS_CHECK_RELEASE) -D_DEBUG
+
+
+# '-fschedule-insns' break 'keaLCP' with EGCS 1.1.2
+CFLAGS_OPT		:= -O6 -march=i586 -ffast-math \
+			   -fno-common -fno-strict-aliasing \
+			   -fexpensive-optimizations -funroll-loops
+CXXFLAGS_OPT		:= $(CFLAGS_OPT)
+
+CFLAGS_RELEASE          := $(CFLAGS_OPT)
+CFLAGS_DEBUG            := -ggdb3 -O0 -Wall
+
+CXXFLAGS_RELEASE        := $(CXXFLAGS_OPT)
+CXXFLAGS_DEBUG          := -ggdb3 -O0 -Wall
+
+ME_ASFLAGS_RELEASE      :=
+ME_ASFLAGS_DEBUG        :=
+
+ME_COMPILERPREFIX       :=
+
+ME_CCLINKFLAGS_RELEASE  :=
+ME_CCLINKFLAGS_DEBUG    :=
+
+LDFLAGS                 := -rc$S -noinhibit-exec
+
+RM			:= rm -rfv

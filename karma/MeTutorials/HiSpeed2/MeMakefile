@@ -1,0 +1,20 @@
+# Assuming GNU make (>v3.76)
+# $Header: /proj/Toolkits/MeTutorials/HiSpeed2/MeMakefile,v 1.1 2000/11/24 22:26:05 xhuang Exp $
+# ($Name: t-stevet-RWSpre-030110 $)
+
+# vim:syntax=make:
+
+#------------------------------
+# Mdt
+#------------------------------
+
+# What's to be built
+targetname:=HiSpeed2
+targettype:=executeable
+
+SOURCES	:= HiSpeed2.c
+
+# Standard incantation
+makerulesdir:=../../build/makerules/
+include ${makerulesdir}Make.rules
+

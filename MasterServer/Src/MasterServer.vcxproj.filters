@@ -1,0 +1,142 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Src">
+      <UniqueIdentifier>{cd87ad5c-0eb2-4b97-9706-ad86efb4ed6b}</UniqueIdentifier>
+      <Extensions>*.cpp</Extensions>
+    </Filter>
+    <Filter Include="Tables">
+      <UniqueIdentifier>{9855b460-e120-41ac-8322-da4f4c4282fe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Inc">
+      <UniqueIdentifier>{0a672e4b-aa58-42c5-8568-f54502f922db}</UniqueIdentifier>
+      <Extensions>*.h</Extensions>
+    </Filter>
+    <Filter Include="PHPTools">
+      <UniqueIdentifier>{7807af99-a45c-4132-a1bb-9d227c9dd5d3}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="CDKeyGen.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Database.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="MasterServer.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="MasterServerLink.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="StatsProcessing.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\Tables\badhash.txt">
+      <Filter>Tables</Filter>
+    </None>
+    <None Include="..\Tables\cdkey.txt">
+      <Filter>Tables</Filter>
+    </None>
+    <None Include="..\Tables\cdkeybatch.txt">
+      <Filter>Tables</Filter>
+    </None>
+    <None Include="..\Tables\cdkeyspaces.txt">
+      <Filter>Tables</Filter>
+    </None>
+    <None Include="..\Tables\matchid.txt">
+      <Filter>Tables</Filter>
+    </None>
+    <None Include="..\Tables\motd.txt">
+      <Filter>Tables</Filter>
+    </None>
+    <None Include="..\Tables\onlineplayers.txt">
+      <Filter>Tables</Filter>
+    </None>
+    <None Include="..\Tables\onlineserverdetails.txt">
+      <Filter>Tables</Filter>
+    </None>
+    <None Include="..\Tables\onlineserverplayers.txt">
+      <Filter>Tables</Filter>
+    </None>
+    <None Include="..\Tables\onlineservers.txt">
+      <Filter>Tables</Filter>
+    </None>
+    <None Include="..\Tables\packagemd5.txt">
+      <Filter>Tables</Filter>
+    </None>
+    <None Include="..\Tables\servercdkey.txt">
+      <Filter>Tables</Filter>
+    </None>
+    <None Include="..\Tables\servers.txt">
+      <Filter>Tables</Filter>
+    </None>
+    <None Include="..\Tables\simultaneous.txt">
+      <Filter>Tables</Filter>
+    </None>
+    <None Include="..\Tables\statsline.txt">
+      <Filter>Tables</Filter>
+    </None>
+    <None Include="..\Tables\statsmatches.txt">
+      <Filter>Tables</Filter>
+    </None>
+    <None Include="..\Tables\versions.txt">
+      <Filter>Tables</Filter>
+    </None>
+    <None Include="..\Tables\versionupgrade.txt">
+      <Filter>Tables</Filter>
+    </None>
+    <None Include="..\Tables\versionurls.txt">
+      <Filter>Tables</Filter>
+    </None>
+    <None Include="..\Tables\warez.txt">
+      <Filter>Inc</Filter>
+    </None>
+    <None Include="..\PHPTools\editmotd.php">
+      <Filter>PHPTools</Filter>
+    </None>
+    <None Include="..\PHPTools\editversion.php">
+      <Filter>PHPTools</Filter>
+    </None>
+    <None Include="..\PHPTools\findcdkey.php">
+      <Filter>PHPTools</Filter>
+    </None>
+    <None Include="..\PHPTools\index.php">
+      <Filter>PHPTools</Filter>
+    </None>
+    <None Include="..\PHPTools\login.php">
+      <Filter>PHPTools</Filter>
+    </None>
+    <None Include="..\PHPTools\md5.php">
+      <Filter>PHPTools</Filter>
+    </None>
+    <None Include="..\PHPTools\motd.php">
+      <Filter>PHPTools</Filter>
+    </None>
+    <None Include="..\PHPTools\newmd5.php">
+      <Filter>PHPTools</Filter>
+    </None>
+    <None Include="..\PHPTools\permissions.txt">
+      <Filter>PHPTools</Filter>
+    </None>
+    <None Include="..\PHPTools\versions.php">
+      <Filter>PHPTools</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\Inc\Database.h">
+      <Filter>Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Inc\MasterServer.h">
+      <Filter>Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Inc\MasterServerLink.h">
+      <Filter>Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Inc\StatsProcessing.h">
+      <Filter>Inc</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

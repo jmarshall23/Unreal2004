@@ -1,0 +1,71 @@
+# -*- makefile -*- vim:noet:ts=8:sw=4:ft=make:
+
+###################################################################### IRIX_O32
+
+# AC_MSG_RESULT(configuring for $PLATFORM)
+
+DEF_PLATFORM            := IRIX
+
+###################
+#
+#  File name elements (prefix & suffix)
+#
+
+S_OBJ                   := .o
+S_EXE                   := 
+P_LIB                   := lib
+S_LIB                   := .a
+S_DEP                   := .d
+S_ASM                   := .s
+
+###################
+#
+# Basic Options
+#
+
+O_DEF                   := -D
+O_UNDEF                 := -U
+_O_EXE                  := -o$S
+_O_OBJ                  := -o$S
+_O_LIB                  := -o$S
+_L			:= -L
+
+#############################
+#
+# Tool and flag-set definitions
+#
+
+ME_COMPILE              := CC
+ME_COMPILE_C            := cc
+ME_COMPILE_CXX          := CC
+ME_ASSEMBLE             := as
+ME_LIBRARY              := CC -ar
+ME_LINK			:= $(ME_COMPILE)
+
+ME_DEPEND               := CC
+ME_AS                   :=
+ME_DVPASM               :=
+
+ME_DEPENDFLAGS          := -M -DDEPENDENCY_PHASE
+
+CPPFLAGS_RELEASE        := -DNDEBUG -DIRIX_O32
+CPPFLAGS_CHECK_RELEASE  := -D_MECHECK -DMCDCHECK -DIRIX_O32
+CPPFLAGS_DEBUG          := $(CPPFLAGS_CHECK_RELEASE) -D_DEBUG
+
+CFLAGS_RELEASE          := -o32 -O2
+CFLAGS_DEBUG            := -o32 -g3 -fullwarn
+
+CXXFLAGS_RELEASE        := -o32 -O2
+CXXFLAGS_DEBUG          := -o32 -g3 -fullwarn
+
+ME_ASFLAGS_RELEASE      :=
+ME_ASFLAGS_DEBUG        :=
+
+ME_COMPILERPREFIX       :=
+
+ME_CCLINKFLAGS_RELEASE  :=
+ME_CCLINKFLAGS_DEBUG    :=
+
+LDFLAGS                 := -rc
+
+RM			:= rm -r -f

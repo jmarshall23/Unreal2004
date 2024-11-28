@@ -1,0 +1,19 @@
+# Assuming GNU make (>v3.76)
+# $Header: /proj/Toolkits/MeSamples/Topple/MeMakefile,v 1.2 2000/11/07 11:20:25 iestyn Exp $
+# ($Name: t-stevet-RWSpre-030110 $)
+
+# vim:syntax=make:
+
+#------------------------------
+# Mdt
+#------------------------------
+
+# What's to be built
+targetname:=Topple
+targettype:=executeable
+
+SOURCES	:= Topple.c
+
+# Standard incantation
+makerulesdir:=../../build/makerules/
+include ${makerulesdir}Make.rules

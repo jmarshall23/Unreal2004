@@ -1,0 +1,57 @@
+# $Id: Make.defs.linux,v 1.49.2.1 2002/04/11 03:45:34 jamesg Exp $
+# $Name: t-stevet-RWSpre-030110 $
+#
+# vim:syntax=make:
+
+# Cowpat macro definitions for Linux toolchain
+
+# THINK CAREFULLY BEFORE EDITING THIS FILE
+# This file is included late on in Make.rules.
+# See the comments in Make.defs.win32 for what this file contains.
+
+# ToDo: Include some of the following as per Grandi on Karma?
+# -fschedule-insns -fno-common -fno-strict-aliasing
+# -fexpensive-optimizations
+
+ifneq (linux,${&os})
+$(error Make.defs.linux: Only for Linux builds)
+endif
+
+AR:=ar
+CC:=gcc
+CPP:=${CC}
+CXX:=g++
+LD:=g++
+CCPLATFORM:=-DLINUX
+CPPMAKEDEPS:=-M
+o:=o
+CCOBJ=-o # trailing space
+CC_codegoing_intodll:=-fPIC -DPIC
+CC_codegoing_intoexe:=
+# I'd like -ansi in here too, but unfortunately
+# /usr/include/semaphore.h won't build with that.
+ccwarn?=-pedantic -Wall -W -Wpointer-arith -Winline -Wno-long-long -Wconversion
+CC_OPTS_none:=${ccwarn} -O0
+CC_OPTS_full:=${ccwarn} -ffast-math -fomit-frame-pointer -funroll-loops -O6
+CC_inline_none:=-fno-inline
+CC_inline_specified:=
+CC_inline_any:=-finline-functions
+CC_SYMB_none:=
+CC_SYMB_all:=-ggdb3
+CC_PROF:=-pg # ToDo: Add -lc_p to link line rather than -lc to get profile info on std library?
+ARFLAGS:=-rc # trailing space
+ifdef PROFILE
+&profilemagic:= -pg 
+endif
+LDFLAGS_SYMB_none+=${&profilemagic} -o # trailing space
+LDFLAGS_SYMB_all+=${&profilemagic} -ggdb3 -o # trailing space
+mkldlibpath:=-L%
+mklibname:=lib%.a
+mkdllname:=lib%.so
+mkdllimportlibname:=lib%.so
+mkldlinksystemlibs:=-l%
+mkexename:=%
+andthen:=&&
+extralibs+=m
+&lq:='
+&rq:='

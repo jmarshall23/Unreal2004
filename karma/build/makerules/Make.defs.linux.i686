@@ -1,0 +1,27 @@
+#######################################################################
+# $Id: Make.defs.linux.i686,v 1.5.2.1 2002/04/11 03:45:34 jamesg Exp $
+# $Name: t-stevet-RWSpre-030110 $
+#######################################################################
+#
+# i686 specific stuff for the linux os
+#
+# This is read just _after_ Make.defs.linux
+
+# Using the ones in /usr/bin for the time being - since we don't seem
+# to work with gcc3 yet!
+
+# The -march line only makes the defines happen on gcc 3.x, hence the
+# seemingly tautologous -mcpu option.
+CCPLATFORM+=-march=i686 -mcpu=pentiumpro
+
+# for enabling little bits of other files:
+# This was only for TinyPTC:
+#cdefs${MAKELEVEL}+=ME_X86 ME_586 ME_MMX
+
+# As was this:
+# ToDo: Is it the same on Win32 re options etc.?
+NASM:=nasm
+NASMFLAGS:=-f elf
+NASMMAKEDEPS:=-M
+NASMOBJ:=-o # trailing space!
+

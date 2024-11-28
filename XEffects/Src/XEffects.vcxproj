@@ -1,0 +1,267 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug_AMD64|Win32">
+      <Configuration>Debug_AMD64</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="UnrealScript|Win32">
+      <Configuration>UnrealScript</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{2B557D11-94C2-4045-840A-ACA1101475DC}</ProjectGuid>
+    <Keyword>MakeFileProj</Keyword>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug_AMD64|Win32'" Label="Configuration">
+    <ConfigurationType>Utility</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='UnrealScript|Win32'" Label="Configuration">
+    <ConfigurationType>Utility</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug_AMD64|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='UnrealScript|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.40219.1</_ProjectFileVersion>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='UnrealScript|Win32'">.\.\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='UnrealScript|Win32'">.\.\</IntDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug_AMD64|Win32'">$(Configuration)\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug_AMD64|Win32'">$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <None Include="..\Classes\AlienBloodExplosion.uc" />
+    <None Include="..\Classes\AlienBloodJet.uc" />
+    <None Include="..\Classes\AlienSmallHit.uc" />
+    <None Include="..\Classes\AssaultMuzFlash1st.uc" />
+    <None Include="..\Classes\AssaultMuzFlash3rd.uc" />
+    <None Include="..\Classes\BioDecal.uc" />
+    <None Include="..\Classes\BioSmoke.uc" />
+    <None Include="..\Classes\Blackmuzzlesmoke.uc" />
+    <None Include="..\Classes\BloodExplosion.uc" />
+    <None Include="..\Classes\BloodJet.uc" />
+    <None Include="..\Classes\BloodSmallHit.uc" />
+    <None Include="..\Classes\BloodSplat.uc" />
+    <None Include="..\Classes\BloodSplatter.uc" />
+    <None Include="..\Classes\bloodsplatterpurple.uc" />
+    <None Include="..\Classes\BloodSpurt.uc" />
+    <None Include="..\Classes\BlueSparks.uc" />
+    <None Include="..\Classes\BlueWhisp.uc" />
+    <None Include="..\Classes\BodyDeRes.uc" />
+    <None Include="..\Classes\BotBloodExplosion.uc" />
+    <None Include="..\Classes\BotSmallHit.uc" />
+    <None Include="..\Classes\BotSparks.uc" />
+    <None Include="..\Classes\Bubble.uc" />
+    <None Include="..\Classes\BulletDecal.uc" />
+    <None Include="..\Classes\ChildBlueSparks.uc" />
+    <None Include="..\Classes\ChildLightningBolt.uc" />
+    <None Include="..\Classes\ComboDecal.uc" />
+    <None Include="..\Classes\DamTeleportEffect.uc" />
+    <None Include="..\Classes\DeResPart.uc" />
+    <None Include="..\Classes\DirtImpact.uc" />
+    <None Include="..\Classes\ExplosionCrap.uc" />
+    <None Include="..\Classes\ExploWallHit.uc" />
+    <None Include="..\Classes\FastBotSparks.uc" />
+    <None Include="..\Classes\FlakDirectionalBlast.uc" />
+    <None Include="..\Classes\FlakExplosion.uc" />
+    <None Include="..\Classes\FlakGlow.uc" />
+    <None Include="..\Classes\FlakMuzFlash1st.uc" />
+    <None Include="..\Classes\FlakMuzFlash3rd.uc" />
+    <None Include="..\Classes\FlakShellTrail.uc" />
+    <None Include="..\Classes\FlakTrail.uc" />
+    <None Include="..\Classes\FlashExplosion.uc" />
+    <None Include="..\Classes\GrenadeSmokeTrail.uc" />
+    <None Include="..\Classes\HitFlame.uc" />
+    <None Include="..\Classes\HitFlameBig.uc" />
+    <None Include="..\Classes\HitSmoke.uc" />
+    <None Include="..\Classes\ImpactDust.uc" />
+    <None Include="..\Classes\LavaDeath.uc" />
+    <None Include="..\Classes\Lightning.uc" />
+    <None Include="..\Classes\LightningBolt.uc" />
+    <None Include="..\Classes\LightningCharge.uc" />
+    <None Include="..\Classes\LightningCharge3rd.uc" />
+    <None Include="..\Classes\MeshEffect.uc" />
+    <None Include="..\Classes\MinigunAltMuzzleSmoke.uc" />
+    <None Include="..\Classes\MinigunMuzAltFlash3rd.uc" />
+    <None Include="..\Classes\MinigunMuzFlash1st.uc" />
+    <None Include="..\Classes\MinigunMuzFlash3rd.uc" />
+    <None Include="..\Classes\MinigunMuzzleSmoke.uc" />
+    <None Include="..\Classes\muzzlesmoke.uc" />
+    <None Include="..\Classes\muzzlesmokerifle.uc" />
+    <None Include="..\Classes\NewExplosionC.uc" />
+    <None Include="..\Classes\NewLinkTrail.uc" />
+    <None Include="..\Classes\NewMinigunMFlash.uc" />
+    <None Include="..\Classes\NewRedeemerTrail.uc" />
+    <None Include="..\Classes\NewTracer.uc" />
+    <None Include="..\Classes\NewTransDeresBlue.uc" />
+    <None Include="..\Classes\NewTransDeresRed.uc" />
+    <None Include="..\Classes\NewTransEffect.uc" />
+    <None Include="..\Classes\NewTransEffectBlue.uc" />
+    <None Include="..\Classes\PainterBeamSpot.uc" />
+    <None Include="..\Classes\PainterBoltSparks.uc" />
+    <None Include="..\Classes\PainterDecal.uc" />
+    <None Include="..\Classes\PainterMark.uc" />
+    <None Include="..\Classes\pclBioMuzzleFlash.uc" />
+    <None Include="..\Classes\pclflakMuzFlash.uc" />
+    <None Include="..\Classes\pclImpactSmoke.uc" />
+    <None Include="..\Classes\PCLlightsmoke.uc" />
+    <None Include="..\Classes\pclLinkmuzflash.uc" />
+    <None Include="..\Classes\pclMinigunMuzFlash.uc" />
+    <None Include="..\Classes\pclmuzflashA.uc" />
+    <None Include="..\Classes\pclMuzFlashRocket.uc" />
+    <None Include="..\Classes\pclmuzflashWhite.uc" />
+    <None Include="..\Classes\pclredsmoke.uc" />
+    <None Include="..\Classes\pclShockMuzFlash.uc" />
+    <None Include="..\Classes\pclSmallSmoke.uc" />
+    <None Include="..\Classes\pclSmoke.uc" />
+    <None Include="..\Classes\PlayerSpawnEffect.uc" />
+    <None Include="..\Classes\rain.uc" />
+    <None Include="..\Classes\RedeemerExplosion.uc" />
+    <None Include="..\Classes\RedeemerTrail.uc" />
+    <None Include="..\Classes\RedWhisp.uc" />
+    <None Include="..\Classes\RocketMark.uc" />
+    <None Include="..\Classes\Shark.uc" />
+    <None Include="..\Classes\ShellSpewer.uc" />
+    <None Include="..\Classes\ShockAltDecal.uc" />
+    <None Include="..\Classes\ShockAltExplosion.uc" />
+    <None Include="..\Classes\ShockBeamMuzFlash.uc" />
+    <None Include="..\Classes\ShockBoltEffect.uc" />
+    <None Include="..\Classes\ShockDarkDecal.uc" />
+    <None Include="..\Classes\ShockDecal.uc" />
+    <None Include="..\Classes\ShockSparks.uc" />
+    <None Include="..\Classes\SmallExplosion.uc" />
+    <None Include="..\Classes\SmallRedeemerExplosion.uc" />
+    <None Include="..\..\XWeapons\Classes\SniperAttachment.uc" />
+    <None Include="..\Classes\Spiral.uc" />
+    <None Include="..\Classes\TankVictim.uc" />
+    <None Include="..\Classes\Tracer.uc" />
+    <None Include="..\Classes\TransDeRes.uc" />
+    <None Include="..\Classes\TranseDeResBlue.uc" />
+    <None Include="..\Classes\VMeshActor.uc" />
+    <None Include="..\Classes\WallSparks.uc" />
+    <None Include="..\Classes\WeaponFadeEffect.uc" />
+    <None Include="..\Classes\xAlienGibGroup.uc" />
+    <None Include="..\Classes\xBotGibGroup.uc" />
+    <None Include="..\Classes\xHeavyWallHitEffect.uc" />
+    <None Include="..\Classes\xpawngibgroup.uc" />
+    <None Include="..\Classes\XScorch.uc" />
+    <None Include="..\Classes\xShieldBeltEffect.uc" />
+    <None Include="..\Classes\ShockBeamCoil.uc" />
+    <None Include="..\Classes\ShockBeamCoilB.uc" />
+    <None Include="..\Classes\ShockCombo.uc" />
+    <None Include="..\Classes\ShockComboCore.uc" />
+    <None Include="..\Classes\ShockComboExpRing.uc" />
+    <None Include="..\Classes\ShockComboFlare.uc" />
+    <None Include="..\Classes\ShockComboFlash.uc" />
+    <None Include="..\Classes\ShockComboSparkles.uc" />
+    <None Include="..\Classes\ShockComboSphereDark.uc" />
+    <None Include="..\Classes\ShockComboVortex.uc" />
+    <None Include="..\Classes\ShockComboWiggles.uc" />
+    <None Include="..\Classes\ShockExplosion.uc" />
+    <None Include="..\Classes\ShockExplosionCore.uc" />
+    <None Include="..\Classes\ShockExplosionCoreB.uc" />
+    <None Include="..\Classes\ShockImpactFlare.uc" />
+    <None Include="..\Classes\ShockImpactFlareB.uc" />
+    <None Include="..\Classes\ShockImpactRing.uc" />
+    <None Include="..\Classes\ShockImpactRingB.uc" />
+    <None Include="..\Classes\ShockImpactScorch.uc" />
+    <None Include="..\Classes\ShockMuzFlash.uc" />
+    <None Include="..\Classes\ShockMuzFlash3rd.uc" />
+    <None Include="..\Classes\ShockMuzFlashB.uc" />
+    <None Include="..\Classes\ShockMuzFlashB3rd.uc" />
+    <None Include="..\Classes\ShockProjElec.uc" />
+    <None Include="..\Classes\ShockProjMuzFlash.uc" />
+    <None Include="..\Classes\ShockProjMuzFlash3rd.uc" />
+    <None Include="..\Classes\ShockProjSparkles.uc" />
+    <None Include="..\Classes\NewExplosionA.uc" />
+    <None Include="..\Classes\NewExplosionB.uc" />
+    <None Include="..\Classes\RocketCorona.uc" />
+    <None Include="..\Classes\RocketExplosion.uc" />
+    <None Include="..\Classes\RocketMuzFlash1st.uc" />
+    <None Include="..\Classes\RocketMuzFlash3rd.uc" />
+    <None Include="..\Classes\RocketSmokeRing.uc" />
+    <None Include="..\Classes\RocketTrailSmoke.uc" />
+    <None Include="..\Classes\LinkBoltEffect.uc" />
+    <None Include="..\Classes\LinkBoltScorch.uc" />
+    <None Include="..\Classes\LinkExpRing.uc" />
+    <None Include="..\Classes\LinkExpRingYellow.uc" />
+    <None Include="..\Classes\LinkMuzFlashBeam1st.uc" />
+    <None Include="..\Classes\LinkMuzFlashBeam3rd.uc" />
+    <None Include="..\Classes\LinkMuzFlashProj1st.uc" />
+    <None Include="..\Classes\LinkMuzFlashProj3rd.uc" />
+    <None Include="..\Classes\LinkProjEffect.uc" />
+    <None Include="..\Classes\LinkProjSparks.uc" />
+    <None Include="..\Classes\LinkProjSparksYellow.uc" />
+    <None Include="..\Classes\LinkProtSphere.uc" />
+    <None Include="..\Classes\LinkScorch.uc" />
+    <None Include="..\Classes\LinkSmoke.uc" />
+    <None Include="..\Classes\LinkSmokeYellow.uc" />
+    <None Include="..\Classes\LinkSparks.uc" />
+    <None Include="..\Classes\Gib.uc" />
+    <None Include="..\Classes\GibBotCalf.uc" />
+    <None Include="..\Classes\GibBotForearm.uc" />
+    <None Include="..\Classes\GibBotHand.uc" />
+    <None Include="..\Classes\GibBotHead.uc" />
+    <None Include="..\Classes\GibBotTorso.uc" />
+    <None Include="..\Classes\GibBotUpperArm.uc" />
+    <None Include="..\Classes\GibHead.uc" />
+    <None Include="..\Classes\GibOrganic_rc.uc" />
+    <None Include="..\Classes\GibOrganicGreenCalf.uc" />
+    <None Include="..\Classes\GibOrganicGreenForearm.uc" />
+    <None Include="..\Classes\GibOrganicGreenHand.uc" />
+    <None Include="..\Classes\GibOrganicGreenHead.uc" />
+    <None Include="..\Classes\GibOrganicGreenTorso.uc" />
+    <None Include="..\Classes\GibOrganicGreenUpperArm.uc" />
+    <None Include="..\Classes\GibOrganicRedCalf.uc" />
+    <None Include="..\Classes\GibOrganicRedForearm.uc" />
+    <None Include="..\Classes\GibOrganicRedHand.uc" />
+    <None Include="..\Classes\GibOrganicRedHead.uc" />
+    <None Include="..\Classes\GibOrganicRedTorso.uc" />
+    <None Include="..\Classes\GibOrganicRedUpperArm.uc" />
+    <None Include="..\Classes\BioMuzFlash1st.uc" />
+    <None Include="..\Classes\GoopSmoke.uc" />
+    <None Include="..\Classes\GoopSparks.uc" />
+    <None Include="..\Classes\IonCannonDeathEffect.uc" />
+    <None Include="..\Classes\IonCore.uc" />
+    <None Include="..\Classes\IonEffect.uc" />
+    <None Include="..\Classes\IonLightBeam.uc" />
+    <None Include="..\Classes\IonShaft.uc" />
+    <None Include="..\Classes\NewIonEffect.uc" />
+    <None Include="..\Classes\ForceRing.uc" />
+    <None Include="..\Classes\ForceRingA.uc" />
+    <None Include="..\Classes\ShieldCharge.uc" />
+    <None Include="..\Classes\ShieldSparks.uc" />
+    <None Include="..\Classes\ComboActivation.uc" />
+    <None Include="..\Classes\OffensiveEffect.uc" />
+    <None Include="..\Classes\RegenCrosses.uc" />
+    <None Include="..\Classes\SpeedTrail.uc" />
+    <None Include="..\Classes\TransBeaconSparks.uc" />
+    <None Include="..\Classes\TransEffect.uc" />
+    <None Include="..\Classes\TransEffectBlue.uc" />
+    <None Include="..\Classes\TransEffectRed.uc" />
+    <None Include="..\Classes\TransFlareBlue.uc" />
+    <None Include="..\Classes\TransFlareRed.uc" />
+    <None Include="..\Classes\TransRecallEffect.uc" />
+    <None Include="..\Classes\TransTrail.uc" />
+    <None Include="..\Classes\TransTrailBlue.uc" />
+    <None Include="..\Classes\TransTrailRed.uc" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

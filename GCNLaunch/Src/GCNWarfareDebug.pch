@@ -1,0 +1,5 @@
+#pragma precompile_target "GCNWarfareDebug.mch"
+#include "PREFIX_GCN_DEBUG.h"
+#include <dolphin.h>
+#include "Core.h"
+#include "Engine.h"

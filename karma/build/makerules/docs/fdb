@@ -1,0 +1,105 @@
+#!/bin/bash
+#
+# $Id: fdb,v 1.4.2.1 2002/04/11 03:45:35 jamesg Exp $
+# $Name: t-stevet-RWSpre-030110 $
+
+set -u
+
+warn() { echo "$@" >&2; }
+die() { warn "$@"; exit 32; }
+
+PrintUsage()
+{
+	cat <<-EOM >&2
+	Usage:
+	$0 -f fmt [options] document.xml
+
+	    -f html|chm : output format
+	    -c css      : attach css file to html-type output
+	    -o dir/     : turn chunking on and use directory (must exist)
+	    -d depth    : depth of chunking (default 1)
+
+	    -h : this help
+
+	EOM
+}
+
+# FilterErrors()
+# {
+# 	grep -v 'DTDDECL catalog entries are not supported' |
+# 	grep -v 'ent/iso-[^.]*.ent:[0-9:]*E: first definition was here' |
+# 	grep -v 'ent/iso-[^.]*.ent:[0-9:]*E: "[^"]*" is not a function name'
+# }
+
+sgmldir='c:/Tools/sgml/'
+
+xsldir=${sgmldir}docbook-xsl-1.48/
+xmldir=${sgmldir}docbook-xml-dtd-4.1.2/
+catdtd=${xmldir}docbook.cat
+
+printusage=
+fmt=_none_selected_
+chunkdepth=
+odir=
+css=
+while getopts hf:c:o:d:ve opt; do
+	case $opt in
+	'h') printusage=yes ;;
+	'f') fmt=$OPTARG ;;
+	'c') css=$OPTARG ;;
+	'o') odir=$OPTARG
+		[ x"$odir" == x"${odir%/}" ] && die "Chunking directory must end in /"
+		[ ! -d "$odir" ] && die "[$odir] is not a directory"
+		;;
+	'd') chunkdepth=$OPTARG ;;
+	'v') set -x;;
+	'e') FilterErrors() { cat; };;
+	'?') # Force exit on bad parameters
+		echo "Try \"$0 -h\" for more information" >&2
+		exit 3
+		;;
+	esac
+done
+
+shift $[OPTIND - 1]	# Eat parsed arguments
+
+[ -n "$printusage" ] && { PrintUsage; exit 0; }
+
+params=
+stylesheet=
+case "$fmt:$odir" in
+	html:) stylesheet=${xsldir}html/docbook.xsl ;;
+	html:*) stylesheet=${xsldir}html/chunk.xsl ;;
+	chm:) die 'You must use [-c dir/] with [-f chm]' ;;
+	chm:*) stylesheet=${xsldir}htmlhelp/htmlhelp.xsl ;;
+	_none_selected_:*)
+		echo "You must use -f to select an output format" >&2
+		echo "Try \"$0 -h\" for more information" >&2
+		exit 1
+		;;
+	*)
+		echo "Unrecognised output format [$fmt]" >&2
+		echo "Try \"$0 -h\" for more information" >&2
+		exit 1
+		;;
+esac
+
+#export SGML_CATALOG_FILES="$catdbx412"
+
+#--catalogs
+#--param chunk.first.sections 1 \
+set -x
+xsltproc \
+	--timing \
+	--param suppress.navigation 0 \
+	--param htmlhelp.autolabel 1 \
+	${css:+--param html.stylesheet "'$css'"} \
+	${chunkdepth:+--param chunk.section.depth "$chunkdepth"} \
+	${odir:+-o "$odir"} \
+	"$stylesheet" \
+	"$@"
+
+# Some magic to reduce jade clutter by applying grep to stderr (see
+# redirections attached to the end of "case" below)
+# exec 3>&1;
+# _cmd_	2>&1 1>&3 3>&- | FilterErrors 1>&2 3>&-

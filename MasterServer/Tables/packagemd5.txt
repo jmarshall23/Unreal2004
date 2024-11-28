@@ -1,0 +1,12 @@
+CREATE TABLE packagemd5 (
+  id int(11) NOT NULL auto_increment,
+
+  guid varchar(32) not null,
+  md5 varchar(32) not null,
+  revision int not null,
+  description varchar(50),
+
+  PRIMARY KEY  (id)
+);
+
+create index idx_packagemd5_revision on packagemd5(revision);

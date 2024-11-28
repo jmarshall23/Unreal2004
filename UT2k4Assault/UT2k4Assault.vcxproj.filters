@@ -1,0 +1,295 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="classes">
+      <UniqueIdentifier>{9c28cf78-ddfd-43d1-b3cd-bb6d8fcf2c64}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="classes\Weapons">
+      <UniqueIdentifier>{27a1028a-4806-4b3e-b996-439b811ad164}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="classes\FX">
+      <UniqueIdentifier>{08a090a9-0f5f-4b5d-94fb-98f841257f38}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="classes\Triggers">
+      <UniqueIdentifier>{873594a6-5555-4f66-8da0-372a8eb0de5b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="classes\Vehicles">
+      <UniqueIdentifier>{21e70dd5-a63a-482c-98ed-c587c8619ca5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="classes\Decorations">
+      <UniqueIdentifier>{17c8c866-2e6f-4d49-ac08-27ddc17dc7b8}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="classes\ACTION_ASOpenSentinel.uc">
+      <Filter>classes</Filter>
+    </None>
+    <None Include="classes\ACTION_ASSetPlayerSpawnArea.uc">
+      <Filter>classes</Filter>
+    </None>
+    <None Include="classes\ACTION_ASTeleportToSpawnArea.uc">
+      <Filter>classes</Filter>
+    </None>
+    <None Include="classes\ACTION_PlayerViewShake.uc">
+      <Filter>classes</Filter>
+    </None>
+    <None Include="classes\ACTION_PlayExplosionSound.uc">
+      <Filter>classes</Filter>
+    </None>
+    <None Include="classes\ASCinematic_Camera.uc">
+      <Filter>classes</Filter>
+    </None>
+    <None Include="classes\ASCinematic_SceneManager.uc">
+      <Filter>classes</Filter>
+    </None>
+    <None Include="classes\ASCriticalObjectiveVolume.uc">
+      <Filter>classes</Filter>
+    </None>
+    <None Include="classes\ASGameInfo.uc">
+      <Filter>classes</Filter>
+    </None>
+    <None Include="classes\ASGameReplicationInfo.uc">
+      <Filter>classes</Filter>
+    </None>
+    <None Include="classes\ASMapList.uc">
+      <Filter>classes</Filter>
+    </None>
+    <None Include="classes\ASMutator.uc">
+      <Filter>classes</Filter>
+    </None>
+    <None Include="classes\ASOBJ_EnergyCore_Delivery.uc">
+      <Filter>classes</Filter>
+    </None>
+    <None Include="classes\ASOBJ_EnergyCore_Spawn.uc">
+      <Filter>classes</Filter>
+    </None>
+    <None Include="classes\ASPlayerReplicationInfo.uc">
+      <Filter>classes</Filter>
+    </None>
+    <None Include="classes\AssaultSquadAI.uc">
+      <Filter>classes</Filter>
+    </None>
+    <None Include="classes\ASSentinelController.uc">
+      <Filter>classes</Filter>
+    </None>
+    <None Include="classes\ASTeamAI.uc">
+      <Filter>classes</Filter>
+    </None>
+    <None Include="classes\DamTypeExploBarrel.uc">
+      <Filter>classes</Filter>
+    </None>
+    <None Include="classes\DestroyVehicleObjective.uc">
+      <Filter>classes</Filter>
+    </None>
+    <None Include="classes\GameObject_EnergyCore.uc">
+      <Filter>classes</Filter>
+    </None>
+    <None Include="classes\HUD_Assault.uc">
+      <Filter>classes</Filter>
+    </None>
+    <None Include="classes\InfoPod.uc">
+      <Filter>classes</Filter>
+    </None>
+    <None Include="classes\LeavingBattleFieldVolume.uc">
+      <Filter>classes</Filter>
+    </None>
+    <None Include="classes\Message_ASKillMessages.uc">
+      <Filter>classes</Filter>
+    </None>
+    <None Include="classes\Message_AssaultTeamRole.uc">
+      <Filter>classes</Filter>
+    </None>
+    <None Include="classes\Message_Awards.uc">
+      <Filter>classes</Filter>
+    </None>
+    <None Include="classes\Message_PowerCore.uc">
+      <Filter>classes</Filter>
+    </None>
+    <None Include="classes\ObjectivePointingArrow.uc">
+      <Filter>classes</Filter>
+    </None>
+    <None Include="classes\ObjectiveProgressDisplay.uc">
+      <Filter>classes</Filter>
+    </None>
+    <None Include="classes\PlayerSpawnManager.uc">
+      <Filter>classes</Filter>
+    </None>
+    <None Include="classes\ScoreBoard_Assault.uc">
+      <Filter>classes</Filter>
+    </None>
+    <None Include="classes\Ammo_Dummy.uc">
+      <Filter>classes\Weapons</Filter>
+    </None>
+    <None Include="classes\DamTypeMinigunTurretBullet.uc">
+      <Filter>classes\Weapons</Filter>
+    </None>
+    <None Include="classes\DamTypeSentinelLaser.uc">
+      <Filter>classes\Weapons</Filter>
+    </None>
+    <None Include="classes\FM_Sentinel_Fire.uc">
+      <Filter>classes\Weapons</Filter>
+    </None>
+    <None Include="classes\FM_Turret_Minigun_AltFire.uc">
+      <Filter>classes\Weapons</Filter>
+    </None>
+    <None Include="classes\FM_Turret_Minigun_Fire.uc">
+      <Filter>classes\Weapons</Filter>
+    </None>
+    <None Include="classes\PROJ_Sentinel_Laser.uc">
+      <Filter>classes\Weapons</Filter>
+    </None>
+    <None Include="classes\PROJ_Sentinel_Laser_Red.uc">
+      <Filter>classes\Weapons</Filter>
+    </None>
+    <None Include="classes\WA_Sentinel.uc">
+      <Filter>classes\Weapons</Filter>
+    </None>
+    <None Include="classes\WA_Turret_Minigun.uc">
+      <Filter>classes\Weapons</Filter>
+    </None>
+    <None Include="classes\Weapon_Sentinel.uc">
+      <Filter>classes\Weapons</Filter>
+    </None>
+    <None Include="classes\Weapon_Turret_Minigun.uc">
+      <Filter>classes\Weapons</Filter>
+    </None>
+    <None Include="classes\FX_ASVehicleBuildEffect.uc">
+      <Filter>classes\FX</Filter>
+    </None>
+    <None Include="classes\FX_ExplodingBarrel.uc">
+      <Filter>classes\FX</Filter>
+    </None>
+    <None Include="classes\FX_Laser_Blue.uc">
+      <Filter>classes\FX</Filter>
+    </None>
+    <None Include="classes\FX_Minigun_ShellSpewer.uc">
+      <Filter>classes\FX</Filter>
+    </None>
+    <None Include="classes\FX_PlasmaImpact.uc">
+      <Filter>classes\FX</Filter>
+    </None>
+    <None Include="classes\FX_SpaceFighter_3rdpMuzzle.uc">
+      <Filter>classes\FX</Filter>
+    </None>
+    <None Include="classes\FX_SpaceFighter_Explosion.uc">
+      <Filter>classes\FX</Filter>
+    </None>
+    <None Include="classes\FX_SpaceFighter_Explosion_Directional.uc">
+      <Filter>classes\FX</Filter>
+    </None>
+    <None Include="classes\FX_SpaceFighter_Trail_Red.uc">
+      <Filter>classes\FX</Filter>
+    </None>
+    <None Include="classes\FX_TurretControlPanel_Lights.uc">
+      <Filter>classes\FX</Filter>
+    </None>
+    <None Include="classes\Trigger_ASForcePlayerRespawn.uc">
+      <Filter>classes\Triggers</Filter>
+    </None>
+    <None Include="classes\Trigger_ASForceTeamRespawn.uc">
+      <Filter>classes\Triggers</Filter>
+    </None>
+    <None Include="classes\Trigger_ASMessageTrigger.uc">
+      <Filter>classes\Triggers</Filter>
+    </None>
+    <None Include="classes\Trigger_ASRoundEnd.uc">
+      <Filter>classes\Triggers</Filter>
+    </None>
+    <None Include="classes\Trigger_ASTeam.uc">
+      <Filter>classes\Triggers</Filter>
+    </None>
+    <None Include="classes\Trigger_ASTeamUseTrigger.uc">
+      <Filter>classes\Triggers</Filter>
+    </None>
+    <None Include="classes\Trigger_ASTouchDamage.uc">
+      <Filter>classes\Triggers</Filter>
+    </None>
+    <None Include="classes\Trigger_ASTurretControlPanel.uc">
+      <Filter>classes\Triggers</Filter>
+    </None>
+    <None Include="classes\Trigger_ASUseAndPossess.uc">
+      <Filter>classes\Triggers</Filter>
+    </None>
+    <None Include="classes\Trigger_ASUseAndRespawn.uc">
+      <Filter>classes\Triggers</Filter>
+    </None>
+    <None Include="classes\Trigger_SetObjectiveStatus.uc">
+      <Filter>classes\Triggers</Filter>
+    </None>
+    <None Include="classes\ASTurret.uc">
+      <Filter>classes\Vehicles</Filter>
+    </None>
+    <None Include="classes\ASTurret_Base.uc">
+      <Filter>classes\Vehicles</Filter>
+    </None>
+    <None Include="classes\ASTurret_Minigun.uc">
+      <Filter>classes\Vehicles</Filter>
+    </None>
+    <None Include="classes\ASTurret_Minigun_Base.uc">
+      <Filter>classes\Vehicles</Filter>
+    </None>
+    <None Include="classes\ASTurret_Minigun_Swivel.uc">
+      <Filter>classes\Vehicles</Filter>
+    </None>
+    <None Include="classes\ASVehicle.uc">
+      <Filter>classes\Vehicles</Filter>
+    </None>
+    <None Include="classes\ASVehicle_Sentinel.uc">
+      <Filter>classes\Vehicles</Filter>
+    </None>
+    <None Include="classes\ASVehicle_Sentinel_Ceiling.uc">
+      <Filter>classes\Vehicles</Filter>
+    </None>
+    <None Include="classes\ASVehicle_Sentinel_Ceiling_Swivel.uc">
+      <Filter>classes\Vehicles</Filter>
+    </None>
+    <None Include="classes\ASVehicle_Sentinel_Floor.uc">
+      <Filter>classes\Vehicles</Filter>
+    </None>
+    <None Include="classes\ASVehicle_Sentinel_Floor_Base.uc">
+      <Filter>classes\Vehicles</Filter>
+    </None>
+    <None Include="classes\ASVehicle_Sentinel_Floor_Swivel.uc">
+      <Filter>classes\Vehicles</Filter>
+    </None>
+    <None Include="classes\ASVehicle_SpaceFighter.uc">
+      <Filter>classes\Vehicles</Filter>
+    </None>
+    <None Include="classes\ASVehicleFactory.uc">
+      <Filter>classes\Vehicles</Filter>
+    </None>
+    <None Include="classes\ASVehicleFactory_LinkTurret.uc">
+      <Filter>classes\Vehicles</Filter>
+    </None>
+    <None Include="classes\ASVehicleFactory_MinigunTurret.uc">
+      <Filter>classes\Vehicles</Filter>
+    </None>
+    <None Include="classes\ASVehicleFactory_SentinelCeiling.uc">
+      <Filter>classes\Vehicles</Filter>
+    </None>
+    <None Include="classes\ASVehicleFactory_SentinelFloor.uc">
+      <Filter>classes\Vehicles</Filter>
+    </None>
+    <None Include="classes\ASVehicleFactory_Turret.uc">
+      <Filter>classes\Vehicles</Filter>
+    </None>
+    <None Include="classes\DECO_Convoy_BoxStraps.uc">
+      <Filter>classes\Decorations</Filter>
+    </None>
+    <None Include="classes\DECO_ConvoyFlag.uc">
+      <Filter>classes\Decorations</Filter>
+    </None>
+    <None Include="classes\DECO_ExplodingBarrel.uc">
+      <Filter>classes\Decorations</Filter>
+    </None>
+    <None Include="classes\DECO_SpaceFighter.uc">
+      <Filter>classes\Decorations</Filter>
+    </None>
+    <None Include="classes\DECO_SpaceFighter_Skaarj.uc">
+      <Filter>classes\Decorations</Filter>
+    </None>
+    <None Include="classes\DECO_TurretControlPanel.uc">
+      <Filter>classes\Decorations</Filter>
+    </None>
+  </ItemGroup>
+</Project>

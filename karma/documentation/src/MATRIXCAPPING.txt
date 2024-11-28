@@ -1,0 +1,25 @@
+Matrix Capping
+==============
+
+"Matrix capping" is a trick used by Mdt to heuristically reduce the size
+of the mathematical problem solved by the Kea solver.
+
+Since PlayStation 2 has a limited VU0 data memory (of 4K), limiting this
+size to 36 has considerable performance advantages. Kea can cope with
+larger matrix sizes, but needs to use a "matrix blocking" strategy to
+buffer data in and out of the VU0 memory; when the size is less than 36,
+the whole problem fits in the memory at once, and so it is possible to
+compute the solution very rapidly.
+
+Note, however, that there is a tradeoff. Matrix capping works by
+eliminating constraint rows according to heuristics. This means that in
+some cases, noticeably "incorrect" behaviour can result.
+
+This can sometimes give the impression of unstable behaviour in extreme
+cases, but the behaviour is not due to mathematical instability; if you
+experience difficulties, try disabling Matrix capping.
+
+This is simply achieved by removing the line that starts
+"MdtWorldSetMaxMatrixSize"
+
+Many of these Mdt samples have Matrix capping enabled.

@@ -1,0 +1,58 @@
+[LevelInfo0]
+Title="LavaGiant 2"
+
+[LevelSummary]
+Title="LavaGiant 2"
+Description="Blood, sweat, and tears have built a lot of great things in our time. In the hellish heat of Purgatory's lava fields, they evaporate so quickly the only trace they leave behind is the grimy buildup on a prisoner's armor."
+
+[Volume0]
+LocationName="Red Base"
+
+[Volume1]
+LocationName="Blue Base"
+
+[Volume2]
+LocationName="Little Rock"
+
+[Volume3]
+LocationName="Top Ridge"
+
+[Volume4]
+LocationName="Lower Red Area"
+
+[Volume5]
+LocationName="Lower Blue Area"
+
+[ZoneInfo0]
+LocationName="Outside"
+
+[ZoneInfo1]
+LocationName="Middle Generator Room"
+
+[ZoneInfo10]
+LocationName="Red Base"
+
+[ZoneInfo2]
+LocationName="Middle Generator Room"
+
+[ZoneInfo3]
+LocationName="Middle Shield Room"
+
+[ZoneInfo4]
+LocationName="Middle Rocket Room"
+
+[ZoneInfo5]
+LocationName="Middle Rocket Room"
+
+[ZoneInfo6]
+LocationName="Middle Rocket Room"
+
+[ZoneInfo7]
+LocationName="Blue Base"
+
+[ZoneInfo8]
+LocationName="Blue Base"
+
+[ZoneInfo9]
+LocationName="Red Base"
+

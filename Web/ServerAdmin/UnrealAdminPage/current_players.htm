@@ -1,0 +1,21 @@
+<!-- #include file="header.inc" -->
+<form method="post" action="<%PostAction%>">
+
+<table class="sectionheader">
+<tr>
+  <td><input class="button" type="submit" name="Refresh" value="Refresh"></td>
+  <td class="aright"><%MinPlayerPart%></td>
+</tr>
+</table>
+
+<br />
+
+<table>
+<tr>
+<%TableHeaders%>
+</tr>
+<%PlayerList%>
+</table>
+<%KickButton%>
+</form>
+<!-- #include file="footer.inc" -->

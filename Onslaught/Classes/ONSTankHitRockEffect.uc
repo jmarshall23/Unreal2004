@@ -1,0 +1,155 @@
+//-----------------------------------------------------------
+//
+//-----------------------------------------------------------
+class ONSTankHitRockEffect extends Emitter;
+
+#exec OBJ LOAD FILE="..\Textures\VMParticleTextures.utx"
+
+DefaultProperties
+{
+    Begin Object Class=SpriteEmitter Name=SpriteEmitter8
+        Acceleration=(Z=-300.000000)
+        FadeOutFactor=(X=0.000000,Y=0.000000,Z=0.000000)
+        FadeOutStartTime=0.300000
+        FadeOut=True
+        FadeInFactor=(W=0.000000,X=0.000000,Y=0.000000,Z=0.000000)
+        FadeInEndTime=1.000000
+        FadeIn=True
+        MaxParticles=80
+        RespawnDeadParticles=False
+        StartLocationOffset=(Z=10.000000)
+        StartLocationShape=PTLS_Sphere
+        SphereRadiusRange=(Min=160.000000,Max=160.000000)
+        AlphaTest=False
+        UseRevolution=True
+        UseRotationFrom=PTRS_Actor
+        SpinParticles=True
+        SpinsPerSecondRange=(X=(Min=7.000000,Max=11.000000))
+        StartSizeRange=(X=(Max=150.000000),Y=(Min=35.000000),Z=(Min=50.000000))
+        UniformSize=True
+        InitialParticlesPerSecond=1050.000000
+        AutomaticInitialSpawning=False
+        DrawStyle=PTDS_AlphaBlend
+        Texture=Texture'VMParticleTextures.TankFiringP.cloudParticleOrange'
+        TextureUSubdivisions=4
+        TextureVSubdivisions=4
+        BlendBetweenSubdivisions=True
+        UseRandomSubdivision=True
+        SecondsBeforeInactive=0.000000
+        LifetimeRange=(Min=0.050000,Max=0.050000)
+        StartVelocityRadialRange=(Min=10.000000,Max=10.000000)
+        MaxAbsVelocity=(X=1.000000,Y=1.000000,Z=1.000000)
+        VelocityLossRange=(X=(Min=-500.000000,Max=500.000000),Y=(Min=-50.000000,Max=50.000000),Z=(Min=-50.000000,Max=50.000000))
+        VelocityScale(0)=(RelativeTime=1.000000,RelativeVelocity=(X=0.200000,Y=0.200000,Z=0.200000))
+        Name="SpriteEmitter8"
+    End Object
+    Emitters(0)=SpriteEmitter'SpriteEmitter8'
+    Begin Object Class=SpriteEmitter Name=SpriteEmitter7
+        Acceleration=(Z=1500.000000)
+        FadeOutStartTime=1.200000
+        FadeOut=True
+        FadeInEndTime=0.750000
+        FadeIn=True
+        MaxParticles=35
+        RespawnDeadParticles=False
+        StartLocationShape=PTLS_Sphere
+        SphereRadiusRange=(Min=150.000000,Max=150.000000)
+        ZTest=True
+        UseRevolution=True
+        RevolutionsPerSecondRange=(X=(Max=0.050000))
+        UseRotationFrom=PTRS_Actor
+        SpinParticles=True
+        SpinsPerSecondRange=(X=(Min=0.065000,Max=0.075000))
+        StartSizeRange=(X=(Min=85.000000,Max=120.000000),Y=(Min=0.000000,Max=0.000000),Z=(Min=0.000000,Max=0.000000))
+        UniformSize=True
+        InitialParticlesPerSecond=150.000000
+        AutomaticInitialSpawning=False
+        DrawStyle=PTDS_AlphaBlend
+        Texture=Texture'VMParticleTextures.TankFiringP.TankDustKick'
+        TextureUSubdivisions=4
+        TextureVSubdivisions=4
+        BlendBetweenSubdivisions=True
+        UseRandomSubdivision=True
+        InitialDelayRange=(Min=0.200000,Max=0.200000)
+        StartVelocityRadialRange=(Min=10.000000,Max=10.000000)
+        MaxAbsVelocity=(X=3.000000,Y=3.000000,Z=3.000000)
+        VelocityLossRange=(X=(Min=-500.000000,Max=500.000000),Y=(Min=-50.000000,Max=50.000000),Z=(Min=-50.000000,Max=50.000000))
+        UseVelocityScale=True
+        Name="SpriteEmitter7"
+    End Object
+    Emitters(1)=SpriteEmitter'SpriteEmitter7'
+    Begin Object Class=SpriteEmitter Name=SpriteEmitter2
+        Acceleration=(Z=-250.000000)
+        UseCollision=True
+        DampingFactorRange=(X=(Min=0.200000,Max=0.250000),Y=(Min=0.200000,Max=0.250000),Z=(Min=0.200000,Max=0.250000))
+        UseSpawnedVelocityScale=True
+        FadeOutStartTime=4.000000
+        FadeOut=True
+        MaxParticles=150
+        ResetAfterChange=True
+        RespawnDeadParticles=False
+        StartLocationRange=(X=(Min=-10.000000,Max=10.000000),Y=(Min=-10.000000,Max=10.000000),Z=(Min=-10.000000,Max=10.000000))
+        StartLocationShape=PTLS_Sphere
+        SphereRadiusRange=(Max=10.000000)
+        ZWrite=True
+        UseRotationFrom=PTRS_Actor
+        SpinParticles=True
+        SpinsPerSecondRange=(X=(Min=0.250000,Max=2.000000))
+        DampRotation=True
+        RotationDampingFactorRange=(X=(Min=0.100000,Max=0.250000))
+        UseRegularSizeScale=False
+        SizeScale(0)=(RelativeTime=1.500000,RelativeSize=0.250000)
+        StartSizeRange=(X=(Min=2.000000,Max=20.000000))
+        UniformSize=True
+        InitialParticlesPerSecond=850.000000
+        AutomaticInitialSpawning=False
+        DrawStyle=PTDS_AlphaBlend
+        Texture=Texture'VMParticleTextures.TankFiringP.tankHitRocks'
+        TextureUSubdivisions=4
+        TextureVSubdivisions=4
+        BlendBetweenSubdivisions=True
+        UseSubdivisionScale=True
+        UseRandomSubdivision=True
+        SecondsBeforeInactive=2.000000
+        LifetimeRange=(Min=6.000000,Max=6.000000)
+        StartVelocityRange=(X=(Min=-600.000000,Max=600.000000),Y=(Min=-600.000000,Max=600.000000),Z=(Min=-600.000000,Max=600.000000))
+        MaxAbsVelocity=(X=5000.000000,Y=5000.000000,Z=5000.000000)
+        AddVelocityFromOtherEmitter=0
+        VelocityScale(0)=(RelativeTime=0.750000,RelativeVelocity=(X=1.000000,Y=1.000000,Z=1.000000))
+        VelocityScale(1)=(RelativeTime=3.000000,RelativeVelocity=(X=2.000000,Y=2.000000))
+        Name="SpriteEmitter2"
+    End Object
+    Emitters(2)=SpriteEmitter'SpriteEmitter2'
+    Begin Object Class=SpriteEmitter Name=SpriteEmitter0
+        Acceleration=(Z=-1500.000000)
+        DampingFactorRange=(X=(Min=0.000000,Max=0.000000),Y=(Min=0.000000,Max=0.000000),Z=(Min=0.000000,Max=0.000000))
+        FadeOutStartTime=0.100000
+        FadeOut=True
+        MaxParticles=50
+        RespawnDeadParticles=False
+        StartLocationRange=(X=(Min=-160.000000,Max=160.000000),Y=(Min=-160.000000,Max=160.000000),Z=(Min=-160.000000,Max=160.000000))
+        StartLocationShape=PTLS_Sphere
+        SphereRadiusRange=(Min=-80.000000,Max=80.000000)
+        UseRotationFrom=PTRS_Actor
+        SpinParticles=True
+        SpinsPerSecondRange=(X=(Min=0.025000,Max=0.100000))
+        DampRotation=True
+        UniformSize=True
+        InitialParticlesPerSecond=250.000000
+        AutomaticInitialSpawning=False
+        DrawStyle=PTDS_AlphaBlend
+        Texture=Texture'VMParticleTextures.TankFiringP.DirtPuffTEX'
+        TextureUSubdivisions=4
+        TextureVSubdivisions=4
+        BlendBetweenSubdivisions=True
+        UseRandomSubdivision=True
+        SecondsBeforeInactive=0.000000
+        LifetimeRange=(Min=3.000000,Max=3.000000)
+        StartVelocityRange=(X=(Min=-200.000000,Max=200.000000),Y=(Min=-200.000000,Max=200.000000),Z=(Min=2000.000000,Max=1000.000000))
+        StartVelocityRadialRange=(Min=250.000000,Max=250.000000)
+        Name="SpriteEmitter0"
+    End Object
+    Emitters(3)=SpriteEmitter'SpriteEmitter0'
+    bNoDelete=False
+    AutoDestroy=True
+}

@@ -1,0 +1,33 @@
+# These are the definitions that will be used in make's rules
+# Configure doesn't really have to know about local definitions.
+# This file is included at the beginning of the makefile
+
+SOURCES:= MdtBcl.cpp \
+# MdtBcl.cpp
+
+SOURCES_NAMES:=$(notdir $(SOURCES))
+SOURCES_REL:=${SOURCES_NAMES}
+
+OBJECTS:=$(SOURCES_NAMES:.c=.o)
+OBJECTS:=$(OBJECTS:.cpp=.o)
+OBJECTS:=$(OBJECTS:.ec=.o)
+OBJECTS:=$(OBJECTS:.ecpp=.o)
+OBJECTS_REL:=$(addprefix $(MAKECMDGOALS)/,$(OBJECTS))
+
+OUTNAME:=MdtBcl
+
+OUTPUT_FILE_RELEASE:=$(OUTNAME)
+OUTPUT_FILE_DEBUG:=$(OUTNAME)_debug
+OUTPUT_FILE_CHECK_RELEASE:=$(OUTNAME)_check
+
+#format the environment include path
+INCLUDE_PATH:=$(strip $(INCLUDE_PATH))
+INCLUDE_PATH:=$(subst :, ,$(INCLUDE_PATH))
+INCLUDE_PATH:=$(addprefix -I,$(INCLUDE_PATH))
+
+#make the source paths relative to this directory
+ME_SRC_PATH:=$(dir ${SOURCES})
+ME_SRC_PATH:=$(subst :, ,$(ME_SRC_PATH))
+ME_SRC_PATH:=$(addprefix ../,$(ME_SRC_PATH))
+
+VPATH+=:$(ME_SRC_PATH):$(MAKECMDGOALS)

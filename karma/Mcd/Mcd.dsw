@@ -1,0 +1,650 @@
+Microsoft Developer Studio Workspace File, Format Version 6.00
+# WARNING: DO NOT EDIT OR DELETE THIS WORKSPACE FILE!
+
+###############################################################################
+
+Project: "BallnChain"=..\MeSamples\BallnChain\BallnChain.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Bridge"=..\MeSamples\Bridge\Bridge.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Chair"=..\MeTutorials\Chair\Chair.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "ConvexStairs"=..\MeSamples\ConvexStairs\ConvexStairs.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "McdConvex"=.\src\convex\McdConvex.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "McdConvexCreateHull"=.\src\QHull\McdConvexCreateHull.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "McdFrame"=.\src\frame\McdFrame.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "McdParticleSystem"=.\src\particle\McdParticleSystem.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "McdPrimitives"=.\src\primitives\McdPrimitives.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "McdRGHeightField"=.\src\terrain\McdRGHeightField.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "McdRwBsp"=.\src\rwbsp\rwbsp.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "McdTriangleMesh"=.\src\mesh\McdTriangleMesh.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Mdt"=..\Mdt\src\mdt.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "MdtBcl"=..\MdtBcl\src\MdtBcl.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "MdtKea"=..\MdtKea\src\mdtkea.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "MeApp"=..\MeApp\src\MeApp.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "MeGlobals"=..\MeGlobals\src\MeGlobals.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "MeViewer"=..\MeViewer\src\MeViewer.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "MeViewer2"=..\MeViewer2\src\MeViewer2.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Mesh4Bars"=.\examples\Mesh4Bars\Mesh4Bars.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name McdFrame
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name McdPrimitives
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name McdTriangleMesh
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name Mdt
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name MdtBcl
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name MdtKea
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name MeGlobals
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name MeMemory
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name Mst
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "MeshChain"=..\MeSamples\MeshChain\MeshChain.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name McdFrame
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name McdPrimitives
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name McdTriangleMesh
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name Mdt
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name MdtBcl
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name MdtKea
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name MeApp
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name MeGlobals
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name Mst
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "MeshMesh"=.\examples\MeshMesh\MeshMesh.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "MeshSgiLogoSpin"=.\examples\MeshSgiLogoSpin\MeshSgiLogoSpin.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name McdFrame
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name McdPrimitives
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name McdTriangleMesh
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name Mdt
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name MdtBcl
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name MdtKea
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name MeGlobals
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name MeMemory
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "Mps"=..\Mps\src\Mps.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Mst"=..\Mst\src\Mst.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Topple"=..\MeSamples\Topple\Topple.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "TriList"=.\examples\trilist\TriList.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "dice"=.\examples\Rw\demo\dice\dice.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name mcdrwbsp
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name mdt
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name mdtkea
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name MeMemory
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name mcddtbridge
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name MdtBcl
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name McdFrame
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name McdPrimitives
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name MeGlobals
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "dominoes"=.\examples\dominoes\dominoes.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name mcd
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name mdt
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name mdtkea
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name MeMemory
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name mcddtbridge
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name MdtBcl
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name McdFrame
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name McdPrimitives
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name MeGlobals
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "fast"=.\examples\fast\fast.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name McdConvex
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name McdConvexCreateHull
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name McdFrame
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name McdPrimitives
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name Mdt
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name MdtBcl
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name MdtKea
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name MeGlobals
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name MeMemory
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "lineseg"=.\examples\lineseg\lineseg.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name mcddtbridge
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name McdFrame
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name McdPrimitives
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name MeGlobals
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name MeMemory
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name McdRGHeightField
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name McdTriangleMesh
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name McdConvex
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name McdConvexCreateHull
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "rgHeightField"=.\examples\rgHeightField\rgHeightField.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name mdt
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name mdtkea
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name MeMemory
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name mcddtbridge
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name MdtBcl
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name McdFrame
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name McdPrimitives
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name MeGlobals
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name McdConvex
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name McdConvexCreateHull
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name McdRGHeightField
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "vis"=.\examples\vis\vis.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name McdPrimitives
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name MeGlobals
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name MeMemory
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name McdConvex
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name McdConvexCreateHull
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name McdFrame
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Global:
+
+Package=<5>
+{{{
+}}}
+
+Package=<3>
+{{{
+}}}
+
+###############################################################################
+

@@ -1,0 +1,39 @@
+# Assuming GNU make (>v3.76)
+# $Header: /proj/Toolkits/MeGlobals/src/MeMakefile,v 1.25 2002/01/14 11:19:49 jamesrf Exp $
+# ($Name: t-stevet-RWSpre-030110 $)
+
+# vim:syntax=make:
+
+#------------------------------
+#Platform independent Makefile
+#------------------------------
+
+# What's to be built
+targetname:=MeGlobals
+targettype:=library
+
+# Note: Recursive definition of SOURCES here in case ${PLATFORM} is set in
+# a canned configuration
+SOURCES=\
+	MeASELoad.c \
+	MeChunk.c \
+	MeCommandLine.c \
+	MeDebugDraw.c \
+	MeDict.c \
+	MeFileSearch.c\
+	MeHash.c \
+    MeIDPool.c \
+	MeMath.c \
+	MeMemory.c \
+	MeMessage.c \
+	MeMisc.c \
+	MePool.c \
+	MeProfile.c \
+	MeProfile_${PLATFORM}.c \
+	MeSimpleFile_${PLATFORM}.c \
+	MeStream.c \
+	MeVersion.c
+
+# Standard incantation
+makerulesdir:=../../build/makerules/
+include ${makerulesdir}Make.rules

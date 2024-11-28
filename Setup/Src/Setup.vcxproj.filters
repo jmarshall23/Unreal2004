@@ -1,0 +1,83 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Src">
+      <UniqueIdentifier>{2e3c58e8-10c2-4529-a3cf-36c855c5553e}</UniqueIdentifier>
+      <Extensions>*.cpp</Extensions>
+    </Filter>
+    <Filter Include="Inc">
+      <UniqueIdentifier>{edb0f0bf-1b4b-4627-a0b0-a42ea275f0c7}</UniqueIdentifier>
+      <Extensions>*.h</Extensions>
+    </Filter>
+    <Filter Include="Res">
+      <UniqueIdentifier>{784b240e-285b-4c1c-b0fe-62ecd46fd469}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes">
+      <UniqueIdentifier>{ea6b28d2-b3bd-429c-a34e-b691609da20b}</UniqueIdentifier>
+      <Extensions>*.uc</Extensions>
+    </Filter>
+    <Filter Include="Int">
+      <UniqueIdentifier>{2bd111ca-d97b-4b80-a4a0-e27da0ff09da}</UniqueIdentifier>
+      <Extensions>*.int</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Setup.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="USetupDefinition.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="USetupDefinitionWindows.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="SetupPrivate.h">
+      <Filter>Src</Filter>
+    </ClInclude>
+    <ClInclude Include="Res\resource.h">
+      <Filter>Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Inc\Setup.h">
+      <Filter>Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Inc\USetupDefinitionWindows.h">
+      <Filter>Inc</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Res\idicon_s.ico">
+      <Filter>Res</Filter>
+    </None>
+    <None Include="Res\idicon_t.ico">
+      <Filter>Res</Filter>
+    </None>
+    <None Include="Res\Unreal.ico">
+      <Filter>Res</Filter>
+    </None>
+    <None Include="..\Classes\SetupDefinition.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\SetupGroup.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\SetupLink.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\SetupObject.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\SetupProduct.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\..\System\Setup.int">
+      <Filter>Int</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Res\SetupRes.rc">
+      <Filter>Res</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+</Project>

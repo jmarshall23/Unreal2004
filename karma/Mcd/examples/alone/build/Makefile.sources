@@ -1,0 +1,34 @@
+
+#-------------------------------------------
+#This file lists the sources and the target 
+# for a particular Context in this Module.
+#-------------------------------------------
+
+
+SOURCES=cdAlone.c
+
+OUTNAME=alone
+
+
+OUTPUT_FILE_RELEASE:=$(OUTNAME)
+OUTPUT_FILE_DEBUG:=$(OUTNAME)_debug
+
+ifeq '$(PLATFORM)' 'win32'
+	OUTPUT_FILE_RELEASE:=$(OUTPUT_FILE_RELEASE).exe
+	OUTPUT_FILE_DEBUG:=$(OUTPUT_FILE_DEBUG).exe
+endif
+
+ifeq '$(PLATFORM)' 'ps2'
+	OUTPUT_FILE_RELEASE:=$(OUTPUT_FILE_RELEASE).elf
+	OUTPUT_FILE_DEBUG:=$(OUTPUT_FILE_DEBUG).elf
+endif
+
+ifeq '$(PLATFORM)' 'linux'
+	OUTPUT_FILE_RELEASE:=$(OUTPUT_FILE_RELEASE)
+	OUTPUT_FILE_DEBUG:=$(OUTPUT_FILE_DEBUG)
+endif
+
+ifeq '$(PLATFORM)' 'irix'
+	OUTPUT_FILE_RELEASE:=$(OUTPUT_FILE_RELEASE)
+	OUTPUT_FILE_DEBUG:=$(OUTPUT_FILE_DEBUG)
+endif

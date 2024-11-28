@@ -1,0 +1,157 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="classes">
+      <UniqueIdentifier>{789f755e-835e-4d8e-8450-001341f5fb7c}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="classes\ClassicBioChargedFire.uc">
+      <Filter>classes</Filter>
+    </None>
+    <None Include="classes\ClassicBioFire.uc">
+      <Filter>classes</Filter>
+    </None>
+    <None Include="classes\ClassicBioGlob.uc">
+      <Filter>classes</Filter>
+    </None>
+    <None Include="classes\ClassicBioRifle.uc">
+      <Filter>classes</Filter>
+    </None>
+    <None Include="classes\ClassicBioRiflePickup.uc">
+      <Filter>classes</Filter>
+    </None>
+    <None Include="classes\ClassicBlueBeacon.uc">
+      <Filter>classes</Filter>
+    </None>
+    <None Include="classes\ClassicBulletTrail.uc">
+      <Filter>classes</Filter>
+    </None>
+    <None Include="classes\ClassicFlakAltFire.uc">
+      <Filter>classes</Filter>
+    </None>
+    <None Include="classes\ClassicFlakCannon.uc">
+      <Filter>classes</Filter>
+    </None>
+    <None Include="classes\ClassicFlakCannonPickup.uc">
+      <Filter>classes</Filter>
+    </None>
+    <None Include="classes\ClassicFlakChunk.uc">
+      <Filter>classes</Filter>
+    </None>
+    <None Include="classes\ClassicFlakFire.uc">
+      <Filter>classes</Filter>
+    </None>
+    <None Include="classes\ClassicFlakShell.uc">
+      <Filter>classes</Filter>
+    </None>
+    <None Include="classes\ClassicGrenadeFire.uc">
+      <Filter>classes</Filter>
+    </None>
+    <None Include="classes\ClassicMinigun.uc">
+      <Filter>classes</Filter>
+    </None>
+    <None Include="classes\ClassicMinigunAltfire.uc">
+      <Filter>classes</Filter>
+    </None>
+    <None Include="classes\ClassicMinigunFire.uc">
+      <Filter>classes</Filter>
+    </None>
+    <None Include="classes\ClassicMinigunPickup.uc">
+      <Filter>classes</Filter>
+    </None>
+    <None Include="classes\ClassicRedBeacon.uc">
+      <Filter>classes</Filter>
+    </None>
+    <None Include="classes\ClassicRocketFire.uc">
+      <Filter>classes</Filter>
+    </None>
+    <None Include="classes\ClassicRocketLauncher.uc">
+      <Filter>classes</Filter>
+    </None>
+    <None Include="classes\ClassicRocketLauncherPickup.uc">
+      <Filter>classes</Filter>
+    </None>
+    <None Include="classes\ClassicRocketMultiFire.uc">
+      <Filter>classes</Filter>
+    </None>
+    <None Include="classes\ClassicShieldGun.uc">
+      <Filter>classes</Filter>
+    </None>
+    <None Include="classes\ClassicShockBeamFire.uc">
+      <Filter>classes</Filter>
+    </None>
+    <None Include="classes\ClassicShockProjectile.uc">
+      <Filter>classes</Filter>
+    </None>
+    <None Include="classes\ClassicShockProjFire.uc">
+      <Filter>classes</Filter>
+    </None>
+    <None Include="classes\ClassicShockRifle.uc">
+      <Filter>classes</Filter>
+    </None>
+    <None Include="classes\ClassicShockRiflePickup.uc">
+      <Filter>classes</Filter>
+    </None>
+    <None Include="classes\ClassicSniperAmmo.uc">
+      <Filter>classes</Filter>
+    </None>
+    <None Include="classes\ClassicSniperAmmoPickup.uc">
+      <Filter>classes</Filter>
+    </None>
+    <None Include="classes\ClassicSniperAttachment.uc">
+      <Filter>classes</Filter>
+    </None>
+    <None Include="classes\ClassicSniperFire.uc">
+      <Filter>classes</Filter>
+    </None>
+    <None Include="classes\ClassicSniperRifle.uc">
+      <Filter>classes</Filter>
+    </None>
+    <None Include="classes\ClassicSniperRiflePickup.uc">
+      <Filter>classes</Filter>
+    </None>
+    <None Include="classes\ClassicSniperSmoke.uc">
+      <Filter>classes</Filter>
+    </None>
+    <None Include="classes\ClassicTransBeacon.uc">
+      <Filter>classes</Filter>
+    </None>
+    <None Include="classes\ClassicTransFire.uc">
+      <Filter>classes</Filter>
+    </None>
+    <None Include="classes\ClassicTranslauncher.uc">
+      <Filter>classes</Filter>
+    </None>
+    <None Include="classes\ClassShieldFire.uc">
+      <Filter>classes</Filter>
+    </None>
+    <None Include="classes\DamTypeClassicHeadshot.uc">
+      <Filter>classes</Filter>
+    </None>
+    <None Include="classes\DamTypeClassicSniper.uc">
+      <Filter>classes</Filter>
+    </None>
+    <None Include="classes\LongBulletDecal.uc">
+      <Filter>classes</Filter>
+    </None>
+    <None Include="classes\MutUseLightning.uc">
+      <Filter>classes</Filter>
+    </None>
+    <None Include="classes\MutUseSniper.uc">
+      <Filter>classes</Filter>
+    </None>
+    <None Include="classes\MutUTClassic.uc">
+      <Filter>classes</Filter>
+    </None>
+    <None Include="classes\SniperWallHitEffect.uc">
+      <Filter>classes</Filter>
+    </None>
+    <None Include="classes\TracerProjectile.uc">
+      <Filter>classes</Filter>
+    </None>
+    <None Include="classes\UTClassicGameRules.uc">
+      <Filter>classes</Filter>
+    </None>
+  </ItemGroup>
+</Project>

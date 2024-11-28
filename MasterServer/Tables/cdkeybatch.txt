@@ -1,0 +1,9 @@
+create table cdkeybatch
+(
+	id int auto_increment not null,
+	created datetime not null,
+	description varchar(100) not null,
+	count int not null,
+
+	primary key(id)
+);

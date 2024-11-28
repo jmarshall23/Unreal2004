@@ -1,0 +1,97 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Src">
+      <UniqueIdentifier>{b5992a2c-6fe9-412d-aefe-b1df8dd68ab5}</UniqueIdentifier>
+      <Extensions>*.cpp;*.asm</Extensions>
+    </Filter>
+    <Filter Include="Inc">
+      <UniqueIdentifier>{be081751-d53f-42f5-825e-a5e2a4052ca0}</UniqueIdentifier>
+      <Extensions>*.inc</Extensions>
+    </Filter>
+    <Filter Include="Classes">
+      <UniqueIdentifier>{4db5fcf7-e29a-4fbd-9492-25fbbaac3feb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\UTV2004c">
+      <UniqueIdentifier>{8434de94-27a5-470d-81dc-5c7eed7af00b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\UTV2004s">
+      <UniqueIdentifier>{89bdb459-83ec-48ce-a7d1-e4bff9d1a660}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="BunchDelayer.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="ReplicatorEngine.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="UtvChannel.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="UTVCommandlet.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="UTVPackageMap.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="UTVRemoteControll.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="UTVUplink.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="UtvVoiceChannel.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\Inc\BunchDelayer.h">
+      <Filter>Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Inc\ReplicatorEngine.h">
+      <Filter>Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Inc\UtvChannel.h">
+      <Filter>Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Inc\UTVCommandlet.h">
+      <Filter>Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Inc\UTVPackageMap.h">
+      <Filter>Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="UTVRemoteControll.h">
+      <Filter>Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Inc\UTVUplink.h">
+      <Filter>Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Inc\UtvVoiceChannel.h">
+      <Filter>Inc</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\UTV2004c\Classes\utvInputPage.uc">
+      <Filter>Classes\UTV2004c</Filter>
+    </None>
+    <None Include="..\..\UTV2004c\Classes\utvInteraction.uc">
+      <Filter>Classes\UTV2004c</Filter>
+    </None>
+    <None Include="..\..\UTV2004c\Classes\utvPrimaryMenu.uc">
+      <Filter>Classes\UTV2004c</Filter>
+    </None>
+    <None Include="..\..\UTV2004c\Classes\utvReplication.uc">
+      <Filter>Classes\UTV2004c</Filter>
+    </None>
+    <None Include="..\..\UTV2004c\Classes\utvWatcherMenu.uc">
+      <Filter>Classes\UTV2004c</Filter>
+    </None>
+    <None Include="..\..\UTV2004s\Classes\utvMutator.uc">
+      <Filter>Classes\UTV2004s</Filter>
+    </None>
+    <None Include="..\..\UTV2004s\Classes\utvSpectator.uc">
+      <Filter>Classes\UTV2004s</Filter>
+    </None>
+  </ItemGroup>
+</Project>

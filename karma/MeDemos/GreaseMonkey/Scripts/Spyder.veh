@@ -1,0 +1,9 @@
+#porsche.veh
+SHAPE_DIR ./Models/Spyder
+TEXTURE_DIR ./Models/Spyder/textures
+CMPT_SHAPES PwheelLF.DFF PwheelLF.DFF PwheelLF.DFF PwheelLF.DFF spyder.DFF
+EXTERNAL_TEXTURE flattened5
+INTERNAL_SHAPE interiorview.dff
+STEERING_GAINS 0.5 6.0 -1.0 1.0
+THROTTLE_GAINS 0.00063
+CAR_DATA_FILE SpyderD.txt

@@ -1,0 +1,1 @@
+<table><tr><th class="full"><%Checkbox%>&nbsp;<%Text%></th></tr></table>

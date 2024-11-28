@@ -1,0 +1,53 @@
+# $Id: Make.defs.ps2,v 1.6.2.1 2002/04/11 03:45:34 jamesg Exp $
+# ($Name: t-stevet-RWSpre-030110 $)
+#
+# vim:syntax=make:
+
+# Cowpat macro definitions for ps2
+
+ifneq 'ps2' "${PLATFORM}"
+$(error Make.defs.ps2: Only for ps2 builds)
+endif
+
+#rwlibs:= \
+#    rplabel rpmemlk rpskin rpworld rtintel rtquat rttilerd \
+#    rpanim rplodatm rpmorph rpspline rt2d rtray rtworld rpbone \
+#    rplogo rppvs rpstereo rtcharse rtmipk rtslerp rwcore rpcollis \
+#    rtintsec rpmeminf rprandom rpvrml rtimport rtpng rtsplpvs \
+
+CC:=ee-gcc
+CXX:=ee-g++
+CPP:=${CC}
+CCPLATFORM:=-DPS2
+CPPMAKEDEPS:=-M
+DSMC:=ee-dvp-as
+DSMPP:=${DSMC}
+DSMPPMAKEDEPS:=--MD
+DSMPPFLAGS:=$(addprefix -I${&sp},${incpath} ${builddir})
+AR:=ee-ar
+ARFLAGS:=-rc # trailing space
+EAC:=../../tools/eac
+EACMICROFLAGS:=-x micro
+o:=o
+CCOBJ=-o # trailing space
+ccwarn?=-Wall# overridable
+CC_OPTS_none:=${ccwarn} -fno-omit-frame-pointer -G0
+CC_OPTS_full:=${ccwarn} -ffast-math -fno-omit-frame-pointer -G0 -O6
+#CC_OPTS_full:=-ffast-math -fno-omit-frame-pointer -G0 -O1
+CC_SYMB_none:=
+CC_SYMB_all:=-ggdb3
+ARFLAGS:=-rc # trailing space
+kernellibraly:=${builddir}app.${targetname}.cmd
+&ldflags-common:=-T ${kernellibraly} -nostartfiles -Wl,-Map,${targetname}.map
+LDFLAGS_SYMB_none:=${&ldflags-common} -o # trailing space
+LDFLAGS_SYMB_all:=${&ldflags-common} -ggdb3 -o # trailing space
+#LDLIBPATH:=$(addprefix -L,${libpath}) -lm -lgraph -ldma -ldev -lpkt -lpad -lvu0 -lpc
+#LDLIBPATH:=$(addprefix -L,${libpath}) $(addprefix -l,${rwlibs}) $(addprefix -l,${extralibs}) -lm -lgraph -ldma -ldev -lpkt -lpad -lvu0 -lpc -lstdc++
+LDLIBPATH:=$(addprefix -L,${libpath}) $(addprefix -l,${extralibs}) -lhip -lhig -lm -lgraph -ldma -ldev -lpkt -lpad -lvu0 -lpc
+LD:=${CC}
+libprefix:=lib
+libsuffix:=.a
+exesuffix:=
+andthen:=&&
+extraobjects:=${kernellibraly}
+&extrasources:=${sonylibdir}/crt0.s

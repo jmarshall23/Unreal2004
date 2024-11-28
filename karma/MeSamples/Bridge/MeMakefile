@@ -1,0 +1,21 @@
+
+# Assuming GNU make (>v3.76)
+# $Header: /proj/Toolkits/MeSamples/Bridge/MeMakefile,v 1.2 2001/05/21 15:58:26 williamg Exp $
+# ($Name: t-stevet-RWSpre-030110 $)
+
+# vim:syntax=make:
+
+#------------------------------
+# Bridge
+#------------------------------
+
+# What's to be built
+targetname:=Bridge
+targettype:=executeable
+
+SOURCES	:= Bridge.c
+
+
+# Standard incantation
+makerulesdir:=../../build/makerules/
+include ${makerulesdir}/Make.rules

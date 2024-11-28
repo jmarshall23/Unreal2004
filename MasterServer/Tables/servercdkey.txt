@@ -1,0 +1,11 @@
+create table servercdkey
+(
+	cdkeyid int not null,
+	timestamp datetime,
+	email varchar(50),
+	ip varchar(15),
+
+	primary key(cdkeyid),
+	key idx_servercdkey_timestamp (timestamp),
+	key idx_servercdkey_ip (ip)
+);

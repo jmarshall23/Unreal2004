@@ -1,0 +1,142 @@
+# Assuming GNU make (>=v3.79)
+# $Id: Make.tests,v 1.4.18.1 2002/04/11 03:45:34 jamesg Exp $
+# ($Name: t-stevet-RWSpre-030110 $)
+
+# vim:syntax=make:
+
+#
+# Run tests on things to ensure the truth of cowpat assumptions on many
+# platforms (e.g., cygwin v. true unix)
+#
+
+# Quiet?
+q:=@
+
+include Make.defs
+
+#Make.test: ;
+
+tests:=bashpipestatus
+
+announce=@echo "PASS: $@"
+
+.PHONY: all ${tests}
+all: ${tests}
+
+bashpipestatus:
+	${q}bash -c '(exit 22) | true | false; [ "22 0 1" = "$${PIPESTATUS[*]}" ]'
+	${announce}
+
+
+# Make macro processing
+pass=$(warning PASS: $1)
+
+test-true=$(if $1,$(warning PASS: $2),$(error FAIL: $2))
+test-false=$(if $1,$(error FAIL: $2),$(warning PASS: $2))
+escape=__$(subst %,|_|,$(subst ${&sp},||,$1))
+is-equal=$(filter $(call escape,$1),$(call escape,$2))
+test-equal=$(call test-true,$(call is-equal,$1,$2),$3)
+test-unequal=$(call test-false,$(call is-equal,$1,$2),$3)
+
+$(call test-equal,hello,hello,test-equal)
+$(call test-unequal,hello,there,test-unequal)
+
+test-canonpath-exact=$(call test-equal,$2,$(call &canonpath,$1),canonpath: [$1]->[$(call &canonpath,$1)] ($2))
+test-canonpath=$(call test-canonpath-exact,$(strip $1),$(strip $2),$3)
+#test-canonpath:=$$(call test-equal,$$$$1,$$(call &canonpath,$$$$2),canonpath: [$$$$1][$$(call &canonpath,$$$$2)])
+$(call test-canonpath,                a, a         )
+$(call test-canonpath,              /a/, /a/       )
+$(call test-canonpath,               /a, /a        )
+$(call test-canonpath,              a/b, a/b       )
+$(call test-canonpath,             a/b/, a/b/      )
+$(call test-canonpath,           b/../a, a         )
+$(call test-canonpath,          a/b/../, a/        )
+$(call test-canonpath,           a/b/.., a/b/..    )
+$(call test-canonpath,         /a/b/../, /a/       )
+$(call test-canonpath,          /a/b/.., /a/b/..   )
+$(call test-canonpath,                /, /         )
+$(call test-canonpath,           /a/../, /         )
+$(call test-canonpath,      /a/b/../../, /         )
+$(call test-canonpath,            /a/.., /a/..     )
+$(call test-canonpath,      /a/b/../../, /         )
+$(call test-canonpath,       /a/b/../.., /a/..     )
+$(call test-canonpath,            //a/b, //a/b     )
+$(call test-canonpath,    //a/b/../../c, //c       )
+$(call test-canonpath,   //a/b/../../c/, //c/      )
+$(call test-canonpath,               //, //        )
+$(call test-canonpath,           ../../, ../../    )
+$(call test-canonpath,      ../../a/../, ../../    )
+$(call test-canonpath, ../../a/b/../../, ../../    )
+$(call test-canonpath, ../../a/b/../.., ../../a/.. )
+
+test-remove-dups=$(call test-equal,$2,$(call &remove-duplicates,$1),remove-dups: [$1]->[$(call &remove-duplicates,$1)] ($2))
+$(call test-remove-dups,a b b,a b)
+$(call test-remove-dups,c b b a a c,c b a)
+$(call test-remove-dups,9 8 7 7 6 6 5 5 4 4 3 3 4 4 2 2 1 1,9 8 7 6 5 4 3 2 1)
+$(call test-remove-dups,,)
+
+append=|$1|$2|
+eval=$1
+test-eval:=$$(call append,$$2,b)
+$(call test-equal,|zz|b|,$(call eval,${test-eval},zz),eval)
+
+patt=hello%
+$(call test-true,$(filter ${patt},hello there),filter sees % in = expansion)
+
+patt:=hello%
+$(call test-true,$(filter ${patt},hello there),filter sees % in := expansion)
+
+
+make --warn -rR BUILD:=free OPTS:=none SYMBOLS:=none CRT:=static  asserts=1  builddir:=_b_1/  genmaks= MeViewer2 PLATFORM:=linux renderwith:=null
+
+# Compiler implementaion files
+test-defined=$(if $(filter undefined,$(origin $1)),$(error FAIL: defined: $${$1}),$(warning PASS: defined: $${$1}))
+test-undefined=$(if $(filter undefined,$(origin $1)),$(warning PASS: undefined: $${$1}),$(error FAIL: undefined: $${$1}))
+$(call test-undefined,jdsfhks blah blah)
+$(call test-defined,test-defined)
+
+compiler-defs:= \
+	CC \
+	CPP \
+	CCINTEL \
+	CCPLATFORM \
+	CPPMAKEDEPS \
+	o \
+	CCOBJ \
+	CC_OPTS_none \
+	CC_OPTS_full \
+	CC_browse_none \
+	CC_browse_nonlocal \
+	CC_browse_complete \
+	CCINTEL_OPTS_none \
+	CCINTEL_OPTS_full \
+	CC_CRT_static \
+	CC_CRT_mthread \
+	CC_CRT_dll \
+	CC_CRT_staticd \
+	CC_CRT_mthreadd \
+	CC_CRT_dlld \
+	CPP_CRT_static \
+	CPP_CRT_mthread \
+	CPP_CRT_dll \
+	CPP_CRT_staticd \
+	CPP_CRT_mthreadd \
+	CPP_CRT_dlld \
+	objpdbname \
+	targetpdbname \
+	CC_SYMB_none \
+	CC_SYMB_all \
+	AR \
+	ARFLAGS \
+	LDFLAGS_SYMB_none \
+	LDFLAGS_SYMB_all \
+	LDLIBPATH \
+	LD \
+	libprefix \
+	libsuffix \
+	exesuffix \
+	andthen \
+
+PLATFORM:=win32
+include Make.defs.${PLATFORM}
+$(foreach d,${compiler-defs},$(call test-defined,${d}))

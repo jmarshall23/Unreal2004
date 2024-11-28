@@ -1,0 +1,243 @@
+#=============================================================================
+# makefile-general: General-purpose rules for Unreal makefiles.
+#
+# Makefiles should define the following variables before including this file:
+# 	Directories:
+# 		SRC_DIRS	= Source code directories.
+# 		BUILD_DIR	= Intermediate file directory.
+# 	Compiler/linker options:
+# 		CXX			= C++ compiler.
+# 		CXXFLAGS	= C++ compiler options.
+# 		LDFLAGS		= Linker options.
+# 		LIBS		= Libraries.
+# 	Files:
+# 		OBJS		= Object files.
+# 		OUT			= Output file. (Full path.)
+#=============================================================================
+
+# Disable implicit suffix rules.
+.SUFFIXES:
+
+# Search paths.
+vpath
+vpath %.cpp	$(SRC_DIRS)
+vpath %.$(OBJSUFFIX)	$(BUILD_DIR)
+vpath %.d	$(BUILD_DIR)
+
+ifneq ($(HAVEPRECOMPILEDHEADERS),true)
+  PRECOMPILED_HEADER :=
+endif
+
+PRECOMPILED_HEADER := $(strip $(PRECOMPILED_HEADER))
+ifneq ($(PRECOMPILED_HEADER),)
+  ifeq ($(COMPILER),visualc)
+    PCH_OUT := $(strip $(call CONVPATH,$(BUILD_DIR)))\$(strip $(PRECOMPILED_HEADER:%.h=%.pch))
+  endif
+  ifeq ($(COMPILER),gcc)
+    PCH_OUT := $(strip $(call CONVPATH,$(BUILD_DIR)))/$(strip $(PRECOMPILED_HEADER)).gch
+    PRECOMPILE_ON := $(PRECOMPILED_HEADER)
+  endif
+endif
+
+ifeq ($(ISWINDOWS),true)
+  LIBS += kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib
+  LIBS += odbc32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib imm32.lib
+  LIBS += advapi32.lib odbccp32.lib winmm.lib wsock32.lib comctl32.lib
+  LIBS := $(LIBS:%.dll=%.lib)
+  LIBS := $(call CONVPATH,$(LIBS))
+  ifneq ($(EXECUTABLE),1)
+    CXXFLAGS += -D_WINDLL -DUSRDLL
+  endif
+
+  ifneq ($(strip $(WINDLLEXP)),)
+    CXXFLAGS += -D$(strip $(WINDLLEXP))=__declspec(dllexport)
+  endif
+endif
+
+ifeq ($(COMPILER),visualc)
+  # Change gcc-style preprocessor defines to msvc-style.
+  CXXFLAGS := $(subst -D,/D,$(CXXFLAGS))
+  CXXFLAGS := $(subst -I,/I,$(CXXFLAGS))
+
+  # Handle DLL exports via .def files.
+  ifneq ($(strip $(WINDEFFILE)),)
+    LDFLAGS += /DEF:"$(WINDEFFILE)"
+  endif
+
+  ifneq ($(strip $(WINSUBSYSTEM)),)
+    LDFLAGS += /SUBSYSTEM:$(strip $(WINSUBSYSTEM))
+  else
+    LDFLAGS += /SUBSYSTEM:WINDOWS
+  endif
+
+  # Handle precompiled headers.
+  ifneq ($(PRECOMPILED_HEADER),)
+    PCHFLAGS += /Yu"$(PRECOMPILED_HEADER)" /Fp"$(PCH_OUT)"
+    PCHBUILDFLAGS += /Yc"$(PRECOMPILED_HEADER)" /Fp"$(PCH_OUT)"
+  endif
+endif
+
+ifeq ($(COMPILER),gcc)
+  # Handle precompiled headers.
+  ifneq ($(PRECOMPILED_HEADER),)
+    PCHFLAGS += -include $(BUILD_DIR)/$(PRECOMPILED_HEADER)
+    PCHBUILDFLAGS += -x c++-header
+  endif
+endif
+
+# Add build path to object filenames.
+BUILD_OBJS			= $(OBJS:%.o=$(BUILD_DIR)/%$(OBJSUFFIX))
+
+# Dependencies are updated automatically, so only include them when necessary.
+USE_DEPENDENCIES = unknown
+ifeq ($(USE_DEPENDENCIES),unknown)
+.DEFAULT: usedeps
+.PHONY: usedeps
+usedeps: dirs
+	@$(MAKE) $(EXTRAS) USE_DEPENDENCIES=yes --no-print-directory
+.PHONY: nodeps
+nodeps: dirs
+	@$(MAKE) $(EXTRAS) USE_DEPENDENCIES=no --no-print-directory
+else
+
+#-----------------------------------------------------------------------------
+# Rules.
+#-----------------------------------------------------------------------------
+
+# Build a shared library.
+ifeq ($(LINKSTYLE),shared)
+ ifeq ($(EXECUTABLE),1)
+   OUTARGS := $(call CXXFLAG_EXEOUT,$(OUT))
+ else
+   OUTARGS := $(call CXXFLAG_DLLOUT,$(OUT))
+ endif
+$(OUT): $(BUILD_OBJS)
+	$(LINKER) $(OUTARGS) $(LDFLAGS) $(call CONVPATH,$^) $(LIBS)
+endif
+
+# Build a static executable.
+ifeq ($(LINKSTYLE),static)
+ ifeq ($(EXECUTABLE),1)
+  ifeq ($(ISGNU),true)
+    $(OUT): $(BUILD_OBJS) $(LIBS)
+	$(LINKER) $(call CXXFLAG_EXEOUT,$@) $(LDFLAGS) $^ $(LIBS)
+  endif
+  ifeq ($(TARGETTYPE),psx2)
+    $(OUT): crt0.o app.cmd $(BUILD_OBJS) $(UNREAL_STATIC_LIBS)
+		$(LINKER) $(call CXXFLAG_EXEOUT,$@) -T $(LCFILE) $(BUILD_DIR)/$(OBJS) $(LIBS) $(LDFLAGS)
+#		copy $@ unstripped.elf
+#		$(STRIP) $@
+  endif
+ endif
+endif
+
+# Build a static library.
+ifeq ($(LINKSTYLE),static)
+ ifneq ($(EXECUTABLE),1)
+  $(OUT): $(BUILD_OBJS)
+	$(STD_RM) $(OUT)
+	$(STD_AR) rcs $(OUT) $(BUILD_OBJS)
+ endif
+endif
+
+# Build a PSX2 core.
+ifeq ($(TARGETTYPE),psx2)
+ crt0.o: $(PSX2_LIB)/crt0.s
+	$(AS) $(ASFLAGS) -o $@ $< > $(BUILD_DIR)/crt0.lst
+endif
+
+# Compile a C++ file.
+ifeq ($(ERRORFORMAT),visualc)
+$(error does this even work?)
+$(BUILD_DIR)/%$(OBJSUFFIX): %.cpp
+	if ! $(STD_CXX) $(CXXFLAG_JUSTCOMPILE) $(CXXFLAGS) $(call CXXFLAG_OBJOUT,$@) $< hen sed -e 's/^'$*'.cpp:\([0-9]*\):\ \(.*\)/'`pwd | sed -e 's/.cygdrive.\([a-z]\)\(.*\)/\\1:\\2\\/'$*.cpp'/g' | sed -e 's/\\\//\\\\\\''\\\\\\/g'`'(\1) : \2/g' < $(BUILD_DIR)/$*.err; exit 1; fi
+$(BUILD_DIR)/%$(OBJSUFFIX): %.c
+	if ! $(STD_CC) $(CXXFLAG_JUSTCOMPILE) $(CXXFLAGS) $(call CXXFLAG_OBJOUT,$@) $< > $(BUILD_DIR)/$*.lst 2> $(BUILD_DIR)/$*.err; then sed -e 's/^'$*'.c:\([0-9]*\):\ \(.*\)/'`pwd | sed -e 's/.cygdrive.\([a-z]\)\(.*\)/\\1:\\2\\/'$*.c'/g' | sed -e 's/\\\//\\\\\\''\\\\\\/g'`'(\1) : \2/g' < $(BUILD_DIR)/$*.err; exit 1; fi
+else
+
+ifneq ($(PRECOMPILED_HEADER),)
+$(PCH_OUT): $(PRECOMPILE_ON)
+	$(STD_CXX) $(CXXFLAG_JUSTCOMPILE) $(CXXFLAGS) $(PCHBUILDFLAGS) $(call CXXFLAG_OBJOUT,$@) $<
+endif
+
+$(BUILD_DIR)/%$(OBJSUFFIX): %.cpp $(PCH_OUT)
+	$(STD_CXX) $(CXXFLAG_JUSTCOMPILE) $(PCHFLAGS) $(call CXXFLAG_OBJOUT,$@) $(CXXFLAGS) $<
+#$(STD_CXX) $(CXXFLAG_JUSTCOMPILE) $(CXXFLAGS) $(call CXXFLAG_OBJOUT,$@) $< > $(BUILD_DIR)/$*.lst
+$(BUILD_DIR)/%$(OBJSUFFIX): %.c
+	$(STD_CC) $(CXXFLAG_JUSTCOMPILE) $(CXXFLAGS) $(call CXXFLAG_OBJOUT,$@) $<
+#$(STD_CC) $(CXXFLAG_JUSTCOMPILE) $(CXXFLAGS) $(call CXXFLAG_OBJOUT,$@) $< #> $(BUILD_DIR)/$*.lst
+endif
+
+# Compile a DSM file.
+$(BUILD_DIR)/%.$(OBJSUFFIX): %.dsm $(DSM_DEPENDENCIES)
+	$(STD_DVPASM) $(STD_DVPASMFLAGS) $(call CXXFLAG_OBJOUT,$@) $< > $(BUILD_DIR)/$*.lst
+
+#Compile a vsm file from a vcl file.
+%.vsm: %.vcl
+	$(GASP) -M -o $*temp.vcl $<
+	$(VCL) $(VCLOPT) -o $*.vsm $*temp.vcl
+	rm $*temp.vcl
+
+# Generate dependencies for a C++ file.
+$(BUILD_DIR)/%.d: %.cpp
+	@echo Generating dependencies for $(notdir $<)
+	@echo $(@:%.d=%.o) $@ : \\ > $@_
+	@$(CXX) -MM $(CXXFLAGS) $< > $@
+#	@sed '/:/s/^/$(subst /,\/,$(BUILD_DIR))\//' $@_ > $@
+#	@-del $@_
+
+# Include dependency files.
+# !!! FIXME: Dependencies don't appear to work anymore, are broken on non-gcc
+# !!! FIXME:  compilers anyhow, and add time to the build...totally disabling
+# !!! FIXME:  this for now, but should revisit later. --ryan.
+#ifeq ($(USE_DEPENDENCIES),yes)
+#-include $(BUILD_OBJS:%.o=%.d)
+#endif
+
+endif
+
+#-----------------------------------------------------------------------------
+# Maintenance.
+#-----------------------------------------------------------------------------
+
+.PHONY: dirs
+
+# make sure OUT is not empty, i.e. - DOPIXO is false...
+ifeq ($(strip $(OUT)),)
+
+dirs:
+	@-$(STD_MKDIR) $(call CONVPATH,$(BUILD_DIR))
+
+else
+
+dirs:
+	@-$(STD_MKDIR) $(call CONVPATH,$(BUILD_DIR))
+	@-$(STD_MKDIR) $(call CONVPATH,$(dir $(OUT)))
+
+endif
+
+CLEANUPS  = $(strip $(wildcard $(BUILD_DIR)/*.o))
+CLEANUPS += $(strip $(wildcard $(BUILD_DIR)/*.obj))
+CLEANUPS += $(strip $(wildcard $(BUILD_DIR)/*.d))
+CLEANUPS += $(strip $(wildcard $(BUILD_DIR)/*.d_))
+CLEANUPS += $(strip $(wildcard $(BUILD_DIR)/*.lst))
+CLEANUPS += $(strip $(wildcard $(SRC_DIRS)/*.old))
+CLEANUPS += $(strip $(wildcard $(INC_DIRS)/*.old))
+CLEANUPS += $(strip $(wildcard $(BUILD_DIRS)/*~))
+CLEANUPS += $(strip $(wildcard $(SRC_DIRS)/*~))
+CLEANUPS += $(strip $(wildcard $(INC_DIRS)/*~))
+CLEANUPS += $(strip $(wildcard $(PCH_OUT)))
+CLEANUPS += $(strip $(wildcard $(OUT)))
+
+.PHONY: clean
+ifeq ($(strip $(CLEANUPS)),)
+clean:
+	@-echo $(BUILD_DIR) is clean.
+else
+clean:
+	-rm -f $(strip $(CLEANUPS))
+endif
+
+#-----------------------------------------------------------------------------
+# The End.
+#-----------------------------------------------------------------------------

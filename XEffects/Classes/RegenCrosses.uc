@@ -1,0 +1,32 @@
+class RegenCrosses extends xEmitter;
+
+defaultproperties
+{
+    RemoteRole=ROLE_SimulatedProxy
+    bNetTemporary=false
+    bReplicateMovement=false
+    Physics=PHYS_Trailer
+    bTrailerSameRotation=true
+    Skins=(Texture'XEffectMat.combos.greencross')
+    Style=STY_Additive
+    mSpawningType=ST_Explode
+    mStartParticles=0
+    mMaxParticles=20
+    mLifeRange(0)=2.0
+    mLifeRange(1)=2.0
+    mRegenRange(0)=10.0
+    mRegenRange(1)=10.0
+    mPosDev=(X=35.0,Y=35.0,Z=45.0)
+    mSpeedRange(0)=0.0
+    mSpeedRange(1)=0.0
+    mPosRelative=false
+    mMassRange(0)=-0.1
+    mMassRange(1)=-0.1
+    mOwnerVelocityFactor=1.0
+    mAirResistance=2.0
+    mSizeRange(0)=6.0
+    mSizeRange(1)=6.0
+    mAttenKa=0.5
+    mAttenFunc=ATF_ExpInOut
+    LifeSpan=+60.0
+}

@@ -1,0 +1,163 @@
+
+GJK Comments.
+
+Gino's implementation has these improvements over Cameron's imp:
+
+- checks that new simplex vertex closest to origin is not one of the
+old simplex vertices. This should prevent looping.
+John says that this might be solved by checking that the new distance
+is < old distance, but this is a numerical test as opposed to a 
+discrete test.
+
+- uses fact that new C-space point must be part of every new simplex
+closer to origin (hence does not examine old simplices.) 
+
+- no copying of delta, etc, values by keeping track of which "slots" form
+the simplex
+
+
+
+Merging Polytope GJK with Primitive GJK:
+
+It would be nice to have one single algorithm to handle both.
+
+Since we need to store vertex coords in world coordinates in the simplex,
+not merely pointers to vertices.
+Do we need to store the vertex pointers at all? (This is the coherency
+info only I think, and needs to be passed to the supporting FN).
+
+I'll have to rewrite GjkSup to not store the coords twice.
+
+Can we get rid of the variable "lastBest1/2", in other words place
+the newly found point in the right (free) spot in the Simplex,
+i.e. in simplex->simplex1[ simplex->npts].
+lastBest then becomes an index into the simplexi array.
+
+Why do we need a separate struct for Simplex and SimplexCoords?
+
+
+Other suggestions:
+
+Use coherence for UpdateAABB
+
+Get rid of identity transform.
+
+Try new penetration depth algorithm (below)
+
+---------------------------------------------------------------------------
+
+GJK-like algorithm for penetration distance (Marek):
+  Input: objects A, B.
+  Finds the largest sphere containing the origin and inside A-B, and
+  where it touches A-B.
+  Uses basic GJK step for finding support point in A-B.
+
+  Upon detection of penetration, GJK has a simplex (4 facets)
+  containing the origin in A-B space.
+  Start with those facets (triangles).
+
+  Keeps a priority queue of triangles (not simplices) forming
+  the boundary of the current approximation of A-B, ordered
+  by their distance to the origin. No adjacency info needed.
+
+  Loop until get same facet twice or distance does not change by more
+        than epsilon):
+  {
+    take the normal closest facet to the origin (top of queue) 
+    and remove from priority queue.
+    find point of support of A-B in the direction of normal
+    remove all faces whose exterior is visible from point
+    add the new facets formed by the new point the affected vertices to
+       form a convex hull
+  }
+
+  return distance to closest facet, and its normal as penetration
+ distance and direction.  The average of the two points of A and B
+ realizing the corresponding support of A-B could be taken as the
+ contact point (in the non-degenerate, strictly convex case - see
+ below).
+
+
+------------------
+
+Other notes from Zhaoheng's experiments. Overlaps with John's results.
+GJK limitations.
+
+GJK works correctly only for strictly convex objects as far as finding
+the supporting plane goes and finding the closest points.
+This can be used to reliably implement collision tests without contact
+generation, and single contact generation (which is all that's needed
+for strictly convex objects), as well as penetration by using support
+plane normal from the last time step.
+
+GJK can correctly find the supporting plane for weakly convex objects 
+but in the case this plane intersects the object in more than a point
+(such as a plane through the face of a box, or tangent to a cylinder)
+the point returned is not well defined.
+The points found might not be the closest points (check!).
+This can be used to reliably implement collision tests without contact
+generation (sensors), but not for one contact strategies.
+
+This implies in particular that it is not always reliable to use the
+direction/distance
+between the two points at the previous timestep to determine
+penetration.
+One possible way to generalize the support mapping would be for
+the object support mapping to return the line segment,
+polygon or disk (typically) that forms this intersection.
+(This is currently the set of all possible intersections of prims with
+a supporting plane).
+Then the closest point between the two returned support geometries could
+be computed.
+
+If two objects are not intersecting, does the supporting plane GJK find 
+have the correct normal for use for penetration at the next time step?
+
+If objects start colliding or touching (as in topple demo), 
+all algorithms using "previous time step" info fail, and something like
+the above penetration alg might be required.
+
+-------------------------------------------------------------------------
+Support Function
+
+Proposed:
+
+CxGeometry::Support(
+         CxSupportFnCoherenceDataPointer *cData, <-- 0 for primitives
+						 <-- start vertex ID for poly
+         const lsVec3 &inDirection,		 <-- can we make it non-normalized?
+         lsVec3 *outSupPoint,
+         lsReal * outSupportVal <- dot prod of SupPoint and inDirection
+)
+
+-------------------------------------------------------------------------
+
+More comments on GjkSup for primitives - May 26, 2000
+
+- GjkSup (and hence GjkMe) does not produce reliable witness points
+  when the condition in the loop:
+  ( sqrd < oldSqrd ) 
+  is not satisfied (ie the new simplex is not better than the old one).
+  This means that in this case, we should use the old set of witness points
+  and the old direction!
+
+- Additionally, it sometimes is the case that 
+  default_distance returns OK, and the simplex contains the origin (and
+  hence the algorithm thinks there is a collision) when in fact there
+  is no collision.
+  After disabling the return on this condition, things seem to work correctly.
+
+Generally, we can split coherence info into two categories:
+
+- support function coherence. Info needed for efficient support fn computation,
+  given that the previous support query is likely to be close to the current
+  one. 
+  This info is per object.
+  For polytopes, the coherence info is one vertex.
+  For primitives, none needed.
+
+- separating plane normal direction.
+  This is implicit in the "simplex" data structure since it provides
+  2 vertices.
+  This info is per pair.
+

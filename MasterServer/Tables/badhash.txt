@@ -1,0 +1,15 @@
+
+CREATE TABLE badhash (
+  id int(11) NOT NULL auto_increment,
+  md5hash varchar(32) NOT NULL default '',
+  ip varchar(15) default NULL,
+  clienttype varchar(10) default NULL,
+  lastseen datetime default NULL,
+  version int(11) default NULL,
+  platform int(11) default NULL,
+  PRIMARY KEY  (id),
+  KEY badhash_md5 (md5hash)
+);
+
+create index idx_badhash_time on badhash(lastseen);
+create index idx_badhash_ip_time on badhash(ip, lastseen);

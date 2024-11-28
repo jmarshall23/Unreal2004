@@ -1,0 +1,1713 @@
+[]
+    LICENSE.txt     = build/special/LICENSE
+    README.txt      = build/special/120/README_top.txt
+
+!IFEQ PLATFORM ps2
+    README_PS2.txt = build/special/120/README_PS2.txt
+    README_PS2_CW.txt = build/special/120/README_PS2_CW.txt
+    README_PS2_PRODG.txt = build/special/120/README_PS2_PRODG.txt
+!ENDIF
+
+!IFEQ PLATFORM ngc
+    README_NGC.txt = build/special/120/README_NGC.txt
+    README_NGC_PRODG.txt = build/special/120/README_NGC_PRODG.txt
+!ENDIF
+
+[include]
+
+    MeApp/include/MeApp.h
+    MeApp/include/MeAppTypes.h
+    MeApp/include/RConvex.h
+    MeApp/include/RGeometry.h
+
+    MeAssetDB/include/MeAssetDB.h
+    MeAssetDB/include/MeAssetDBTypes.h
+
+    MeAssetDBXMLIO/include/MeAssetDBXMLIO.h
+    MeAssetDBXMLIO/include/MeAssetDBXMLIOTypes.h
+
+    MeAssetFactory/include/MeAssetFactoryTypes.h
+    MeAssetFactory/include/MeAssetFactory.h
+
+    MeXML/include/MeXMLOutput.h
+    MeXML/include/MeXMLParser.h
+    MeXML/include/MeXMLTree.h
+
+    Mst/include/Mst.h
+    Mst/include/MstBridge.h
+    Mst/include/MstModelDynamics.h
+    Mst/include/MstTypes.h
+    Mst/include/MstUniverse.h
+    Mst/include/MstUtils.h
+
+    Mcd/include/Mcd.h
+    Mcd/include/McdAggregate.h
+    Mcd/include/McdBatch.h
+    Mcd/include/McdBox.h
+    Mcd/include/McdCTypes.h
+    Mcd/include/McdCone.h
+    Mcd/include/McdContact.h
+    Mcd/include/McdConvexMesh.h
+    Mcd/include/McdCullingTable.h
+    Mcd/include/McdCylinder.h
+    Mcd/include/McdFrame.h
+    Mcd/include/McdGeometry.h
+    Mcd/include/McdGeometryInstance.h
+    Mcd/include/McdGeometryTypes.h
+    Mcd/include/McdGjk.h
+    Mcd/include/McdGjkMaximumPoint.h
+    Mcd/include/McdInteractionTable.h
+    Mcd/include/McdInteractions.h
+    Mcd/include/McdMessage.h
+    Mcd/include/McdModel.h
+    Mcd/include/McdModelPair.h
+    Mcd/include/McdModelPairContainer.h
+    Mcd/include/McdModelPairManager.h
+    Mcd/include/McdNull.h
+    Mcd/include/McdPlane.h
+    Mcd/include/McdPlaneIntersect.h
+    Mcd/include/McdPolygonIntersection.h
+    Mcd/include/McdPrimitives.h
+    Mcd/include/McdProfile.h
+    Mcd/include/McdQHullTypes.h
+    Mcd/include/McdSpace.h
+    Mcd/include/McdSphere.h
+    Mcd/include/McdSphyl.h
+    Mcd/include/McdTriangleList.h
+    Mcd/include/McduDebugDraw.h
+    Mcd/include/McduRequestTable.h
+    Mcd/src/frame/McdCheck.h
+    Mcd/src/frame/McdCoreErrorList.h
+
+    
+    Mdt/include/Mdt.h
+    Mdt/include/MdtAlignment.h
+    Mdt/include/MdtAngular3.h
+    Mdt/include/MdtBSJoint.h
+    Mdt/include/MdtBody.h
+    Mdt/include/MdtCarWheel.h
+    Mdt/include/MdtCheckMacros.h
+    Mdt/include/MdtConeLimit.h
+    Mdt/include/MdtConstraint.h
+    Mdt/include/MdtContact.h
+    Mdt/include/MdtContactGroup.h
+    Mdt/include/MdtContactParams.h
+    Mdt/include/MdtDefaults.h
+    Mdt/include/MdtFixedPath.h
+    Mdt/include/MdtHinge.h
+    Mdt/include/MdtLimit.h
+    Mdt/include/MdtLinear1.h
+    Mdt/include/MdtLinear2.h
+    Mdt/include/MdtMainLoop.h
+    Mdt/include/MdtPartition.h
+    Mdt/include/MdtPrismatic.h
+    Mdt/include/MdtRPROJoint.h
+    Mdt/include/MdtSkeletal.h
+    Mdt/include/MdtSpring.h
+    Mdt/include/MdtSpring6.h
+    Mdt/include/MdtTypes.h
+    Mdt/include/MdtUniversal.h
+    Mdt/include/MdtUserConstraint.h
+    Mdt/include/MdtUtilities.h
+    Mdt/include/MdtWorld.h
+    MdtBcl/include/MdtBcl.h
+
+    MeGlobals/include/MeASELoad.h
+    MeGlobals/include/MeAssert.h
+    MeGlobals/include/MeBounding.h
+    MeGlobals/include/MeCall.h
+    MeGlobals/include/MeChunk.h
+    MeGlobals/include/MeCommandLine.h
+    MeGlobals/include/MeDebugDraw.h
+    MeGlobals/include/MeDict.h
+    MeGlobals/include/MeHash.h
+    MeGlobals/include/MeHeap.h
+    MeGlobals/include/MeIDPool.h
+    MeGlobals/include/MeInline.h
+    MeGlobals/include/MeMath.h
+    MeGlobals/include/MeMemory.h
+    MeGlobals/include/MeMessage.h
+    MeGlobals/include/MeMisc.h
+    MeGlobals/include/MePool.h
+    MeGlobals/include/MePoolx.h
+    
+    %generate MePrecision.h = MeGlobals/include/MePrecision.h
+    %command  awk -f correctPrecision.awk < $+ > $@
+
+    MeGlobals/include/MeProfile.h
+    MeGlobals/include/MeSet.h
+    MeGlobals/include/MeSimpleFile.h
+    MeGlobals/include/MeStream.h
+    MeGlobals/include/MeString.h
+    MeGlobals/include/MeVersion.h
+
+    MdtKea/include/MdtKea.h
+
+!IFEQ WITH_MEVIEWER '1'
+    MeViewer/include/MeViewer.h
+    MeViewer/include/MeViewerPerformanceTimer.h
+    MeViewer/include/MeViewerTimer.h
+
+    !IFEQ PLATFORM ps2
+      MeViewer/include/MeViewerTimer_ps2.h
+    !ENDIF
+!ENDIF
+
+!IFEQ WITH_MEVIEWER2 '1'
+    MeViewer2/include/MeViewer.h
+    MeViewer2/include/MeViewerTypes.h
+    MeViewer2/include/MeViewer_d3d.h
+    MeViewer2/include/RGeometryUtils.h
+    MeViewer2/include/RMenu.h
+    MeViewer2/include/RTogglemenu.h
+!ENDIF
+
+!IFNEQ WITH_DOCS '0'
+
+[]
+    documentation/src/lightweight/index.html
+
+[doc]
+    %directory  = documentation/release
+
+    %generate dummyFile
+    %command  rm -f $(@D)/Demos.pdf $(@D)/Collision.pdf $(@D)/Dynamics.pdf $(@D)/Simulation.pdf $(@D)/Viewer.pdf $(@D)/Example_Programs.pdf $(@D)/Glossary.pdf $(@D)/Resource.pdf %$(@D)/*.fm  $(@D)/points.pdf $(@D)/FAEFAQ1.txt $(@D)/MATRIXCAPPING.txt
+
+   %generate welcome.html = documentation/release/welcome.html
+   %command  if [ -e $@ ] ; then chmod u+w $@ ; fi && awk -f patchHTML.awk < $+ > $@
+
+
+
+[doc]
+    documentation/src/installation/Installation.pdf
+    documentation/src/lightweight/doc/overview.html
+
+[doc/Welcome_pics]
+    %generate dummyFile
+    %command rm -f $(@D)/ballHitsWall*.jpg $(@D)/bounce.jpg $(@D)/boxCar.jpg $(@D)/bridge.jpg $(@D)/carTerrain.jpg $(@D)/chair2.jpg $(@D)/ConvexPrims.jpg $(@D)/convexStair.jpg $(@D)/cradle.jpg $(@D)/drop.jpg $(@D)/keaOnly.jpg $(@D)/MeshChain.jpg $(@D)/rpro.jpg $(@D)/SamsToy.jpg $(@D)/snooker.jpg $(@D)/Spring.jpg $(@D)/Wheelies.jpg
+
+[doc/images]
+    documentation/src/lightweight/doc/images/karmaLogo.gif
+    %generate dummyFile
+    %command rm -f $(@D)/screenshot*.gif 
+
+[doc/UserGuide]
+    %directory = documentation/UserGuide
+
+    %generate dummyFile
+    %command rm -f $(@D)/*.fm $(@D)/*.book ; rm -rf $(@D)/CVS $(@D)/Images $(@D)/Tutorial/CVS $(@D)/Tutorial/QuadBike/CVS $(@D)/Tutorial/QuadBike/QuadBike.dsp $(@D)/Tutorial/QuadBike/QuadBikeXb.dsp
+    
+    !IFNEQ PLATFORM ps2
+         %generate dummyFile
+         %command rm -f $(@D)/Tutorial/QuadBike/QuadBikeSN.dsp
+    !ENDIF
+
+    !IFEQ PLATFORM win32
+      %generate Tutorial/QuadBike/QuadBike.dsp = documentation/UserGuide/Tutorial/QuadBike/QuadBike.dsp
+      %command awk -v FORCED_INC="../../../../include:../../../../3rdParty/glut" -v FORCED_LIB_ROOT="../../../.." -v FORCED_LIB_CONFIG="${PLATFORM}${DIR_MODIFIER}" -v FORCED_LIB_ADDFIRST="../../../components/lib.CONFIG/${PLATFORM}${DIR_MODIFIER}" -f patchDSP.awk < $+ > $@
+    !ENDIF
+
+    !IFEQ PLATFORM xbox
+      %generate Tutorial/QuadBike/QuadBike.dsp = documentation/UserGuide/Tutorial/QuadBike/QuadBikeXb.dsp
+      %command awk -v FORCED_INC="../../../../include:../../../../3rdParty/glut" -v FORCED_LIB_ROOT="../../../.." -v FORCED_LIB_CONFIG="${PLATFORM}${DIR_MODIFIER}" -v FORCED_LIB_ADDFIRST="../../../components/lib.CONFIG/${PLATFORM}${DIR_MODIFIER}" -f patchDSP_x.awk < $+ > $@
+    !ENDIF
+
+!IFEQ PLATFORM ps2
+[doc/UserGuide/Tutorial/QuadBike]
+  documentation/UserGuide/Tutorial/QuadBike/QuadBikeSN.dsp
+!ENDIF
+
+[doc/MSHelp]
+    %directory = documentation/MSHelp/Karma_Ref/
+    documentation/MSHelp/README_MSHelp.txt
+
+    %generate deleteCVSdummy
+    %command rm -fr $(@D)/CVS
+
+    %generate deleteDummy
+    %command rm -f $(@D)/*.h* $(@D)/*.chi
+
+[doc/ReleaseNotes]
+
+;   build/special/005/UpgradeNotes.html
+
+;   This actually gets copied automagically because it is in the
+;   top level directory.
+;   %generate CHANGES.txt        = documentations/src/CHANGES.txt
+;   %command  if [ -s $+ ] ; then cp -a $+ $@ ; fi
+
+    %generate CHANGES_MDT.txt    = Mdt/CHANGES
+    %command  if [ -s $+ ] ; then cp -a $+ $@ ; fi
+
+    %generate CHANGES_MCD.txt    = Mcd/CHANGES
+    %command  if [ -s $+ ] ; then cp -a $+ $@ ; fi
+
+    %generate CHANGES_MEAPP.txt     = MeApp/CHANGES
+    %command  if [ -s $+ ] ; then cp -a $+ $@ ; fi
+
+    %generate CHANGES_MST.txt       = Mst/CHANGES
+    %command  if [ -s $+ ] ; then cp -a $+ $@ ; fi
+
+    %generate CHANGES_MEVIEWER2.txt = MeViewer2/CHANGES
+    %command  if [ -s $+ ] ; then cp -a $+ $@ ; fi
+
+; Docs
+!ENDIF ; WITH_DOCS
+
+[lib.rel/${PLATFORM}${DIR_MODIFIER}]
+    %library McdFrame            = lib.rel/${PLATFORM}${DIR_MODIFIER}
+    %library McdConvex           = lib.rel/${PLATFORM}${DIR_MODIFIER}
+    %library McdConvexCreateHull = lib.rel/${PLATFORM}${DIR_MODIFIER}
+    %library McdPrimitives       = lib.rel/${PLATFORM}${DIR_MODIFIER}
+
+    !IFNEQ WITH_RW_BRIDGE 0
+      !IFEQ PLATFORM win32
+        %library McdRwBSP        = lib.rel/${PLATFORM}${DIR_MODIFIER}
+      !ENDIF
+
+      !IFEQ PLATFORM ps2
+        %library McdRwBSP        = lib.rel/${PLATFORM}${DIR_MODIFIER}
+      !ENDIF
+    !ENDIF
+
+    !IFEQ CAN_PERFORMER '1'
+      %library McdPerformer      = lib.rel/${PLATFORM}${DIR_MODIFIER}
+    !ENDIF
+
+    %library Mdt                 = lib.rel/${PLATFORM}${DIR_MODIFIER}
+    %library MdtBcl              = lib.rel/${PLATFORM}${DIR_MODIFIER}
+
+!IFEQ WITH_MEVIEWER '1'
+    %library MeViewer            = lib.rel/${PLATFORM}${DIR_MODIFIER}
+!ENDIF
+!IFEQ WITH_MEVIEWER2 '1'
+    %library MeViewer2           = lib.rel/${PLATFORM}${DIR_MODIFIER}
+!ENDIF
+
+    %library MeGlobals           = lib.rel/${PLATFORM}${DIR_MODIFIER}
+    %library Mst                 = lib.rel/${PLATFORM}${DIR_MODIFIER}
+    %library MeApp               = lib.rel/${PLATFORM}${DIR_MODIFIER}
+    %library MeAssetDB           = lib.rel/${PLATFORM}${DIR_MODIFIER}
+    %library MeAssetDBXMLIO      = lib.rel/${PLATFORM}${DIR_MODIFIER}
+    %library MeAssetFactory      = lib.rel/${PLATFORM}${DIR_MODIFIER}
+    %library MeXML               = lib.rel/${PLATFORM}${DIR_MODIFIER}
+
+; Special -- these libs contain the license control
+
+!IFEQ PLATFORM ps2
+    %library MdtKea             = lib.rel/${PLATFORM}${DIR_MODIFIER}
+    %library McdCommon          = lib.rel/${PLATFORM}${DIR_MODIFIER}
+!ELSE
+
+  !IFEQ WITH_LICENSE 'NO'
+    %library MdtKea             = lib.rel/${PLATFORM}${DIR_MODIFIER}
+  !ELSE
+    %library MdtKea_l           = lib.rel/${PLATFORM}${DIR_MODIFIER}
+    %generate dummyFile
+    %command  mv $(@D)/${LIB_PREFIX}MdtKea_l${LIB_SUFFIX} $(@D)/${LIB_PREFIX}MdtKea${LIB_SUFFIX}
+  !ENDIF
+
+  !IFEQ WITH_LICENSE 'NO'
+    %library McdCommon          = lib.rel/${PLATFORM}${DIR_MODIFIER}
+  !ELSE
+    %library McdCommon_l2       = lib.rel/${PLATFORM}${DIR_MODIFIER}
+    %generate dummyFile
+    %command  mv $(@D)/${LIB_PREFIX}McdCommon_l2${LIB_SUFFIX} $(@D)/${LIB_PREFIX}McdCommon${LIB_SUFFIX}
+  !ENDIF
+
+!ENDIF
+
+!IFEQ WITH_REALDEBUG 1
+
+[lib.dbg/${PLATFORM}${DIR_MODIFIER}]
+    %library McdFrame            = lib.dbg/${PLATFORM}${DIR_MODIFIER}
+    %library McdConvex           = lib.dbg/${PLATFORM}${DIR_MODIFIER}
+    %library McdConvexCreateHull = lib.dbg/${PLATFORM}${DIR_MODIFIER}
+    %library McdPrimitives       = lib.dbg/${PLATFORM}${DIR_MODIFIER}
+
+    !IFNEQ WITH_RW_BRIDGE 0
+      !IFEQ PLATFORM win32
+        %library McdRwBSP        = lib.dbg/${PLATFORM}${DIR_MODIFIER}
+      !ENDIF
+
+      !IFEQ PLATFORM ps2
+        %library McdRwBSP        = lib.dbg/${PLATFORM}${DIR_MODIFIER}
+      !ENDIF
+    !ENDIF
+
+    !IFEQ CAN_PERFORMER '1'
+      %library McdPerformer      = lib.dbg/${PLATFORM}${DIR_MODIFIER}
+    !ENDIF
+
+    %library Mdt                 = lib.dbg/${PLATFORM}${DIR_MODIFIER}
+    %library MdtBcl              = lib.dbg/${PLATFORM}${DIR_MODIFIER}
+
+!IFEQ WITH_MEVIEWER '1'
+    %library MeViewer            = lib.dbg/${PLATFORM}${DIR_MODIFIER}
+!ENDIF
+!IFEQ WITH_MEVIEWER2 '1'
+    %library MeViewer2           = lib.dbg/${PLATFORM}${DIR_MODIFIER}
+!ENDIF
+
+    %library MeGlobals           = lib.dbg/${PLATFORM}${DIR_MODIFIER}
+    %library Mst                 = lib.dbg/${PLATFORM}${DIR_MODIFIER}
+    %library MeApp               = lib.dbg/${PLATFORM}${DIR_MODIFIER}
+    %library MeAssetDB           = lib.dbg/${PLATFORM}${DIR_MODIFIER}
+    %library MeAssetDBXMLIO      = lib.dbg/${PLATFORM}${DIR_MODIFIER}
+    %library MeAssetFactory      = lib.dbg/${PLATFORM}${DIR_MODIFIER}
+    %library MeXML               = lib.dbg/${PLATFORM}${DIR_MODIFIER}
+
+; Special -- these libs contain the license control
+
+!IFEQ PLATFORM ps2
+    %library MdtKea             = lib.dbg/${PLATFORM}${DIR_MODIFIER}
+    %library McdCommon          = lib.dbg/${PLATFORM}${DIR_MODIFIER}
+;    %library McdTriangleMesh    = lib.dbg/${PLATFORM}${DIR_MODIFIER}
+!ELSE
+
+  !IFEQ WITH_LICENSE 'NO'
+    %library MdtKea             = lib.dbg/${PLATFORM}${DIR_MODIFIER}
+  !ELSE
+    %library MdtKea_l           = lib.dbg/${PLATFORM}${DIR_MODIFIER}
+    %generate dummyFile
+    %command  mv $(@D)/${LIB_PREFIX}MdtKea_l${LIB_SUFFIX} $(@D)/${LIB_PREFIX}MdtKea${LIB_SUFFIX}
+  !ENDIF
+
+  !IFEQ WITH_LICENSE 'NO'
+    %library McdTriangleMesh    = lib.dbg/${PLATFORM}${DIR_MODIFIER}
+  !ELSE
+   %library McdTriangleMesh_l  = lib.dbg/${PLATFORM}${DIR_MODIFIER}
+    %generate dummyFile
+    %command  mv $(@D)/${LIB_PREFIX}McdTriangleMesh_l${LIB_SUFFIX} $(@D)/${LIB_PREFIX}McdTriangleMesh${LIB_SUFFIX}
+  !ENDIF
+
+  !IFEQ WITH_LICENSE 'NO'
+    %library McdCommon           = lib.dbg/${PLATFORM}${DIR_MODIFIER}
+  !ELSE
+    %library McdCommon_l2        = lib.dbg/${PLATFORM}${DIR_MODIFIER}
+    %generate dummyFile
+    %command  mv $(@D)/${LIB_PREFIX}McdCommon_l2${LIB_SUFFIX} $(@D)/${LIB_PREFIX}McdCommon${LIB_SUFFIX}
+  !ENDIF
+
+; Realdebug
+!ENDIF
+
+!ENDIF
+
+[lib.chk/${PLATFORM}${DIR_MODIFIER}]
+    %library McdFrame            = lib.chk/${PLATFORM}${DIR_MODIFIER}
+    %library McdConvex           = lib.chk/${PLATFORM}${DIR_MODIFIER}
+    %library McdConvexCreateHull = lib.chk/${PLATFORM}${DIR_MODIFIER}
+    %library McdPrimitives       = lib.chk/${PLATFORM}${DIR_MODIFIER}
+
+    !IFNEQ WITH_RW_BRIDGE 0
+      !IFEQ PLATFORM win32
+        %library McdRwBSP        = lib.chk/${PLATFORM}${DIR_MODIFIER}
+      !ENDIF
+
+      !IFEQ PLATFORM ps2
+        %library McdRwBSP        = lib.chk/${PLATFORM}${DIR_MODIFIER}
+      !ENDIF
+    !ENDIF
+
+    !IFEQ CAN_PERFORMER '1'
+      %library McdPerformer      = lib.chk/${PLATFORM}${DIR_MODIFIER}
+    !ENDIF
+
+    %library Mdt                 = lib.chk/${PLATFORM}${DIR_MODIFIER}
+    %library MdtBcl              = lib.chk/${PLATFORM}${DIR_MODIFIER}
+
+!IFEQ WITH_MEVIEWER '1'
+    %library MeViewer            = lib.chk/${PLATFORM}${DIR_MODIFIER}
+!ENDIF
+!IFEQ WITH_MEVIEWER2 '1'
+    %library MeViewer2           = lib.chk/${PLATFORM}${DIR_MODIFIER}
+!ENDIF
+
+    %library MeGlobals           = lib.chk/${PLATFORM}${DIR_MODIFIER}
+    %library Mst                 = lib.chk/${PLATFORM}${DIR_MODIFIER}
+    %library MeApp               = lib.chk/${PLATFORM}${DIR_MODIFIER}
+    %library MeAssetDB           = lib.chk/${PLATFORM}${DIR_MODIFIER}
+    %library MeAssetDBXMLIO      = lib.chk/${PLATFORM}${DIR_MODIFIER}
+    %library MeAssetFactory      = lib.chk/${PLATFORM}${DIR_MODIFIER}
+    %library MeXML               = lib.chk/${PLATFORM}${DIR_MODIFIER}
+
+; Special -- these libs contain the license control
+
+!IFEQ PLATFORM ps2
+    %library MdtKea              = lib.chk/${PLATFORM}${DIR_MODIFIER}
+    %library McdCommon           = lib.chk/${PLATFORM}${DIR_MODIFIER}
+!ELSE
+
+  !IFEQ WITH_LICENSE 'NO'
+    %library MdtKea              = lib.chk/${PLATFORM}${DIR_MODIFIER}
+  !ELSE
+    %library MdtKea_l            = lib.chk/${PLATFORM}${DIR_MODIFIER}
+    %generate dummyFile
+    %command  mv $(@D)/${LIB_PREFIX}MdtKea_l${LIB_SUFFIX} $(@D)/${LIB_PREFIX}MdtKea${LIB_SUFFIX}
+  !ENDIF
+
+  !IFEQ WITH_LICENSE 'NO'
+    %library McdCommon           = lib.chk/${PLATFORM}${DIR_MODIFIER}
+  !ELSE
+    %library McdCommon_l2        = lib.chk/${PLATFORM}${DIR_MODIFIER}
+    %generate dummyFile
+    %command  mv $(@D)/${LIB_PREFIX}McdCommon_l2${LIB_SUFFIX} $(@D)/${LIB_PREFIX}McdCommon${LIB_SUFFIX}
+  !ENDIF
+
+!ENDIF
+
+
+!IFNEQ WITH_ANY_SRC '0'
+
+[src]
+
+!IFEQ ME_SOURCE_INCLUDED 1
+    build/special/120/makefile
+!ELSE
+    makefile = build/special/005/makefile.eval
+
+!ENDIF
+!IFEQ PLATFORM xbox
+    build-pg/build_xbe.sh
+    build-pg/MeXbImg.flags
+!ENDIF
+
+    README_build.txt = build/special/120/README_build.txt
+
+; Record ps2 libraries used to generate this build 
+; These are symbolically linked to /usr/local/sce in the form
+;!IFEQ PLATFORM ps2
+;    %generate README_ps2libs.txt
+;    %command  echo "This release was compiled with and is intended for use with: " > $@
+;
+;    %generate README_ps2libs.txt
+;    %command  echo "" >> $@
+;
+;    %generate README_ps2libs.txt
+;    %command  head -5 /usr/local/sce/readme.txt | tail +2 >> $@
+;!ENDIF
+
+!IFEQ ME_SOURCE_INCLUDED 1
+
+[src/components]
+
+    makefile = build/special/120/makefile.components
+
+[src/components/build/makerules]
+
+    build/makerules/makefile
+    build/makerules/makefile.common.in
+    build/makerules/makefile.lib
+    build/makerules/makefile.defs
+    build/makerules/makefile.defs.${PLATFORM}
+    build/makerules/makefile.rules.${PLATFORM}
+    build/makerules/configure
+    build/makerules/configure.in
+    build/makerules/gendep.awk
+
+!IFEQ PLATFORM "win32"
+!IFNEQ DEF_C_LIBRARY "${DEFAULT_C_LIBRARY}"
+    %generate makefile.settings
+    %command echo "DEF_C_LIBRARY := ${DEF_C_LIBRARY}" >> $@
+!ENDIF
+!ENDIF
+
+!IFNEQ DEF_PRECISION "${DEFAULT_PRECISION}"
+    %generate makefile.settings
+    %command echo "DEF_PRECISION := ${DEF_PRECISION}" >> $@
+!ENDIF
+
+!IFEQ PLATFORM "xbox"
+    !IFNEQ DEF_C_LIBRARY "${DEFAULT_C_LIBRARY}"
+        %generate makefile.settings
+        %command echo "DEF_C_LIBRARY := ${DEF_C_LIBRARY}" >> $@
+    !ENDIF
+!ENDIF
+
+!IFNEQ DEF_PRECISION "${DEFAULT_PRECISION}"
+    %generate makefile.settings
+    %command echo "DEF_PRECISION := ${DEF_PRECISION}" >> $@
+!ENDIF
+
+!IFEQ CAN_PERFORMER '1'
+
+; COMPONENT - Mcd/performer
+
+[src/components/Mcd/src/performer]
+
+    Mcd/src/performer/McdPerformer.cpp
+    Mcd/src/performer/makefile
+
+!ENDIF
+
+; COMPONENT - MeAPP
+    
+[src/components/MeApp/src]
+
+    MeApp/src/MeApp.c
+    MeApp/src/MeAppGraphics.c
+    MeApp/src/RConvex.c
+    MeApp/src/RGeometry.c
+    MeApp/src/version.c
+
+    MeApp/src/makefile
+
+    !IFEQ PLATFORM win32
+      %generate MeApp.dsp = MeApp/src/MeApp.dsp
+      %command awk -v FORCED_INC="../../../../include" -v ME_HEADER_DIR="../../../../include" -v FORCED_LIB_CONFIG="${PLATFORM}${DIR_MODIFIER}" -v stripSuffixes="CPP" -f patchDSP.awk < $+ > $@
+    !ENDIF
+
+    !IFEQ PLATFORM xbox
+      %generate MeApp.dsp = MeApp/src/MeAppXb.dsp
+      %command awk -v FORCED_INC="../../../../include" -v ME_HEADER_DIR="../../../../include" -v FORCED_LIB_CONFIG="${PLATFORM}${DIR_MODIFIER}" -v stripSuffixes="CPP" -f patchDSP_x.awk < $+ > $@
+    !ENDIF
+
+    !IFEQ PLATFORM ps2
+       MeApp/src/MeAppSN.dsp
+    !ENDIF
+
+; COMPONENT - MeAssetDB
+
+[src/components/MeAssetDB/src]
+
+    MeAssetDB/src/MeAssetDB.c
+    MeAssetDB/src/MeAssetDBInternal.h
+    MeAssetDB/src/MeFAsset.c
+    MeAssetDB/src/MeFAssetPart.c
+    MeAssetDB/src/MeFGeometry.c
+    MeAssetDB/src/MeFGeometryFromMesh.c
+    MeAssetDB/src/MeFJoint.c
+    MeAssetDB/src/MeFModel.c
+    MeAssetDB/src/MeFPrimitive.c
+    MeAssetDB/src/version.c
+
+    MeAssetDB/src/makefile
+    
+    !IFEQ PLATFORM win32
+      %generate MeAssetDB.dsp = MeAssetDB/src/MeAssetDB.dsp
+      %command awk -v FORCED_INC="../../../../include" -v ME_HEADER_DIR="../../../../include" -v FORCED_LIB_CONFIG="${PLATFORM}${DIR_MODIFIER}" -v stripSuffixes="CPP" -f patchDSP.awk < $+ > $@
+    !ENDIF
+
+    !IFEQ PLATFORM xbox
+      %generate MeAssetDB.dsp = MeAssetDB/src/MeAssetDBXb.dsp
+      %command awk -v FORCED_INC="../../../../include" -v ME_HEADER_DIR="../../../../include" -v FORCED_LIB_CONFIG="${PLATFORM}${DIR_MODIFIER}" -v stripSuffixes="CPP" -f patchDSP_x.awk < $+ > $@
+    !ENDIF
+
+    !IFEQ PLATFORM ps2
+      MeAssetDB/src/MeAssetDBSN.dsp
+    !ENDIF
+
+; COMPONENT - MeAssetDBXMLIO
+
+[src/components/MeAssetDBXMLIO/src]
+
+    MeAssetDBXMLIO/src/MeAssetDBXMLIO.c
+    MeAssetDBXMLIO/src/MeAssetDBXMLIO_1_0.h
+    MeAssetDBXMLIO/src/MeAssetDBXMLInput_1_0.c
+    MeAssetDBXMLIO/src/MeAssetDBXMLOutput_1_0.c
+    MeAssetDBXMLIO/src/version.c
+
+    MeAssetDBXMLIO/src/makefile
+    
+    !IFEQ PLATFORM win32
+      %generate MeAssetDBXMLIO.dsp = MeAssetDBXMLIO/src/MeAssetDBXMLIO.dsp
+      %command awk -v FORCED_INC="../../../../include" -v ME_HEADER_DIR="../../../../include" -v FORCED_LIB_CONFIG="${PLATFORM}${DIR_MODIFIER}" -v stripSuffixes="CPP" -f patchDSP.awk < $+ > $@
+    !ENDIF
+
+    !IFEQ PLATFORM xbox
+      %generate MeAssetDBXMLIO.dsp = MeAssetDBXMLIO/src/MeAssetDBXMLIOXb.dsp
+      %command awk -v FORCED_INC="../../../../include" -v ME_HEADER_DIR="../../../../include" -v FORCED_LIB_CONFIG="${PLATFORM}${DIR_MODIFIER}" -v stripSuffixes="CPP" -f patchDSP_x.awk < $+ > $@
+    !ENDIF
+
+    !IFEQ PLATFORM ps2
+      MeAssetDBXMLIO/src/MeAssetDBXMLIOSN.dsp
+    !ENDIF
+
+; COMPONENT - MeAssetFactory
+
+[src/components/MeAssetFactory/src]
+
+    MeAssetFactory/src/McdGeometryManager.c
+    MeAssetFactory/src/MeAssetFactory.c
+    MeAssetFactory/src/MeAssetFactoryCreateFuncs.c
+    MeAssetFactory/src/version.c
+
+    MeAssetFactory/src/makefile
+    
+    !IFEQ PLATFORM win32
+      %generate MeAssetFactory.dsp = MeAssetFactory/src/MeAssetFactory.dsp
+      %command awk -v FORCED_INC="../../../../include" -v ME_HEADER_DIR="../../../../include" -v FORCED_LIB_CONFIG="${PLATFORM}${DIR_MODIFIER}" -v stripSuffixes="CPP" -f patchDSP.awk < $+ > $@
+    !ENDIF
+
+    !IFEQ PLATFORM xbox
+      %generate MeAssetFactory.dsp = MeAssetFactory/src/MeAssetFactoryXb.dsp
+      %command awk -v FORCED_INC="../../../../include" -v ME_HEADER_DIR="../../../../include" -v FORCED_LIB_CONFIG="${PLATFORM}${DIR_MODIFIER}" -v stripSuffixes="CPP" -f patchDSP_x.awk < $+ > $@
+    !ENDIF
+
+    !IFEQ PLATFORM ps2
+      MeAssetFactory/src/MeAssetFactorySN.dsp
+    !ENDIF
+
+; COMPONENT - MeXML
+
+[src/components/MeXML/src]
+
+    MeXML/src/MeXMLOutput.c
+    MeXML/src/MeXMLParser.c
+    MeXML/src/MeXMLTree.c
+    MeXML/src/version.c
+
+    MeXML/src/makefile
+    
+    !IFEQ PLATFORM win32
+      %generate MeXML.dsp = MeXML/src/MeXML.dsp
+      %command awk -v FORCED_INC="../../../../include" -v ME_HEADER_DIR="../../../../include" -v FORCED_LIB_CONFIG="${PLATFORM}${DIR_MODIFIER}" -v stripSuffixes="CPP" -f patchDSP.awk < $+ > $@
+    !ENDIF
+
+    !IFEQ PLATFORM xbox
+      %generate MeXML.dsp = MeXML/src/MeXMLXb.dsp
+      %command awk -v FORCED_INC="../../../../include" -v ME_HEADER_DIR="../../../../include" -v FORCED_LIB_CONFIG="${PLATFORM}${DIR_MODIFIER}" -v stripSuffixes="CPP" -f patchDSP_x.awk < $+ > $@
+    !ENDIF
+
+    !IFEQ PLATFORM ps2
+       MeXML/src/MeXMLSN.dsp
+    !ENDIF
+    
+; COMPONENT - Mst
+
+[src/components/Mst/src]
+
+    Mst/src/MstBridge.c
+    Mst/src/MstModelDynamics.c
+    Mst/src/MstUniverse.c
+    Mst/src/MstUtils.c
+    Mst/src/version.c
+
+    Mst/src/makefile
+
+    !IFEQ PLATFORM win32
+      %generate Mst.dsp = Mst/src/Mst.dsp
+      %command awk -v FORCED_INC="../../../../include" -v ME_HEADER_DIR="../../../../include" -v FORCED_LIB_CONFIG="${PLATFORM}${DIR_MODIFIER}" -v stripSuffixes="CPP" -f patchDSP.awk < $+ > $@
+    !ENDIF
+
+
+    !IFEQ PLATFORM xbox
+      %generate Mst.dsp = Mst/src/MstXb.dsp
+      %command awk -v FORCED_INC="../../../../include" -v ME_HEADER_DIR="../../../../include" -v FORCED_LIB_CONFIG="${PLATFORM}${DIR_MODIFIER}" -v stripSuffixes="CPP" -f patchDSP_x.awk < $+ > $@
+    !ENDIF
+
+    !IFEQ PLATFORM ps2
+      Mst/src/MstSN.dsp
+    !ENDIF
+; COMPONENT - Mdt
+
+[src/components/Mdt/src]
+
+    Mdt/src/MdtAngular3.c
+    Mdt/src/MdtBody.c
+    Mdt/src/MdtBSJoint.c
+    Mdt/src/MdtCarWheel.c
+    Mdt/src/MdtConeLimit.c
+    Mdt/src/MdtConstraint.c
+    Mdt/src/MdtContact.c
+    Mdt/src/MdtContactGroup.c
+    Mdt/src/MdtContactParams.c
+    Mdt/src/MdtFixedPath.c
+    Mdt/src/MdtHinge.c
+    Mdt/src/MdtLimit.c
+    Mdt/src/MdtLinear1.c
+    Mdt/src/MdtLinear2.c
+    Mdt/src/MdtLOD.c
+    Mdt/src/MdtMainLoop.c
+    Mdt/src/MdtPartition.c
+    Mdt/src/MdtPrismatic.c
+    Mdt/src/MdtRPROJoint.c
+    Mdt/src/MdtSkeletal.c
+    Mdt/src/MdtSpring.c
+    Mdt/src/MdtSpring6.c
+    Mdt/src/MdtUniversal.c
+    Mdt/src/MdtUserConstraint.c
+    Mdt/src/MdtUtils.c
+    Mdt/src/MdtUtils.h
+    Mdt/src/MdtWorld.c
+    Mdt/src/version.c
+
+    Mdt/src/makefile
+
+    !IFEQ PLATFORM win32
+      %generate Mdt.dsp = Mdt/src/mdt.dsp
+      %command awk -v FORCED_INC="../../../../include" -v ME_HEADER_DIR="../../../../include" -v FORCED_LIB_CONFIG="${PLATFORM}${DIR_MODIFIER}" -v stripSuffixes="CPP" -f patchDSP.awk < $+ > $@
+    !ENDIF
+
+
+    !IFEQ PLATFORM xbox
+      %generate Mdt.dsp = Mdt/src/MdtXb.dsp
+      %command awk -v FORCED_INC="../../../../include" -v ME_HEADER_DIR="../../../../include" -v FORCED_LIB_CONFIG="${PLATFORM}${DIR_MODIFIER}" -v stripSuffixes="CPP" -f patchDSP_x.awk < $+ > $@
+    !ENDIF
+
+    !IFEQ PLATFORM ps2
+       Mdt/src/MdtSN.dsp
+    !ENDIF
+; COMPONENT - MeGlobals
+
+[src/components/MeGlobals/src]
+
+    MeGlobals/src/MeASELoad.c
+    MeGlobals/src/MeBounding.c
+    MeGlobals/src/MeChunk.c
+    MeGlobals/src/MeCommandLine.c
+    MeGlobals/src/MeDebugDraw.c
+    MeGlobals/src/MeDict.c
+    MeGlobals/src/MeFileSearch.c
+    MeGlobals/src/MeHash.c
+    MeGlobals/src/MeHeap.c
+    MeGlobals/src/MeIDPool.c
+    MeGlobals/src/MeMath.c
+    MeGlobals/src/MeMemory.c
+    MeGlobals/src/MeMemoryCpp.cpp
+    MeGlobals/src/MeMessage.c
+    MeGlobals/src/MeMisc.c
+    MeGlobals/src/MePool.c
+    MeGlobals/src/MePoolx.c
+    MeGlobals/src/MePrecision.c
+    MeGlobals/src/MeProfile.c
+    MeGlobals/src/MeSet.c
+    MeGlobals/src/MeSimpleFile.c
+    MeGlobals/src/MeStream.c
+    MeGlobals/src/MeString.c
+    MeGlobals/src/MeVersion.c
+    MeGlobals/src/version.c
+
+    !IFEQ PLATFORM irix
+      MeGlobals/src/MeSimpleFile_stdc.c
+      MeGlobals/src/MeProfile_irix.c
+      MeGlobals/src/MeSimpleFile_irix.c
+    !ENDIF
+    !IFEQ PLATFORM linux
+      MeGlobals/src/MeSimpleFile_linux.c
+      MeGlobals/src/MeSimpleFile_stdc.c
+      MeGlobals/src/MeProfile_linux.c
+    !ENDIF
+    !IFEQ PLATFORM win32
+      MeGlobals/src/MeSimpleFile_win32.c
+      MeGlobals/src/MeProfile_win32.c
+    !ENDIF
+    !IFEQ PLATFORM xbox
+      MeGlobals/src/MeSimpleFile_xbox.c
+      MeGlobals/src/MeProfile_xbox.c
+    !ENDIF
+    !IFEQ PLATFORM ps2
+      MeGlobals/src/MeSimpleFile_ps2.c
+      MeGlobals/src/MeProfile_ps2.c
+    !ENDIF
+
+
+    MeGlobals/src/makefile
+
+    !IFEQ PLATFORM win32
+      %generate MeGlobals.dsp = MeGlobals/src/MeGlobals.dsp
+      %command awk -v FORCED_INC="../../../../include" -v ME_HEADER_DIR="../../../../include" -v FORCED_LIB_CONFIG="${PLATFORM}${DIR_MODIFIER}" -v stripSuffixes="CPP" -f patchDSP.awk < $+ > $@
+    !ENDIF
+
+    !IFEQ PLATFORM xbox
+      %generate MeGlobals.dsp = MeGlobals/src/MeGlobalsXb.dsp
+      %command awk -v FORCED_INC="../../../../include" -v ME_HEADER_DIR="../../../../include" -v FORCED_LIB_CONFIG="${PLATFORM}${DIR_MODIFIER}" -v stripSuffixes="CPP" -f patchDSP_x.awk < $+ > $@
+    !ENDIF
+
+    !IFEQ PLATFORM ps2
+       MeGlobals/src/MeGlobalsSN.dsp
+    !ENDIF
+
+!IFEQ WITH_MEVIEWER2 '1'
+
+; COMPONENT - MeViewer2
+
+[src/components/MeViewer2/src]
+
+    !IFEQ PLATFORM win32
+      MeViewer2/src/MeViewerResources.cpp
+      MeViewer2/src/MeViewerResources.rc
+      %generate MeViewerResources.dsp = MeViewer2/src/MeViewerResources.dsp
+      %command awk -v FORCED_INC="../../../../include" -v ME_HEADER_DIR="../../../../include" -v FORCED_LIB_CONFIG="${PLATFORM}${DIR_MODIFIER}" -v stripSuffixes="CPP" -f patchDSP.awk < $+ > $@
+      MeViewer2/src/resource.h
+      MeViewer2/src/icon.ico
+    !ENDIF
+
+    MeViewer2/src/makefile
+    MeViewer2/src/version.c
+
+    !IFEQ PLATFORM win32
+      !IFEQ DEF_PRECISION "SINGLE"
+        %generate MeViewer2.dsp = MeViewer2/src/MeViewer2.dsp
+        %command awk -v FORCED_INC="backends:frame:../../../../include:../../../../3rdParty/glut" -v ME_HEADER_DIR="../../../../include" -v FORCED_LIB_CONFIG="${PLATFORM}${DIR_MODIFIER}" -v stripSuffixes="CPP" -f patchDSP.awk < $+ > $@
+      !ELSE
+      ;
+      ; NO DirectX as default in the double precision build
+      ; Therefore opengl will be the default
+      ;
+        %generate MeViewer2.dsp = MeViewer2/src/MeViewer2.dsp
+        %command awk -v FORCED_INC="backends:frame:../../../../include:../../../../3rdParty/glut" -v ME_HEADER_DIR="../../../../include" -v FORCED_LIB_CONFIG="${PLATFORM}${DIR_MODIFIER}" -v stripSuffixes="CPP" -v ADD_UNDEFINE=WITH_D3D -f patchDSP.awk < $+ > $@
+      !ENDIF
+    !ENDIF
+
+
+    !IFEQ PLATFORM xbox
+      !IFEQ DEF_PRECISION "SINGLE"
+        %generate MeViewer2.dsp = MeViewer2/src/MeViewer2Xb.dsp
+        %command awk -v FORCED_INC="backends:frame:../../../../include:../../../../3rdParty/glut" -v ME_HEADER_DIR="../../../../include" -v FORCED_LIB_CONFIG="${PLATFORM}${DIR_MODIFIER}" -v stripSuffixes="CPP" -f patchDSP_x.awk < $+ > $@
+      !ENDIF
+    !ENDIF
+
+    !IFEQ PLATFORM ps2
+      !IFEQ DEF_PRECISION "SINGLE"
+         MeViewer2/src/MeViewer2SN.dsp
+      !ENDIF
+    !ENDIF
+
+[src/components/MeViewer2/src/backends]
+    MeViewer2/src/backends/Init_ogl.h
+    MeViewer2/src/backends/Init_ogl.c
+    MeViewer2/src/backends/Init_d3d.c
+    MeViewer2/src/backends/Render_benchmark.c
+    MeViewer2/src/backends/Render_benchmark.h
+    MeViewer2/src/backends/Render_d3d.c
+    MeViewer2/src/backends/Render_null.c
+    MeViewer2/src/backends/Render_null.h
+    MeViewer2/src/backends/Render_ogl.c
+    MeViewer2/src/backends/Render_ogl.h
+
+    !IFEQ PLATFORM ps2
+      MeViewer2/src/backends/Input_ps2.c
+    !ENDIF
+    !IFEQ PLATFORM xbox
+      MeViewer2/src/backends/Render_xbox.c
+      MeViewer2/src/backends/Render_xbox.h
+    !ENDIF
+    MeViewer2/src/backends/Resource_d3d.h
+
+[src/components/MeViewer2/src/frame]
+
+    MeViewer2/src/frame/MeViewer.c
+    MeViewer2/src/frame/RGeometryUtils.c
+    MeViewer2/src/frame/RMenu.c
+    MeViewer2/src/frame/RMouseCam.c
+    MeViewer2/src/frame/RMouseCam.h
+
+[src/components/MeViewer2/src/utils]
+
+    MeViewer2/src/utils/blender2meg.py
+
+; MeViewer2
+!ENDIF
+
+; COMPONENT - McdFrame
+
+[src/components/McdFrame/src]
+
+    Mcd/src/frame/McdAggregate.cpp
+    Mcd/src/frame/McdBatch.cpp
+    Mcd/src/frame/McduDebugDraw.cpp
+    Mcd/src/frame/McdFrame.cpp
+    Mcd/src/frame/McdGeometry.cpp
+    Mcd/src/frame/McdGeometryInstance.cpp
+    Mcd/src/frame/McdInteractions.cpp
+    Mcd/src/frame/McdMessage.cpp
+    Mcd/src/frame/McdModel.cpp
+    Mcd/src/frame/McdModelPair.cpp
+    Mcd/src/frame/McdModelPairContainer.cpp
+    Mcd/src/frame/McdModelPairManager.cpp
+    Mcd/src/frame/McdNull.cpp
+
+    %generate makefile = Mcd/src/frame/makefile
+    %command sed -e 's/..\/..\/..\/build\/makerules/..\/..\/build\/makerules/g' -e 's/T_SRC_DIR.*/T_SRC_DIR := .\//' < $+ > $@
+
+    Mcd/src/frame/version.c
+
+    !IFEQ PLATFORM win32
+      %generate McdFrame.dsp = Mcd/src/frame/McdFrame.dsp
+      %command awk -v FORCED_INC="../../../../include" -v ME_HEADER_DIR="../../../../include"  -v FORCED_OUT_ROOT="../.." -v FORCED_LIB_CONFIG="${PLATFORM}${DIR_MODIFIER}" -v stripSuffixes="CPP" -f patchDSP.awk < $+ > $@
+    !ENDIF
+
+    !IFEQ PLATFORM xbox
+      %generate McdFrame.dsp = Mcd/src/frame/McdFrameXb.dsp
+      %command awk -v FORCED_INC="../../../../include" -v ME_HEADER_DIR="../../../../include"  -v FORCED_OUT_ROOT="../.." -v FORCED_LIB_CONFIG="${PLATFORM}${DIR_MODIFIER}" -v stripSuffixes="CPP" -f patchDSP_x.awk < $+ > $@
+    !ENDIF
+
+    !IFEQ PLATFORM ps2
+       Mcd/src/frame/McdFrameSN.dsp
+    !ENDIF
+
+; source included
+!ENDIF
+
+!ENDIF
+
+!IFNEQ LIBS_ONLY     1
+!IFNEQ WITH_EXAMPLES 0
+;
+; Definition of included examples
+;
+
+;
+;    MeSamples/makefile
+;
+;!IFEQ PLATFORM ps2
+;    %generate examples.def
+;    %command  echo "EXAMPLES := Cradle Topple RainbowChain BallMan Wheelies" > $@
+;!ELSE
+;    %generate examples.def
+;    %command  echo "EXAMPLES := Cradle Topple RainbowChain BallMan ManyPendulums MeshChain Wheelies" > $@
+;!ENDIF
+;
+
+; Textures for some platforms
+
+  [bin/Resources]
+
+      Resources/ME_logo_512x256.bmp
+      Resources/celtic.bmp
+      Resources/concrete.bmp
+      Resources/black.bmp
+
+      Resources/rdonut2.obj
+
+      !IFEQ CAN_PERFORMER 1
+        Resources/teapot566.flt 
+        Resources/teapot566.pfb
+      !ENDIF
+
+      Resources/perfticks.meg
+
+    !IFEQ PLATFORM win32
+      Resources/MeViewerResources.dll
+    !ENDIF
+
+; EXAMPLE - Chair
+
+[bin/TechDemos]
+    %executable Chair = MeTutorials/bin.rel/${PLATFORM}${DIR_MODIFIER}/Chair
+
+[src/TechDemos/Chair]
+    MeTutorials/Chair/Chair.c
+
+    %generate makefile = MeTutorials/Chair/makefile
+    %command sed -e 's/..\/..\/build\/makerules/..\/..\/components\/build\/makerules/g' < $+ > $@
+
+    !IFEQ PLATFORM win32
+      %generate Chair.dsp = MeTutorials/Chair/Chair.dsp
+      %command awk -v FORCED_INC="../../../include:../../../3rdParty/glut" -v FORCED_LIB_ROOT="../../.." -v FORCED_LIB_CONFIG="${PLATFORM}${DIR_MODIFIER}" -v FORCED_LIB_ADDFIRST="../../components/lib.CONFIG/${PLATFORM}${DIR_MODIFIER}" -f patchDSP.awk < $+ > $@
+    !ENDIF
+
+    !IFEQ PLATFORM xbox
+      %generate Chair.dsp = MeTutorials/Chair/ChairXb.dsp
+      %command awk -v FORCED_INC="../../../include:../../../3rdParty/glut" -v FORCED_LIB_ROOT="../../.." -v FORCED_LIB_CONFIG="${PLATFORM}${DIR_MODIFIER}" -v FORCED_LIB_ADDFIRST="../../components/lib.CONFIG/${PLATFORM}${DIR_MODIFIER}" -f patchDSP_x.awk < $+ > $@
+    !ENDIF
+    
+    !IFEQ PLATFORM ps2
+       MeTutorials/Chair/ChairSN.dsp
+    !ENDIF
+
+; EXAMPLE - HiSpeed
+
+[bin/TechDemos]
+    %executable HiSpeed = MeTutorials/bin.rel/${PLATFORM}${DIR_MODIFIER}/HiSpeed
+
+[src/TechDemos/HiSpeed]
+    MeTutorials/HiSpeed/HiSpeed.c
+
+    %generate makefile = MeTutorials/HiSpeed/makefile
+    %command sed -e 's/..\/..\/build\/makerules/..\/..\/components\/build\/makerules/g' < $+ > $@
+
+    !IFEQ PLATFORM win32
+      %generate HiSpeed.dsp = MeTutorials/HiSpeed/HiSpeed.dsp
+      %command awk -v FORCED_INC="../../../include:../../../3rdParty/glut" -v FORCED_LIB_ROOT="../../.." -v FORCED_LIB_CONFIG="${PLATFORM}${DIR_MODIFIER}" -v FORCED_LIB_ADDFIRST="../../components/lib.CONFIG/${PLATFORM}${DIR_MODIFIER}" -f patchDSP.awk < $+ > $@
+    !ENDIF
+
+    !IFEQ PLATFORM xbox
+      %generate HiSpeed.dsp = MeTutorials/HiSpeed/HiSpeedXb.dsp
+      %command awk -v FORCED_INC="../../../include:../../../3rdParty/glut" -v FORCED_LIB_ROOT="../../.." -v FORCED_LIB_CONFIG="${PLATFORM}${DIR_MODIFIER}" -v FORCED_LIB_ADDFIRST="../../components/lib.CONFIG/${PLATFORM}${DIR_MODIFIER}" -f patchDSP_x.awk < $+ > $@
+    !ENDIF
+
+    !IFEQ PLATFORM ps2
+       MeTutorials/HiSpeed/HiSpeedSN.dsp
+    !ENDIF
+
+; EXAMPLE - Hinge
+
+[bin/TechDemos]
+    %executable Hinge = MeTutorials/bin.rel/${PLATFORM}${DIR_MODIFIER}/Hinge
+
+[src/TechDemos/Hinge]
+    MeTutorials/Hinge/Hinge.c
+
+    %generate makefile = MeTutorials/Hinge/makefile
+    %command sed -e 's/..\/..\/build\/makerules/..\/..\/components\/build\/makerules/g' < $+ > $@
+
+    !IFEQ PLATFORM win32
+      %generate Hinge.dsp = MeTutorials/Hinge/Hinge.dsp
+      %command awk -v FORCED_INC="../../../include:../../../3rdParty/glut" -v FORCED_LIB_ROOT="../../.." -v FORCED_LIB_CONFIG="${PLATFORM}${DIR_MODIFIER}" -v FORCED_LIB_ADDFIRST="../../components/lib.CONFIG/${PLATFORM}${DIR_MODIFIER}" -f patchDSP.awk < $+ > $@
+    !ENDIF
+
+    !IFEQ PLATFORM xbox
+      %generate Hinge.dsp = MeTutorials/Hinge/HingeXb.dsp
+      %command awk -v FORCED_INC="../../../include:../../../3rdParty/glut" -v FORCED_LIB_ROOT="../../.." -v FORCED_LIB_CONFIG="${PLATFORM}${DIR_MODIFIER}" -v FORCED_LIB_ADDFIRST="../../components/lib.CONFIG/${PLATFORM}${DIR_MODIFIER}" -f patchDSP_x.awk < $+ > $@
+    !ENDIF
+
+    !IFEQ PLATFORM ps2
+       MeTutorials/Hinge/HingeSN.dsp
+    !ENDIF
+
+; EXAMPLE - Prismatic
+
+[bin/TechDemos]
+    %executable Prismatic = MeTutorials/bin.rel/${PLATFORM}${DIR_MODIFIER}/Prismatic
+
+[src/TechDemos/Prismatic]
+    MeTutorials/Prismatic/Prismatic.c
+
+    %generate makefile = MeTutorials/Prismatic/makefile
+    %command sed -e 's/..\/..\/build\/makerules/..\/..\/components\/build\/makerules/g' < $+ > $@
+
+    !IFEQ PLATFORM win32
+      %generate Prismatic.dsp = MeTutorials/Prismatic/Prismatic.dsp
+      %command awk -v FORCED_INC="../../../include:../../../3rdParty/glut" -v FORCED_LIB_ROOT="../../.." -v FORCED_LIB_CONFIG="${PLATFORM}${DIR_MODIFIER}" -v FORCED_LIB_ADDFIRST="../../components/lib.CONFIG/${PLATFORM}${DIR_MODIFIER}" -f patchDSP.awk < $+ > $@
+    !ENDIF
+
+    !IFEQ PLATFORM xbox
+      %generate Prismatic.dsp = MeTutorials/Prismatic/PrismaticXb.dsp
+      %command awk -v FORCED_INC="../../../include:../../../3rdParty/glut" -v FORCED_LIB_ROOT="../../.." -v FORCED_LIB_CONFIG="${PLATFORM}${DIR_MODIFIER}" -v FORCED_LIB_ADDFIRST="../../components/lib.CONFIG/${PLATFORM}${DIR_MODIFIER}" -f patchDSP_x.awk < $+ > $@
+    !ENDIF
+
+    !IFEQ PLATFORM ps2
+       MeTutorials/Prismatic/PrismaticSN.dsp
+    !ENDIF
+
+; EXAMPLE - TriangleList
+
+[bin/TechDemos]
+    %executable TriangleList = MeTutorials/bin.rel/${PLATFORM}${DIR_MODIFIER}/TriangleList
+
+[src/TechDemos/TriangleList]
+    MeTutorials/TriangleList/TriangleList.c
+
+    %generate makefile = MeTutorials/TriangleList/makefile
+    %command sed -e 's/..\/..\/build\/makerules/..\/..\/components\/build\/makerules/g' < $+ > $@
+
+    !IFEQ PLATFORM win32
+      %generate TriangleList.dsp = MeTutorials/TriangleList/TriangleList.dsp
+      %command awk -v FORCED_INC="../../../include:../../../3rdParty/glut" -v FORCED_LIB_ROOT="../../.." -v FORCED_LIB_CONFIG="${PLATFORM}${DIR_MODIFIER}" -v FORCED_LIB_ADDFIRST="../../components/lib.CONFIG/${PLATFORM}${DIR_MODIFIER}" -f patchDSP.awk < $+ > $@
+    !ENDIF
+
+    !IFEQ PLATFORM xbox
+      %generate TriangleList.dsp = MeTutorials/TriangleList/TriangleListXb.dsp
+      %command awk -v FORCED_INC="../../../include:../../../3rdParty/glut" -v FORCED_LIB_ROOT="../../.." -v FORCED_LIB_CONFIG="${PLATFORM}${DIR_MODIFIER}" -v FORCED_LIB_ADDFIRST="../../components/lib.CONFIG/${PLATFORM}${DIR_MODIFIER}" -f patchDSP_x.awk < $+ > $@
+    !ENDIF
+
+    !IFEQ PLATFORM ps2
+       MeTutorials/TriangleList/TriangleListSN.dsp
+    !ENDIF
+
+; EXAMPLE - BallMan
+
+[bin/Demos]
+    %executable BallMan = MeSamples/bin.rel/${PLATFORM}${DIR_MODIFIER}/BallMan
+
+[src/Demos/BallMan]
+    MeSamples/BallMan/BallMan.c
+
+    %generate makefile = MeSamples/BallMan/makefile
+    %command sed -e 's/..\/..\/build\/makerules/..\/..\/components\/build\/makerules/g' < $+ > $@
+
+    !IFEQ PLATFORM win32
+      %generate BallMan.dsp = MeSamples/BallMan/BallMan.dsp
+      %command awk -v FORCED_INC="../../../include:../../../3rdParty/glut" -v FORCED_LIB_ROOT="../../.." -v FORCED_LIB_CONFIG="${PLATFORM}${DIR_MODIFIER}" -v FORCED_LIB_ADDFIRST="../../components/lib.CONFIG/${PLATFORM}${DIR_MODIFIER}" -f patchDSP.awk < $+ > $@
+    !ENDIF
+
+    !IFEQ PLATFORM xbox
+      %generate BallMan.dsp = MeSamples/BallMan/BallManXb.dsp
+      %command awk -v FORCED_INC="../../../include:../../../3rdParty/glut" -v FORCED_LIB_ROOT="../../.." -v FORCED_LIB_CONFIG="${PLATFORM}${DIR_MODIFIER}" -v FORCED_LIB_ADDFIRST="../../components/lib.CONFIG/${PLATFORM}${DIR_MODIFIER}" -f patchDSP_x.awk < $+ > $@
+    !ENDIF
+
+    !IFEQ PLATFORM ps2
+       MeSamples/BallMan/BallManSN.dsp
+    !ENDIF
+
+; EXAMPLE - ConeUserGeometry
+
+[bin/TechDemos]
+    %executable ConeUserGeometry = MeSamples/bin.rel/${PLATFORM}${DIR_MODIFIER}/ConeUserGeometry
+
+[src/TechDemos/ConeUserGeometry]
+    MeSamples/ConeUserGeometry/ConeGeometry.c
+    MeSamples/ConeUserGeometry/ConeSample.c
+    MeSamples/ConeUserGeometry/ConeGeometry.h
+
+    %generate makefile = MeSamples/ConeUserGeometry/makefile
+    %command sed -e 's/..\/..\/build\/makerules/..\/..\/components\/build\/makerules/g' < $+ > $@
+
+    !IFEQ PLATFORM win32
+      %generate ConeUserGeometry.dsp = MeSamples/ConeUserGeometry/ConeUserGeometry.dsp
+      %command awk -v FORCED_INC="../../../include:../../../3rdParty/glut" -v FORCED_LIB_ROOT="../../.." -v FORCED_LIB_CONFIG="${PLATFORM}${DIR_MODIFIER}" -v FORCED_LIB_ADDFIRST="../../components/lib.CONFIG/${PLATFORM}${DIR_MODIFIER}" -f patchDSP.awk < $+ > $@
+    !ENDIF
+
+    !IFEQ PLATFORM xbox
+      %generate ConeUserGeometry.dsp = MeSamples/ConeUserGeometry/ConeUserGeometryXb.dsp
+      %command awk -v FORCED_INC="../../../include:../../../3rdParty/glut" -v FORCED_LIB_ROOT="../../.." -v FORCED_LIB_CONFIG="${PLATFORM}${DIR_MODIFIER}" -v FORCED_LIB_ADDFIRST="../../components/lib.CONFIG/${PLATFORM}${DIR_MODIFIER}" -f patchDSP_x.awk < $+ > $@
+    !ENDIF
+
+    !IFEQ PLATFORM ps2
+       MeSamples/ConeUserGeometry/ConeUserGeometrySN.dsp
+    !ENDIF
+
+; EXAMPLE - ConvexStairs
+
+[bin/Demos]
+    %executable ConvexStairs = MeSamples/bin.rel/${PLATFORM}${DIR_MODIFIER}/ConvexStairs
+
+[src/Demos/ConvexStairs]
+    MeSamples/ConvexStairs/ConvexStairs.c
+
+    %generate makefile = MeSamples/ConvexStairs/makefile
+    %command sed -e 's/..\/..\/build\/makerules/..\/..\/components\/build\/makerules/g' < $+ > $@
+
+    !IFEQ PLATFORM win32
+      %generate ConvexStairs.dsp = MeSamples/ConvexStairs/ConvexStairs.dsp
+      %command awk -v FORCED_INC="../../../include:../../../3rdParty/glut" -v FORCED_LIB_ROOT="../../.." -v FORCED_LIB_CONFIG="${PLATFORM}${DIR_MODIFIER}" -v FORCED_LIB_ADDFIRST="../../components/lib.CONFIG/${PLATFORM}${DIR_MODIFIER}" -f patchDSP.awk < $+ > $@
+    !ENDIF
+
+    !IFEQ PLATFORM xbox
+      %generate ConvexStairs.dsp = MeSamples/ConvexStairs/ConvexStairsXb.dsp
+      %command awk -v FORCED_INC="../../../include:../../../3rdParty/glut" -v FORCED_LIB_ROOT="../../.." -v FORCED_LIB_CONFIG="${PLATFORM}${DIR_MODIFIER}" -v FORCED_LIB_ADDFIRST="../../components/lib.CONFIG/${PLATFORM}${DIR_MODIFIER}" -f patchDSP_x.awk < $+ > $@
+    !ENDIF
+
+    !IFEQ PLATFORM ps2
+       MeSamples/ConvexStairs/ConvexStairsSN.dsp
+    !ENDIF
+
+; EXAMPLE - Crane
+
+;!IFNEQ PLATFORM ps2
+[bin/Demos]
+    %executable Crane = MeSamples/bin.rel/${PLATFORM}${DIR_MODIFIER}/Crane
+
+[src/Demos/Crane]
+    MeSamples/Crane/Crane.c
+
+    %generate makefile = MeSamples/Crane/makefile
+    %command sed -e 's/..\/..\/build\/makerules/..\/..\/components\/build\/makerules/g' < $+ > $@
+
+    !IFEQ PLATFORM win32
+      %generate Crane.dsp = MeSamples/Crane/Crane.dsp
+      %command awk -v FORCED_INC="../../../include:../../../3rdParty/glut" -v FORCED_LIB_ROOT="../../.." -v FORCED_LIB_CONFIG="${PLATFORM}${DIR_MODIFIER}" -v FORCED_LIB_ADDFIRST="../../components/lib.CONFIG/${PLATFORM}${DIR_MODIFIER}" -f patchDSP.awk < $+ > $@
+    !ENDIF
+;!ENDIF
+
+    !IFEQ PLATFORM xbox
+      %generate Crane.dsp = MeSamples/Crane/CraneXb.dsp
+      %command awk -v FORCED_INC="../../../include:../../../3rdParty/glut" -v FORCED_LIB_ROOT="../../.." -v FORCED_LIB_CONFIG="${PLATFORM}${DIR_MODIFIER}" -v FORCED_LIB_ADDFIRST="../../components/lib.CONFIG/${PLATFORM}${DIR_MODIFIER}" -f patchDSP_x.awk < $+ > $@
+    !ENDIF
+
+    !IFEQ PLATFORM ps2
+       MeSamples/Crane/CraneSN.dsp
+    !ENDIF
+
+; EXAMPLE - Cubes
+
+[bin/TechDemos]
+    %executable Cubes = MeSamples/bin.rel/${PLATFORM}${DIR_MODIFIER}/Cubes
+
+[src/TechDemos/Cubes]
+    MeSamples/Cubes/Cubes.c
+
+    %generate makefile = MeSamples/Cubes/makefile
+    %command sed -e 's/..\/..\/build\/makerules/..\/..\/components\/build\/makerules/g' < $+ > $@
+
+    !IFEQ PLATFORM win32
+      %generate Cubes.dsp = MeSamples/Cubes/Cubes.dsp
+      %command awk -v FORCED_INC="../../../include:../../../3rdParty/glut" -v FORCED_LIB_ROOT="../../.." -v FORCED_LIB_CONFIG="${PLATFORM}${DIR_MODIFIER}" -v FORCED_LIB_ADDFIRST="../../components/lib.CONFIG/${PLATFORM}${DIR_MODIFIER}" -f patchDSP.awk < $+ > $@
+    !ENDIF
+
+    !IFEQ PLATFORM xbox
+      %generate Cubes.dsp = MeSamples/Cubes/CubesXb.dsp
+      %command awk -v FORCED_INC="../../../include:../../../3rdParty/glut" -v FORCED_LIB_ROOT="../../.." -v FORCED_LIB_CONFIG="${PLATFORM}${DIR_MODIFIER}" -v FORCED_LIB_ADDFIRST="../../components/lib.CONFIG/${PLATFORM}${DIR_MODIFIER}" -f patchDSP_x.awk < $+ > $@
+    !ENDIF
+
+    !IFEQ PLATFORM ps2
+       MeSamples/Cubes/CubesSN.dsp
+    !ENDIF
+
+; EXAMPLE - Friction
+
+[bin/TechDemos]
+    %executable Friction = MeSamples/bin.rel/${PLATFORM}${DIR_MODIFIER}/Friction
+
+[src/TechDemos/Friction]
+    MeSamples/Friction/Friction.c
+
+    %generate makefile = MeSamples/Friction/makefile
+    %command sed -e 's/..\/..\/build\/makerules/..\/..\/components\/build\/makerules/g' < $+ > $@
+
+    !IFEQ PLATFORM win32
+      %generate Friction.dsp = MeSamples/Friction/Friction.dsp
+      %command awk -v FORCED_INC="../../../include:../../../3rdParty/glut" -v FORCED_LIB_ROOT="../../.." -v FORCED_LIB_CONFIG="${PLATFORM}${DIR_MODIFIER}" -v FORCED_LIB_ADDFIRST="../../components/lib.CONFIG/${PLATFORM}${DIR_MODIFIER}" -f patchDSP.awk < $+ > $@
+    !ENDIF
+
+    !IFEQ PLATFORM xbox
+      %generate Friction.dsp = MeSamples/Friction/FrictionXb.dsp
+      %command awk -v FORCED_INC="../../../include:../../../3rdParty/glut" -v FORCED_LIB_ROOT="../../.." -v FORCED_LIB_CONFIG="${PLATFORM}${DIR_MODIFIER}" -v FORCED_LIB_ADDFIRST="../../components/lib.CONFIG/${PLATFORM}${DIR_MODIFIER}" -f patchDSP_x.awk < $+ > $@
+    !ENDIF
+
+    !IFEQ PLATFORM ps2
+       MeSamples/Friction/FrictionSN.dsp
+    !ENDIF
+
+; EXAMPLE - ManyPendulums
+
+[bin/Demos]
+    %executable ManyPendulums = MeSamples/bin.rel/${PLATFORM}${DIR_MODIFIER}/ManyPendulums
+
+[src/Demos/ManyPendulums]
+    MeSamples/ManyPendulums/ManyPendulums.c
+
+    %generate makefile = MeSamples/ManyPendulums/makefile
+    %command sed -e 's/..\/..\/build\/makerules/..\/..\/components\/build\/makerules/g' < $+ > $@
+
+    !IFEQ PLATFORM win32
+      %generate ManyPendulums.dsp = MeSamples/ManyPendulums/ManyPendulums.dsp
+      %command awk -v FORCED_INC="../../../include:../../../3rdParty/glut" -v FORCED_LIB_ROOT="../../.." -v FORCED_LIB_CONFIG="${PLATFORM}${DIR_MODIFIER}" -v FORCED_LIB_ADDFIRST="../../components/lib.CONFIG/${PLATFORM}${DIR_MODIFIER}" -f patchDSP.awk < $+ > $@
+    !ENDIF
+
+    !IFEQ PLATFORM xbox
+      %generate ManyPendulums.dsp = MeSamples/ManyPendulums/ManyPendulumsXb.dsp
+      %command awk -v FORCED_INC="../../../include:../../../3rdParty/glut" -v FORCED_LIB_ROOT="../../.." -v FORCED_LIB_CONFIG="${PLATFORM}${DIR_MODIFIER}" -v FORCED_LIB_ADDFIRST="../../components/lib.CONFIG/${PLATFORM}${DIR_MODIFIER}" -f patchDSP_x.awk < $+ > $@
+    !ENDIF
+
+    !IFEQ PLATFORM ps2
+       MeSamples/ManyPendulums/ManyPendulumsSN.dsp
+    !ENDIF
+
+; EXAMPLE - QuadBike
+
+[bin/Demos]
+    %executable QuadBike = MeSamples/bin.rel/${PLATFORM}${DIR_MODIFIER}/QuadBike
+
+[src/Demos/QuadBike]
+    MeSamples/QuadBike/controls.c
+    MeSamples/QuadBike/controls.h
+    MeSamples/QuadBike/main.c
+    MeSamples/QuadBike/main.h
+    MeSamples/QuadBike/rider.c
+    MeSamples/QuadBike/rider.h
+    MeSamples/QuadBike/terrain.c
+    MeSamples/QuadBike/terrain.h
+    MeSamples/QuadBike/utils.c
+    MeSamples/QuadBike/utils.h
+    MeSamples/QuadBike/vehicle.c
+    MeSamples/QuadBike/vehicle.h
+
+    %generate makefile = MeSamples/QuadBike/makefile
+    %command sed -e 's/..\/..\/build\/makerules/..\/..\/components\/build\/makerules/g' < $+ > $@
+
+    !IFEQ PLATFORM win32
+      %generate QuadBike.dsp = MeSamples/QuadBike/QuadBike.dsp
+      %command awk -v FORCED_INC="../../../include:../../../3rdParty/glut" -v FORCED_LIB_ROOT="../../.." -v FORCED_LIB_CONFIG="${PLATFORM}${DIR_MODIFIER}" -v FORCED_LIB_ADDFIRST="../../components/lib.CONFIG/${PLATFORM}${DIR_MODIFIER}" -f patchDSP.awk < $+ > $@
+    !ENDIF
+
+    !IFEQ PLATFORM xbox
+      %generate QuadBike.dsp = MeSamples/QuadBike/QuadBikeXb.dsp
+      %command awk -v FORCED_INC="../../../include:../../../3rdParty/glut" -v FORCED_LIB_ROOT="../../.." -v FORCED_LIB_CONFIG="${PLATFORM}${DIR_MODIFIER}" -v FORCED_LIB_ADDFIRST="../../components/lib.CONFIG/${PLATFORM}${DIR_MODIFIER}" -f patchDSP_x.awk < $+ > $@
+    !ENDIF
+    
+    !IFEQ PLATFORM ps2
+       MeSamples/QuadBike/QuadBikeSN.dsp
+    !ENDIF
+
+; EXAMPLE - RainbowChain
+
+[bin/TechDemos]
+    %executable RainbowChain = MeSamples/bin.rel/${PLATFORM}${DIR_MODIFIER}/RainbowChain
+
+[src/TechDemos/RainbowChain]
+    MeSamples/RainbowChain/RainbowChain.c
+
+    %generate makefile = MeSamples/RainbowChain/makefile
+    %command sed -e 's/..\/..\/build\/makerules/..\/..\/components\/build\/makerules/g' < $+ > $@
+
+    !IFEQ PLATFORM win32
+      %generate RainbowChain.dsp = MeSamples/RainbowChain/RainbowChain.dsp
+      %command awk -v FORCED_INC="../../../include:../../../3rdParty/glut" -v FORCED_LIB_ROOT="../../.." -v FORCED_LIB_CONFIG="${PLATFORM}${DIR_MODIFIER}" -v FORCED_LIB_ADDFIRST="../../components/lib.CONFIG/${PLATFORM}${DIR_MODIFIER}" -f patchDSP.awk < $+ > $@
+    !ENDIF
+
+    !IFEQ PLATFORM xbox
+      %generate RainbowChain.dsp = MeSamples/RainbowChain/RainbowChainXb.dsp
+      %command awk -v FORCED_INC="../../../include:../../../3rdParty/glut" -v FORCED_LIB_ROOT="../../.." -v FORCED_LIB_CONFIG="${PLATFORM}${DIR_MODIFIER}" -v FORCED_LIB_ADDFIRST="../../components/lib.CONFIG/${PLATFORM}${DIR_MODIFIER}" -f patchDSP_x.awk < $+ > $@
+    !ENDIF
+
+    !IFEQ PLATFORM ps2
+       MeSamples/RainbowChain/RainbowChainSN.dsp
+    !ENDIF
+
+; EXAMPLE - Tank
+
+[bin/Demos]
+    %executable Tank = MeSamples/bin.rel/${PLATFORM}${DIR_MODIFIER}/Tank
+
+[src/Demos/Tank]
+    MeSamples/Tank/Tank.c
+    MeSamples/Tank/TankUtils.c
+    MeSamples/Tank/TankUtils.h
+
+    %generate makefile = MeSamples/Tank/makefile
+    %command sed -e 's/..\/..\/build\/makerules/..\/..\/components\/build\/makerules/g' < $+ > $@
+
+    !IFEQ PLATFORM win32
+      %generate Tank.dsp = MeSamples/Tank/Tank.dsp
+      %command awk -v FORCED_INC="../../../include:../../../3rdParty/glut" -v FORCED_LIB_ROOT="../../.." -v FORCED_LIB_CONFIG="${PLATFORM}${DIR_MODIFIER}" -v FORCED_LIB_ADDFIRST="../../components/lib.CONFIG/${PLATFORM}${DIR_MODIFIER}" -f patchDSP.awk < $+ > $@
+    !ENDIF
+
+    !IFEQ PLATFORM xbox
+      %generate Tank.dsp = MeSamples/Tank/TankXb.dsp
+      %command awk -v FORCED_INC="../../../include:../../../3rdParty/glut" -v FORCED_LIB_ROOT="../../.." -v FORCED_LIB_CONFIG="${PLATFORM}${DIR_MODIFIER}" -v FORCED_LIB_ADDFIRST="../../components/lib.CONFIG/${PLATFORM}${DIR_MODIFIER}" -f patchDSP_x.awk < $+ > $@
+    !ENDIF
+
+    !IFEQ PLATFORM ps2
+       MeSamples/Tank/TankSN.dsp
+    !ENDIF
+
+; EXAMPLE - Topple
+
+[bin/Demos]
+    %executable Topple = MeSamples/bin.rel/${PLATFORM}${DIR_MODIFIER}/Topple
+
+[src/Demos/Topple]
+    MeSamples/Topple/Topple.c
+
+    %generate makefile = MeSamples/Topple/makefile
+    %command sed -e 's/..\/..\/build\/makerules/..\/..\/components\/build\/makerules/g' < $+ > $@
+
+    !IFEQ PLATFORM win32
+      %generate Topple.dsp = MeSamples/Topple/Topple.dsp
+      %command awk -v FORCED_INC="../../../include:../../../3rdParty/glut" -v FORCED_LIB_ROOT="../../.." -v FORCED_LIB_CONFIG="${PLATFORM}${DIR_MODIFIER}" -v FORCED_LIB_ADDFIRST="../../components/lib.CONFIG/${PLATFORM}${DIR_MODIFIER}" -f patchDSP.awk < $+ > $@
+    !ENDIF
+
+    !IFEQ PLATFORM xbox
+      %generate Topple.dsp = MeSamples/Topple/ToppleXb.dsp
+      %command awk -v FORCED_INC="../../../include:../../../3rdParty/glut" -v FORCED_LIB_ROOT="../../.." -v FORCED_LIB_CONFIG="${PLATFORM}${DIR_MODIFIER}" -v FORCED_LIB_ADDFIRST="../../components/lib.CONFIG/${PLATFORM}${DIR_MODIFIER}" -f patchDSP_x.awk < $+ > $@
+    !ENDIF
+
+    !IFEQ PLATFORM ps2
+       MeSamples/Topple/ToppleSN.dsp
+    !ENDIF
+
+[bin/Resources]
+
+    Resources/ME_ball3.bmp
+    Resources/ME_logo2.bmp
+    Resources/checkerboard.bmp
+    Resources/crane.bmp
+    Resources/font.bmp
+    Resources/perfticks.meg
+    Resources/rock.bmp
+    Resources/skydome.bmp
+    Resources/stone.bmp
+    Resources/terrain2.bmp
+    Resources/wood.bmp
+    Resources/wood1.bmp
+
+    Resources/chassis.bmp
+    Resources/torso.bmp
+    Resources/wheel.bmp
+
+    Resources/chassis.ase
+    Resources/leftWheel.ase
+    Resources/lowerArm.ase
+    Resources/lowerLegs.ase
+    Resources/rightWheel.ase
+    Resources/torso.ase
+    Resources/upperArm.ase
+    Resources/upperLegs.ase
+
+    Resources/crane_dangler.ase
+    Resources/crane_extender.ase
+    Resources/crane_magnet.ase
+    Resources/crane_main.ase
+    Resources/crane_main_arm.ase
+    Resources/crane_radar.ase
+
+    Resources/wild.ase
+
+[bin/Resources]
+    
+    Resources/ka_files/crane.ka
+
+[src/Demos]
+    makefile = MeSamples/makefile.demos
+
+    %generate demos.def
+    %command  echo "EXAMPLES :=  BallMan ConvexStairs Crane ManyPendulums QuadBike Tank Topple" > $@
+
+[src/TechDemos]
+    makefile = MeSamples/makefile.techdemos
+    
+    %generate techdemos.def
+    %command  echo "EXAMPLES :=  Chair ConeUserGeometry Cubes Friction HiSpeed Hinge Prismatic RainbowChain TriangleList" > $@
+!IFEQ PLATFORM win32
+
+; Now that the tree is constructed, review it for creating a DSW
+[src]
+    %generate MeToolkits.dsw
+    %command  find $(@D) -name \*.dsp | grep -v SamsToy | xargs grep -H ^CFG=\\\|ADD\\\ LINK32 | awk -vPREFIX=$(@D) -f dsw_generator.awk > $@
+
+!ENDIF
+
+!IFEQ PLATFORM xbox
+
+; Now that the tree is constructed, review it for creating a DSW
+[src]
+    %generate MeToolkits.dsw
+    %command  find $(@D) -name \*.dsp | grep -v SamsToy | xargs grep -H ^CFG=\\\|ADD\\\ LINK32 | awk -vPREFIX=$(@D) -f dsw_generator.awk > $@
+
+!ENDIF
+
+!IFEQ PLATFORM ps2
+[src]
+  MeToolkitSN.dsw = build/internal/metoolkitSN.dsw
+!ENDIF
+
+; With examples
+!ENDIF
+
+;
+; Demos
+;
+
+
+!IFEQ BLOATED_RELEASE yes
+
+!IFEQ PLATFORM 'win32'
+  [bin/Actor]
+      MeDemos/Actor/ActorDemoV101.exe
+      MeDemos/Actor/ActorMovie.avi
+      Actor_README-VI.txt = MeDemos/Actor/ReadMeActor-VIversion.txt
+      Actor_README.txt = MeDemos/Actor/readmeActor.txt
+!ENDIF
+
+!ENDIF
+
+;
+; Third party stuff
+;
+
+
+!IFNEQ WITH_EXTRAS '0'
+[3rdParty]
+    tools/3rdParty/COPYING.txt
+    tools/3rdParty/README_Qhull.txt
+;   tools/3rdParty/README_RenderWare.txt
+
+!IFEQ PLATFORM win32
+  [3rdParty/glut]
+      tools/glut/glut32.lib
+      tools/glut/glut32.dll
+      tools/glut/README-win32.txt
+
+  [3rdParty/glut/GL]
+      tools/glut/GL/glut.h
+
+  [bin/Demos]
+      tools/glut/glut32.dll
+
+  [bin/TechDemos]
+      tools/glut/glut32.dll
+
+!ENDIF
+!ENDIF
+
+;
+; Optional Extras
+;
+
+!IFEQ GREASEMONKEY 1
+
+[bin/GreaseMonkey]
+
+    MeDemos/GreaseMonkey/readme.txt
+
+    !IFEQ PLATFORM win32
+        MeDemos/GreaseMonkey/GreaseMonkey.exe
+    !ENDIF
+
+    !IFEQ PLATFORM xbox
+        MeDemos/GreaseMonkey/GreaseMonkey.xbe
+    !ENDIF
+
+    !IFEQ PLATFORM ps2
+        MeDemos/GreaseMonkey/GreaseMonkey.elf
+    !ENDIF
+
+
+[bin/GreaseMonkey/Scripts]
+    MeDemos/GreaseMonkey/Scripts/BWM2200.veh
+    MeDemos/GreaseMonkey/Scripts/BWM2200D.txt
+    MeDemos/GreaseMonkey/Scripts/HotRod.veh
+    MeDemos/GreaseMonkey/Scripts/HotRodD.txt
+    MeDemos/GreaseMonkey/Scripts/Micro.veh
+    MeDemos/GreaseMonkey/Scripts/MicroD.txt
+    MeDemos/GreaseMonkey/Scripts/Spyder.veh
+    MeDemos/GreaseMonkey/Scripts/SpyderD.txt
+    MeDemos/GreaseMonkey/Scripts/grmonkey.cfg
+    MeDemos/GreaseMonkey/Scripts/lights.lts
+    MeDemos/GreaseMonkey/Scripts/tracks.txt
+
+[bin/GreaseMonkey/Models/world]
+    MeDemos/GreaseMonkey/Models/world/RampWorld.BSP
+
+[bin/GreaseMonkey/Models/world/textures]
+    MeDemos/GreaseMonkey/Models/world/textures/STEEL.bmp
+    MeDemos/GreaseMonkey/Models/world/textures/advroad_main.bmp
+    MeDemos/GreaseMonkey/Models/world/textures/arrow.bmp
+    MeDemos/GreaseMonkey/Models/world/textures/arrows.bmp
+    MeDemos/GreaseMonkey/Models/world/textures/billboard1.bmp
+    MeDemos/GreaseMonkey/Models/world/textures/billboard2.bmp
+    MeDemos/GreaseMonkey/Models/world/textures/billboard3.bmp
+    MeDemos/GreaseMonkey/Models/world/textures/blue.bmp
+    MeDemos/GreaseMonkey/Models/world/textures/cement.bmp
+    MeDemos/GreaseMonkey/Models/world/textures/concsmall.bmp
+    MeDemos/GreaseMonkey/Models/world/textures/crisscross.bmp
+    MeDemos/GreaseMonkey/Models/world/textures/duskysky.bmp
+    MeDemos/GreaseMonkey/Models/world/textures/grass.bmp
+    MeDemos/GreaseMonkey/Models/world/textures/grassdirt.bmp
+    MeDemos/GreaseMonkey/Models/world/textures/gray.bmp
+    MeDemos/GreaseMonkey/Models/world/textures/guardads.bmp
+    MeDemos/GreaseMonkey/Models/world/textures/hay.bmp
+    MeDemos/GreaseMonkey/Models/world/textures/horizon.bmp
+    MeDemos/GreaseMonkey/Models/world/textures/horizon2.bmp
+    MeDemos/GreaseMonkey/Models/world/textures/lights.bmp
+    MeDemos/GreaseMonkey/Models/world/textures/props.bmp
+    MeDemos/GreaseMonkey/Models/world/textures/road_arrow.bmp
+    MeDemos/GreaseMonkey/Models/world/textures/road_main.bmp
+    MeDemos/GreaseMonkey/Models/world/textures/road_start.bmp
+    MeDemos/GreaseMonkey/Models/world/textures/sky.bmp
+    MeDemos/GreaseMonkey/Models/world/textures/sky2.bmp
+    MeDemos/GreaseMonkey/Models/world/textures/smoke.bmp
+    MeDemos/GreaseMonkey/Models/world/textures/smokem.bmp
+    MeDemos/GreaseMonkey/Models/world/textures/stands.bmp
+    MeDemos/GreaseMonkey/Models/world/textures/stands2.bmp
+    MeDemos/GreaseMonkey/Models/world/textures/standside.bmp
+    MeDemos/GreaseMonkey/Models/world/textures/tent.bmp
+    MeDemos/GreaseMonkey/Models/world/textures/tentbar.bmp
+    MeDemos/GreaseMonkey/Models/world/textures/wheel.bmp
+
+[bin/GreaseMonkey/Models/BWM2200]
+    MeDemos/GreaseMonkey/Models/BWM2200/interiorview.dff
+    MeDemos/GreaseMonkey/Models/BWM2200/BWM2200.DFF
+    MeDemos/GreaseMonkey/Models/BWM2200/wheelbwmL.DFF
+    MeDemos/GreaseMonkey/Models/BWM2200/wheelbwmR.DFF
+
+[bin/GreaseMonkey/Models/BWM2200/textures]
+    MeDemos/GreaseMonkey/Models/BWM2200/textures/beemer.bmp
+    MeDemos/GreaseMonkey/Models/BWM2200/textures/beemerGray.bmp
+    MeDemos/GreaseMonkey/Models/BWM2200/textures/wheelbeemer.bmp
+
+[bin/GreaseMonkey/Models/HotRod]
+    MeDemos/GreaseMonkey/Models/HotRod/interiorview.dff
+    MeDemos/GreaseMonkey/Models/HotRod/HotRod.DFF
+;   MeDemos/GreaseMonkey/Models/HotRod/IntCarTiltPivotReset.DFF
+    MeDemos/GreaseMonkey/Models/HotRod/wheelL.DFF
+    MeDemos/GreaseMonkey/Models/HotRod/wheelR.DFF
+
+[bin/GreaseMonkey/Models/HotRod/textures]
+    MeDemos/GreaseMonkey/Models/HotRod/textures/RodMap.bmp
+    MeDemos/GreaseMonkey/Models/HotRod/textures/car2map.bmp
+    MeDemos/GreaseMonkey/Models/HotRod/textures/car3map.bmp
+    MeDemos/GreaseMonkey/Models/HotRod/textures/car4map.bmp
+    MeDemos/GreaseMonkey/Models/HotRod/textures/car5map.bmp
+    MeDemos/GreaseMonkey/Models/HotRod/textures/car6map.bmp
+    MeDemos/GreaseMonkey/Models/HotRod/textures/car7map.bmp
+    MeDemos/GreaseMonkey/Models/HotRod/textures/interior.bmp
+
+[bin/GreaseMonkey/Models/Micro]
+    MeDemos/GreaseMonkey/Models/Micro/interiorview.dff
+    MeDemos/GreaseMonkey/Models/Micro/mini.DFF
+    MeDemos/GreaseMonkey/Models/Micro/wheelminiL.DFF
+    MeDemos/GreaseMonkey/Models/Micro/wheelminiR.DFF
+
+[bin/GreaseMonkey/Models/Micro/textures]
+    MeDemos/GreaseMonkey/Models/Micro/textures/miniB_flat.bmp
+    MeDemos/GreaseMonkey/Models/Micro/textures/minigray.bmp
+    MeDemos/GreaseMonkey/Models/Micro/textures/minigrayLight.bmp
+    MeDemos/GreaseMonkey/Models/Micro/textures/minitan.bmp
+    MeDemos/GreaseMonkey/Models/Micro/textures/wheelmini.bmp
+
+[bin/GreaseMonkey/Models/Spyder]
+    MeDemos/GreaseMonkey/Models/Spyder/interiorview.dff
+    MeDemos/GreaseMonkey/Models/Spyder/PwheelLF.DFF
+    MeDemos/GreaseMonkey/Models/Spyder/PwheelRF.DFF
+    MeDemos/GreaseMonkey/Models/Spyder/spyder.DFF
+
+[bin/GreaseMonkey/Models/Spyder/textures]
+    MeDemos/GreaseMonkey/Models/Spyder/textures/flattened5.bmp
+    MeDemos/GreaseMonkey/Models/Spyder/textures/wheelporsche.bmp
+
+; Include sound, but for Windows only
+
+!IFEQ PLATFORM win32
+[bin/GreaseMonkey]
+    MeDemos/GreaseMonkey/QMDX.dll
+    MeDemos/GreaseMonkey/QMDX.lib
+
+[bin/GreaseMonkey/Samples]
+    MeDemos/GreaseMonkey/Samples/idle.wav
+    MeDemos/GreaseMonkey/Samples/jet.wav
+    MeDemos/GreaseMonkey/Samples/loopskid.wav
+    MeDemos/GreaseMonkey/Samples/v8engine.wav
+!ENDIF
+
+
+!ENDIF
+
+!IFEQ PLUGIN 1
+!IFEQ PLATFORM 'win32'
+
+[3dsmax]
+
+    ; Plugin
+    MePlugins/3dsmax/plugin/MathEng.dlo
+
+    ; Documentation
+    MePlugins/3dsmax/doc/ME_MaxPlugin_UserGuide.htm
+
+[3dsmax/docfiles]
+
+    %directory MePlugins/3dsmax/doc/docfiles
+    %generate dummyFile
+    %command rm -rf $(@D)/CVS
+
+!ENDIF
+!ENDIF
+
+!IFEQ CODEWARRIOR 1
+!IFEQ PLATFORM 'ps2'
+
+;  MeGlobals/include/MeCWPS2Prefix.h
+;  MeGlobals/include/MeCWPS2PrefixCheck.h
+;
+;[src/examples]
+;  build/special/CodeWarrior/src/examples/examples.mcp
+;
+;[src/components]
+;  build/special/CodeWarrior/src/components/components.mcp
+;
+;[src/components/MeViewer2/src]
+;  build/special/CodeWarrior/src/components/MeViewer2.mcp
+;  build/special/CodeWarrior/include/MeCWPS2Viewer2.h
+;  build/special/CodeWarrior/include/MeCWPS2Viewer2Check.h
+;
+;[src/cwstationery]
+;  build/special/CodeWarrior/src/cwstationery/Program.c
+;  build/special/CodeWarrior/src/cwstationery/Program.mcp
+
+!ENDIF
+!ENDIF
+!ENDIF ; LIBS_ONLY

@@ -1,0 +1,109 @@
+Header files for release:
+
+McdBox.h
+McdCompositeGeometry.h
+McdCompositeModel.h
+McdCone.h
+McdContact.h
+McdConvexMesh.h
+McdCylinder.h
+McdEach.h
+McdFrame.h
+McdGeometry.h
+McdInteractionTable.h
+McdInteractions.h
+McdIntersectResult.h
+McdLineSegIntersect.h
+McdLoadXML.h
+McdModel.h
+McdModelPair.h
+McdModelPairContainer.h
+McdPlane.h
+McdPrimitives.h
+McdRGHeightField.h
+McdRwBSP.h
+McdSafeTimeResult.h
+McdSaveXML.h
+McdSpace.h
+McdSphere.h
+McdTriangleMesh.h
+McdTriangleNE.h
+McduConvexMeshIO.h
+McduRequestTable.h
+McduTriangleMeshIO.h
+McduRGHeightFieldIO.h
+McdParticleSystem.h
+
+
+Header files NOT for release:
+
+McdMessage.h
+McdBoxSphere.h
+
+?
+McdParticleContact.h
+McdParticleIntersect.h
+
+McdDtBridge.h
+McdTriangleList.h
+Mcda.h
+McduDtBridge.h
+McduDrawContacts.h
+McduDrawConvexMesh.h
+McduDrawGrid.h
+McduDrawMcdContacts.h
+McduDrawMdtContacts.h
+McduDrawTorus.h
+McduDrawTrace.h
+McduDrawTriangleMesh.h
+McduDtBridge.h
+McduRouter.h
+
+
+
+** Doxygen groupings **
+
+libMcdFrame:
+
+   McdMessage.h
+   McdFrame.h
+   McdGeometry.h 
+   McdModel.h
+   McdModelPair.h
+   McdModelPairContainer.h
+   McdSpace.h
+
+   McdInteractions.h
+   McdEach.h
+   McdContact.h
+   McdIntersectResult.h
+   McdSafeTimeResult.h
+   McdLineSegIntersect.h
+
+   McduRequestTable.h
+
+   McdCompositeModel.h
+   McdCompositeGeometry.h
+
+   McdLoadXML.h
+   McdSaveXML.h
+
+libMcdPrimitives:
+   
+   McdPrimitives.h
+
+   McdSphere.h
+   McdBox.h
+   McdPlane.h
+   McdCone.h
+   McdCylinder.h
+
+otherMcdlibs ("advanced functionality"):
+
+   McdConvexMesh.h
+   McdRGHeightField.h
+   McdTriangleMesh.h
+   McdTriangleNE.h
+   McduTriangleMeshIO.h
+
+

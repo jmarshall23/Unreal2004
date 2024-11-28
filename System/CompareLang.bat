@@ -1,0 +1,1 @@
+for %%i in (%2*.%1) do "C:\Program Files\Araxis\Araxis Merge 2001 Professional\compare" %%~ni.int %%~ni.%1

@@ -1,0 +1,20 @@
+All library files are compiled with VC++ 6.0.
+
+The libs in debug directory are compiled with the following options:
+
+run-time library:        Debug Multithreaded
+Calling convention:      __cdecl
+Struct member alignment: 8
+
+This includes the DBUG library, that can be enabled by setting the
+MYSQL_DEBUG environtment variable.  To log everything do the following before
+starting your client:
+SET MYSQL_DEBUG=d:t:o,C::\temp\mysqld.log
+
+The libs in opt directory are compiled with the following options:
+
+run-time library:        Multithreaded
+Calling convention:      __stdcall
+Struct member alignment: 8
+Optimize for speed on Pentium processors.
+(It will work with any i386x processor)

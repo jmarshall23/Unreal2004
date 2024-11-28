@@ -1,0 +1,20 @@
+
+# Assuming GNU make (>v3.76)
+# $Header: /proj/Toolkits/MeSamples/BallMan/MeMakefile,v 1.2 2001/05/21 15:58:26 williamg Exp $
+# ($Name: t-stevet-RWSpre-030110 $)
+
+# vim:syntax=make:
+
+#------------------------------
+# BallMan
+#------------------------------
+
+# What's to be built
+targetname:=BallMan
+targettype:=executeable
+
+SOURCES	:= BallMan.c
+
+# Standard incantation
+makerulesdir:=../../build/makerules/
+include ${makerulesdir}/Make.rules

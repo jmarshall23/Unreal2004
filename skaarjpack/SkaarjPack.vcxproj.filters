@@ -1,0 +1,160 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="classes">
+      <UniqueIdentifier>{6d1c34d8-bf5a-41ae-b230-4f229b4398e4}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="classes\Behemoth.uc">
+      <Filter>classes</Filter>
+    </None>
+    <None Include="classes\BelchFlames.uc">
+      <Filter>classes</Filter>
+    </None>
+    <None Include="classes\Brute.uc">
+      <Filter>classes</Filter>
+    </None>
+    <None Include="classes\BruteAmmo.uc">
+      <Filter>classes</Filter>
+    </None>
+    <None Include="classes\BruteRocket.uc">
+      <Filter>classes</Filter>
+    </None>
+    <None Include="classes\DamTypeBelch.uc">
+      <Filter>classes</Filter>
+    </None>
+    <None Include="classes\DamTypeBruteRocket.uc">
+      <Filter>classes</Filter>
+    </None>
+    <None Include="classes\DamTypeKrallBolt.uc">
+      <Filter>classes</Filter>
+    </None>
+    <None Include="classes\DamTypeSkaarjProj.uc">
+      <Filter>classes</Filter>
+    </None>
+    <None Include="classes\DamTypeWarlordRocket.uc">
+      <Filter>classes</Filter>
+    </None>
+    <None Include="classes\EliteKrall.uc">
+      <Filter>classes</Filter>
+    </None>
+    <None Include="classes\EliteKrallBolt.uc">
+      <Filter>classes</Filter>
+    </None>
+    <None Include="classes\FireSkaarj.uc">
+      <Filter>classes</Filter>
+    </None>
+    <None Include="classes\FireSkaarjProjectile.uc">
+      <Filter>classes</Filter>
+    </None>
+    <None Include="classes\GasBag.uc">
+      <Filter>classes</Filter>
+    </None>
+    <None Include="classes\GasbagAmmo.uc">
+      <Filter>classes</Filter>
+    </None>
+    <None Include="classes\GasbagBelch.uc">
+      <Filter>classes</Filter>
+    </None>
+    <None Include="classes\HUDInvasion.uc">
+      <Filter>classes</Filter>
+    </None>
+    <None Include="classes\IceSkaarj.uc">
+      <Filter>classes</Filter>
+    </None>
+    <None Include="classes\IceSkaarjProjectile.uc">
+      <Filter>classes</Filter>
+    </None>
+    <None Include="classes\Invasion.uc">
+      <Filter>classes</Filter>
+    </None>
+    <None Include="classes\InvasionBot.uc">
+      <Filter>classes</Filter>
+    </None>
+    <None Include="classes\InvasionDeathMessage.uc">
+      <Filter>classes</Filter>
+    </None>
+    <None Include="classes\InvasionGameReplicationInfo.uc">
+      <Filter>classes</Filter>
+    </None>
+    <None Include="classes\InvasionMessage.uc">
+      <Filter>classes</Filter>
+    </None>
+    <None Include="classes\InvasionMutator.uc">
+      <Filter>classes</Filter>
+    </None>
+    <None Include="classes\InvasionPoint.uc">
+      <Filter>classes</Filter>
+    </None>
+    <None Include="classes\InvasionSquad.uc">
+      <Filter>classes</Filter>
+    </None>
+    <None Include="classes\InvasionTeamAI.uc">
+      <Filter>classes</Filter>
+    </None>
+    <None Include="classes\InvasionTimerMessage.uc">
+      <Filter>classes</Filter>
+    </None>
+    <None Include="classes\InvasionWaveConfig.uc">
+      <Filter>classes</Filter>
+    </None>
+    <None Include="classes\krall.uc">
+      <Filter>classes</Filter>
+    </None>
+    <None Include="classes\KrallAmmo.uc">
+      <Filter>classes</Filter>
+    </None>
+    <None Include="classes\Krallbolt.uc">
+      <Filter>classes</Filter>
+    </None>
+    <None Include="classes\Manta.uc">
+      <Filter>classes</Filter>
+    </None>
+    <None Include="classes\MapListSkaarjInvasion.uc">
+      <Filter>classes</Filter>
+    </None>
+    <None Include="classes\MeleeDamage.uc">
+      <Filter>classes</Filter>
+    </None>
+    <None Include="classes\Monster.uc">
+      <Filter>classes</Filter>
+    </None>
+    <None Include="classes\MonsterController.uc">
+      <Filter>classes</Filter>
+    </None>
+    <None Include="classes\RazorFly.uc">
+      <Filter>classes</Filter>
+    </None>
+    <None Include="classes\ScoreboardInvasion.uc">
+      <Filter>classes</Filter>
+    </None>
+    <None Include="classes\Skaarj.uc">
+      <Filter>classes</Filter>
+    </None>
+    <None Include="classes\SkaarjAmmo.uc">
+      <Filter>classes</Filter>
+    </None>
+    <None Include="classes\SkaarjProjectile.uc">
+      <Filter>classes</Filter>
+    </None>
+    <None Include="classes\SkaarjPupae.uc">
+      <Filter>classes</Filter>
+    </None>
+    <None Include="classes\SkaarjSparkles.uc">
+      <Filter>classes</Filter>
+    </None>
+    <None Include="classes\TAB_IAInvasion.uc">
+      <Filter>classes</Filter>
+    </None>
+    <None Include="classes\WarLord.uc">
+      <Filter>classes</Filter>
+    </None>
+    <None Include="classes\WarlordAmmo.uc">
+      <Filter>classes</Filter>
+    </None>
+    <None Include="classes\WarlordRocket.uc">
+      <Filter>classes</Filter>
+    </None>
+  </ItemGroup>
+</Project>

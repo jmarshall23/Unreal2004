@@ -1,0 +1,16 @@
+# $Id: Make.canned.wfgg-moth-profile,v 1.2.8.1 2002/04/11 03:45:35 jamesg Exp $
+# $Name: t-stevet-RWSpre-030110 $
+#
+# vim:syntax=make:
+#
+# See Readme.txt for comments
+
+BUILD?=free
+OPTS?=full
+PRECISION?=single
+SYMBOLS?=all
+buildcontext?=moth
+builddir?=_${PLATFORM}p/
+doreldefs?=release
+inline?=specified
+profiling?=yes

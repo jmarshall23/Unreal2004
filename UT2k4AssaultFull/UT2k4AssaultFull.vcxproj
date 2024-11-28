@@ -1,0 +1,149 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{F2508EB8-3BEB-415C-A8B4-CCC701CF74EC}</ProjectGuid>
+    <RootNamespace>UT2k4AssaultFull</RootNamespace>
+    <Keyword>ManagedCProj</Keyword>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <CLRSupport>OldSyntax</CLRSupport>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <CLRSupport>OldSyntax</CLRSupport>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.40219.1</_ProjectFileVersion>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(SolutionDir)$(Configuration)\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(Configuration)\</IntDir>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</LinkIncremental>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(SolutionDir)$(Configuration)\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(Configuration)\</IntDir>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkIncremental>
+    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" />
+    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" />
+    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" />
+    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" />
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>false</MinimalRebuild>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <OutputFile>$(OutDir)$(ProjectName).exe</OutputFile>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AssemblyDebug>true</AssemblyDebug>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <PreprocessorDefinitions>WIN32;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>false</MinimalRebuild>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <OutputFile>$(OutDir)$(ProjectName).exe</OutputFile>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <None Include="classes\Ammo_BallTurret.uc" />
+    <None Include="classes\ASTurret_BallTurret.uc" />
+    <None Include="classes\ASTurret_BallTurret_Base.uc" />
+    <None Include="classes\ASTurret_IonCannon.uc" />
+    <None Include="classes\ASTurret_IonCannon_Base.uc" />
+    <None Include="classes\ASTurret_IonCannon_Swivel.uc" />
+    <None Include="classes\ASTurret_LinkTurret.uc" />
+    <None Include="classes\ASTurret_LinkTurret_Base.uc" />
+    <None Include="classes\ASTurret_LinkTurret_Swivel.uc" />
+    <None Include="classes\ASVehicle_SpaceFighter_Human.uc" />
+    <None Include="classes\ASVehicle_SpaceFighter_Skaarj.uc" />
+    <None Include="classes\ASVehicleFactory_IonCannon.uc" />
+    <None Include="classes\DamTypeBallTurretPlasma.uc" />
+    <None Include="classes\DamTypeIonCannonBlast.uc" />
+    <None Include="classes\DamTypeLinkTurretBeam.uc" />
+    <None Include="classes\DamTypeLinkTurretPlasma.uc" />
+    <None Include="classes\DamTypeSpaceFighterLaser.uc" />
+    <None Include="classes\DamTypeSpaceFighterLaser_Skaarj.uc" />
+    <None Include="classes\DamTypeSpaceFighterMissile.uc" />
+    <None Include="classes\DamTypeSpaceFighterMissileSkaarj.uc" />
+    <None Include="classes\FM_BallTurret_Fire.uc" />
+    <None Include="classes\FM_LinkTurret_AltFire.uc" />
+    <None Include="classes\FM_LinkTurret_Fire.uc" />
+    <None Include="classes\FM_SpaceFighter_AltFire.uc" />
+    <None Include="classes\FM_SpaceFighter_InstantHitLaser.uc" />
+    <None Include="classes\FM_Turret_AltFire_Shield.uc" />
+    <None Include="classes\FM_Turret_IonCannon_Fire.uc" />
+    <None Include="classes\FX_BallTurret_Shield.uc" />
+    <None Include="classes\FX_LinkTurret_BeamEffect.uc" />
+    <None Include="classes\FX_LinkTurret_GreenPlasma.uc" />
+    <None Include="classes\FX_LinkTurretShield.uc" />
+    <None Include="classes\FX_LinkTurretShield_Red.uc" />
+    <None Include="classes\FX_NewIonCore.uc" />
+    <None Include="classes\FX_NewIonPlasmaBeam.uc" />
+    <None Include="classes\FX_SpaceFighter_InstantHitLaser.uc" />
+    <None Include="classes\FX_SpaceFighter_Rocket_Trail.uc" />
+    <None Include="classes\FX_SpaceFighter_Shield.uc" />
+    <None Include="classes\FX_SpaceFighter_Shield_Red.uc" />
+    <None Include="classes\FX_SpaceFighter_ShotDownEmitter.uc" />
+    <None Include="classes\FX_SpaceFighter_SkaarjPlasma.uc" />
+    <None Include="classes\FX_Turret_IonCannon_BeamExplosion.uc" />
+    <None Include="classes\FX_Turret_IonCannon_BeamFire.uc" />
+    <None Include="classes\FX_Turret_IonCannon_ChargeBeam.uc" />
+    <None Include="classes\FX_Turret_IonCannon_FireEffect.uc" />
+    <None Include="classes\FX_Turret_IonCannon_LaserBeam.uc" />
+    <None Include="classes\LinkTurretController.uc" />
+    <None Include="classes\PROJ_LinkTurret_Plasma.uc" />
+    <None Include="classes\PROJ_SpaceFighter_Rocket.uc" />
+    <None Include="classes\PROJ_TurretSkaarjPlasma.uc" />
+    <None Include="classes\PROJ_TurretSkaarjPlasma_Red.uc" />
+    <None Include="classes\WA_LinkTurret.uc" />
+    <None Include="classes\WA_SpaceFighter.uc" />
+    <None Include="classes\WA_Turret.uc" />
+    <None Include="classes\WA_Turret_IonCannon.uc" />
+    <None Include="classes\Weapon_LinkTurret.uc" />
+    <None Include="classes\Weapon_SpaceFighter.uc" />
+    <None Include="classes\Weapon_SpaceFighter_Skaarj.uc" />
+    <None Include="classes\Weapon_Turret.uc" />
+    <None Include="classes\Weapon_Turret_IonCannon.uc" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

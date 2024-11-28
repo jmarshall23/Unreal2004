@@ -1,0 +1,43 @@
+# $Id: Make.defs.elate,v 1.25.2.1 2002/04/11 03:45:34 jamesg Exp $
+# ($Name: t-stevet-RWSpre-030110 $)
+#
+# vim:syntax=make:
+
+# Cowpat macro definitions for elate
+
+ifneq (elate,${&os})
+$(error Make.defs.elate: Only for elate builds)
+endif
+
+CC:=vpcc
+CXX:=vpcc -cxx
+CPP:=${CC}
+CCPLATFORM:=-DELATE
+CPPMAKEDEPS:=-E -M
+o:=o
+CCOBJ=-o # trailing space
+ccwarn?=-pedantic -Wall -W -Wpointer-arith -Winline -Wconversion# overrideable
+CC_OPTS_none:=${ccwarn}
+CC_OPTS_full:=${ccwarn} -ffast-math -fomit-frame-pointer -funroll-loops -O6 -Os
+CC_inline_none:=-fno-inline
+CC_inline_specified:=
+CC_inline_any:=-finline-functions
+CC_SYMB_none:=
+CC_SYMB_all:=-g
+CC_codegoing_intodll:=
+CC_codegoing_intoexe:=
+&parallel:=
+AR:=vpar
+ARFLAGS:=-rc # trailing space
+LDFLAGS_SYMB_none:=-cxx -o # trailing space
+LDFLAGS_SYMB_all:=-g -cxx -o # trailing space
+LDLIBPATH:=$(addprefix -L,${libpath})
+LD:=vpcc -lsys -lcp # C++ library also needed
+mklibname:=lib%.a
+mkdllname:=lib%.so
+mkdllimportlibname:=lib%.so
+mkldlinksystemlibs:=-l%
+mkexename:=%
+andthen:=;
+&lq:={
+&rq:=}

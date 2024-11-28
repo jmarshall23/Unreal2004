@@ -1,0 +1,20 @@
+# Assuming GNU make (>v3.76)
+# $Header: /proj/Toolkits/MeTutorials/TriangleList/MeMakefile,v 1.1 2001/08/01 09:44:59 jamesg Exp $
+# ($Name: t-stevet-RWSpre-030110 $)
+
+# vim:syntax=make:
+
+#------------------------------
+# Mdt
+#------------------------------
+
+# What's to be built
+targetname:=TriangleList
+targettype:=executeable
+
+SOURCES	:= TriangleList.c
+
+# Standard incantation
+makerulesdir:=../../build/makerules/
+include ${makerulesdir}Make.rules
+

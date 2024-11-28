@@ -1,0 +1,24 @@
+create table cdkey
+(
+	id int auto_increment not null,		/* id for xref			*/
+	md5hash char(32) not null,			/* md5 hash of cd key	*/
+	cdkey varchar(40) not null,			/* actual cd key		*/
+
+	batchid int not null,				/* batch this cd key was generated in */
+	disabled char(1),					/* disabled only		*/
+	serveronly char(1),					/* server only			*/
+	
+	version int,
+	platform int,
+	lastseen datetime,
+	seencount int default 0,
+	lastseenip char(15)
+
+	usedspaces char(1),								/* last time we saw this key the user used spaces */
+	lastseenlang char(3),
+
+	product int,
+
+	primary key(id),
+	key idx_cdkey_md5hash (md5hash(8))
+);

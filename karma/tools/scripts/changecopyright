@@ -1,0 +1,15 @@
+#!/bin/sh
+
+# Change the copyright from the simple form to the more verbose form
+#
+# Run this script from the tools/scripts location
+#
+
+DIR=../../.
+#../../MeGlobals/include
+
+FIND=/usr/bin/find
+
+FILES=".*\.[ch]\(pp\)?"
+
+$FIND $DIR -regex $FILES -print0 | xargs -0 perl -pi.bak copyright.pl

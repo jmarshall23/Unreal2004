@@ -1,0 +1,1049 @@
+
+
+  ;  # keaSmallChol_ps2.evsm
+  ;  # =====================
+  ;  # 
+  ;  # This little beauty does Cholesky decomposition, and lower- and upper- triangular solve.
+  ;  # 
+  ;  # It works with symmetric positive definite matrices of dimension <= 36, and solves for one
+  ;  # right-hand-side at a time.
+  ;  # 
+  ;  # It is in parallel eac for VU0. Compile with eac -x micro.
+  ;  # 
+  ;  # It works like this:
+  ;  # 
+  ;  # Put the A matrix in VUMEM starting at the beginning.
+  ;  # 
+  ;  # The A matrix is square and should be in 'half-wallpapered' format. 
+  ;  # 
+  ;  # This is the same as wallpapered, but only stores the upper triangle, so the quadwords go like
+  ;  # this:
+  ;  # 
+  ;  # aaaa  eeee  mmmm
+  ;  # bbbb  ffff  nnnn
+  ;  # cccc  gggg  oooo
+  ;  # dddd  hhhh  pppp
+  ;  #       iiii  qqqq
+  ;  #       jjjj  rrrr
+  ;  #       kkkk  ssss
+  ;  #       llll  tttt
+  ;  #             uuuu
+  ;  #             vvvv
+  ;  #             wwww
+  ;  #             xxxx
+  ;  # 
+  ;  # and so on... (if that makes any sense).
+  ;  # 
+  ;  # Clearly, you only need to store the upper triangle because the matrix is symmetric.
+  ;  # 
+  ;  # So, that's where the A matrix goes. You will find that the number of quadwords is given by
+  ;  # 
+  ;  # (n*n)/8 + n/2 where n is the dimension of the square matrix.
+  ;  # 
+  ;  # Then leave a gap of n quadwords. This is where this program will store reciprocal square
+  ;  # roots of diagonal elements.
+  ;  # 
+  ;  # Then put in one right hand side vector, which will take up n/4 quadwords.
+  ;  # 
+  ;  # Finally, the last quadword in VUMEM, number 255, is used for parameters.
+  ;  # 
+  ;  # VUMEM[255].x = n    (dimension of matrix) 
+  ;  # VUMEM[255].y = qwc  (quadword count of A matrix, i.e. (n*n)/8 + n/2)
+  ;  # VUMEM[255].z = bqwc (quadword count of rhs vector, i.e. n/4)
+  ;  # VUMEM[255].w should be set to zero.
+  ;  # 
+  ;  # With the VUMEM set up like that- A matrix, gap of n quadwords, rhs, and, right at the end, the
+  ;  # parameters, {n, qwc, bqwc, 0}, run the code from the top and it'll factorize A in place, leaving
+  ;  # G there instead, and solve for the rhs, replacing it with its solution. 
+  ;  # 
+  ;  # It will also set VUMEM[255].w to 1. 
+  ;  # 
+  ;  # Think of VUMEM[255].w as a boolean saying "is this a factorized matrix?".
+  ;  # 
+  ;  # You can then upload a different rhs in the same place as the previous one and run it from
+  ;  # the top again. Finding that VUMEM[255].w is now ==1, it will skip the factor and go straight
+  ;  # to the solve.
+  ;  # 
+  ;  # Alternatively, you can just call it from solve_only, if you can figure out how to call
+  ;  # microprograms otherwise than from the top.
+
+  ;  %qi
+  ;  %qi2
+  ;  %ri
+  ;  %mi
+  ;  %mibase
+  ;  %i
+  ;  %j
+  ;  %tmp
+  ;  %tmp2
+  ;  %rsq
+  ;  %rsqi
+  ;  %sl
+  ;  %si
+  ;  %qend
+  ;  %param_qwc
+  ;  q0
+  ;  q1
+  ;  q2
+  ;  q3
+  ;  r0
+  ;  r1
+  ;  r2
+  ;  r3
+  ;  m0
+  ;  m1
+  ;  m2
+  ;  m3
+  ;  rs0
+  ;  rs1
+  ;  rs2
+  ;  rs3
+
+    NOP                                   IADD           VI01, VI00, VI00  ;  %qi         = %K + %K
+    NOP                                   IADD           VI02, VI00, VI00  ;  %qi2        = %K + %K
+    NOP                                   IADD           VI03, VI00, VI00  ;  %ri         = %K + %K
+    NOP                                   IADD           VI04, VI00, VI00  ;  %mi         = %K + %K
+    NOP                                   IADD           VI05, VI00, VI00  ;  %mibase     = %K + %K
+    NOP                                   IADD           VI06, VI00, VI00  ;  %i          = %K + %K
+    NOP                                   IADD           VI07, VI00, VI00  ;  %j          = %K + %K
+    NOP                                   IADD           VI13, VI00, VI00  ;  %si         = %K + %K
+
+      ;  # Load parameters
+    NOP    ILW.y  VI15, 255(VI00)  ;  'NOP    ||    'ILW.y  @%param_qwc, 255(@%K)
+
+  ;  ~%rsq
+  ;  %is_factorized
+
+    NOP   ILW.w   VI10, 255(VI00)  ;  'NOP   ||    'ILW.w   @%is_factorized, 255(@%K)
+
+    NOP   NOP  ;  'NOP   ||    'NOP
+    NOP                                   IBNE           VI10, VI00, solve_only  ;  (%is_factorized != %K) solve_only
+    NOP   NOP  ;  'NOP   ||    'NOP
+
+  ;  ~%is_factorized
+  ;  %rsq
+
+    NOP                                   IADD           VI14, VI00, VI15  ;  %qend = %K + %param_qwc
+    NOP                                   IADD           VI10, VI00, VI14  ;  %rsq  = %K + %qend
+    NOP                                   IADD           VI11, VI00, VI14  ;  %rsqi = %K + %qend
+
+    NOP                                   IADDIU         VI12, VI00, 4  ;  %sl   = %K + 4u
+
+main_loop:  ;  'main_loop:
+
+    NOP                                   ISUBIU         VI08, VI12, 4  ;  %tmp  = %sl - 4u
+    NOP                                   ISUB           VI08, VI03, VI08  ;  %tmp  = %ri - %tmp
+    NOP                                   LQI            VF01, (VI01++)  ;  q0    << (%qi++)
+    NOP                                   IBLTZ          VI08, not_triangle  ;  (%tmp < %K) not_triangle
+    NOP                                   IADD           VI06, VI00, VI03  ;  %i    = %K + %ri
+
+triangle:  ;  'triangle:
+
+    NOP                                   ISUBIU         VI08, VI06, 3  ;  %tmp = %i - 3u
+    MULAw.xyzw   ACC, VF01, VF00          IADD           VI04, VI00, VI05  ;  ACC  = q0 * K.w      ||    %mi  = %K + %mibase
+
+ms_triangle_0:  ;  'ms_triangle_0:
+
+      ;  # if(!(i>3)) goto skip0
+
+    NOP                                   IBLEZ          VI08, skip0  ;  (%tmp <= %K) skip0
+
+    NOP                                   ISUB           VI07, VI01, VI06  ;  %j = %qi - %i
+    NOP                                   ISUBIU         VI07, VI07, 1  ;  %j = %j  - 1u
+
+    NOP                                   LQI            VF09, (VI04++)  ;  m0 << (%mi++)
+    NOP                                   LQI            VF05, (VI07++)  ;  r0 << (%j++)
+    NOP                                   LQI            VF06, (VI07++)  ;  r1 << (%j++)
+
+loop0:  ;  'loop0:
+
+    NOP                                   LQI            VF10, (VI04++)  ;  m1   << (%mi++)
+    NOP                                   LQI            VF07, (VI07++)  ;  r2   << (%j++)
+    MSUBAx.xyzw  ACC, VF05, VF09          LQI            VF11, (VI04++)  ;  ACC  = ACC - r0 * m0.x    ||    m2 << (%mi++)    
+    NOP                                   LQI            VF08, (VI07++)  ;  r3   << (%j++)
+    MSUBAx.xyzw  ACC, VF06, VF10          LQI            VF12, (VI04++)  ;  ACC  = ACC - r1 * m1.x    ||    m3 << (%mi++)
+    NOP                                   LQI            VF05, (VI07++)  ;  r0   << (%j++)
+    MSUBAx.xyzw  ACC, VF07, VF11          ISUBIU         VI06, VI06, 4  ;  ACC  = ACC - r2 * m2.x    ||    %i  = %i  - 4u
+    NOP                                   ISUBIU         VI08, VI06, 3  ;  %tmp = %i - 3u
+    MSUBAx.xyzw  ACC, VF08, VF12          LQI            VF09, (VI04++)  ;  ACC  = ACC - r3 * m3.x    ||    m0 << (%mi++)
+
+    NOP                                   IBGTZ          VI08, loop0  ;  (%tmp > %K) loop0
+    NOP                                   LQI            VF06, (VI07++)  ;  r1 << (%j++)
+
+skip0:  ;  'skip0:
+
+      ;  # No epilog
+
+    MADDx.xyzw  VF01, VF00, VF00          IADDIU         VI03, VI03, 1  ;  q0  = ACC + K * K.x    ||    %ri = %ri + 1u
+    NOP                                   LQI            VF02, (VI01++)  ;  q1  << (%qi++)
+    NOP                                   IADD           VI06, VI00, VI03  ;  %i  = %K + %ri
+    NOP                                   IADD           VI04, VI00, VI05  ;  %mi = %K + %mibase
+
+    NOP                                   RSQRT          Q,VF00w,VF01x  ;  Q = K.w / | q0.x
+
+      ;  # End of 0, Start of 1
+
+    NOP                                   ISUBIU         VI08, VI06, 3  ;  %tmp = %i - 3u
+    MULAw.xyzw   ACC, VF02, VF00          NOP  ;  ACC  = q1 * K.w
+
+ms_triangle_1:  ;  'ms_triangle_1:
+
+      ;  # if(!(i>3)) goto skip1
+
+    NOP                                   IBLEZ          VI08, skip1  ;  (%tmp <= %K) skip1
+    NOP                                   ISUB           VI07, VI01, VI06  ;  %j = %qi - %i
+    NOP                                   ISUBIU         VI07, VI07, 1  ;  %j = %j  - 1u
+
+    NOP                                   LQI            VF09, (VI04++)  ;  m0 << (%mi++)
+    NOP                                   LQI            VF05, (VI07++)  ;  r0 << (%j++)
+    NOP                                   LQI            VF06, (VI07++)  ;  r1 << (%j++)
+
+loop1:  ;  'loop1:
+
+    NOP                                   LQI            VF10, (VI04++)  ;  m1   << (%mi++)
+    NOP                                   LQI            VF07, (VI07++)  ;  r2   << (%j++)
+    MSUBAy.xyzw  ACC, VF05, VF09          LQI            VF11, (VI04++)  ;  ACC  = ACC - r0 * m0.y    ||    m2 << (%mi++)
+    NOP                                   LQI            VF08, (VI07++)  ;  r3   << (%j++)
+    MSUBAy.xyzw  ACC, VF06, VF10          LQI            VF12, (VI04++)  ;  ACC  = ACC - r1 * m1.y    ||    m3 << (%mi++)
+    NOP                                   LQI            VF05, (VI07++)  ;  r0   << (%j++)
+    MSUBAy.xyzw  ACC, VF07, VF11          ISUBIU         VI06, VI06, 4  ;  ACC  = ACC - r2 * m2.y    ||    %i  = %i  - 4u
+    NOP                                   ISUBIU         VI08, VI06, 3  ;  %tmp = %i - 3u
+    MSUBAy.xyzw  ACC, VF08, VF12          LQI            VF09, (VI04++)  ;  ACC  = ACC - r3 * m3.y    ||    m0 << (%mi++)
+
+    NOP                                   IBGTZ          VI08, loop1  ;  (%tmp > %K) loop1
+    NOP                                   LQI            VF06, (VI07++)  ;  r1 << (%j++)
+
+    NOP  B skip11  ;  'NOP  ||  'B skip11
+    NOP                                   ISUBIU         VI04, VI04, 1  ;  %mi = %mi - 1u
+
+skip1:  ;  'skip1:
+
+    NOP    NOP  ;  'NOP    ||    'NOP
+    NOP    NOP  ;  'NOP    ||    'NOP
+    NOP    NOP  ;  'NOP    ||    'NOP
+    NOP    NOP  ;  'NOP    ||    'NOP
+    NOP    NOP  ;  'NOP    ||    'NOP
+    NOP    NOP  ;  'NOP    ||    'NOP
+    NOP    NOP  ;  'NOP    ||    'NOP
+    NOP    NOP  ;  'NOP    ||    'NOP
+
+skip11:  ;  'skip11:
+
+      ;  # Epilog length 1
+      ;  
+    ADDq.x      VF13, VF00,    Q          NOP  ;  rs0.x = K.x + Q
+    MULq.xyzw   VF01, VF01,    Q          NOP  ;  q0 = q0 * Q
+
+      ;  # 2 stalls here
+
+    NOP                                   SQI            VF13, (VI11++)  ;  rs0 >> (%rsqi++)
+    NOP                                   SQI            VF01, (VI02++)  ;  q0 >> (%qi2++)
+
+    NOP                                   LQI            VF09, (VI04++)  ;  m0 << (%mi++)
+
+      ;  # 3 stalls here
+
+    MSUBAy.xyzw  ACC, VF01, VF09          NOP  ;  ACC = ACC - q0 * m0.y
+
+    MADDx.xyzw  VF02, VF00, VF00          IADDIU         VI03, VI03, 1  ;  q1 = ACC + K * K.x    ||    %ri = %ri + 1u
+    NOP                                   LQI            VF03, (VI01++)  ;  q2 << (%qi++)
+    NOP                                   IADD           VI06, VI00, VI03  ;  %i  = %K + %ri
+    NOP                                   IADD           VI04, VI00, VI05  ;  %mi = %K + %mibase
+    NOP                                   RSQRT          Q,VF00w,VF02y  ;  Q = K.w / | q1.y
+
+      ;  # End of 1, Start of 2
+
+    NOP                                   ISUBIU         VI08, VI06, 3  ;  %tmp = %i - 3u
+    MULAw.xyzw   ACC, VF03, VF00          NOP  ;  ACC = q2 * K.w
+
+ms_triangle_2:  ;  'ms_triangle_2:
+
+      ;  # if(!(i>3)) goto skip2
+
+    NOP                                   IBLEZ          VI08, skip2  ;  (%tmp <= %K) skip2
+    NOP                                   ISUB           VI07, VI01, VI06  ;  %j = %qi - %i
+    NOP                                   ISUBIU         VI07, VI07, 1  ;  %j = %j  - 1u
+
+    NOP                                   LQI            VF05, (VI07++)  ;  r0 << (%j++)
+    NOP                                   LQI            VF09, (VI04++)  ;  m0 << (%mi++)
+    NOP                                   LQI            VF06, (VI07++)  ;  r1 << (%j++)
+
+loop2:  ;  'loop2:
+
+    NOP                                   LQI            VF10, (VI04++)  ;  m1 << (%mi++)
+    NOP                                   LQI            VF07, (VI07++)  ;  r2 << (%j++)
+    MSUBAz.xyzw  ACC, VF05, VF09          LQI            VF11, (VI04++)  ;  ACC = ACC - r0 * m0.z    ||    m2 << (%mi++)
+    NOP                                   LQI            VF08, (VI07++)  ;  r3 << (%j++)
+    MSUBAz.xyzw  ACC, VF06, VF10          LQI            VF12, (VI04++)  ;  ACC = ACC - r1 * m1.z    ||    m3 << (%mi++)
+    NOP                                   LQI            VF05, (VI07++)  ;  r0 << (%j++)
+    MSUBAz.xyzw  ACC, VF07, VF11          ISUBIU         VI06, VI06, 4  ;  ACC = ACC - r2 * m2.z    ||    %i  = %i  - 4u
+    NOP                                   ISUBIU         VI08, VI06, 3  ;  %tmp = %i - 3u
+    MSUBAz.xyzw  ACC, VF08, VF12          LQI            VF09, (VI04++)  ;  ACC = ACC - r3 * m3.z    ||    m0 << (%mi++)
+
+    NOP                                   IBGTZ          VI08, loop2  ;  (%tmp > %K) loop2
+    NOP                                   LQI            VF06, (VI07++)  ;  r1 << (%j++)
+
+    NOP  B skip21  ;  'NOP  ||  'B skip21
+    NOP                                   ISUBIU         VI04, VI04, 1  ;  %mi = %mi - 1u
+
+skip2:  ;  'skip2:
+
+    NOP    NOP  ;  'NOP    ||    'NOP
+    NOP    NOP  ;  'NOP    ||    'NOP
+    NOP    NOP  ;  'NOP    ||    'NOP
+    NOP    NOP  ;  'NOP    ||    'NOP
+    NOP    NOP  ;  'NOP    ||    'NOP
+    NOP    NOP  ;  'NOP    ||    'NOP
+    NOP    NOP  ;  'NOP    ||    'NOP
+    NOP    NOP  ;  'NOP    ||    'NOP
+
+skip21:  ;  'skip21:
+
+      ;  # Epilog length 2
+
+    ADDq.x      VF13, VF00,    Q          NOP  ;  rs0.x = K.x + Q
+    MULq.xyzw   VF02, VF02,    Q          NOP  ;  q1   = q1 * Q
+    NOP                                   SQI            VF13, (VI11++)  ;  rs0  >> (%rsqi++)
+    NOP                                   SQI            VF02, (VI02++)  ;  q1   >> (%qi2++)
+   ;  
+    NOP                                   LQI            VF09, (VI04++)  ;  m0 << (%mi++)
+    NOP                                   LQI            VF10, (VI04++)  ;  m1 << (%mi++)
+
+    MSUBAz.xyzw  ACC, VF01, VF09          NOP  ;  ACC = ACC - q0 * m0.z
+    MSUBAz.xyzw  ACC, VF02, VF10          NOP  ;  ACC = ACC - q1 * m1.z
+
+    MADDx.xyzw  VF03, VF00, VF00          IADDIU         VI03, VI03, 1  ;  q2 = ACC + K * K.x    ||    %ri = %ri + 1u
+    NOP                                   LQI            VF04, (VI01++)  ;  q3 << (%qi++)
+    NOP                                   IADD           VI06, VI00, VI03  ;  %i  = %K + %ri
+    NOP                                   IADD           VI04, VI00, VI05  ;  %mi = %K + %mibase
+    NOP                                   RSQRT          Q,VF00w,VF03z  ;  Q = K.w / | q2.z
+
+      ;  # End of 2, Start of 3
+    NOP                                   ISUBIU         VI08, VI06, 3  ;  %tmp = %i - 3u
+    MULAw.xyzw   ACC, VF04, VF00          NOP  ;  ACC = q3 * K.w
+
+ms_triangle_3:  ;  'ms_triangle_3:
+
+      ;  # if(!(i>3)) goto skip3
+
+    NOP                                   IBLEZ          VI08, skip3  ;  (%tmp <= %K) skip3
+    NOP                                   ISUB           VI07, VI01, VI06  ;  %j = %qi - %i
+    NOP                                   ISUBIU         VI07, VI07, 1  ;  %j = %j  - 1u
+
+    NOP                                   LQI            VF05, (VI07++)  ;  r0 << (%j++)
+    NOP                                   LQI            VF09, (VI04++)  ;  m0 << (%mi++)
+    NOP                                   LQI            VF06, (VI07++)  ;  r1 << (%j++)
+
+loop3:  ;  'loop3:
+
+    NOP                                   LQI            VF10, (VI04++)  ;  m1 << (%mi++)
+    NOP                                   LQI            VF07, (VI07++)  ;  r2 << (%j++)
+    MSUBAw.xyzw  ACC, VF05, VF09          LQI            VF11, (VI04++)  ;  ACC = ACC - r0 * m0.w    ||    m2 << (%mi++)
+    NOP                                   LQI            VF08, (VI07++)  ;  r3 << (%j++)
+    MSUBAw.xyzw  ACC, VF06, VF10          LQI            VF12, (VI04++)  ;  ACC = ACC - r1 * m1.w    ||    m3 << (%mi++)
+    NOP                                   LQI            VF05, (VI07++)  ;  r0 << (%j++)
+    MSUBAw.xyzw  ACC, VF07, VF11          ISUBIU         VI06, VI06, 4  ;  ACC = ACC - r2 * m2.w    ||    %i  = %i  - 4u
+    NOP                                   ISUBIU         VI08, VI06, 3  ;  %tmp = %i - 3u
+    MSUBAw.xyzw  ACC, VF08, VF12          LQI            VF09, (VI04++)  ;  ACC = ACC - r3 * m3.w    ||    m0 << (%mi++)
+
+    NOP                                   IBGTZ          VI08, loop3  ;  (%tmp > %K) loop3
+    NOP                                   LQI            VF06, (VI07++)  ;  r1 << (%j++)
+
+    NOP  B skip31  ;  'NOP  || 'B skip31
+    NOP                                   ISUBIU         VI04, VI04, 1  ;  %mi = %mi - 1u
+
+skip3:  ;  'skip3:
+
+    NOP    NOP  ;  'NOP    ||    'NOP
+    NOP    NOP  ;  'NOP    ||    'NOP
+    NOP    NOP  ;  'NOP    ||    'NOP
+    NOP    NOP  ;  'NOP    ||    'NOP
+    NOP    NOP  ;  'NOP    ||    'NOP
+    NOP    NOP  ;  'NOP    ||    'NOP
+    NOP    NOP  ;  'NOP    ||    'NOP
+    NOP    NOP  ;  'NOP    ||    'NOP
+
+skip31:  ;  'skip31:
+
+      ;  # Epilog length 3
+
+    ADDq.x      VF13, VF00,    Q          NOP  ;  rs0.x = K.x + Q
+    MULq.xyzw   VF03, VF03,    Q          NOP  ;  q2 = q2 * Q
+      ;  
+    NOP                                   SQI            VF13, (VI11++)  ;  rs0 >> (%rsqi++)
+    NOP                                   SQI            VF03, (VI02++)  ;  q2 >> (%qi2++)
+
+    NOP                                   LQI            VF09, (VI04++)  ;  m0 << (%mi++)
+    NOP                                   LQI            VF10, (VI04++)  ;  m1 << (%mi++)
+    NOP                                   LQI            VF11, (VI04++)  ;  m2 << (%mi++)
+
+    MSUBAw.xyzw  ACC, VF01, VF09          NOP  ;  ACC = ACC - q0 * m0.w
+    MSUBAw.xyzw  ACC, VF02, VF10          NOP  ;  ACC = ACC - q1 * m1.w
+    MSUBAw.xyzw  ACC, VF03, VF11          NOP  ;  ACC = ACC - q2 * m2.w
+
+    MADDx.xyzw  VF04, VF00, VF00          IADDIU         VI03, VI03, 1  ;  q3 = ACC + K * K.x       ||    %ri = %ri + 1u
+
+    NOP                                   RSQRT          Q,VF00w,VF04w  ;  Q = K.w / | q3.w
+
+    NOP  NOP  ;  'NOP  ||  'NOP
+    NOP  NOP  ;  'NOP  ||  'NOP
+    NOP  NOP  ;  'NOP  ||  'NOP
+    NOP  NOP  ;  'NOP  ||  'NOP
+    NOP  NOP  ;  'NOP  ||  'NOP
+    NOP  NOP  ;  'NOP  ||  'NOP
+    NOP  NOP  ;  'NOP  ||  'NOP
+    NOP  NOP  ;  'NOP  ||  'NOP
+
+    NOP                                   IADDIU         VI13, VI13, 1  ;  %si = %si + 1u
+    NOP                                   IADD           VI03, VI00, VI00  ;  %ri = %K  + %K
+    NOP                                   IADDIU         VI12, VI12, 4  ;  %sl = %sl + 4u
+    NOP                                   IADD           VI05, VI00, VI00  ;  %mibase = %K + %K
+
+    ADDq.x      VF13, VF00,    Q          NOP  ;  rs0.x = K.x + Q
+    MULq.xyzw   VF04, VF04,    Q          NOP  ;  q3    = q3 * Q
+    NOP                                   SQI            VF13, (VI11++)  ;  rs0   >> (%rsqi++)
+    NOP                                   SQI            VF04, (VI02++)  ;  q3    >> (%qi2++)
+
+    NOP                                   IBEQ           VI01, VI14, end  ;  (%qi == %qend) end
+    NOP  NOP  ;  'NOP  ||  'NOP
+
+    NOP  B main_loop  ;  'NOP  ||  'B main_loop
+    NOP                                   IADD           VI05, VI05, VI03  ;  %mibase = %mibase + %ri
+
+not_triangle:  ;  'not_triangle:
+
+      ;  # Start of 0
+
+    NOP                                   IADD           VI04, VI00, VI05  ;  %mi = %K + %mibase
+    NOP                                   ISUBIU         VI08, VI06, 3  ;  %tmp = %i - 3u
+    MULAw.xyzw   ACC, VF01, VF00          NOP  ;  ACC =  q0 * K.w
+
+ms_not_triangle_0:  ;  'ms_not_triangle_0:
+
+      ;  # if(!(i>3)) goto skip4
+
+    NOP                                   IBLEZ          VI08, skip4  ;  (%tmp <= %K) skip4
+    NOP                                   IADD           VI09, VI10, VI03  ;  %tmp2 =  %rsq + %ri
+
+    NOP                                   ISUB           VI07, VI01, VI06  ;  %j = %qi - %i
+    NOP                                   ISUBIU         VI07, VI07, 1  ;  %j = %j  - 1u
+
+    NOP                                   LQI            VF05, (VI07++)  ;  r0 << (%j++)
+    NOP                                   LQI            VF09, (VI04++)  ;  m0 << (%mi++)
+    NOP                                   LQI            VF06, (VI07++)  ;  r1 << (%j++)
+
+loop4:  ;  'loop4:
+
+    NOP                                   LQI            VF10, (VI04++)  ;  m1 << (%mi++)
+    NOP                                   LQI            VF07, (VI07++)  ;  r2 << (%j++)
+    MSUBAx.xyzw  ACC, VF05, VF09          LQI            VF11, (VI04++)  ;  ACC = ACC - r0 * m0.x    ||    m2 << (%mi++)
+    NOP                                   LQI            VF08, (VI07++)  ;  r3 << (%j++)
+    MSUBAx.xyzw  ACC, VF06, VF10          LQI            VF12, (VI04++)  ;  ACC = ACC - r1 * m1.x    ||    m3 << (%mi++)
+    NOP                                   LQI            VF05, (VI07++)  ;  r0 << (%j++)
+    MSUBAx.xyzw  ACC, VF07, VF11          ISUBIU         VI06, VI06, 4  ;  ACC = ACC - r2 * m2.x    ||    %i  = %i  - 4u
+    NOP                                   ISUBIU         VI08, VI06, 3  ;  %tmp = %i - 3u
+    MSUBAx.xyzw  ACC, VF08, VF12          LQI            VF09, (VI04++)  ;  ACC = ACC - r3 * m3.x    ||    m0 << (%mi++)
+
+    NOP                                   IBGTZ          VI08, loop4  ;  (%tmp > %K) loop4
+    NOP                                   LQI            VF06, (VI07++)  ;  r1 << (%j++)
+
+skip4:  ;  'skip4:
+
+      ;  # No epilog
+
+    MADDx.xyzw  VF01, VF00, VF00          LQI            VF13, (VI09++)  ;  q0 = ACC + K * K.x     ||    rs0   << (%tmp2++)
+
+    NOP                                   LQI            VF14, (VI09++)  ;  rs1   << (%tmp2++)
+    NOP                                   LQI            VF15, (VI09++)  ;  rs2   << (%tmp2++)
+    NOP                                   LQI            VF16, (VI09++)  ;  rs3   << (%tmp2++)
+
+    MULx.xyzw   VF01, VF01, VF13          IADDIU         VI03, VI03, 1  ;  q0    =  q0 * rs0.x    ||    %ri = %ri + 1u
+
+      ;  # End of 0, Start of 1
+
+    NOP                                   LQI            VF02, (VI01++)  ;  q1   << (%qi++)
+    NOP                                   IADD           VI06, VI00, VI03  ;  %i  = %K + %ri
+    NOP                                   IADD           VI04, VI00, VI05  ;  %mi = %K + %mibase
+    NOP                                   ISUBIU         VI08, VI06, 3  ;  %tmp = %i - 3u
+    MULAw.xyzw   ACC, VF02, VF00          SQI            VF01, (VI02++)  ;  ACC =  q1 * K.w    ||    q0   >> (%qi2++)
+
+ms_not_triangle_1:  ;  'ms_not_triangle_1:
+
+      ;  # if(!(i>3)) goto skip5
+
+    NOP                                   IBLEZ          VI08, skip5  ;  (%tmp <= %K) skip5
+    NOP                                   ISUB           VI07, VI01, VI06  ;  %j = %qi - %i
+    NOP                                   ISUBIU         VI07, VI07, 1  ;  %j = %j  - 1u
+
+    NOP                                   LQI            VF05, (VI07++)  ;  r0 << (%j++)
+    NOP                                   LQI            VF09, (VI04++)  ;  m0 << (%mi++)
+    NOP                                   LQI            VF06, (VI07++)  ;  r1 << (%j++)
+
+loop5:  ;  'loop5:
+
+    NOP                                   LQI            VF10, (VI04++)  ;  m1 << (%mi++)
+    NOP                                   LQI            VF07, (VI07++)  ;  r2 << (%j++)
+    MSUBAy.xyzw  ACC, VF05, VF09          LQI            VF11, (VI04++)  ;  ACC = ACC - r0 * m0.y    ||    m2 << (%mi++)
+    NOP                                   LQI            VF08, (VI07++)  ;  r3 << (%j++)
+    MSUBAy.xyzw  ACC, VF06, VF10          LQI            VF12, (VI04++)  ;  ACC = ACC - r1 * m1.y    ||    m3 << (%mi++)
+    NOP                                   LQI            VF05, (VI07++)  ;  r0 << (%j++)
+    MSUBAy.xyzw  ACC, VF07, VF11          ISUBIU         VI06, VI06, 4  ;  ACC = ACC - r2 * m2.y    ||    %i  = %i  - 4u
+    NOP                                   ISUBIU         VI08, VI06, 3  ;  %tmp = %i - 3u
+    MSUBAy.xyzw  ACC, VF08, VF12          LQI            VF09, (VI04++)  ;  ACC = ACC - r3 * m3.y    ||    m0 << (%mi++)
+
+    NOP                                   IBGTZ          VI08, loop5  ;  (%tmp > %K) loop5
+    NOP                                   LQI            VF06, (VI07++)  ;  r1 << (%j++)
+
+    NOP                                   ISUBIU         VI04, VI04, 1  ;  %mi = %mi - 1u
+
+skip5:  ;  'skip5:
+
+      ;  # Epilog length 1
+
+    NOP                                   LQI            VF09, (VI04++)  ;  m0   << (%mi++)
+
+    MSUBAy.xyzw  ACC, VF01, VF09          NOP  ;  ACC = ACC - q0 * m0.y
+    MADDx.xyzw  VF02, VF00, VF00          NOP  ;  q1 = ACC + K * K.x
+
+    MULx.xyzw   VF02, VF02, VF14          IADDIU         VI03, VI03, 1  ;  q1   =  q1 * rs1.x    ||    %ri  =  %ri + 1u     # ri++
+
+      ;  # End of 1, Start of 2
+
+    NOP                                   LQI            VF03, (VI01++)  ;  q2   << (%qi++)
+    NOP                                   IADD           VI06, VI00, VI03  ;  %i  = %K + %ri
+    NOP                                   IADD           VI04, VI00, VI05  ;  %mi = %K + %mibase
+    NOP                                   ISUBIU         VI08, VI06, 3  ;  %tmp = %i - 3u
+    MULAw.xyzw   ACC, VF03, VF00          SQI            VF02, (VI02++)  ;  ACC =  q2 * K.w    ||    q1   >> (%qi2++)
+
+ms_not_triangle_2:  ;  'ms_not_triangle_2:
+
+      ;  # if(!(i>3)) goto skip6
+
+    NOP                                   IBLEZ          VI08, skip6  ;  (%tmp <= %K) skip6
+    NOP                                   ISUB           VI07, VI01, VI06  ;  %j = %qi - %i
+    NOP                                   ISUBIU         VI07, VI07, 1  ;  %j = %j  - 1u
+
+    NOP                                   LQI            VF05, (VI07++)  ;  r0 << (%j++)
+    NOP                                   LQI            VF09, (VI04++)  ;  m0 << (%mi++)
+    NOP                                   LQI            VF06, (VI07++)  ;  r1 << (%j++)
+
+loop6:  ;  'loop6:
+
+    NOP                                   LQI            VF10, (VI04++)  ;  m1 << (%mi++)
+    NOP                                   LQI            VF07, (VI07++)  ;  r2 << (%j++)
+    MSUBAz.xyzw  ACC, VF05, VF09          LQI            VF11, (VI04++)  ;  ACC = ACC - r0 * m0.z    ||    m2 << (%mi++)
+    NOP                                   LQI            VF08, (VI07++)  ;  r3 << (%j++)
+    MSUBAz.xyzw  ACC, VF06, VF10          LQI            VF12, (VI04++)  ;  ACC = ACC - r1 * m1.z    ||    m3 << (%mi++)
+    NOP                                   LQI            VF05, (VI07++)  ;  r0 << (%j++)
+    MSUBAz.xyzw  ACC, VF07, VF11          ISUBIU         VI06, VI06, 4  ;  ACC = ACC - r2 * m2.z    ||    %i  = %i  - 4u
+    NOP                                   ISUBIU         VI08, VI06, 3  ;  %tmp = %i - 3u
+    MSUBAz.xyzw  ACC, VF08, VF12          LQI            VF09, (VI04++)  ;  ACC = ACC - r3 * m3.z    ||    m0 << (%mi++)
+
+    NOP                                   IBGTZ          VI08, loop6  ;  (%tmp > %K) loop6
+    NOP                                   LQI            VF06, (VI07++)  ;  r1 << (%j++)
+
+    NOP                                   ISUBIU         VI04, VI04, 1  ;  %mi = %mi - 1u
+
+skip6:  ;  'skip6:
+
+      ;  # Epilog length 2
+
+    NOP                                   LQI            VF09, (VI04++)  ;  m0   << (%mi++)
+    NOP                                   LQI            VF10, (VI04++)  ;  m1   << (%mi++)
+
+    MSUBAz.xyzw  ACC, VF01, VF09          NOP  ;  ACC = ACC - q0 * m0.z
+    MSUBAz.xyzw  ACC, VF02, VF10          NOP  ;  ACC = ACC - q1 * m1.z
+
+    MADDx.xyzw  VF03, VF00, VF00          NOP  ;  q2 = ACC + K * K.x
+    MULx.xyzw   VF03, VF03, VF15          IADDIU         VI03, VI03, 1  ;  q2    =  q2 * rs2.x    ||    %ri  =  %ri + 1u     # ri++
+
+      ;  # End of 2, Start of 3
+
+    NOP                                   LQI            VF04, (VI01++)  ;  q3   << (%qi++)
+    NOP                                   IADD           VI06, VI00, VI03  ;  %i  = %K + %ri
+    NOP                                   IADD           VI04, VI00, VI05  ;  %mi = %K + %mibase
+    NOP                                   ISUBIU         VI08, VI06, 3  ;  %tmp = %i - 3u
+    MULAw.xyzw   ACC, VF04, VF00          SQI            VF03, (VI02++)  ;  ACC =  q3 * K.w    ||    q2    >> (%qi2++)
+
+ms_not_triangle_3:  ;  'ms_not_triangle_3:
+
+      ;  # if(!(i>3)) goto skip7
+
+    NOP                                   IBLEZ          VI08, skip7  ;  (%tmp <= %K) skip7
+    NOP                                   ISUB           VI07, VI01, VI06  ;  %j = %qi - %i
+    NOP                                   ISUBIU         VI07, VI07, 1  ;  %j = %j  - 1u
+
+    NOP                                   LQI            VF05, (VI07++)  ;  r0 << (%j++)
+    NOP                                   LQI            VF09, (VI04++)  ;  m0 << (%mi++)
+    NOP                                   LQI            VF06, (VI07++)  ;  r1 << (%j++)
+
+loop7:  ;  'loop7:
+
+    NOP                                   LQI            VF10, (VI04++)  ;  m1 << (%mi++)
+    NOP                                   LQI            VF07, (VI07++)  ;  r2 << (%j++)
+    MSUBAw.xyzw  ACC, VF05, VF09          LQI            VF11, (VI04++)  ;  ACC = ACC - r0 * m0.w    ||    m2 << (%mi++)
+    NOP                                   LQI            VF08, (VI07++)  ;  r3 << (%j++)
+    MSUBAw.xyzw  ACC, VF06, VF10          LQI            VF12, (VI04++)  ;  ACC = ACC - r1 * m1.w    ||    m3 << (%mi++)
+    NOP                                   LQI            VF05, (VI07++)  ;  r0 << (%j++)
+    MSUBAw.xyzw  ACC, VF07, VF11          ISUBIU         VI06, VI06, 4  ;  ACC = ACC - r2 * m2.w    ||    %i  = %i  - 4u
+    NOP                                   ISUBIU         VI08, VI06, 3  ;  %tmp = %i - 3u
+    MSUBAw.xyzw  ACC, VF08, VF12          LQI            VF09, (VI04++)  ;  ACC = ACC - r3 * m3.w    ||    m0 << (%mi++)
+
+    NOP                                   IBGTZ          VI08, loop7  ;  (%tmp > %K) loop7
+    NOP                                   LQI            VF06, (VI07++)  ;  r1 << (%j++)
+
+    NOP                                   ISUBIU         VI04, VI04, 1  ;  %mi = %mi - 1u
+
+skip7:  ;  'skip7:
+
+      ;  # Epilog length 3
+
+    NOP                                   LQI            VF09, (VI04++)  ;  m0   << (%mi++)
+    NOP                                   LQI            VF10, (VI04++)  ;  m1   << (%mi++)
+    NOP                                   LQI            VF11, (VI04++)  ;  m2   << (%mi++)
+
+    MSUBAw.xyzw  ACC, VF01, VF09          NOP  ;  ACC = ACC - q0 * m0.w
+    MSUBAw.xyzw  ACC, VF02, VF10          NOP  ;  ACC = ACC - q1 * m1.w
+    MSUBAw.xyzw  ACC, VF03, VF11          NOP  ;  ACC = ACC - q2 * m2.w
+
+    MADDx.xyzw  VF04, VF00, VF00          IADDIU         VI03, VI03, 1  ;  q3 = ACC + K * K.x    ||    %ri  =  %ri + 1u
+    MULx.xyzw   VF04, VF04, VF16          IADD           VI05, VI05, VI03  ;  q3   =  q3 * rs3.x    ||    %mibase = %mibase + %ri
+
+endif_triangle:  ;  'endif_triangle:
+
+    NOP  B main_loop  ;  'NOP  ||  'B main_loop
+    NOP                                   SQI            VF04, (VI02++)  ;  q3   >> (%qi2++)
+
+end:  ;  'end:
+    NOP[E]  NOP  ;  'NOP[E]  ||  'NOP
+    NOP     NOP  ;  'NOP     ||  'NOP
+  ;  ~%qi
+  ;  ~%qi2
+  ;  ~%ri
+  ;  ~%mi
+  ;  ~%mibase
+  ;  ~%i
+  ;  ~%j
+  ;  ~%tmp
+  ;  ~%tmp2
+  ;  ~%rsq
+  ;  ~%rsqi
+  ;  ~%sl
+  ;  ~%si
+  ;  ~%qend
+  ;  ~q0
+  ;  ~q1
+  ;  ~q2
+  ;  ~q3
+  ;  ~r0
+  ;  ~r1
+  ;  ~r2
+  ;  ~r3
+  ;  ~m0
+  ;  ~m1
+  ;  ~m2
+  ;  ~m3
+  ;  ~rs0
+  ;  ~rs1
+  ;  ~rs2
+  ;  ~rs3
+
+  ;  %x0
+  ;  %xi
+  ;  %xi2
+  ;  %xend
+  ;  %ai
+  ;  %rsqi
+  ;  %bi
+  ;  %t
+  ;  %param_n
+  ;  %param_bqwc
+  ;  b
+  ;  x
+  ;  t
+  ;  a0
+  ;  a1
+  ;  a2
+  ;  a3
+  ;  rs0
+  ;  rs1
+  ;  rs2
+  ;  rs3
+
+solve_only:  ;  'solve_only:
+
+      ;  # Load parameters
+    NOP    ILW.x  VI09, 255(VI00)  ;  'NOP    ||    'ILW.x  @%param_n, 255(@%K)
+    NOP    ILW.z  VI10, 255(VI00)  ;  'NOP    ||    'ILW.z  @%param_bqwc, 255(@%K)
+    NOP    ILW.y  VI15, 255(VI00)  ;  'NOP    ||    'ILW.y  @%param_qwc, 255(@%K)
+
+      ;  # Lower solve
+
+    NOP                                   IADD           VI06, VI00, VI15  ;  %rsqi = %K + %param_qwc     # Start of reciprocal square roots array 
+    NOP                                   IADD           VI01, VI06, VI09  ;  %x0 = %rsqi + %param_n      # Start of xb 
+    NOP                                   IADD           VI02, VI00, VI01  ;  %xi = %K + %x0              # Start of xb 
+    NOP                                   IADD           VI04, VI01, VI10  ;  %xend = %x0 + %param_bqwc   # End of xb (xb + xbqwc) 
+    NOP                                   IADD           VI03, VI00, VI01  ;  %xi2 = %K + %x0             # Start of xb
+    NOP                                   IADD           VI05, VI00, VI00  ;  %ai = %K + %K
+
+
+main_loop_low:  ;  'main_loop_low:
+
+    NOP                                   IBEQ           VI02, VI04, end_low  ;  (%xi == %xend) end_low
+    NOP                                   IADD           VI07, VI00, VI01  ;  %bi = %K + %x0      # Start of xb 
+
+    NOP                                   LQI            VF02, (VI02++)  ;  x << (%xi++)
+
+    NOP                                   LQI            VF04, (VI05++)  ;  a0 << (%ai++)
+    NOP                                   LQI            VF05, (VI05++)  ;  a1 << (%ai++)
+
+    NOP                                   ISUB           VI08, VI07, VI03  ;  %t = %bi - %xi2
+    NOP                                   LQI            VF06, (VI05++)  ;  a2 << (%ai++)
+    NOP                                   IBGEZ          VI08, triangle_low  ;  (%t >= %K) triangle_low
+    NOP                                   LQI            VF07, (VI05++)  ;  a3 << (%ai++)
+      ;  
+    MULAx.xyzw   ACC, VF00, VF00          LQI            VF01, (VI07++)  ;  ACC = K * K.x           ||    b << (%bi++)
+
+quad_low:  ;  'quad_low:
+
+    MSUBAx.xyzw  ACC, VF04, VF01          LQI            VF04, (VI05++)  ;  ACC = ACC - a0 * b.x    ||    a0 << (%ai++)
+    MSUBAy.xyzw  ACC, VF05, VF01          LQI            VF05, (VI05++)  ;  ACC = ACC - a1 * b.y    ||    a1 << (%ai++)
+    MSUBAz.xyzw  ACC, VF06, VF01          LQI            VF06, (VI05++)  ;  ACC = ACC - a2 * b.z    ||    a2 << (%ai++)
+    MSUBAw.xyzw  ACC, VF07, VF01          LQI            VF01, (VI07++)  ;  ACC = ACC - a3 * b.w    ||    b  << (%bi++)
+
+    NOP                                   ISUB           VI08, VI07, VI03  ;  %t = %bi - %xi2
+    NOP                                   LQI            VF07, (VI05++)  ;  a3 << (%ai++)
+    NOP                                   IBLEZ          VI08, quad_low  ;  (%t <= %K) quad_low
+    NOP  NOP  ;  'NOP  ||  'NOP
+      ;  
+    MADDAw.xyzw  ACC, VF02, VF00          NOP  ;  ACC = ACC + x * K.w
+    MADDx.xyzw  VF02, VF00, VF00          NOP  ;  x = ACC + K * K.x    
+
+triangle_low:  ;  'triangle_low:
+
+    NOP                                   LQI            VF08, (VI06++)  ;  rs0 << (%rsqi++)
+    NOP                                   LQI            VF09, (VI06++)  ;  rs1 << (%rsqi++)
+    NOP                                   LQI            VF10, (VI06++)  ;  rs2 << (%rsqi++)
+    NOP                                   LQI            VF11, (VI06++)  ;  rs3 << (%rsqi++)
+
+    MULx.x      VF02, VF02, VF08          NOP  ;  x.x = x * rs0.x
+
+    MULAx.xyzw   ACC, VF04, VF02          NOP  ;  ACC = a0 * x.x
+    MADDx.xyzw  VF03, VF00, VF00          NOP  ;  t = ACC + K * K.x
+
+    SUB.y       VF02, VF02, VF03          NOP  ;  x.y = x - t
+    MULx.y      VF02, VF02, VF09          NOP  ;  x.y = x * rs1.x
+
+    MADDAy.xyzw  ACC, VF05, VF02          NOP  ;  ACC = ACC + a1 * x.y
+    MADDx.xyzw  VF03, VF00, VF00          NOP  ;  t = ACC + K * K.x
+
+    SUB.z       VF02, VF02, VF03          NOP  ;  x.z = x - t
+    MULx.z      VF02, VF02, VF10          NOP  ;  x.z = x * rs2.x
+
+    MADDAz.xyzw  ACC, VF06, VF02          NOP  ;  ACC = ACC + a2 * x.z
+    MADDx.xyzw  VF03, VF00, VF00          NOP  ;  t = ACC + K * K.x
+
+    SUB.w       VF02, VF02, VF03          NOP  ;  x.w = x - t
+    MULx.w      VF02, VF02, VF11          NOP  ;  x.w = x * rs3.x
+
+    nop  B main_loop_low  ;  'nop  ||  'B main_loop_low
+    NOP                                   SQI            VF02, (VI03++)  ;  x >> (%xi2++)
+
+end_low:  ;  'end_low:
+
+  ;  ~%xi
+  ;  ~%xi2
+  ;  ~%xend
+  ;  ~%ai
+  ;  ~%rsqi
+  ;  ~%bi
+  ;  ~%t
+  ;  ~b
+  ;  ~x
+  ;  ~t
+  ;  ~a0
+  ;  ~a1
+  ;  ~a2
+  ;  ~a3
+  ;  ~rs0
+  ;  ~rs1
+  ;  ~rs2
+  ;  ~rs3
+
+      ;  # Flip all the blocks
+
+  ;  %qi
+  ;  %qi2
+  ;  %qend
+  ;  a0
+  ;  a1
+  ;  a2
+  ;  a3
+  ;  t0
+  ;  t1
+  ;  t2
+  ;  t3
+  ;  zero
+
+  ;  # 622 cycles to transpose 144 quadwords at the moment. 
+  ;  # This one does it properly (the minor diagonal transpose)
+
+    MULx.xyzw   VF09, VF00, VF00          IADD           VI02, VI00, VI00  ;  zero = K * K.x    ||    %qi = %K + %K
+    NOP                                   IADD           VI03, VI00, VI00  ;  %qi2 = %K + %K
+      ;  
+    NOP                                   IADDIU         VI04, VI15, 4  ;  %qend = %param_qwc + 4u # 4 more than you expect
+
+    NOP                                   LQI            VF01, (VI02++)  ;  a0 << (%qi++)
+    NOP                                   LQI            VF02, (VI02++)  ;  a1 << (%qi++)
+    NOP                                   LQI            VF03, (VI02++)  ;  a2 << (%qi++)
+    NOP                                   LQI            VF04, (VI02++)  ;  a3 << (%qi++)
+
+loop:  ;  'loop:
+
+    ADDw.x      VF05, VF09, VF04          MOVE.z  VF06, VF02  ;  t0.x = zero + a3.w    ||    'MOVE.z  @t1, @a1
+    ADDw.y      VF05, VF09, VF03          MR32.y  VF06, VF03  ;  t0.y = zero + a2.w    ||    'MR32.y  @t1, @a2
+
+    ADDz.x      VF06, VF09, VF04          MOVE.w  VF05, VF01  ;  t1.x = zero + a3.z    ||    'MOVE.w  @t0, @a0
+    ADDz.w      VF06, VF09, VF01          MR32.z  VF05, VF02  ;  t1.w = zero + a0.z    ||    'MR32.z  @t0, @a1
+
+    ADDy.z      VF07, VF09, VF02          MOVE.x  VF08, VF04  ;  t2.z = zero + a1.y    ||    'MOVE.x  @t3, @a3
+    ADDy.w      VF07, VF09, VF01          MR32.w  VF08, VF01  ;  t2.w = zero + a0.y    ||    'MR32.w  @t3, @a0
+
+    ADDx.y      VF08, VF09, VF03          MOVE.y  VF07, VF03  ;  t3.y = zero + a2.x    ||    'MOVE.y  @t2, @a2
+    ADDx.z      VF08, VF09, VF02          MR32.x  VF07, VF04  ;  t3.z = zero + a1.x    ||    'MR32.x  @t2, @a3
+
+    NOP                                   LQI            VF01, (VI02++)  ;  a0 << (%qi++)
+    NOP                                   LQI            VF02, (VI02++)  ;  a1 << (%qi++)
+    NOP                                   LQI            VF03, (VI02++)  ;  a2 << (%qi++)
+    NOP                                   LQI            VF04, (VI02++)  ;  a3 << (%qi++)
+
+    NOP                                   SQI            VF05, (VI03++)  ;  t0 >> (%qi2++)
+    NOP                                   SQI            VF06, (VI03++)  ;  t1 >> (%qi2++)
+    NOP                                   SQI            VF07, (VI03++)  ;  t2 >> (%qi2++)
+
+    NOP                                   IBNE           VI02, VI04, loop  ;  (%qi != %qend) loop
+    NOP                                   SQI            VF08, (VI03++)  ;  t3 >> (%qi2++)
+
+    NOP  NOP  ;  'NOP  ||  'NOP
+
+  ;  ~%qi
+  ;  ~%qi2
+  ;  ~%qend
+  ;  ~a0
+  ;  ~a1
+  ;  ~a2
+  ;  ~a3
+  ;  ~t0
+  ;  ~t1
+  ;  ~t2
+  ;  ~t3
+  ;  ~zero
+
+      ;  # Now we can do the upper solve, which is the same as the lower
+      ;  # solve, except with dodgy indexing.
+
+  ;  %xi
+  ;  %xi2
+  ;  %xend
+  ;  %ai
+  ;  %rsqi
+  ;  %bi
+  ;  %t
+  ;  %sl
+  ;  %basei
+  ;  %step
+  ;  b
+  ;  x
+  ;  t
+  ;  t2
+  ;  a0
+  ;  a1
+  ;  a2
+  ;  a3
+  ;  rs0
+  ;  rs1
+  ;  rs2
+  ;  rs3
+
+      ;  # Upper solve
+
+    NOP                                   IADD           VI06, VI15, VI09  ;  %rsqi = %param_qwc + %param_n  # End of rsq (rsq + rsqqwc) 
+    NOP                                   IADD           VI02, VI01, VI10  ;  %xi = %x0 + %param_bqwc        # End of xb  (xb  + xbqwc) 
+    NOP                                   IADD           VI03, VI00, VI02  ;  %xi2 = %K + %xi                # End of xb  (xb  + xbqwc)
+    NOP                                   IADD           VI04, VI15, VI09  ;  %xend = %param_qwc + %param_n  # Start of xb 
+    NOP                                   ISUBIU         VI05, VI15, 4  ;  %ai = %param_qwc - 4u          # Start of last block of G 
+    NOP                                   IADDIU         VI11, VI00, 4  ;  %sl = %K + 4u
+    NOP                                   IADD           VI12, VI05, VI00  ;  %basei = %ai + %K
+
+main_loop_upp:  ;  'main_loop_upp:
+
+    NOP                                   IBEQ           VI02, VI04, end_upp  ;  (%xi == %xend) end_upp
+    MULx.xyzw   VF04, VF00, VF00          IADD           VI13, VI00, VI09  ;  t2 = K * K.x    ||    %step = %K + %param_n       # Initial step size is 4(N-1)+4
+
+    NOP                                   IADD           VI07, VI01, VI10  ;  %bi = %x0 + %param_bqwc       # End of xb (xb + xbqwc) 
+    NOP                                   ISUB           VI08, VI07, VI03  ;  %t = %bi - %xi2
+
+    NOP                                   LQD            VF02, (--VI02)  ;  x << (--%xi)
+    NOP                                   IBLEZ          VI08, triangle_upp  ;  (%t <= %K) triangle_upp
+    MULAx.xyzw   ACC, VF00, VF00          LQD            VF01, (--VI07)  ;  ACC = K * K.x    ||    b << (--%bi)
+
+quad_upp:  ;  'quad_upp:
+
+    NOP                                   LQI            VF05, (VI05++)  ;  a0 << (%ai++)
+    NOP                                   LQI            VF06, (VI05++)  ;  a1 << (%ai++)
+    NOP                                   LQI            VF07, (VI05++)  ;  a2 << (%ai++)
+    NOP                                   LQI            VF08, (VI05++)  ;  a3 << (%ai++)
+
+    MSUBAx.xyzw  ACC, VF08, VF01          NOP  ;  ACC = ACC - a3 * b.x
+    MSUBAy.xyzw  ACC, VF07, VF01          NOP  ;  ACC = ACC - a2 * b.y
+    MSUBAz.xyzw  ACC, VF06, VF01          NOP  ;  ACC = ACC - a1 * b.z
+    MSUBAw.xyzw  ACC, VF05, VF01          LQD            VF01, (--VI07)  ;  ACC = ACC - a0 * b.w    ||    b << (--%bi)
+
+    NOP                                   ISUB           VI08, VI07, VI03  ;  %t = %bi - %xi2
+
+      ;  # Adjust %ai to do transposed traversal
+
+    NOP                                   ISUB           VI05, VI05, VI13  ;  %ai = %ai - %step
+    NOP                                   IBGEZ          VI08, quad_upp  ;  (%t >= %K) quad_upp
+    NOP                                   ISUBIU         VI13, VI13, 4  ;  %step = %step - 4u
+
+triangle_upp:  ;  'triangle_upp:
+
+      ;  # You need to reverse x
+
+    MADDx.xyzw  VF04, VF00, VF00          LQD            VF09, (--VI06)  ;  t2 = ACC + K * K.x    ||        rs0 << (--%rsqi)
+    ADDw.x      VF02, VF02, VF04          LQI            VF05, (VI05++)  ;  x.x = x + t2.w        ||        a0  << (%ai++)
+    ADDz.y      VF02, VF02, VF04          LQD            VF10, (--VI06)  ;  x.y = x + t2.z        ||        rs1 << (--%rsqi)
+    ADDy.z      VF02, VF02, VF04          LQI            VF06, (VI05++)  ;  x.z = x + t2.y        ||        a1  << (%ai++)
+    ADDx.w      VF02, VF02, VF04          LQD            VF11, (--VI06)  ;  x.w = x + t2.x        ||        rs2 << (--%rsqi)
+    MULx.w      VF02, VF02, VF09          LQI            VF07, (VI05++)  ;  x.w = x * rs0.x       ||        a2  << (%ai++)
+    MULAw.xyzw   ACC, VF05, VF02          IADDIU         VI05, VI05, 1  ;  ACC = a0 * x.w        ||        %ai =  %ai + 1u
+    MADDx.xyzw  VF03, VF00, VF00          LQD            VF12, (--VI06)  ;  t = ACC + K * K.x     ||        rs3 << (--%rsqi)
+
+    SUBy.z      VF02, VF02, VF03          NOP  ;  x.z = x - t.y
+    MULx.z      VF02, VF02, VF10          NOP  ;  x.z = x * rs1.x
+
+    NOP                                   ISUBIU         VI05, VI12, 4  ;  %ai = %basei - 4u
+    NOP                                   IADD           VI12, VI00, VI05  ;  %basei = %K + %ai
+    NOP                                   IADD           VI13, VI00, VI09  ;  %step = %K + %param_n
+
+    MADDAz.xyzw  ACC, VF06, VF02          NOP  ;  ACC = ACC + a1 * x.z
+    MADDx.xyzw  VF03, VF00, VF00          NOP  ;  t = ACC + K * K.x
+
+    SUBz.y      VF02, VF02, VF03          NOP  ;  x.y = x - t.z
+    MULx.y      VF02, VF02, VF11          NOP  ;  x.y = x * rs2.x
+
+    MADDAy.xyzw  ACC, VF07, VF02          NOP  ;  ACC = ACC + a2 * x.y
+    MADDx.xyzw  VF03, VF00, VF00          NOP  ;  t = ACC + K * K.x
+
+    SUBw.x      VF02, VF02, VF03          NOP  ;  x.x = x - t.w
+    MULx.x      VF02, VF02, VF12          NOP  ;  x.x = x * rs3.x
+
+    NOP  B main_loop_upp  ;  'NOP  ||  'B main_loop_upp
+    NOP                                   SQD            VF02, (--VI03)  ;  x >> (--%xi2)
+
+end_upp:  ;  'end_upp:
+
+  ;  ~%xi
+  ;  ~%x0
+  ;  ~%xi2
+  ;  ~%xend
+  ;  ~%ai
+  ;  ~%rsqi
+  ;  ~%bi
+  ;  ~%t
+  ;  ~%sl
+  ;  ~%basei
+  ;  ~%step
+  ;  ~b
+  ;  ~x
+  ;  ~t
+  ;  ~t2
+  ;  ~a0
+  ;  ~a1
+  ;  ~a2
+  ;  ~a3
+  ;  ~rs0
+  ;  ~rs1
+  ;  ~rs2
+  ;  ~rs3
+
+      ;  # Flip all the blocks (back again)
+
+  ;  %qi
+  ;  %qi2
+  ;  %qend
+  ;  a0
+  ;  a1
+  ;  a2
+  ;  a3
+  ;  t0
+  ;  t1
+  ;  t2
+  ;  t3
+  ;  zero
+
+    MULx.xyzw   VF09, VF00, VF00          IADD           VI01, VI00, VI00  ;  zero = K * K.x    ||    %qi = %K + %K
+    NOP                                   IADD           VI02, VI00, VI00  ;  %qi2 = %K + %K
+      ;  
+    NOP                                   IADDIU         VI03, VI15, 4  ;  %qend = %param_qwc + 4u # 4 more than you expect
+
+    NOP                                   LQI            VF01, (VI01++)  ;  a0 << (%qi++)
+    NOP                                   LQI            VF02, (VI01++)  ;  a1 << (%qi++)
+    NOP                                   LQI            VF03, (VI01++)  ;  a2 << (%qi++)
+    NOP                                   LQI            VF04, (VI01++)  ;  a3 << (%qi++)
+
+loop_flip_2:  ;  'loop_flip_2:
+
+    ADDw.x      VF05, VF09, VF04          MOVE.z  VF06, VF02  ;  t0.x = zero + a3.w    ||    'MOVE.z  @t1, @a1
+    ADDw.y      VF05, VF09, VF03          MR32.y  VF06, VF03  ;  t0.y = zero + a2.w    ||    'MR32.y  @t1, @a2
+
+    ADDz.x      VF06, VF09, VF04          MOVE.w  VF05, VF01  ;  t1.x = zero + a3.z    ||    'MOVE.w  @t0, @a0
+    ADDz.w      VF06, VF09, VF01          MR32.z  VF05, VF02  ;  t1.w = zero + a0.z    ||    'MR32.z  @t0, @a1
+
+    ADDy.z      VF07, VF09, VF02          MOVE.x  VF08, VF04  ;  t2.z = zero + a1.y    ||    'MOVE.x  @t3, @a3
+    ADDy.w      VF07, VF09, VF01          MR32.w  VF08, VF01  ;  t2.w = zero + a0.y    ||    'MR32.w  @t3, @a0
+
+    ADDx.y      VF08, VF09, VF03          MOVE.y  VF07, VF03  ;  t3.y = zero + a2.x    ||    'MOVE.y  @t2, @a2
+    ADDx.z      VF08, VF09, VF02          MR32.x  VF07, VF04  ;  t3.z = zero + a1.x    ||    'MR32.x  @t2, @a3
+
+    NOP                                   LQI            VF01, (VI01++)  ;  a0 << (%qi++)
+    NOP                                   LQI            VF02, (VI01++)  ;  a1 << (%qi++)
+    NOP                                   LQI            VF03, (VI01++)  ;  a2 << (%qi++)
+    NOP                                   LQI            VF04, (VI01++)  ;  a3 << (%qi++)
+
+    NOP                                   SQI            VF05, (VI02++)  ;  t0 >> (%qi2++)
+    NOP                                   SQI            VF06, (VI02++)  ;  t1 >> (%qi2++)
+    NOP                                   SQI            VF07, (VI02++)  ;  t2 >> (%qi2++)
+
+    NOP                                   IBNE           VI01, VI03, loop_flip_2  ;  (%qi != %qend) loop_flip_2
+    NOP                                   SQI            VF08, (VI02++)  ;  t3 >> (%qi2++)
+
+  ;  %is_factorized
+    NOP                                   IADDIU         VI04, VI00, 1  ;  %is_factorized = %K + 1u
+    NOP     ISW.w  VI04, 255(VI00)  ;  'NOP     ||   'ISW.w  @%is_factorized, 255(@%K)
+    NOP     NOP  ;  'NOP     ||   'NOP
+    NOP     NOP  ;  'NOP     ||   'NOP
+  ;  ~%is_factorized
+
+    NOP[E]  NOP   ;  'NOP[E]  ||  'NOP 
+    NOP     NOP  ;  'NOP     ||  'NOP
+
+
+  ;  ~%qi
+  ;  ~%qi2
+  ;  ~%qend
+  ;  ~a0
+  ;  ~a1
+  ;  ~a2
+  ;  ~a3
+  ;  ~t0
+  ;  ~t1
+  ;  ~t2
+  ;  ~t3
+  ;  ~zero
+  ;  ~%param_n
+  ;  ~%param_bqwc
+  ;  ~%param_qwc
+
+

@@ -1,0 +1,89 @@
+# Assuming GNU make {>v3.76}
+# $Header: /proj/Toolkits/Mcd/src/MeMakefile,v 1.20 2001/09/07 18:39:40 piercarl Exp $
+# ($Name: t-stevet-RWSpre-030110 $)
+
+# vim:syntax=make:
+
+#------------------------------
+#Platform independent Makefile
+#------------------------------
+
+#MCD_SRC := frame dtbridge rwbsp convex particle primitives QHull
+
+mcdpackages:=\
+	QHull\
+	convex\
+	frame\
+	primitives\
+	terrain\
+	util
+
+# "Dead for the forseeable future"
+#	particle\
+
+ifeq "${PLATFORM}" 'trimedia'
+#Mesh doesn't compile on TriMedia - STL problems
+else
+mcdpackages += mesh
+endif
+
+# "Dead for the foreseeable future"
+#ifeq "${PLATFORM}" 'win32'
+#mcdpackages += rwbsp
+#endif
+#ifeq "${PLATFORM}" 'ps2'
+#mcdpackages+=rwbsp
+#endif
+
+ifneq ($(strip $(WITH_MPS)),)
+mcdpackages+=particle
+endif
+
+.PHONY: all ${mcdpackages}
+
+# Common extra includes for sub-makes (that's what "export" is for)
+export incpath${MAKELEVEL}:=\
+	../../tools/glut\
+	frame\
+	terrain\
+	convex\
+	QHull\
+	particle\
+	cx\
+	primitives\
+	math\
+	space\
+	util\
+	terrain \
+	mesh
+
+# "Dead for the foreseeable future"
+#	rwbsp\
+
+# Get list of requested packages from the command line (defaults to
+# ${mcdpackages})
+packages:=$(filter ${mcdpackages},${MAKECMDGOALS})
+nonpackages:=$(filter-out ${mcdpackages},${MAKECMDGOALS})
+
+ifeq '' "${packages}"
+packages:=${mcdpackages}# default to all
+endif
+
+# Make all _other_ command-line targets legal (they will be passed on to the sub-makes)
+all ${nonpackages}: ${packages}
+
+# Note: -R (--no-builtin-variables) is best here, but we are restricted to
+# -r (--no-builtin-rules) as make 3.76 doesn't support -R (sigh!)
+
+# Note: taking the lead from the original autoconf makefile, this is _not_ a
+# "descend into dir" make.
+${mcdpackages}:
+	${MAKE} --no-print-directory -r -f $@/MeMakefile ${nonpackages}
+
+# Special rules for Renderware library that will
+# fail "gracefully" if Renderware is not available
+#rwbsp_rel:
+#	-@${MAKE} -Crwbsp release
+#rwbsp_dbg:
+#	-@${MAKE} -Crwbsp debug
+

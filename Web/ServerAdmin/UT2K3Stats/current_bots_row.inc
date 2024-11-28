@@ -1,0 +1,1 @@
+<tr><td class="s"><input type="hidden" name="BotX<%BotIndex%>" value=""><input type="checkbox" name="Bot<%BotIndex%>" value="<%BotName%>"<%DisabledBots%>><%BotName%></td><td width="20px" class="s">&nbsp;</td><td>&nbsp;</td></tr>

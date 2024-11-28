@@ -1,0 +1,93 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Classes">
+      <UniqueIdentifier>{40602ff1-f85d-4f46-a127-4f5f92369cd6}</UniqueIdentifier>
+      <Extensions>*.uc</Extensions>
+    </Filter>
+    <Filter Include="Classes\LastManStanding">
+      <UniqueIdentifier>{fd05216b-6f06-4a38-8145-6f9cfa3a27e0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\Mutant">
+      <UniqueIdentifier>{f2d23b67-5a83-4ba6-b219-4db38e669db5}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Classes\ComboCrate.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ComboMiniMe.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\CrateActor.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\MutCrateCombo.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\MutPintSizeCombo.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\HudLMS.uc">
+      <Filter>Classes\LastManStanding</Filter>
+    </None>
+    <None Include="Classes\LMSBroadcastHandler.uc">
+      <Filter>Classes\LastManStanding</Filter>
+    </None>
+    <None Include="Classes\LMSMessage.uc">
+      <Filter>Classes\LastManStanding</Filter>
+    </None>
+    <None Include="Classes\MapListLastManStanding.uc">
+      <Filter>Classes\LastManStanding</Filter>
+    </None>
+    <None Include="Classes\MutLastManStanding.uc">
+      <Filter>Classes\LastManStanding</Filter>
+    </None>
+    <None Include="Classes\ScoreBoardLMS.uc">
+      <Filter>Classes\LastManStanding</Filter>
+    </None>
+    <None Include="Classes\Tab_IALastManStanding.uc">
+      <Filter>Classes\LastManStanding</Filter>
+    </None>
+    <None Include="Classes\xLastManStandingGame.uc">
+      <Filter>Classes\LastManStanding</Filter>
+    </None>
+    <None Include="Classes\DamTypeMutant.uc">
+      <Filter>Classes\Mutant</Filter>
+    </None>
+    <None Include="Classes\HudMutant.uc">
+      <Filter>Classes\Mutant</Filter>
+    </None>
+    <None Include="Classes\MapListMutant.uc">
+      <Filter>Classes\Mutant</Filter>
+    </None>
+    <None Include="Classes\MutantGameReplicationInfo.uc">
+      <Filter>Classes\Mutant</Filter>
+    </None>
+    <None Include="Classes\MutantGlow.uc">
+      <Filter>Classes\Mutant</Filter>
+    </None>
+    <None Include="Classes\MutantMessage.uc">
+      <Filter>Classes\Mutant</Filter>
+    </None>
+    <None Include="Classes\MutantNameMessage.uc">
+      <Filter>Classes\Mutant</Filter>
+    </None>
+    <None Include="Classes\MutantScoreboard.uc">
+      <Filter>Classes\Mutant</Filter>
+    </None>
+    <None Include="Classes\MutSquadAI.uc">
+      <Filter>Classes\Mutant</Filter>
+    </None>
+    <None Include="Classes\Tab_IAMutant.uc">
+      <Filter>Classes\Mutant</Filter>
+    </None>
+    <None Include="Classes\xMutantGame.uc">
+      <Filter>Classes\Mutant</Filter>
+    </None>
+    <None Include="Classes\xMutantPawn.uc">
+      <Filter>Classes\Mutant</Filter>
+    </None>
+    <None Include="..\System\BonusPack.int" />
+  </ItemGroup>
+</Project>

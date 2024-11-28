@@ -1,0 +1,34 @@
+Microsoft Visual Studio Solution File, Format Version 7.00
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "XBoxLaunch", "XboxLaunch.vcproj", "{0CC5CE9E-B826-4EDC-A91C-669094484A31}"
+EndProject
+Global
+	GlobalSection(SourceCodeControl) = preSolution
+		SccNumberOfProjects = 2
+		SccProjectName0 = XBoxLaunch
+		SccLocalPath0 = ..
+		SccProvider0 = MSSCCI:Perforce\u0020SCM
+		CanCheckoutShared = true
+		SccProjectFilePathRelativizedFromConnection0 = ..\\
+		SolutionUniqueID = {9DD3B7A7-4EC5-4DB7-A8C6-C3025BCADA7A}
+		SccProjectUniqueName1 = XboxLaunch.vcproj
+		SccLocalPath1 = ..
+		CanCheckoutShared = true
+		SccProjectFilePathRelativizedFromConnection1 = ..\\
+	EndGlobalSection
+	GlobalSection(SolutionConfiguration) = preSolution
+		ConfigName.0 = Debug
+		ConfigName.1 = Release
+	EndGlobalSection
+	GlobalSection(ProjectDependencies) = postSolution
+	EndGlobalSection
+	GlobalSection(ProjectConfiguration) = postSolution
+		{0CC5CE9E-B826-4EDC-A91C-669094484A31}.Debug.ActiveCfg = Debug|Xbox
+		{0CC5CE9E-B826-4EDC-A91C-669094484A31}.Debug.Build.0 = Debug|Xbox
+		{0CC5CE9E-B826-4EDC-A91C-669094484A31}.Release.ActiveCfg = Release|Xbox
+		{0CC5CE9E-B826-4EDC-A91C-669094484A31}.Release.Build.0 = Release|Xbox
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+	EndGlobalSection
+	GlobalSection(ExtensibilityAddIns) = postSolution
+	EndGlobalSection
+EndGlobal

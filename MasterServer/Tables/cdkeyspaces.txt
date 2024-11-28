@@ -1,0 +1,7 @@
+create table cdkeyspaces
+(
+	cdkeyid int not null,					/* cdkey table id for xref			*/
+	md5hashsp char(32)	not null,			/* md5 hash of cd key (with spaces) */
+	primary key(cdkeyid),
+	key idx_cdkeyspaces_md5hashsp (md5hashsp(8))
+);

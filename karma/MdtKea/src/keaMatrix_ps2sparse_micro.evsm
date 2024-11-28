@@ -1,0 +1,868 @@
+__expression_asm
+
+# BkMat_sgemv4ColNoTrans33MinusA3X1OneY1
+# --------------------------------------
+#
+# Y := Y - A*X 
+#
+# Y - 12*1 vector
+# A - 12*12 matrix
+# X - 12*1 vector
+#
+# On Entry:
+#
+# vi1 = buffer
+# VUMEM[buffer+0..buffer+36)  - A
+# VUMEM[buffer+36..buffer+39) - X 
+# vf1 = Y[0..4)
+# vf2 = Y[4..8)
+# vf3 = Y[8..12)
+#
+        %buffer
+        %bufferlen
+        %px
+        %pa
+
+        y0
+        y1
+        y2
+        ablock0_0
+        ablock0_1
+        ablock0_2
+        ablock0_3
+        ablock1_0
+        ablock1_1
+        ablock1_2
+        ablock1_3
+        ablock2_0
+        ablock2_1
+        ablock2_2
+        ablock2_3
+        x0
+        x1
+        x2
+
+'sgemvSubNoTrans:
+        'nop                         || %pa = %buffer + %K
+        'nop                         || %px = %pa + 36u
+        'nop                         || x0        << (%px+0)
+        'nop                         || ablock0_0 << (%pa++)
+        'nop                         || ablock0_1 << (%pa++)
+        'nop                         || ablock0_2 << (%pa++)
+        'nop                         || ablock0_3 << (%pa++)
+        ACC = y0 + K.x               || x1        << (%px+1)
+        ACC = ACC - ablock0_0 * x0.x || ablock1_0 << (%pa++)
+        ACC = ACC - ablock0_1 * x0.y || ablock1_1 << (%pa++)
+        ACC = ACC - ablock0_2 * x0.z || ablock1_2 << (%pa++)
+        ACC = ACC - ablock0_3 * x0.w || ablock1_3 << (%pa++)
+        'nop                         || x2        << (%px+2)
+        ACC = ACC - ablock1_0 * x1.x || ablock2_0 << (%pa++)
+        ACC = ACC - ablock1_1 * x1.y || ablock2_1 << (%pa++)
+        ACC = ACC - ablock1_2 * x1.z || ablock2_2 << (%pa++)
+        ACC = ACC - ablock1_3 * x1.w || ablock2_3 << (%pa++)
+        'nop                         || x0        << (%px+0)
+        ACC = ACC - ablock2_0 * x2.x || ablock0_0 << (%pa++)
+        ACC = ACC - ablock2_1 * x2.y || ablock0_1 << (%pa++)
+        ACC = ACC - ablock2_2 * x2.z || ablock0_2 << (%pa++)
+        y0  = ACC - ablock2_3 * x2.w || ablock0_3 << (%pa++)
+        
+        ACC = y1 + K.x               || x1        << (%px+1)
+        ACC = ACC - ablock0_0 * x0.x || ablock1_0 << (%pa++)
+        ACC = ACC - ablock0_1 * x0.y || ablock1_1 << (%pa++)
+        ACC = ACC - ablock0_2 * x0.z || ablock1_2 << (%pa++)
+        ACC = ACC - ablock0_3 * x0.w || ablock1_3 << (%pa++)
+        'nop                         || x2        << (%px+2)
+        ACC = ACC - ablock1_0 * x1.x || ablock2_0 << (%pa++)
+        ACC = ACC - ablock1_1 * x1.y || ablock2_1 << (%pa++)
+        ACC = ACC - ablock1_2 * x1.z || ablock2_2 << (%pa++)
+        ACC = ACC - ablock1_3 * x1.w || ablock2_3 << (%pa++)
+        'nop                         || x0        << (%px+0)
+        ACC = ACC - ablock2_0 * x2.x || ablock0_0 << (%pa++)
+        ACC = ACC - ablock2_1 * x2.y || ablock0_1 << (%pa++)
+        ACC = ACC - ablock2_2 * x2.z || ablock0_2 << (%pa++)
+        y1  = ACC - ablock2_3 * x2.w || ablock0_3 << (%pa++)
+        
+        ACC = y2 + K.x               || x1        << (%px+1)
+        ACC = ACC - ablock0_0 * x0.x || ablock1_0 << (%pa++)
+        ACC = ACC - ablock0_1 * x0.y || ablock1_1 << (%pa++)
+        ACC = ACC - ablock0_2 * x0.z || ablock1_2 << (%pa++)
+        ACC = ACC - ablock0_3 * x0.w || ablock1_3 << (%pa++)
+        'nop                         || x2        << (%px+2)
+        ACC = ACC - ablock1_0 * x1.x || ablock2_0 << (%pa++)
+        ACC = ACC - ablock1_1 * x1.y || ablock2_1 << (%pa++)
+        ACC = ACC - ablock1_2 * x1.z || ablock2_2 << (%pa++)
+        ACC = ACC - ablock1_3 * x1.w || ablock2_3 << (%pa++)
+        ACC = ACC - ablock2_0 * x2.x || %bufferlen = %K + 39u
+        ACC = ACC - ablock2_1 * x2.y || %buffer = %bufferlen - %buffer
+        ACC = ACC - ablock2_2 * x2.z || 'nop 
+        y2  = ACC - ablock2_3 * x2.w || 'nop
+        'nop[e]                      || 'nop
+        'nop                         || 'nop
+
+        ~%buffer
+        ~%bufferlen
+        ~%px
+        ~%pa
+
+        ~y0
+        ~y1
+        ~y2
+        ~ablock0_0
+        ~ablock0_1
+        ~ablock0_2
+        ~ablock0_3
+        ~ablock1_0
+        ~ablock1_1
+        ~ablock1_2
+        ~ablock1_3
+        ~ablock2_0
+        ~ablock2_1
+        ~ablock2_2
+        ~ablock2_3
+        ~x0
+        ~x1
+        ~x2
+
+'sgemvSubTrans:
+        %buffer
+        %pans
+        %bufferlen
+        %px
+        %prow0
+        %prow1
+        %prow2
+
+        x0
+        x1
+        x2
+        zero
+        in_0
+        in_1
+        in_2
+        in_3
+        ablock_0
+        ablock_1
+        ablock_2
+        ablock_3
+        y0
+        y1
+        y2
+
+        'nop                         ||    %prow0 = %buffer + %K
+        'nop                         ||    %prow1 = %prow0 + 12u
+        'nop                         ||    %prow2 = %prow0 + 24u
+        zero = K-K                   ||    y0   << (%pans+0)
+        'nop                         ||    y1   << (%pans+1)
+        'nop                         ||    in_0 << (%prow0++)
+        'nop                         ||    in_1 << (%prow0++)
+        'nop                         ||    in_2 << (%prow0++)
+        'nop                         ||    in_3 << (%prow0++)
+        ablock_0.y = zero + in_1.x   ||    'MOVE.y  @ablock_1, @in_1
+        ablock_0.z = zero + in_2.x   ||    'MR32.x  @ablock_1, @in_0
+        ablock_1.z = zero + in_2.y   ||    'MOVE.x  @ablock_0, @in_0
+        ablock_1.w = zero + in_3.y   ||    'MR32.w  @ablock_0, @in_3
+        ablock_2.x = zero + in_0.z   ||    'MOVE.w  @ablock_3, @in_3
+        ablock_2.w = zero + in_3.z   ||    'MR32.z  @ablock_3, @in_2
+        ablock_3.x = zero + in_0.w   ||    'MR32.y  @ablock_2, @in_1
+        ablock_3.y = zero + in_1.w   ||    'MOVE.z  @ablock_2, @in_2
+        ACC = y0 + K.x               ||    y2   << (%pans+2)
+        ACC = ACC - ablock_0 * x0.x  ||    in_0 << (%prow1++)
+        ACC = ACC - ablock_1 * x0.y  ||    in_1 << (%prow1++)
+        ACC = ACC - ablock_2 * x0.z  ||    in_2 << (%prow1++)
+        ACC = ACC - ablock_3 * x0.w  ||    in_3 << (%prow1++)
+        ablock_0.y = zero + in_1.x   ||    'MOVE.y  @ablock_1, @in_1
+        ablock_0.z = zero + in_2.x   ||    'MR32.x  @ablock_1, @in_0
+        ablock_1.z = zero + in_2.y   ||    'MOVE.x  @ablock_0, @in_0
+        ablock_1.w = zero + in_3.y   ||    'MR32.w  @ablock_0, @in_3
+        ablock_2.x = zero + in_0.z   ||    'MOVE.w  @ablock_3, @in_3
+        ablock_2.w = zero + in_3.z   ||    'MR32.z  @ablock_3, @in_2
+        ablock_3.x = zero + in_0.w   ||    'MR32.y  @ablock_2, @in_1
+        ablock_3.y = zero + in_1.w   ||    'MOVE.z  @ablock_2, @in_2
+        ACC = ACC - ablock_0 * x1.x  ||    in_0 << (%prow2++)
+        ACC = ACC - ablock_1 * x1.y  ||    in_1 << (%prow2++)
+        ACC = ACC - ablock_2 * x1.z  ||    in_2 << (%prow2++)
+        ACC = ACC - ablock_3 * x1.w  ||    in_3 << (%prow2++)
+        ablock_0.y = zero + in_1.x   ||    'MOVE.y  @ablock_1, @in_1
+        ablock_0.z = zero + in_2.x   ||    'MR32.x  @ablock_1, @in_0
+        ablock_1.z = zero + in_2.y   ||    'MOVE.x  @ablock_0, @in_0
+        ablock_1.w = zero + in_3.y   ||    'MR32.w  @ablock_0, @in_3
+        ablock_2.x = zero + in_0.z   ||    'MOVE.w  @ablock_3, @in_3
+        ablock_2.w = zero + in_3.z   ||    'MR32.z  @ablock_3, @in_2
+        ablock_3.x = zero + in_0.w   ||    'MR32.y  @ablock_2, @in_1
+        ablock_3.y = zero + in_1.w   ||    'MOVE.z  @ablock_2, @in_2
+        ACC = ACC - ablock_0 * x2.x  ||    in_0 << (%prow0++)
+        ACC = ACC - ablock_1 * x2.y  ||    in_1 << (%prow0++)
+        ACC = ACC - ablock_2 * x2.z  ||    in_2 << (%prow0++)
+        y0  = ACC - ablock_3 * x2.w  ||    in_3 << (%prow0++)
+
+        ablock_0.y = zero + in_1.x   ||    'MOVE.y  @ablock_1, @in_1
+        ablock_0.z = zero + in_2.x   ||    'MR32.x  @ablock_1, @in_0
+        ablock_1.z = zero + in_2.y   ||    'MOVE.x  @ablock_0, @in_0
+        ablock_1.w = zero + in_3.y   ||    'MR32.w  @ablock_0, @in_3
+        ablock_2.x = zero + in_0.z   ||    'MOVE.w  @ablock_3, @in_3
+        ablock_2.w = zero + in_3.z   ||    'MR32.z  @ablock_3, @in_2
+        ablock_3.x = zero + in_0.w   ||    'MR32.y  @ablock_2, @in_1
+        ablock_3.y = zero + in_1.w   ||    'MOVE.z  @ablock_2, @in_2
+        ACC = y1 + K.x               ||    y0   >> (%pans+0)
+        ACC = ACC - ablock_0 * x0.x  ||    in_0 << (%prow1++)
+        ACC = ACC - ablock_1 * x0.y  ||    in_1 << (%prow1++)
+        ACC = ACC - ablock_2 * x0.z  ||    in_2 << (%prow1++)
+        ACC = ACC - ablock_3 * x0.w  ||    in_3 << (%prow1++)
+        ablock_0.y = zero + in_1.x   ||    'MOVE.y  @ablock_1, @in_1
+        ablock_0.z = zero + in_2.x   ||    'MR32.x  @ablock_1, @in_0
+        ablock_1.z = zero + in_2.y   ||    'MOVE.x  @ablock_0, @in_0
+        ablock_1.w = zero + in_3.y   ||    'MR32.w  @ablock_0, @in_3
+        ablock_2.x = zero + in_0.z   ||    'MOVE.w  @ablock_3, @in_3
+        ablock_2.w = zero + in_3.z   ||    'MR32.z  @ablock_3, @in_2
+        ablock_3.x = zero + in_0.w   ||    'MR32.y  @ablock_2, @in_1
+        ablock_3.y = zero + in_1.w   ||    'MOVE.z  @ablock_2, @in_2
+        ACC = ACC - ablock_0 * x1.x  ||    in_0 << (%prow2++)
+        ACC = ACC - ablock_1 * x1.y  ||    in_1 << (%prow2++)
+        ACC = ACC - ablock_2 * x1.z  ||    in_2 << (%prow2++)
+        ACC = ACC - ablock_3 * x1.w  ||    in_3 << (%prow2++)
+        ablock_0.y = zero + in_1.x   ||    'MOVE.y  @ablock_1, @in_1
+        ablock_0.z = zero + in_2.x   ||    'MR32.x  @ablock_1, @in_0
+        ablock_1.z = zero + in_2.y   ||    'MOVE.x  @ablock_0, @in_0
+        ablock_1.w = zero + in_3.y   ||    'MR32.w  @ablock_0, @in_3
+        ablock_2.x = zero + in_0.z   ||    'MOVE.w  @ablock_3, @in_3
+        ablock_2.w = zero + in_3.z   ||    'MR32.z  @ablock_3, @in_2
+        ablock_3.x = zero + in_0.w   ||    'MR32.y  @ablock_2, @in_1
+        ablock_3.y = zero + in_1.w   ||    'MOVE.z  @ablock_2, @in_2
+        ACC = ACC - ablock_0 * x2.x  ||    in_0 << (%prow0++)
+        ACC = ACC - ablock_1 * x2.y  ||    in_1 << (%prow0++)
+        ACC = ACC - ablock_2 * x2.z  ||    in_2 << (%prow0++)
+        y1  = ACC - ablock_3 * x2.w  ||    in_3 << (%prow0++)
+                 
+        ablock_0.y = zero + in_1.x   ||    'MOVE.y  @ablock_1, @in_1
+        ablock_0.z = zero + in_2.x   ||    'MR32.x  @ablock_1, @in_0
+        ablock_1.z = zero + in_2.y   ||    'MOVE.x  @ablock_0, @in_0
+        ablock_1.w = zero + in_3.y   ||    'MR32.w  @ablock_0, @in_3
+        ablock_2.x = zero + in_0.z   ||    'MOVE.w  @ablock_3, @in_3
+        ablock_2.w = zero + in_3.z   ||    'MR32.z  @ablock_3, @in_2
+        ablock_3.x = zero + in_0.w   ||    'MR32.y  @ablock_2, @in_1
+        ablock_3.y = zero + in_1.w   ||    'MOVE.z  @ablock_2, @in_2
+        ACC = y2 + K.x               ||    y1  >> (%pans+1)
+        ACC = ACC - ablock_0 * x0.x  ||    in_0 << (%prow1++)
+        ACC = ACC - ablock_1 * x0.y  ||    in_1 << (%prow1++)
+        ACC = ACC - ablock_2 * x0.z  ||    in_2 << (%prow1++)
+        ACC = ACC - ablock_3 * x0.w  ||    in_3 << (%prow1++)
+        ablock_0.y = zero + in_1.x   ||    'MOVE.y  @ablock_1, @in_1
+        ablock_0.z = zero + in_2.x   ||    'MR32.x  @ablock_1, @in_0
+        ablock_1.z = zero + in_2.y   ||    'MOVE.x  @ablock_0, @in_0
+        ablock_1.w = zero + in_3.y   ||    'MR32.w  @ablock_0, @in_3
+        ablock_2.x = zero + in_0.z   ||    'MOVE.w  @ablock_3, @in_3
+        ablock_2.w = zero + in_3.z   ||    'MR32.z  @ablock_3, @in_2
+        ablock_3.x = zero + in_0.w   ||    'MR32.y  @ablock_2, @in_1
+        ablock_3.y = zero + in_1.w   ||    'MOVE.z  @ablock_2, @in_2
+        ACC = ACC - ablock_0 * x1.x  ||    in_0 << (%prow2++)
+        ACC = ACC - ablock_1 * x1.y  ||    in_1 << (%prow2++)
+        ACC = ACC - ablock_2 * x1.z  ||    in_2 << (%prow2++)
+        ACC = ACC - ablock_3 * x1.w  ||    in_3 << (%prow2++)
+        ablock_0.y = zero + in_1.x   ||    'MOVE.y  @ablock_1, @in_1
+        ablock_0.z = zero + in_2.x   ||    'MR32.x  @ablock_1, @in_0
+        ablock_1.z = zero + in_2.y   ||    'MOVE.x  @ablock_0, @in_0
+        ablock_1.w = zero + in_3.y   ||    'MR32.w  @ablock_0, @in_3
+        ablock_2.x = zero + in_0.z   ||    'MOVE.w  @ablock_3, @in_3
+        ablock_2.w = zero + in_3.z   ||    'MR32.z  @ablock_3, @in_2
+        ablock_3.x = zero + in_0.w   ||    'MR32.y  @ablock_2, @in_1
+        ablock_3.y = zero + in_1.w   ||    'MOVE.z  @ablock_2, @in_2
+        ACC = ACC - ablock_0 * x2.x  ||    %bufferlen = %K + 36u
+        ACC = ACC - ablock_1 * x2.y  ||    %buffer    = %bufferlen - %buffer
+        ACC = ACC - ablock_2 * x2.z  ||    'nop
+        y2  = ACC - ablock_3 * x2.w  ||    'nop
+        'nop                         ||    'nop
+        'nop                         ||    'nop
+        'nop                         ||    'nop
+        'nop                         ||    y2 >> (%pans+2)
+        'nop                         ||    %pans      = %pans - 3u
+        'nop[e]                      ||    'nop
+        'nop                         ||    'nop
+
+        ~%buffer
+        ~%pans
+        ~%bufferlen
+        ~%px
+        ~%prow0
+        ~%prow1
+        ~%prow2
+
+        ~x0
+        ~x1
+        ~x2
+        ~zero
+        ~in_0
+        ~in_1
+        ~in_2
+        ~in_3
+        ~ablock_0
+        ~ablock_1
+        ~ablock_2
+        ~ablock_3
+        ~y0
+        ~y1
+        ~y2
+
+'strsvTrans:
+
+        %pa
+        %pans
+        %bufferlen
+        r0
+        r1
+        r2
+        in_0
+        in_1
+        in_2
+        in_3
+        a0
+        a1
+        a2
+        a3
+        a4
+        a5
+        a6
+        a7
+        recip
+        zero
+        tmp
+
+        # Flip the contents of each quad in the rhs vector
+
+        zero = K - K                 ||    'nop
+        tmp.x = zero + r0.w          ||    'nop
+        tmp.y = zero + r0.z          ||    'nop
+        tmp.z = zero + r0.y          ||    'nop
+        tmp.w = zero + r0.x          ||    'nop
+        r0    = tmp + K.x            ||    'nop     
+        tmp.x = zero + r1.w          ||    'nop
+        tmp.y = zero + r1.z          ||    'nop
+        tmp.z = zero + r1.y          ||    'nop
+        tmp.w = zero + r1.x          ||    'nop
+        r1    = tmp + K.x            ||    'nop     
+        tmp.x = zero + r2.w          ||    'nop
+        tmp.y = zero + r2.z          ||    'nop
+        tmp.z = zero + r2.y          ||    'nop
+        tmp.w = zero + r2.x          ||    'nop
+        r2    = tmp + K.x            ||    'nop     
+
+        'nop                         ||    in_3 << (%pa+35)
+        'nop                         ||    in_1 << (%pa+33)
+        'nop                         ||    in_2 << (%pa+34)
+        'nop                         ||    in_0 << (%pa+32)
+        'nop                         ||    Q = K.w / in_3.w
+        a0.x = zero + in_3.w         ||    'MOVE.z  @a1, @in_1
+        a0.y = zero + in_2.w         ||    'MR32.y  @a1, @in_2
+        a1.x = zero + in_3.z         ||    'MOVE.w  @a0, @in_0
+        a1.w = zero + in_0.z         ||    'MR32.z  @a0, @in_1
+        a2.z = zero + in_1.y         ||    'MOVE.x  @a3, @in_3
+        a2.w = zero + in_0.y         ||    'MR32.w  @a3, @in_0
+        recip.x = zero + Q           ||    Q = K.w / in_2.z
+        a3.y = zero + in_2.x         ||    'MOVE.y  @a2, @in_2
+        a3.z = zero + in_1.x         ||    'MR32.x  @a2, @in_3
+        'nop                         ||    'waitq
+        recip.y = zero + Q           ||    Q = K.w / in_1.y
+        'nop                         ||    'waitq
+        recip.z = zero + Q           ||    Q = K.w / in_0.x
+        'nop                         ||    'waitq
+        recip.w = zero + Q           ||    'nop
+        ACC     = K - K              ||    'nop
+
+        r2.x    = r2.x * recip.x     ||    'nop
+        ACC.yzw = ACC - a0 * r2.x    ||    'nop
+        r2.y    = ACC + r2 * K.w     ||    'nop
+        r2.y    = r2.y * recip.y     ||    'nop
+        ACC.zw  = ACC - a1 * r2.y    ||    'nop
+        r2.z    = ACC + r2 * K.w     ||    'nop
+        r2.z    = r2.z * recip.z     ||    'nop
+        ACC.w   = ACC - a2 * r2.z    ||    'nop
+        r2.w    = ACC + r2 * K.w     ||    'nop
+        r2.w    = r2.w * recip.w     ||    'nop
+
+        # Square triangle
+
+        'nop                         ||    in_3 << (%pa+31)
+        'nop                         ||    in_1 << (%pa+29)
+        'nop                         ||    in_2 << (%pa+30)
+        'nop                         ||    in_0 << (%pa+28)
+        'nop                         ||    'nop
+        a0.x = zero + in_3.w         ||    'MOVE.z  @a1, @in_1
+        a0.y = zero + in_2.w         ||    'MR32.y  @a1, @in_2
+        a1.x = zero + in_3.z         ||    'MOVE.w  @a0, @in_0
+        a1.w = zero + in_0.z         ||    'MR32.z  @a0, @in_1
+        a2.z = zero + in_1.y         ||    'MOVE.x  @a3, @in_3
+        a2.w = zero + in_0.y         ||    'MR32.w  @a3, @in_0
+        a3.y = zero + in_2.x         ||    'MOVE.y  @a2, @in_2
+        a3.z = zero + in_1.x         ||    'MR32.x  @a2, @in_3
+        ACC = K - K                  ||    'nop
+        ACC = ACC - a0 * r2.x        ||    'nop
+        ACC = ACC - a1 * r2.y        ||    'nop
+        ACC = ACC - a2 * r2.z        ||    'nop
+        ACC = ACC - a3 * r2.w        ||    'nop
+
+        zero = K - K                 ||    in_3 << (%pa+19)
+        'nop                         ||    in_1 << (%pa+17)
+        'nop                         ||    in_2 << (%pa+18)
+        'nop                         ||    in_0 << (%pa+16)
+        'nop                         ||    Q = K.w / in_3.w
+        a0.x = zero + in_3.w         ||    'MOVE.z  @a1, @in_1
+        a0.y = zero + in_2.w         ||    'MR32.y  @a1, @in_2
+        a1.x = zero + in_3.z         ||    'MOVE.w  @a0, @in_0
+        a1.w = zero + in_0.z         ||    'MR32.z  @a0, @in_1
+        a2.z = zero + in_1.y         ||    'MOVE.x  @a3, @in_3
+        a2.w = zero + in_0.y         ||    'MR32.w  @a3, @in_0
+        recip.x = zero + Q           ||    Q = K.w / in_2.z
+        a3.y = zero + in_2.x         ||    'MOVE.y  @a2, @in_2
+        a3.z = zero + in_1.x         ||    'MR32.x  @a2, @in_3
+        'nop                         ||    'waitq
+        recip.y = zero + Q           ||    Q = K.w / in_1.y
+        'nop                         ||    'waitq
+        recip.z = zero + Q           ||    Q = K.w / in_0.x
+        'nop                         ||    'waitq
+        recip.w = zero + Q           ||    'nop
+
+
+        r1.x = ACC + r1 * K.w        ||    'nop
+        r1.x = r1.x * recip.x        ||    'nop
+
+        ACC.yzw = ACC - a0 * r1.x    ||    'nop
+        r1.y = ACC + r1 * K.w        ||    'nop
+        r1.y = r1.y * recip.y        ||    'nop
+
+        ACC.zw = ACC - a1 * r1.y     ||    'nop
+        r1.z = ACC + r1 * K.w        ||    'nop
+        r1.z = r1.z * recip.z        ||    'nop
+
+        ACC.w = ACC - a2 * r1.z      ||    'nop
+        r1.w = ACC + r1 * K.w        ||    'nop
+        r1.w = r1.w * recip.w        ||    'nop
+
+        # r1 is done, now do r0
+
+        'nop                         ||    in_0 << (%pa+24)
+        'nop                         ||    in_1 << (%pa+25)
+        'nop                         ||    in_2 << (%pa+26)
+        'nop                         ||    in_3 << (%pa+27)
+        a0.x = zero + in_3.w         ||    'MOVE.z  @a1, @in_1
+        a0.y = zero + in_2.w         ||    'MR32.y  @a1, @in_2
+        a1.x = zero + in_3.z         ||    'MOVE.w  @a0, @in_0
+        a1.w = zero + in_0.z         ||    'MR32.z  @a0, @in_1
+        a2.z = zero + in_1.y         ||    'MOVE.x  @a3, @in_3
+        a2.w = zero + in_0.y         ||    'MR32.w  @a3, @in_0
+        a3.y = zero + in_2.x         ||    'MOVE.y  @a2, @in_2
+        a3.z = zero + in_1.x         ||    'MR32.x  @a2, @in_3
+        'nop                         ||    in_0 << (%pa+12)
+        'nop                         ||    in_1 << (%pa+13)
+        'nop                         ||    in_2 << (%pa+14)
+        'nop                         ||    in_3 << (%pa+15)
+        a4.x = zero + in_3.w         ||    'MOVE.z  @a5, @in_1
+        a4.y = zero + in_2.w         ||    'MR32.y  @a5, @in_2
+        a5.x = zero + in_3.z         ||    'MOVE.w  @a4, @in_0
+        a5.w = zero + in_0.z         ||    'MR32.z  @a4, @in_1
+        a6.z = zero + in_1.y         ||    'MOVE.x  @a7, @in_3
+        a6.w = zero + in_0.y         ||    'MR32.w  @a7, @in_0
+        a7.y = zero + in_2.x         ||    'MOVE.y  @a6, @in_2
+        a7.z = zero + in_1.x         ||    'MR32.x  @a6, @in_3
+        ACC = K - K                  ||    'nop
+        ACC = ACC - a0 * r2.x        ||    'nop
+        ACC = ACC - a1 * r2.y        ||    'nop
+        ACC = ACC - a2 * r2.z        ||    'nop
+        ACC = ACC - a3 * r2.w        ||    'nop
+        ACC = ACC - a4 * r1.x        ||    'nop
+        ACC = ACC - a5 * r1.y        ||    'nop
+        ACC = ACC - a6 * r1.z        ||    'nop
+        ACC = ACC - a7 * r1.w        ||    'nop
+
+        zero = K - K                 ||    in_3 << (%pa+3)
+        'nop                         ||    in_1 << (%pa+1)
+        'nop                         ||    in_2 << (%pa+2)
+        'nop                         ||    in_0 << (%pa+0)
+        'nop                         ||    Q = K.w / in_3.w
+        a0.x = zero + in_3.w         ||    'MOVE.z  @a1, @in_1
+        a0.y = zero + in_2.w         ||    'MR32.y  @a1, @in_2
+        a1.x = zero + in_3.z         ||    'MOVE.w  @a0, @in_0
+        a1.w = zero + in_0.z         ||    'MR32.z  @a0, @in_1
+        a2.z = zero + in_1.y         ||    'MOVE.x  @a3, @in_3
+        a2.w = zero + in_0.y         ||    'MR32.w  @a3, @in_0
+        recip.x = zero + Q           ||    Q = K.w / in_2.z
+        a3.y = zero + in_2.x         ||    'MOVE.y  @a2, @in_2
+        a3.z = zero + in_1.x         ||    'MR32.x  @a2, @in_3
+        'nop                         ||    'waitq
+        recip.y = zero + Q           ||    Q = K.w / in_1.y
+        'nop                         ||    'waitq
+        recip.z = zero + Q           ||    Q = K.w / in_0.x
+        'nop                         ||    'waitq
+        recip.w = zero + Q           ||    'nop
+        r0.x = ACC + r0 * K.w        ||    'nop
+        r0.x = r0.x * recip.x        ||    'nop 
+        ACC.yzw = ACC - a0 * r0.x    ||    'nop
+        r0.y = ACC + r0 * K.w        ||    'nop
+        r0.y = r0.y * recip.y        ||    'nop
+        ACC.zw = ACC - a1 * r0.y     ||    'nop
+        r0.z = ACC + r0 * K.w        ||    'nop
+        r0.z = r0.z * recip.z        ||    'nop
+        ACC.w = ACC - a2 * r0.z      ||    %bufferlen = %K + 36u
+        r0.w = ACC + r0 * K.w        ||    %pa    = %bufferlen - %pa
+        r0.w = r0.w * recip.w        ||    'nop
+
+        # Flip the quadwords in the answer vector
+
+        tmp.x = zero + r0.w          ||    'nop
+        tmp.y = zero + r0.z          ||    'nop
+        tmp.z = zero + r0.y          ||    'nop
+        tmp.w = zero + r0.x          ||    'nop
+        r0    = tmp + K.x            ||    'nop     
+        tmp.x = zero + r1.w          ||    'nop
+        tmp.y = zero + r1.z          ||    'nop
+        tmp.z = zero + r1.y          ||    'nop
+        tmp.w = zero + r1.x          ||    'nop
+        r1    = tmp + K.x            ||    'nop     
+        tmp.x = zero + r2.w          ||    'nop
+        tmp.y = zero + r2.z          ||    'nop
+        tmp.z = zero + r2.y          ||    'nop
+        tmp.w = zero + r2.x          ||    'nop
+        r2    = tmp + K.x            ||    'nop     
+
+        'nop[e]                      ||    'nop
+        'nop                         ||    'nop
+
+        ~%pa
+        ~%pans
+        ~%bufferlen
+        ~r0
+        ~r1
+        ~r2
+        ~in_0
+        ~in_1
+        ~in_2
+        ~in_3
+        ~a0
+        ~a1
+        ~a2
+        ~a3
+        ~a4
+        ~a5
+        ~a6
+        ~a7
+        ~recip
+        ~zero
+        ~tmp
+
+'strsv:
+        %pa
+        x0
+        x1
+        x2
+       
+        in_0
+        in_1
+        in_2
+        in_3
+        a0
+        a1
+        a2
+        a3
+        a4
+        a5
+        a6
+        a7
+        recip
+        zero
+
+        zero = K - K                 ||    a0 << (%pa+0)
+        'nop                         ||    a1 << (%pa+1)
+        'nop                         ||    a2 << (%pa+2)
+        'nop                         ||    a3 << (%pa+3)
+
+        'nop                         ||    Q = K.w / a0.x
+        'nop                         ||    'waitq
+        recip.x = zero + Q           ||    Q = K.w / a1.y
+        'nop                         ||    'waitq
+        recip.y = zero + Q           ||    Q = K.w / a2.z
+        'nop                         ||    'waitq
+        recip.z = zero + Q           ||    Q = K.w / a3.w
+        'nop                         ||    'waitq
+        recip.w = zero + Q           ||    'nop
+
+        ACC = K - K                  ||    'nop
+
+        x0.x = x0.x * recip.x        ||    'nop
+
+        ACC.yzw = ACC - a0 * x0.x    ||    'nop
+        x0.y = ACC + x0 * K.w        ||    'nop
+        x0.y = x0.y * recip.y        ||    'nop
+
+        ACC.zw = ACC - a1 * x0.y     ||    'nop
+        x0.z = ACC + x0 * K.w        ||    'nop
+        x0.z = x0.z * recip.z        ||    'nop
+
+        ACC.w = ACC - a2 * x0.z      ||    'nop
+        x0.w = ACC + x0 * K.w        ||    'nop
+        x0.w = x0.w * recip.w        ||    'nop
+
+
+
+        'nop                         ||    a0 << (%pa+12)
+        'nop                         ||    a1 << (%pa+13)
+        'nop                         ||    a2 << (%pa+14)
+        'nop                         ||    a3 << (%pa+15)
+
+        ACC = K - K                  ||    'nop
+
+        ACC = ACC - a0 * x0.x        ||    'nop
+        ACC = ACC - a1 * x0.y        ||    'nop
+        ACC = ACC - a2 * x0.z        ||    'nop
+        ACC = ACC - a3 * x0.w        ||    'nop
+
+        'nop                         ||    a0 << (%pa+16)
+        'nop                         ||    a1 << (%pa+17)
+        'nop                         ||    a2 << (%pa+18)
+        'nop                         ||    a3 << (%pa+19)
+
+        'nop                         ||    Q = K.w / a0.x
+        'nop                         ||    'waitq
+        recip.x = zero + Q           ||    'nop
+
+        'nop                         ||    Q = K.w / a1.y
+        'nop                         ||    'waitq
+        recip.y = zero + Q           ||    'nop
+
+        'nop                         ||    Q = K.w / a2.z
+        'nop                         ||    'waitq
+        recip.z = zero + Q           ||    'nop
+
+        'nop                         ||    Q = K.w / a3.w
+        'nop                         ||    'waitq
+        recip.w = zero + Q           ||    'nop
+
+        x1.x = ACC + x1 * K.w        ||    'nop
+        x1.x = x1.x * recip.x        ||    'nop
+
+        ACC.yzw = ACC - a0 * x1.x    ||    'nop
+        x1.y = ACC + x1 * K.w        ||    'nop
+        x1.y = x1.y * recip.y        ||    'nop
+
+        ACC.zw = ACC - a1 * x1.y     ||    'nop
+        x1.z = ACC + x1 * K.w        ||    'nop
+        x1.z = x1.z * recip.z        ||    'nop
+
+        ACC.w = ACC - a2 * x1.z      ||    'nop
+        x1.w = ACC + x1 * K.w        ||    'nop
+        x1.w = x1.w * recip.w        ||    'nop
+
+
+
+        'nop                         ||    a0 << (%pa+24)
+        'nop                         ||    a1 << (%pa+25)
+        'nop                         ||    a2 << (%pa+26)
+        'nop                         ||    a3 << (%pa+27)
+        'nop                         ||    a4 << (%pa+28)
+        'nop                         ||    a5 << (%pa+29)
+        'nop                         ||    a6 << (%pa+30)
+        'nop                         ||    a7 << (%pa+31)
+
+        ACC = K - K                  ||    'nop
+
+        ACC = ACC - a0 * x0.x        ||    'nop
+        ACC = ACC - a1 * x0.y        ||    'nop
+        ACC = ACC - a2 * x0.z        ||    'nop
+        ACC = ACC - a3 * x0.w        ||    'nop
+        ACC = ACC - a4 * x1.x        ||    'nop
+        ACC = ACC - a5 * x1.y        ||    'nop
+        ACC = ACC - a6 * x1.z        ||    'nop
+        ACC = ACC - a7 * x1.w        ||    'nop
+        'nop                         ||    a0 << (%pa+32)
+        'nop                         ||    a1 << (%pa+33)
+        'nop                         ||    a2 << (%pa+34)
+        'nop                         ||    a3 << (%pa+35)
+        'nop                         ||    Q = K.w / a0.x       
+        'nop                         ||    'waitq
+        recip.x = zero + Q           ||    'nop
+        'nop                         ||    Q = K.w / a1.y               
+        'nop                         ||    'waitq
+        recip.y = zero + Q           ||    'nop
+        'nop                         ||    Q = K.w / a2.z
+        'nop                         ||    'waitq
+        recip.z = zero + Q           ||    'nop
+        'nop                         ||    Q = K.w / a3.w
+        'nop                         ||    'waitq
+        recip.w = zero + Q           ||    'nop
+        x2.x = ACC + x2 * K.w        ||    'nop
+        x2.x = x2.x * recip.x        ||    'nop 
+        ACC.yzw = ACC - a0 * x2.x    ||    'nop
+        x2.y = ACC + x2 * K.w        ||    'nop
+        x2.y = x2.y * recip.y        ||    'nop
+        ACC.zw = ACC - a1 * x2.y     ||    'nop
+        x2.z = ACC + x2 * K.w        ||    'nop
+        x2.z = x2.z * recip.z        ||    'nop
+        ACC.w = ACC - a2 * x2.z      ||    'nop
+        x2.w = ACC + x2 * K.w        ||    'nop
+        x2.w = x2.w * recip.w        ||    'nop
+
+        'nop[e]                      ||    'nop
+        'nop                         ||    'nop
+
+        ~%pa
+        ~x0
+        ~x1
+        ~x2
+
+        ~in_0
+        ~in_1
+        ~in_2
+        ~in_3
+        ~a0
+        ~a1
+        ~a2
+        ~a3
+        ~a4
+        ~a5
+        ~a6
+        ~a7
+        ~recip
+        ~zero
+
+    # Transposed multiply-add 12x12 block
+
+# A is 12x12, x and y are 12x1
+#
+# A is of course 'transpose wallpapered'
+# 
+# y += At * x
+# 
+# Input: y in vf1 thru vf3
+#        x in vf4 thru vf6
+# 
+#        A in memory starting at ITOP
+# 
+# Output: y (still in vf1 thru vf3)
+
+# Note these declarations rely on eac using the registers in turn and
+# starting at vf1.
+
+# This one is optimized for space
+
+y0
+y1
+y2
+
+x0
+x1
+x2
+
+# These don't
+
+a0
+a1
+a2
+a3
+
+t0
+t1
+t2
+t3
+
+zero
+%start
+%blk
+%ra
+%ra2
+%proc_block
+%proc_load_block
+
+'trmuladd:
+
+    # Actually, it's not double-buffered yet, and won't be anytime
+    # soon, because it isn't any longer the hotspot. We don't set ITOP in
+    # the VIF chain, so it's safer just to say it starts at the top.
+
+
+#    'NOP             ||  'XITOP  @%start
+    %start = %K - %K
+
+    # NOTE NOTE NOTE NB WARNING THESE OFFSETS CHANGE IF YOU CHANGE ANY
+    # OF THE CODE, MAKE SURE THEY'RE UP TO DATE, OR NOTHING WILL WORK !!!!
+
+    zero = K - K     ||  %proc_block = %K + 477u
+    %proc_load_block = %K + 490u
+
+    ACC = y0 + K.x   ||    'JALR  @%ra, @%proc_block
+    %blk = %start + %K
+    y0  = ACC + t3 * x2.w
+
+    ACC = y1 + K.x   ||    'JALR  @%ra, @%proc_block
+    %blk = %start + 4u  
+    y1  = ACC + t3 * x2.w
+
+    ACC = y2 + K.x   ||    'JALR  @%ra, @%proc_block
+    %blk = %start + 8u
+    y2  = ACC + t3 * x2.w
+
+    'NOP[E] ||   'NOP
+    'NOP    ||   'NOP
+
+'proc_block:
+
+    'NOP    ||   'JALR  @%ra2, @%proc_load_block 
+    'NOP    ||   'NOP
+
+    ACC = ACC + t0 * x0.x  
+    ACC = ACC + t1 * x0.y    ||    %blk = %blk + 12u
+    ACC = ACC + t2 * x0.z    ||    'JALR  @%ra2, @%proc_load_block
+    ACC = ACC + t3 * x0.w  
+
+    ACC = ACC + t0 * x1.x  
+    ACC = ACC + t1 * x1.y    ||    %blk = %blk + 12u 
+    ACC = ACC + t2 * x1.z    ||    'JALR  @%ra2, @%proc_load_block
+    ACC = ACC + t3 * x1.w  
+
+    ACC = ACC + t0 * x2.x  
+    ACC = ACC + t1 * x2.y    ||    'JR  @%ra 
+    ACC = ACC + t2 * x2.z  
+
+'end_proc_block:
+
+'proc_load_block:
+
+    a0 << (%blk)
+    a1 << (%blk+1)
+    a2 << (%blk+2)
+    a3 << (%blk+3)
+
+    t0.y = zero + a1.x    ||    'MOVE.y  @t1, @a1
+    t0.z = zero + a2.x    ||    'MR32.x  @t1, @a0
+
+    t1.z = zero + a2.y    ||    'MOVE.x  @t0, @a0
+    t1.w = zero + a3.y    ||    'MR32.w  @t0, @a3
+
+    t2.x = zero + a0.z    ||    'MOVE.w  @t3, @a3
+    t2.w = zero + a3.z    ||    'MR32.z  @t3, @a2
+
+    t3.x = zero + a0.w    ||    'MR32.y  @t2, @a1
+    'NOP                  ||    'JR      @%ra2
+    t3.y = zero + a1.w    ||    'MOVE.z  @t2, @a2
+
+'end_proc_load_block:
+
+~y0
+~y1
+~y2
+~x0
+~x1
+~x2
+~a0
+~a1
+~a2
+~a3
+~t0
+~t1
+~t2
+~t3
+~zero
+~%start
+~%blk
+~%ra
+~%proc_block
+~%ra2
+~%proc_load_block
+
+__end_expression_asm

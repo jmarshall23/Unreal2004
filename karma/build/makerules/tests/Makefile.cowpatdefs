@@ -1,0 +1,23 @@
+# $Id: Makefile.cowpatdefs,v 1.2.8.1 2002/04/11 03:45:35 jamesg Exp $
+# $Name: t-stevet-RWSpre-030110 $
+#
+# Test cowpat defs
+
+indent+=|
+
+.PHONY: all
+all: win32 linux-i686 linux-sa1100
+	@:
+
+.PHONY: win32
+win32:
+	${q}echo '${MAKELEVEL} ${indent}[$@]'
+	${q}${MAKE} --no-print-directory -f ../Make.defs.win32 -f Mak.cowpatdefs.test '&os:=win32'
+
+.PHONY: linux-i686 linux-sa1100
+linux-i686 linux-sa1100: cpu=$(patsubst linux-%,%,$@)
+linux-i686 linux-sa1100:
+	${q}echo '${MAKELEVEL} ${indent}[$@]'
+	${q}${MAKE} $(strip --no-print-directory -f ../Make.defs.linux \
+		-f ../Make.defs.linux.${cpu} \
+		-f Mak.cowpatdefs.test '&os:=linux' '&cpu:=${cpu}')

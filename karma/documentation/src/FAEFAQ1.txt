@@ -1,0 +1,593 @@
+FAQ: Advice on using Karma from the Karma Field Application Engineers
+
+Edited: B.Marshall 7/3/01 v1.0.1
+
+DYNAMICS: JOINTS
+
+ Q. How do I attach a body to the world at a fixed point?  I tried
+    attaching with a ball-socket joint to a NULL body pointer, as is
+    "MdtBSJointSetBodies(joint, body, 0)" but it didn't work.
+
+ A. Do you want to:
+
+    1) 'join' a body to the world or
+    2) just fix a body completely in space?
+
+    in either case:
+
+    1) Make sure you set the bodies before you enable the joint or set
+       its position. You should get a warning message (using the 'check'
+       or 'debug' libraries) anyway if you try and change the bodies
+       once a joint is enabled. Also make sure the bodies are in the
+       correct position before you set the position of the joint.
+
+    2) If something is just fixed in space, you won't want a body for it
+       at all. Just have a collision model if necessary. Anything you
+       would want to join to this body, join to the world instead.
+
+ Q. I need to a joint to approximate a human hip, but 
+    am not clear how to do this?
+
+ A. Imagine the primary axis of your body is in the same as the leg
+    bone. The hip can rotate a limited amount around this axis but also
+    rotate about 120 degrees perpendicular to the primary axis, which
+    allows you to raise and lower your thigh.  The joints to use would
+    be combination of ball and socket and two cone limits. The ball and
+    socket linearly constrains the body. The first cone limit axis is
+    defined as the line which the thigh bone would make if it is near
+    halfway raised. The second cone limit axis is defined perpendicular
+    to this (sideways to the front on the human body) and with a half
+    angle that limits the rotation about the thigh bone axis.
+
+    Cone limits can be similarly be used for shoulders and other less
+    obvious joints.  Visualising how a cone limit works can sometimes be
+    difficult. The best way we have found to do it is imagine a sphere
+    inside a separate slightly larger sphere shell. Then imagine taking a
+    stick a making a hole in the outer shell so that stick just fits through
+    and attaches to the inner sphere. This stick is your cone primary axis,
+    it cannot move because the hole made in the sphere shell is small, but
+    can rotate about it's own axis and rotate the sphere inside - the body
+    it is attached to. If the hole is made larger the stick is free to move
+    around more. This is essentially increasing the cone limit angle.  This
+    is all straightforward enough, but becomes more complex when another
+    stick is added perpendicular to the original through another hole. If
+    both are linked to the sphere the original stick cannot rotate through
+    360 degrees as before and is limited to the cone angle of the second
+    stick.
+
+
+ Q. How do you obtain forces from contacts to use for extra gameplay
+    elements ? i.e. the doors being blown off in the demo "Revolver"or a
+    sound of an impact
+
+ A. You would need to check at each time step to see if objects are in
+    contact. The force that you need to check for damage in joint can be
+    obtained using:
+    
+      void MEAPI MdtConstraintGetForce (MdtConstraintID c, unsigned int
+      bodyindex,MeVector3 f) 
+
+    This returns the force, in the world reference frame, applied to a
+    body by constraint c on the previous timestep.
+
+    To generate sounds between two object colliding you first need to
+    work out the forces from the contacts. When two objects collide they
+    generate a contact group. In the per pair callback, obtain the first
+    contact by using MdtBodyGetFirstContact function, and then
+    MdtBodyGetNextContact for the others until 0 is returned. Use
+    MdtContactGetForce to obtain the collision force for each of the
+    contacts.
+
+DYNAMICS: INERTIA TENSORS
+
+ Q. Since Karma uses only spherical inertia tensors how do simulate
+    objects that have an obvious non- symmetric mass distribution
+    i.e. long thin poles
+
+ A. Yes, at the moment Karma approximates any inertia tensor that you
+    give to it to be spherical (i.e. diagonal with the same
+    number). There are a number of reasons for this (see page 102 of the
+    dynamics developer guide). For most things we've tried this actually
+    works fine in practice. In the future we will offer a switch to
+    allow Kea to use the full inertia matrix provided.
+
+    However, if you want to replicate non-spherical inertia now, you can
+    attempt to join two or more bodies together. It is possible to
+    connect them with an Angular3 to limit the three degrees of rotation
+    and a ball and socket joint to limit the linear degrees of rotation.
+    However, this will also increase overhead. More inventive methods,
+    such as using a ball and socket and stiff spring between the two
+    bodies, might be possible but has not been tried.
+
+
+DYNAMICS: DETERMINISM
+
+ Q. When I reset some of the demos the behaviour is not exactly
+    replicated each time - does this mean Karma is not deterministic?
+
+ A. No, not in the new version anyway. In the last version of Karma (v
+    1.02) to reset a scene properly you need to completely destroy and
+    reset the scene.  The variation in the scene restoration when it is
+    restarted is caused by persistent data. This causes a variation in
+    the order of data stored in memory that is subsequently sent to the
+    constraint solver resulting in slightly different behaviour.
+
+    In the new release, this problem is solved by providing sorting
+    calls on collision and dynamics objects such that if the simulation
+    data set up by the user is the same, the sort will arrange these in
+    a deterministic order in memory. At present limits constraints will
+    also need re-setting to their starting values.
+
+    If you need to re-start from a certain previous time frame you will
+    also need to store the transforms yourself.  Note that depending on
+    exactly what you need, you can get
+
+    - An object's quaternion using MdtBodyGetQuaternion(object, MeVector4)
+    - An object's orientation using MdtBodyGetOrientation (object, MeMatrix3)
+    - An object's position using MdtBodyGetPosition (object, MeVector3)
+
+    Depending on your application, this may save you memory if you need
+    to store data for a large number of objects.
+
+DYNAMICS: GENERAL
+
+ Q. I have dropped an object onto a surface which works fine. However,
+    when I apply an explicit force to it nothing happens, except when
+    another object touches it, sending it quickly off in a random
+    direction?
+
+ A. What is happening is that the body has come to rest on the ground
+    and been automatically disabled. When the explicit force is applied
+    it does not re-enable the body and what happens is that the force
+    accumulates in the system until the body is enabled. Enabling will
+    occur when the other object touches it. You will need to enable the
+    body when applying an explicit force.
+
+
+COLLISION: TRIANGLE LIST
+
+ Q. I need to use a collision primitive for my terrain, what should I
+    use, triangle lists, heightfield or triangle mesh?
+
+ A. This is answer is quite simple, use triangle lists (tri-lists).
+    There are a number of reasons for this but in the main we have
+    listened to the needs of our customers and tri-list provides the
+    flexibility and speed that is needed to be integrated with their
+    various triangle storage systems. There are also reasons not to use
+    tri-mesh and heightfield. Tri-mesh was developed with engineering
+    solutions in mind, i.e. collision between two complex shaped
+    objects. It is not really applicable to games and the collisions are
+    between two tri-meshs. It will be degraded in future releases so
+    please do not base your game around it. If you need to do collisions
+    between two complex shaped objects use an "aggregated" set of convex
+    hulls. Heightfield was believed to be useful for terrain but is not
+    flexible enough to deal with the ever expanding number of methods of
+    storing triangles for terrain.
+
+ Q. Ok, so I'm going to use tri-list, what were the problems with it
+    before and how is it easier to use now?
+
+ A. To start with the documentation on tri-list was lacking detail, but
+    in the new release that has been addressed. Tri-list was derived
+    from a specific Renderware tri- list function that is now obsolete.
+
+    Triangle list also has improved functionality. Tri-list tests for
+    static intersection of a primitive against a number of triangles,
+    and generates for each triangle a set of contacts. In 1.0, the
+    contact set is the set of points of intersection of the primitive
+    and the triangle, and the contact normal is the direction of minimal
+    penetration, i.e. the direction of the vector of minimal length
+    along which translating one of the objects will result in
+    separation. This presents a number of problems when e.g.
+    triangulating a height field. Thus, in 1.1, each triangle has a
+    number of associated flags:
+
+    kMcdTriangleTwoSided
+      if this flag is set, the triangle is two-sided (as at present).
+      Otherwise the intersection normal is flipped if necessary so that
+      its dot product with the input normal is >0.
+
+    kMcdTriangleUseSmallestPenetration
+      if this flag is set, the intersection plane is the plane of
+      smallest penetration with the triangle (i.e. it may try and push a
+      box out of the edge of the triangle). If not, the plane of
+      separation (which also defines the contact normal) is always
+      perpendicular to the triangle face (but if the triangle is two-
+      sided, may be the reverse of the normal).
+
+    kMcdTriangleUseEdgeContacts
+      if this is set, contacts are generated where the triangle edges
+      pass through the box. Otherwise they're only generated where the
+      box edge passes through the triangle.
+
+    If all these flags are set, with the value kMcdTriangleStandard, the
+    behaviour is as in Karma 1.0.
+
+    Another important improvement is that tri-list now also collides
+    with convex hulls and cylinders.
+
+    A bounding box bug that occurs when moving tri-lists has also been
+    fixed.
+
+ Q. What is the best way to use triangle lists?
+
+ A. Karma collision stores the extents of the bounding box around the
+    terrain that can be changed dynamically if necessary.
+
+    Karma collision does the bounding box - object farfield collision
+    test and if there is an intersection, calls the user defined
+    callback and passes control to your application.  It is then left to
+    the user to generate the (culled) list of which triangles within the
+    bounding box to pass onto Karma so that the nearfield tests can be
+    performed. You could pass all of your triangles back, but this would
+    be excessive.  In the ideal case, the number of triangles in the
+    list will be as low as possible. As an alternative method you could
+    do all your triangle culling before the main call to Karma which may
+    reduce the callback work for some applications.
+
+    The main problem you may come across is when apparently spurious
+    contacts are generated, causing the colliding object to move in
+    unexpected direction suddenly.  This may be for a number of
+    reasons. Firstly, edge contacts are notorious for creating strange
+    contacts, mainly because if the surface is relatively smooth edges
+    are not expected. Tri-list contains no connectivity information so
+    if you know that you have a smooth surface then it is best to turn
+    off edge contact generation. Similarly, since there is no
+    connectivity information, if triangles are passed to tri-list and
+    they occupy the same triangle space, two exactly the same contacts
+    may be generated. This sometimes causes problems with Kea. If you
+    suspect this is happening then it is best in the per pair callback
+    routine to cull similar contacts (see MstBridge in documentation).
+
+    Remember that the order of the vertices has to correspond to the
+    normal you give it according to a 'right-hand' system. So it looks
+    like your 'top' triangle has the vertices in the wrong order. Also -
+    just setting the contact position/penetration to fixed numbers in
+    the callback might cause some odd behaviour.
+
+    While using tri-lists, try to draw your generated contacts for
+    debugging purposes, it will help a great deal if any of the above
+    quirks occur.
+
+COLLISION: HEIGHTFIELDS
+
+ Q. If I have a very simple demo and really want to use Heightfield, how
+    does Karma interpolate the height field nodes to get the height
+    between nodes?
+
+ A. The height within one 'square' of the heightfield is just linearly
+    interpolated as two triangles:
+
+    <low-X, low-Y>,<low-X, high-Y>,<high-X, low-Y>
+    <low-X, high-Y>,<high-X, low-Y>,<high-X, high-Y>
+
+ Q. When I set up a height field in the collision space, do I have to
+    freeze it?
+
+ A. No, but it is useful to. In the same way as the plane is frozen in
+    the simple Karma examples, you should freeze any 'static' collision
+    models. Note though that if you wish to move a frozen model, you
+    should un-freeze it, change the transform, update it and then freeze
+    it again.
+
+    This is for speed reasons. The 'near-field' contact-generation tests
+    are only called for pairs of models where at least one is
+    un-frozen. When a body comes to rest on the ground and is
+    auto-disabled by Mdt, its collision model is frozen
+    automatically. Then the body-ground collision test will not be
+    called until the body is re-enabled again.  Also, if an object is
+    frozen, no work is done updating relative transforms etc. each frame
+    for it.
+
+    COLLISION: GENERAL TIPS
+
+ Q. How do I add an object into a collision space which interacts only
+    with 1 other specified object?
+
+ A. Two ways to do this:
+
+    1) Insert into the McdSpace farfield as usual, and just make lots of
+       calls to McdSpaceDisablePair to disable interaction with each
+       model in turn. Easy, but not very elegant.
+
+    2) Don't insert the model into the McdSpace at all. Each time you
+       call McdSpaceUpdate, update the model yourself by calling
+       McdModelUpdate. Updating a model recalculates its position using
+       any relative transforms, updates its AABB etc.
+
+    Now, look in MstBridge.c, function MstBridgeUpdateContacts, to see
+    where you currently gets pairs of potentially-colliding models out
+    of the McdSpace and process them. You can change this to do all the
+    pairs generated by the farfield, and then make a model pair yourself
+    containing the model you didn't insert, and the one thing it can hit
+    in the space, e.g. (please use this as a guide only!):
+
+    {
+	MeBool pairOverflow;
+	McdSpacePairIterator spaceIter;
+	McdModelPair* pair;
+
+	/* end state-modification mode, ready
+	   for state queries */
+	McdSpaceEndChanges(s);
+
+	/* Initialise iterator for this space. */
+	McdSpacePairIteratorBegin(s, &spaceIter);
+
+	/* Keep getting pairs from farfield until we're done. */
+	do
+	{
+	    McdModelPairContainerReset(b->pairs);
+	    pairOverflow = McdSpaceGetPairs(s, &spaceIter, b->pairs);
+
+	    /* Initialises 'Hello' pairs and clears
+	       'Goodbye' pairs. */
+	    MstHandleTransitions(b->pairs);
+
+	    /* Generate collision information and pass to dynamics. */
+	    MstHandleCollisions(b->pairs, s, w, b);
+	}
+	while(pairOverflow);
+
+	McdModelPairContainerReset(b->pairs);
+
+	/* Make a model pair containing my model (not in the space),
+	   and the one it can hit. */
+	pair = McdModelPairCreate(myModel, hitModel);
+
+	/* Put the pair into the container. */
+	b->pairs->helloFirst = b->pairs->helloFirst - 1;
+	b->pairs->array[helloFirst] = pair;
+
+	/* As before. This will 'hello' this model
+	   pair and do the test. */
+	McdHello(pair);
+	MstHandleCollisions(b->pairs, s, w, b);
+	McdGoodbye(pair);
+
+	/* Now clean up. */
+	McdModelPairDestroy(pair);
+
+	/* end of state-query mode, ready for
+	   state modifications. */
+	McdSpaceBeginChanges(s);
+    }
+
+    Obviously this could be improved further by doing a quick AABB test
+    on the two models before creating a model pair for them.
+
+    {
+	MeBool overlap = 1;
+	MeVector3 myMin, myMax, hitMin, hitMax;
+
+	/* Get bounding box from each model. */
+	McdModelGetAABB(myModel, myMin, myMax);
+	McdModelGetAABB(hitModel, hitMin, hitMax);
+
+	/* Do test. */
+	if(myMax[0] < hitMin[0] || myMin[0] > hitMax[0] ||
+	   myMax[1] < hitMin[1] || myMin[1] > hitMax[1] ||
+	   myMax[2] < hitMin[2] || myMin[2] > hitMax[2])
+	   overlap = 0;
+
+	if(overlap)
+	{
+	    /* Make model pair, hello, add to container, handle collisions,
+	       goodbye, destroy. */
+	}
+    }
+
+    It should also be easy to extend the many of your own models, but
+    make sure the ModelPairContainer is big enough when you add them!
+
+
+ Q. I'm using cylinders for lampposts in my game and there are many of
+    them. Is it worth reusing an existing model or is cheaper to release
+    the old one and create a new one?
+
+ A. First of all, remember that many models can share the same
+    geometry. So if you only have a couple of different sizes of
+    lampposts, you can just create one McdCylinder for each size, and
+    direct each model to the correct geometry. The RainbowChain and
+    ManyPendulums examples show this.
+
+    As for re-using McdModels, this is probably a good idea. There is
+    actually very little overhead in creating or destroying McdModels,
+    because they are simply added or removed from a pool that is
+    allocated at setup time. However, inserting and removing the model
+    from the farfield McdSpace does have some overhead. It would
+    probably be much quicker to simply change the position of an
+    McdModel to represent a new lamppost object.
+
+    McdSpace works by keeping three axis-sorted lists of 'start' and
+    'end' markers for objects in the scene. Whenever an object moves,
+    the farfield updates for any markers that are passed. When you
+    remove or add an object to the farfield it has to first be moved to
+    or from infinity, passing any markers on the way. Moving it a small
+    distance inside the farfield passes less markers.
+
+
+ Q. I'm confused as to where the McdModel transform is held?
+
+ A. Each McdModel has a pointer to a transform, rather than storing one
+    internally itself. When you call McdModelSetBody it sets the
+    McdModel to point to the transform held inside the MdtBody. If you
+    call McdModelSetTransformPtr after this, you will change where the
+    McdModel looks for its transform.  If, for example, the transform
+    you pass in to McdModelSetTransformPtr is only declared locally, it
+    could cause a crash when it tries to access it inside
+    collision. Also, because the McdModel no longer points to the
+    dynamics transform, it won't move as the MdtBody does.
+
+    If you have tied an MdtBody and McdModel together, and you want to
+    move it, use MdtBodySetPosition etc. instead.
+
+PERFORMANCE: LEVELS OF DETAIL IN PHYSICS
+
+ Q. I've prototyped my game with many objects in the world and that
+    works fine. However, our level designers have now populated the
+    world with lots and lots of objects, and things are starting to bog
+    down a bit. What can you suggest we do to speed up the frame rate?
+
+ A. Ok- there are LOTS that can be done to make situations go faster. To
+    start with, check your performance bar to see if it's a constant
+    slowness, or just 'spiking' occasionally. Are there particular
+    situations that cause it to slow down?
+
+    The first thing to know is that the basic static/dynamic box
+    friction model can make large systems go more slowly. Try (as a
+    test) turning off friction for objects against the world and see if
+    it helps. When friction is turned on and bodies come into contact it
+    will call the Linear Complementary Problem (LCP) solver. If a body
+    comes in and out of contact it creates discontinuities in the forces
+    causing an action in the solver called 'pivoting'. This also occurs
+    when an object moves from static to dynamic friction.
+
+    Pivoting can cause slowness for large systems and is more pronounced
+    on the PS2 version than the PC. One solution we've found is not to
+    use box friction and use slip instead. This eliminates the change
+    from static to dynamic friction. The way to totally turn off LCP is
+    to also to set MaxAdhesiveForce to ME_INFINITY for every material,
+    or in the contact parameters. This eliminates LCP pivots on
+    colliding objects. The down side of this is that for one frame, the
+    colliding objects will stay in contact with one another giving the
+    impression of sticky-ness. However, when used in conjunction with
+    slip it allows the body to move.
+
+    Using no-friction and increasing damping works, but isn't great.
+
+    Large systems occur either when there is a object containing many
+    joints or situations where many objects touch each other i.e. a wall
+    with lots of bricks in. This forms a large matrix which needs
+    solving.
+
+    For the objects with many joints you could use level of detail (LOD)
+    physics modelling similar to LOD in graphics. If you can't see
+    something or you are a long way from it, you can degrade the
+    friction model/cull more contacts etc. The GreaseMonkey demonstrates
+    this by having a mode where the car is made up of five bodies (one
+    chassis, four wheels) and another mode where there is one body and
+    four contacts for the wheels. Think about how your physical models
+    could be reduced in this way. It's worth remembering that however
+    fast Karma is, and will be, it will always take up a finite amount
+    of time and avoiding unnecessary calculations is usually a good
+    thing to do.
+
+ Q. What about SetMaxMatrixSize, where does this fit into LOD?
+
+ A. SetMaxMatrixSize is a method of limiting the maximum matrix size you
+    can have in Kea. Each time step, Mdt groups all bodies into 'partitions'
+    that are constrained together either by contacts or joints. A collection
+    of bodies joined together (e.g. a rag-doll) will always be in the
+    same partition. If the rag-doll hits a box, the doll and the box
+    will be in the same partition while in contact. Contacts to the
+    world do not join partitions together e.g. two boxes sat separately
+    on a static plane will be in different partitions.
+
+    The amount of memory that Kea uses to build and solve the matrix for
+    each partition is related to the square of the number of 'constraint
+    rows' in that partition. A constraint generates one constraint row
+    for each degree of freedom constrained. The number of constraint
+    rows in a partition is also an indication of the time taken to solve
+    that partition. The MdtKea library contains a function
+    MdtKeaMemoryRequired that returns the amount of memory required to
+    solve a particular set of partitions. The MeChunk utility in the
+    MeGlobals library holds a pool of memory that is automatically
+    resized as necessary and used by MdtKea each time step.
+
+    It is very difficult to predict in advance the maximum amount of
+    memory that Kea will ever require. Because it depends on the number
+    of constraints in each partition, not just the total number, any
+    theoretical upper bound is usually very high. Instead, Mdt now
+    provides the ability to reduce the number of constraint rows in any
+    partition (using MdtWorldSetMaxMatrixSize). It does this by first
+    removing friction from contacts (a friction contact adds 3
+    constraint rows, a frictionless contact adds just 1), and then
+    removing contacts altogether. This gradually degrades the 'quality'
+    of the simulation as a partition becomes too large. To decide which
+    contacts to degrade first, an 'importance' is assigned to each
+    contact. The default criteria for this are that body- world contacts
+    are more important than body-body contacts, and that more
+    penetrating contacts are more important. The user can define custom
+    importance criteria if desired by writing their own 'contact
+    importance callback' and using the MdtWorldSetContactImportanceCB
+    function. In doing so, they can take into account contact
+    visibility, distance from camera etc. Note that jointed systems will
+    not be reduced so your Kea memory size must always be larger than
+    SetMaxMatrixSize in case contacts and constraints cannot be removed.
+
+    We are working on a system that will also automatically partition
+    the world by evaluating the dependency tree of the contacts and
+    removing the weak coupling between two objects. That is, where the
+    movement between two will not grossly effect the behaviour of the
+    system as a whole. Although not automatic it is possible to do
+    manual cull with Karma. After McdSpaceUpdate() and before
+    MeWorldUpdate() is called go through the list of contact pairs and
+    find which contacts represent the collision of the two objects you
+    think are weakly dependent. Replace these with separate hard world
+    contacts. This can run for one or two frames until the matrix size
+    has reduced. You could also perform this in the per pair callback.
+
+
+ Q. Could you provide a table of numbers, which indicates the relative
+    speed of collision detection and contact generation between
+    different types of primitive and non-primitive geometries?  This
+    would be very a helpful guide in making decisions about what kind of
+    collision geometries to use.
+
+    In principal there's no reason why not, and we'd be happy to publish
+    this information if we had it, but the relative speed of geometries
+    varies by platform and by the extent of completion of collision
+    optimisation. In general the order (fastest first) is spheres and
+    planes, boxes, cylinders, convex objects, triangle meshes. The speed
+    of trilist is dependent on too many factors outside Karma to be
+    predictable independent of the application.
+
+MATH: VECTOR LIBS
+
+ Q. Are the force and torque accumulators MeVector4's?
+
+ A. Yes they are, inside the MdtKeaBody struct, held inside the MdtBody
+    struct.  The MdtKea structures are designed to ensure quad-word
+    alignment for data where needed. This is needed by PS2/SSE etc. for
+    SIMD speed-ups.  The final element of each is just treated as
+    'padding'.
+
+ Q. Why are the impulse accumulators MeVector4's instead of MeVector3's?
+
+ A. Just for symmetry with the force/torque accumulators in the
+    MdtKeaBody struct. The last elements should be kept as zero for
+    safety though.
+
+APPLICATIONS: CARS
+
+ Q. What's the best primitive to use for wheels ?
+
+ A. You may find using spheres for wheels works better than using
+    cylinders.  Using a sphere means you usually have only 1 contact
+    between the wheel and the ground, and this makes tuning the handling
+    much easier. Also, its much easier to ensure you have good contact
+    information with a simpler primitive. In addition, the test is a bit
+    faster.
+
+ Q. What about steering and suspension?
+
+ A. First have a look at the CarTerrain demo in MeTutorials for an
+    example of running a simple car on an RGHeightfield.
+
+    You will probably want to 'orient' the friction direction to lie
+    along the direction of the wheel. This allows you to set different
+    properties for the 'rolling' and 'slipping' directions of the
+    tyres. The CarTerrain demo does this using the cross-product of the
+    contact normal direction and the wheel hinge direction (although you
+    might want to use a PerContactCB rather than PerPairCB).
+
+    Make sure you set the 'FastSpin' axis each timestep for each of your
+    wheels. This ensures you don't 'loose' small components of rotation
+    (eg. steering) when the wheels are spinning at high speeds.
+
+    Take care when developing your tyre model. If the force values you
+    calculate are from slip angles at low speeds you may find the angle
+    flipping a lot. When translated into a force that may cause weird
+    sideways swaying effects. As a suggestion you could use slip
+    velocity at low speeds and slip angle at high speeds.

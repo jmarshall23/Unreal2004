@@ -1,0 +1,437 @@
+Microsoft Developer Studio Workspace File, Format Version 6.00
+# WARNING: DO NOT EDIT OR DELETE THIS WORKSPACE FILE!
+
+###############################################################################
+
+Project: "BallManXb"="..\..\MeSamples\BallMan\BallManXb.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name McdCommonXb
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name MdtKeaXb
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name MdtXb
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name MeGlobalsXb
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name MeViewer2Xb
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name MstXb
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name MdtBclXb
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name McdFrameXb
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name McdConvexCreateHullXb
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name McdConvexXb
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name McdPrimitivesXb
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name MeAppXb
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "ChairXb"="..\..\MeTutorials\Chair\ChairXb.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "ConeUserGeometryXb"="..\..\MeSamples\ConeUserGeometry\ConeUserGeometryXb.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "ConvexStairsXb"="..\..\MeSamples\ConvexStairs\ConvexStairsXb.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "CraneXb"="..\..\MeSamples\Crane\CraneXb.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "CubesXb"="..\..\MeSamples\Cubes\CubesXb.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "FrictionXb"="..\..\MeSamples\Friction\FrictionXb.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "HiSpeedXb"="..\..\MeTutorials\HiSpeed\HiSpeedXb.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "HingeXb"="..\..\MeTutorials\Hinge\HingeXb.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "ManyPendulumsXb"="..\..\MeSamples\ManyPendulums\ManyPendulumsXb.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "McdCommonXb"="..\..\Mcd\src\util\McdCommonXb.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "McdConvexCreateHullXb"="..\..\Mcd\src\QHull\McdConvexCreateHullXb.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "McdConvexXb"="..\..\Mcd\src\convex\McdConvexXb.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "McdFrameXb"="..\..\Mcd\src\frame\McdFrameXb.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "McdPrimitivesXb"="..\..\Mcd\src\primitives\McdPrimitivesXb.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "MdtBclXb"="..\..\MdtBcl\src\MdtBclXb.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "MdtKeaXb"="..\..\MdtKea\src\MdtKeaXb.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "MdtXb"="..\..\Mdt\src\MdtXb.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "MeAppXb"="..\..\MeApp\src\MeAppXb.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "MeAssetDBXMLIOXb"="..\..\MeAssetDBXMLIO\src\MeAssetDBXMLIOXb.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "MeAssetDBXb"="..\..\MeAssetDB\src\MeAssetDBXb.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "MeAssetFactoryXb"="..\..\MeAssetFactory\src\MeAssetFactoryXb.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "MeGlobalsXb"="..\..\MeGlobals\src\MeGlobalsXb.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "MeViewer2Xb"="..\..\MeViewer2\src\MeViewer2Xb.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "MeXMLXb"="..\..\MeXML\src\MeXMLXb.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "MstXb"="..\..\Mst\src\MstXb.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "PrismaticXb"="..\..\MeTutorials\Prismatic\PrismaticXb.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "QuadBikeXb"="..\..\MeSamples\QuadBike\QuadBikeXb.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "RainbowChainXb"="..\..\MeSamples\RainbowChain\RainbowChainXb.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "TankXb"="..\..\MeSamples\Tank\TankXb.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "ToppleXb"="..\..\MeSamples\Topple\ToppleXb.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "TriangleListXb"="..\..\MeTutorials\TriangleList\TriangleListXb.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Global:
+
+Package=<5>
+{{{
+}}}
+
+Package=<3>
+{{{
+}}}
+
+###############################################################################
+

@@ -1,0 +1,1 @@
+<th><a href="<%PostAction%>?Sort=<%HeadTitle%>?Last=<%Sort%><%ReverseSort%>" target="_self"><%HeadTitle%></a></th>

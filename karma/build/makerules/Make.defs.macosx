@@ -1,0 +1,47 @@
+# $Id: Make.defs.macosx,v 1.5.2.1 2002/04/11 03:45:34 jamesg Exp $
+# $Name: t-stevet-RWSpre-030110 $
+#
+# vim:syntax=make:
+
+# Cowpat macro definitions for Linux toolchain
+
+# THINK CAREFULLY BEFORE EDITING THIS FILE
+# This file is included late on in Make.rules.
+# See the comments in Make.defs.win32 for what this file contains.
+
+ifneq (macosx,${&os})
+$(error Make.defs.macosx: Only for Mac OS X builds)
+endif
+
+AR:=ar
+CC:=cc
+CPP:=cpp
+CXX:=cc
+LD:=cc
+CCPLATFORM:=-DMACOSX
+CPPMAKEDEPS:=-M
+o:=o
+CCOBJ=-o # trailing space
+CC_codegoing_intodll:=-fPIC -DPIC
+CC_codegoing_intoexe:=
+ccwarn?=-Wall -W -Wpointer-arith -Wno-long-long -Winline
+CC_OPTS_none:=${ccwarn} -O0
+CC_OPTS_full:=${ccwarn} -ffast-math -fomit-frame-pointer -funroll-loops -O3
+CC_inline_none:=-fno-inline
+CC_inline_specified:=
+CC_inline_any:=-finline-functions
+CC_SYMB_none:=
+CC_SYMB_all:=-ggdb3 # Can one get more?,
+ARFLAGS:=-rc # trailing space
+LDFLAGS_SYMB_none+=-lobjc -o # trailing space
+LDFLAGS_SYMB_all+=-lobjc -o # trailing space, ToDo: Symbols for debugging - direct option to linker hence -ggdb doesn't work ... ?
+mkldlibpath:=-L%
+mklibname:=lib%.a
+mkdllname:=lib%.dylib
+mkdllimportlibname:=lib%.dylib
+mkldlinksystemlibs:=-l%
+mkexename:=%
+andthen:=&&
+extralibs+=m
+&lq:='
+&rq:='

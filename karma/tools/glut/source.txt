@@ -1,0 +1,8 @@
+The distribution of the OpenGL Utility Toolkit 
+can be found at:
+
+http://www.pobox.com/~nate/glut.html
+
+  or
+
+http://www.xmission.com/~nate/glut.html

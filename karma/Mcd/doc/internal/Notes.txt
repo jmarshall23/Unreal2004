@@ -1,0 +1,97 @@
+Priorities: 1 = Highest, 3 = Lowest
+1 = for Beta
+2 = maybe for beta
+3+= later
+
+(Weeks) (Who)   (What)
+
+Changes:
+P1:
+0		remove references to new in particles and convex!
+1	?	MeReal <- lsReal
+		Do we need EEMath.inl ?
+
+1 	?	Better error handling
+			TempAssert
+			Better error checking
+
+2		Convex contact generation fix
+1		terrain contact generation fix
+0.5		Box-Box vertex-vertex, edge-edge contact fix
+
+5	C	Framework cleanup
+			- C model, geometries, pairs, ...
+			- Dispatcher/Request broker
+			- TOD dispatcher/meta dispatcher issues
+			- PairData issues
+			- User writable primitives and intersection functions
+
+	C	- memory leak in pairwise registered interactions (convex)
+		- next, prev model : ability to loop over all models.
+	S	- check for orthonormality of rotations
+		remove curvature from contacts
+		turn pool/array/hashtable macros into templates
+
+		Restructuring according to new plan:
+		- pair pointer in results
+		- ...
+
+
+P2:
+6		Convex cleanup
+2		convex uses mesh data structure
+
+P3:
+1	?	Clean up use of core files 
+0	B	Inconsistent use of GetSize() in Array and PtrArray.
+
+
+Farfield:
+P1:
+		Allow auto resizing
+		check pairs can be swapped
+		support for keeping track of pairs per component(?)
+
+
+
+Features:
+P1:
+9	ZM 	Mesh 
+1	C	Composite design
+1	S	Composite implementation
+1	?	cone interactions
+8	ZSM	TOD
+4		Streaming of objects for load/save support
+
+		Particles:
+2	S	- changes to allow for linesegments
+3  	S	- finish interactions with basic types
+
+P2:
+  		interactions with mesh types                  3?      S
+
+P3:
+1	?	Add Sphyll-Sphyll, ...
+?	SJM	Particle and aerodynamics collision
+3	*	Simple Grid-Based Farfield
+
+
+Optimization
+P1:
+?	DW	PS2 Optmisation
+			Primitives, data flow - Framework, GJK
+P2:
+
+
+---
+
+W = Bill
+D = Dilip
+B = Brwian
+M = Mawek
+Z = Zwahong
+C = Cwis
+S = Scott
+
+
+/*<--------------------------- eighty characters ---------------------------->*/

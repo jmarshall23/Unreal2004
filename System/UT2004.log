@@ -1,0 +1,109 @@
+Log: Log file open, 11/20/24 10:43:37
+Init: Name subsystem initialized
+Init: Detected: Microsoft Windows NT 6.2 (Build: 9200)
+Init: Version: 3186 (127.29)
+Init: Compiled: Nov 20 2024 10:14:56
+Init: Command line: 
+Init: Character set: Unicode
+Init: Base directory: C:\projects\Unreal2004\System\
+Init: Ini:UT2004.ini   UserIni:User.ini
+Init: Object subsystem initialized
+Log: 	nvldumd.dll/NVIDIA GeForce RTX 4070 Ti SUPER
+Log: 	nvldumd.dll/NVIDIA GeForce RTX 4070 Ti SUPER
+Log: Game class is 'GameInfo'
+Log: Bringing Level Entry.myLevel up for play (0) appSeconds: 108.059000...
+ScriptLog: GameInfo::InitGame : bEnableStatLogging False
+Log: Browse: NvidiaLogo.ut2?Name=Player?Class=Engine.Pawn?Character=Jakob?team=255
+Log: Collecting garbage
+Log: Purging garbage
+Log: Garbage: objects: 26837->26837; refs: 272570
+Log: Game class is 'CinematicGame'
+Log: Bringing Level NvidiaLogo.myLevel up for play (0) appSeconds: 109.003000...
+Log: (Karma): Autodetecting CPU for SSE
+Log: (Karma): Using SSE Optimizations
+ScriptLog: GameInfo::InitGame : bEnableStatLogging False
+Log: ALAudio: Using DirectSound to record audio.
+Log: SET PLAYER!
+ScriptLog: New Player Player id=22e43ba8cf596238f8f2726b4cbe5a4d
+Log: Opened viewport
+Log: Enter SetRes: 1920x1200 Fullscreen 0
+Log: Using back-buffer format 22(32-bit)
+Log: Using depth-buffer format 77(32-bit)
+Log: Creating device
+Log: xD3DHelper::Init (QuadEmulation)
+Log: Startup time: 109.048000 seconds
+Log: Precaching: NvidiaLogo.LevelInfo0
+Log: Static mesh batches: 508608 vertex bytes, 110460 index bytes
+Log: Allocating 16384 byte dynamic index buffer.
+Log: Finished precaching geometry in 0.094 seconds
+Log: Finished precaching textures in 0.073 seconds
+Debug: UT2k4MainMenu.Opened()   Sender:Package.UT2k4MainMenu
+Log: URL: Adding default option Name=Player
+Log: URL: Adding default option Class=Engine.Pawn
+Log: URL: Adding default option Character=Jakob
+Log: URL: Adding default option team=255
+Log: Browse: Index.ut2?disconnect?Name=Player?Class=Engine.Pawn?Character=Jakob?team=255
+Log: Failed; returning to Entry
+ScriptLog: UT2k4MainMenu NotifyLevelChange  PendingConnection:False
+Log: GP=FALSE
+Log: Spawning new actor for Viewport WindowsViewport
+Log: SET PLAYER!
+ScriptLog: New Player Player id=22e43ba8cf596238f8f2726b4cbe5a4d
+Log: Static mesh batches: 0 vertex bytes, 0 index bytes
+Debug: UT2k4MainMenu.Opened()   Sender:None
+ScriptLog: Attempting to close a non-existing menu page
+Log: URL: Adding default option Name=Player
+Log: URL: Adding default option Class=Engine.Pawn
+Log: URL: Adding default option Character=Jakob
+Log: URL: Adding default option team=255
+Log: Browse: DM-DE-Osiris2?Game=XGame.xDeathMatch?bAutoNumBots=True?Name=Player?Class=Engine.Pawn?Character=Jakob?team=255
+Log: Collecting garbage
+Log: Purging garbage
+Log: (Karma): Level Karma Terminated.
+Log: Garbage: objects: 36464->33855; refs: 420505
+Log: Game class is 'xDeathMatch'
+Log: Bringing Level DM-DE-Osiris2.myLevel up for play (0) appSeconds: 138.208000...
+Log: (Karma): Autodetecting CPU for SSE
+Log: (Karma): Using SSE Optimizations
+ScriptLog: GameInfo::InitGame : bEnableStatLogging False
+ScriptLog: bAutoNumBots: True
+Log: Spawning new actor for Viewport WindowsViewport
+Log: SET PLAYER!
+ScriptLog: New Player Player id=22e43ba8cf596238f8f2726b4cbe5a4d
+Log: Precaching: DM-DE-Osiris2.LevelInfo0
+Log: Static mesh batches: 3277116 vertex bytes, 451926 index bytes
+Log: Allocating 16384 byte dynamic index buffer.
+Log: Allocating 26508 byte dynamic index buffer.
+Log: Finished precaching geometry in 0.473 seconds
+Log: Finished precaching textures in 0.412 seconds
+ScriptLog: START MATCH
+Log: Preprocessing:  Vertex stream total vertices: 86 Orig wedges: 86
+Log: Closing by request
+Log: appRequestExit(0)
+Exit: Preparing to exit.
+Log: Purging garbage
+Log: Unbound to Window.dll
+Log: Unbound to Core.dll
+Log: Unbound to Engine.dll
+Exit: Game engine shut down
+Log: Unbound to WinDrv.dll
+Exit: Windows client shut down
+Log: Unbound to D3DDrv.dll
+Log: Unbound to XGame.dll
+Log: Unbound to IpDrv.dll
+Log: Unbound to Editor.dll
+Log: Unbound to Fire.dll
+Log: Unbound to XInterface.dll
+Log: Unbound to UWeb.dll
+Log: Unbound to Onslaught.dll
+Log: Unbound to ALAudio.dll
+Log: Waiting for file streaming thread to finish...
+Exit: OpenAL Audio subsystem shut down.
+Log: (Karma): Level Karma Terminated.
+Log: Garbage: objects: 36442->0; refs: 420505
+Exit: Object subsystem successfully closed.
+Exit: Exiting.
+Log: FileManager: Reading 0 GByte 263 MByte 185 KByte 762 Bytes from HD took 0.309000 seconds (0.259000 reading, 0.050000 seeking).
+Log: FileManager: 0.152000 seconds spent with misc. duties
+Uninitialized: Name subsystem shut down
+Uninitialized: Log file closed, 11/20/24 10:47:14

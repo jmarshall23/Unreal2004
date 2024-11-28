@@ -1,0 +1,36 @@
+# Assuming GNU make {>v3.76}
+# $Header: /proj/Toolkits/Mcd/src/mesh/MeMakefile,v 1.4 2001/02/08 16:05:37 williamg Exp $
+# ($Name: t-stevet-RWSpre-030110 $)
+
+# vim:syntax=make:
+
+#------------------------------
+#Platform independent Makefile
+#------------------------------
+
+# What's to be built
+targetname:=McdTriangleMesh
+targettype:=library
+
+SOURCES:=\
+	mesh/BBoxFitter.cpp \
+	mesh/BVTree.cpp \
+	mesh/CxSODistTriTri.cpp \
+	mesh/CxTriangleMesh.cpp \
+	mesh/IxTriangleMeshLineSegment.cpp \
+	mesh/IxTriangleMeshTriangleMesh.cpp \
+	mesh/Jacobi.cpp\
+	mesh/McdTriangleMesh.cpp \
+	mesh/McdTriangleMeshRegisterInteractions.cpp \
+	mesh/MeshMeshDist.cpp \
+	mesh/ObbFinder.cpp \
+	mesh/ObbObb.cpp \
+	mesh/RectRectDist.cpp \
+	mesh/SSR.cpp \
+	mesh/TriTriDist.cpp \
+	mesh/TriTriIsctTest.cpp\
+
+# Standard incantation
+makerulesdir:=../../build/makerules/
+include ${makerulesdir}Make.rules
+

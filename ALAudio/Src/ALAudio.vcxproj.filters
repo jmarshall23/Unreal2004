@@ -1,0 +1,69 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Inc">
+      <UniqueIdentifier>{5a8a9c3b-9dad-4aed-9483-b14b21e5a158}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src">
+      <UniqueIdentifier>{fcb67e92-2629-4af8-8c1d-429a830d37b3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MP3">
+      <UniqueIdentifier>{3bb68715-f369-476e-844f-f6252918b83f}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\Inc\ALAudio.h">
+      <Filter>Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Inc\ALAudioCapture.h">
+      <Filter>Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="ALAudioPrivate.h">
+      <Filter>Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Inc\ALAudioStream.h">
+      <Filter>Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Inc\ALAudioSubsystem.h">
+      <Filter>Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Inc\ALAudioVoice.h">
+      <Filter>Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Inc\ALFuncs.h">
+      <Filter>Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Mp3\datatbl.h">
+      <Filter>MP3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Mp3\mp3dec.h">
+      <Filter>MP3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Mp3\mss.h">
+      <Filter>MP3</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="ALAudio.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="ALAudioCapture.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="ALAudioStream.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="ALAudioSubsystem.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="ALAudioVoice.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Mp3\mp3api.cpp">
+      <Filter>MP3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Mp3\mp3dec.cpp">
+      <Filter>MP3</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

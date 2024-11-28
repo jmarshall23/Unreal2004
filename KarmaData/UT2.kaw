@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+
+<KAT_WORKSPACE version="1.0">
+	<FILE>
+		<NAME>.\Alien.ka</NAME>
+		<RESOURCE_PATH>Models\</RESOURCE_PATH>
+	</FILE>
+	<FILE>
+		<NAME>.\Bot.ka</NAME>
+		<RESOURCE_PATH>Models\</RESOURCE_PATH>
+	</FILE>
+	<FILE>
+		<NAME>.\Human.ka</NAME>
+		<RESOURCE_PATH>Models\</RESOURCE_PATH>
+	</FILE>
+	<FILE>
+		<NAME>.\intro.ka</NAME>
+		<RESOURCE_PATH>.</RESOURCE_PATH>
+	</FILE>
+	<FILE>
+		<NAME>.\jugg.ka</NAME>
+		<RESOURCE_PATH>Models\</RESOURCE_PATH>
+	</FILE>
+	<FILE>
+		<NAME>.\Skaarj.ka</NAME>
+		<RESOURCE_PATH>Models\</RESOURCE_PATH>
+	</FILE>
+</KAT_WORKSPACE>

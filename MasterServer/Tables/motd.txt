@@ -1,0 +1,12 @@
+create table motd
+(
+	id				int not null auto_increment,
+
+	version			int not null,
+	language		char(3),
+	demo			char(1),
+	
+	message			text,
+	
+	primary key(id)
+);

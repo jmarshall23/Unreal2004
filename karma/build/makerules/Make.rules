@@ -1,0 +1,1174 @@
+# $Id: Make.rules,v 1.280 2002/02/25 08:35:22 iestyn Exp $
+# $Name: t-stevet-RWSpre-030110 $
+
+# vim:syntax=make:isk+=&,-,.
+
+# Assuming GNU make (>=v3.79)
+#
+#######################################################################
+#
+# This make file makes targets with full dependency generation. It does
+# two things:
+#
+#	1. Generates a .d file in the ${builddir} for every source file
+#	2. Generates a .mak file in the ${builddir} for every source file
+#
+# The .d files contain per-file, per-build make dependency lists, the .mak
+# files contain fully expanded make rules to compile the source file.
+#
+# Final compilation is done by combining the .mak files into a single
+# Makefile (not with that name) in ${builddir}, and then using that to do
+# the make.
+#
+# Since this target/build specific makefile is dead simple, it is easy for
+# a developer to (temporarily) edit in extremis (well, I find this dead
+# useful anyway.)
+#
+# This makefile simply contains rules for generating .mak and .d files.
+# Note that the generated makefile might be for a different target
+# platform.
+#
+# Further note:
+#	Nowadays the .mak files also include the .d files. The rules for
+#	generating object files also re-generate the .d file.
+#	GOOD:
+#		A big win in efficiency. Some compilers support generating
+#		dependencies (for free) when compiling the source.
+#	BAD:
+#		The generated makefile is no longer completely generic. It relies
+#		on some GNU-isms (inclusion, and re-generation of included files).
+#
+#######################################################################
+#
+# Naming notes
+#
+# VAR	Variable possibly overriden on make command line and thus
+#		potentially READ ONLY. These should not be modified.
+#
+# &VAR	Variables internal to cowpat, Potentially long-lived
+#
+# _VAR	Ephemeral variables. Should never be initially be set with +=
+#
+#######################################################################
+# Protability(sic.) notes
+#
+# Hah! I've given up supporting make 3.76 and up. to work properly we
+# really need stuff like static pattern rules which aren't around on
+# earlier makes. So now you need make 3.79 and above. So there.
+#
+#######################################################################
+#
+# Other notes:
+#
+# This makefile generally depends on the .d files (it includes them).
+# Thus the first thing make tries to do is the update the .d files to
+# ensure this makefile is up to date. The .d files also refer to
+# themselves, so that the act of including them here ensures this makefile
+# knows when they need to be remade (when one of the dependent C .h files
+# change for instance).
+#
+# This is not required when building the .mak file. In this case, make is
+# re-run with the command line definition "gendeps=no".
+#
+#######################################################################
+#
+# General make Notes:
+#
+# "ifdef" is be used instead of "$(if...)" as this doesn't give a warning
+# when --warn-undefined-variables is in use
+#
+#######################################################################
+#
+# Useful Command-line macros
+#
+# Mandatory:
+#	PLATFORM=linux|macosx|ps2|elate|win32|irix|trimedia
+#	BUILD=free|checked
+#	CRT=er, this is in flux at the mo
+#	OPTS=none|full
+#	SYMBOLS=none|all
+#	makerulesdir - Path to this file
+#
+# Canned configurations:
+#	config=debug|release|...
+#
+# Optional
+#	do=maks:themak:deps:compile:link:run (one or more of)
+#	dont=maks:themak:deps:compile:link:run (one or more of)
+#	gendeps=no
+#	genmaks=no
+#	installib=no
+#	PRECISION=single|double|fixed - defaults to single
+#	asserts=yes
+#
+# User Overrides
+#	builddir	object/lib/exes
+#	installdir	libs are put here
+#
+#######################################################################
+
+.SUFFIXES:	# delete default suffixes
+
+# Don't need to list our suffixes (in fact it's better not to) as we don't
+# use old-fashioned suffix rules.
+#.SUFFIXES: .cpp .c .m .d .mak .dsm .evsm .vsm
+
+#######################################################################
+#
+# Really early stuff
+#
+# Normally, the setting of ${makerulesdir} is checked by the "include
+# ${makerulesdir}Make.rules" line in a cowpat makefile. This doesn't
+# happen if you are doing everything from the command line.
+
+# _val: get the value of a (*possibly) undefined variable without a
+# "warning: undefined variable" message under --warn-undefined-variables.
+_val=$(if $(filter undefined,$(origin $1)),,${$1})
+
+# ikwid: I know what I'm doing (pah!)
+_comma:=,
+&ikwid:=$(subst ${_comma}, ,$(call _val,ikwid))
+
+ifndef makerulesdir
+$(error You must set $${makerulesdir})
+endif
+
+ifeq (,$(wildcard ${makerulesdir}Make.rules))
+$(error $${makerulesdir} is incorrectly set -- Make.rules not found!)
+endif
+
+# The stuff in Make.defs is in a separate file so that the user may
+# explicitly included it early on in a MeMakefile
+
+ifndef &Make.defs.seen
+include ${makerulesdir}Make.defs
+endif
+&cpincfiles+=Make.defs# Always add dependency
+&dsuff:=${&dsuff}# Force non-recursive
+
+# Sanity check stuff that's not checked "really early"
+include ${makerulesdir}Make.sanity # Don't bother if ikwid
+&cpincfiles+=Make.sanity
+
+#######################################################################
+#
+# Debugging
+#
+
+ifeq (1,2)
+$(warning MAKECMDGOALS = [${MAKECMDGOALS}])
+$(warning MAKEFLAGS = [${MAKEFLAGS}])
+$(warning MAKELEVEL = [${MAKELEVEL}])
+$(warning MAKEFILES = [${MAKEFILES}])
+$(warning MAKEOVERRIDES = [${MAKEOVERRIDES}])
+$(warning VPATH = [${VPATH}])
+endif
+
+#######################################################################
+# Useful internal defs
+# By default, topdir is two above ${makerulesdir}
+topdir?=$(call &canonpath,${makerulesdir}../../)
+topdir:=${topdir}
+
+$(call &ensurefinalslash,topdir)
+
+# Elate stuff by default goes here
+ifndef buildroot
+buildroot:=${topdir}${buildrootprefix}$(patsubst ${builddirprefix}%,%,${builddir})
+endif # buildroot
+
+# ${tgtpfx}, ${tgtsfx}: Undocumented command-line hacks
+
+&targetname:=${tgtpfx}$(notdir ${targetname})${&dsuff}${tgtsfx}
+&targetdir:=$(if $(filter elate,${&os}),$(dir ${targetname}))# targetdir only used on elate
+
+&systemlibs:=${extralibs}
+
+#######################################################################
+# Where are our X11 resources? We should have been told, but .....
+
+xincdir?=
+xlibdir?=
+
+ifdef autodiscoverx11
+ifneq (,$(filter ${PLATFORM},${&platformsrequiringx11}))
+# Here % represents "include" or "lib"
+&possiblexdirs:=/usr/X11/% \
+	/usr/X11R6/%/ \
+	/usr/X11R5/%/ \
+	/usr/X11R4/%/ \
+	/usr/%/X11/ \
+	/usr/%/X11R6/ \
+	/usr/%/X11R5/ \
+	/usr/%/X11R4/ \
+	/usr/local/X11/%/ \
+	/usr/local/X11R6/%/ \
+	/usr/local/X11R5/%/ \
+	/usr/local/X11R4/%/ \
+	/usr/local/%/X11/ \
+	/usr/local/%/X11R6/ \
+	/usr/local/%/X11R5/ \
+	/usr/local/%/X11R4/ \
+	/usr/X386/%/ \
+	/usr/x386/%/ \
+	/usr/XFree86/%/X11/ \
+	/usr/%/ \
+	/usr/local/%/ \
+	/usr/unsupported/%/ \
+	/usr/athena/%/ \
+	/usr/local/x11r5/%/ \
+	/usr/lpp/Xamples/%/ \
+	/usr/openwin/%/ \
+	/usr/openwin/share/%/
+
+# Look for our keyword header and make the include path point to its location:
+&look-for-x11=$(patsubst %$2,%,$(firstword $(wildcard $(addsuffix $2,$(subst %,$1,${&possiblexdirs})))))
+
+xincdir:=$(call &look-for-x11,include,X11/Intrinsic.h)
+$(if ${xincdir},,$(error cowpat: Cannot find X11 include path))
+
+# Same for libs. Try same place as includes first.
+# Use static .s rather than shared .so so that it works on cygwin
+xlibdir:=$(patsubst %libXt.a,%,$(wildcard $(addsuffix libXt.a,$(subst /include/,/lib/,${xincdir}))))
+# only if no good, try the whole list
+ifndef xlibdir
+xlibdir:=$(call &look-for-x11,lib,libXt.so)
+endif
+
+ifneq (${xlibdir},$(subst include,lib,${xincdir}))
+  $(warning [${xincdir}] [${xlibdir}])
+  $(error cowpat: Error: X11 library path does not match X11 include path)
+endif
+$(warning cowpat: autodiscoverx11: use xincdir:=${xincdir} xlibdir:=${xlibdir})
+endif # x11 platforms
+endif # autodiscoverx11
+
+#######################################################################
+#
+# Includes
+#
+
+&incpath:=${incpath}# Start with command-line version
+
+ifeq (ps2,${PLATFORM})
+&incpath+= \
+	/usr/local/sce/ee/include \
+	/usr/local/sce/ee/gcc/include \
+	${RW3_DIR}/rwsdk/include/sky
+endif # ps2
+
+# Karma ---------------------------------------------------------------
+
+ifeq (karma,${buildcontext})
+#override with meviewer=MeViewer on commandline or in makefile to get the old MeViewer
+meviewer?=MeViewer2
+
+# This path originally from the Mdt makefile.in,
+# with ../include moved to the top
+&incpath:= \
+	../include \
+	${&incpath} \
+	${topdir}${meviewer}/include \
+	${topdir}Mcd/include \
+	${topdir}Mdt/include \
+	${topdir}MdtBcl/include \
+	${topdir}MdtKea/include \
+	${topdir}MeApp/include \
+	${topdir}MeFile/include \
+	${topdir}MeGlobals/include \
+	${topdir}Mps/include\
+	${topdir}Mst/include
+
+include ${makerulesdir}Make.defs.C.karma
+
+endif # karma
+
+# Moth ----------------------------------------------------------------
+# Collision is out, at the moment.
+#	${topdir}collision/include \
+
+ifeq (moth,${buildcontext})
+_incpath:= \
+	${topdir}3d/include \
+	${topdir}extras/include \
+	${topdir}game/include \
+	${topdir}geom/include \
+	${topdir}math/include \
+	${topdir}physics/include \
+	${topdir}sound/include \
+	${topdir}3d/include \
+	${topdir}util/include \
+	${topdir}e-anim/include \
+
+# When building the library/dll or a test, we also can see the "protected"
+# headers in zInclude
+&incpath+= \
+	${_incpath} \
+	$(if $(filter internal,${api}),$(patsubst %/include,%/zInclude,${_incpath}))
+
+# Extra include paths needed for Koan sound library on Intent
+ifeq (elate,${&os})
+&incpath+= \
+	/com/sseyo/include \
+	/lang/cc/include \
+	/lang/cc/include/cp \
+	/lang/cc/include/cp/std
+endif #elate
+
+include ${makerulesdir}Make.defs.C.zenon
+
+endif # moth ${buildcontext}
+
+# Common --------------------------------------------------------------
+
+&incpath+=${xincdir}
+
+# Remove duplicates while retaining order (pah!)
+&incpath:=${hackincpath} ${&incpath} $(foreach i,${&0toMAKELEVEL},${incpath${i}})
+&incpath:=$(call &remove-duplicates,${&incpath})
+
+
+#######################################################################
+# ..Then some platform dependent macros
+
+# First a few defaults. Some macros which may eventually be platform
+# specific, but at the moment are the same for eveyone.
+
+ifeq (karma,${buildcontext})
+CPP_BUILD_free?=
+CPP_BUILD_checked?=-D_MECHECK
+endif # ${buildcontext} karma
+
+CPP_BUILD_free?=-DMZFREE
+CPP_BUILD_checked?=-DMZCHECK
+
+# CPP_doreldefs_${doreldefs}
+CPP_doreldefs_release:=-DNDEBUG
+CPP_doreldefs_debug:=-D_DEBUG
+
+#----------------------------------------------------------------------
+# Grab the platform dependent compiler definitions, keeping a list of our
+# dependent files.
+#
+# TODO: Some get a full list of included memakefiles
+
+memakefile?=MeMakefile# May need to be overridden on command-line
+
+# Note: &cpincfiles are relative to ${makerulesdir}
+&cpincfiles+=Make.rules makdeps.pl
+
+#
+# Grab the platform dependent compiler definitions
+#
+
+include ${makerulesdir}Make.defs.${&os}
+&cpincfiles+=Make.defs.${&os}
+
+#
+# ..and the cpu ones (it is allowable for these not to exist)
+#
+
+ifneq (,$(wildcard ${makerulesdir}Make.defs.${&os}.${&cpu}))
+include ${makerulesdir}Make.defs.${&os}.${&cpu}
+&cpincfiles+=Make.defs.${&os}.${&cpu}
+endif
+
+#----------------------------------------------------------------------
+#
+# Compiler command line defs
+#
+
+ifeq (default,$(origin CXX))
+$(error cowpat: internal error: $$CXX has not been overridden)
+endif
+
+# -DGCC -DSKY on Ps2 are for Greasemonkey
+# TODO: Move the if win32 stuff into the win32 defs file
+
+######################################################################
+# Library paths
+
+libdir:=${topdir}lib/${builddir}
+browsedir:=${topdir}lib/${builddir}browse/
+themakefile:=${builddir}Makefile.${&targetname}
+
+ifeq (win32,${&os})
+# ToDo: er, why? Oh yes, for Karma.
+	&libpath+=${topdir}tools/glut
+endif
+
+ifeq (ps2,${&os})
+	&libpath+=${sonylibdir} ${RW3_DIR}/rwsdk/lib/sky
+endif
+
+ifeq (trimedia,${&os})
+	&libpath+=${trimedialibdir}
+endif
+
+# Add in user defined stuff, removing duplicates while retaining order
+&libpath:=${hacklibpath} ${libpath} $(foreach i,${&0toMAKELEVEL},${libpath${i}}) ${xlibdir} ${&libpath}
+&libpath:=$(call &remove-duplicates,${&libpath})
+&libpath:=$(patsubst %,${mkldlibpath},${&libpath})
+
+# C defs use ${MAKELEVEL}
+&cdefs?=# Avoid "undefined variable" warnings
+&cdefs:=$(addprefix -D,${&cdefs} ${cdefs} $(foreach i,${&0toMAKELEVEL},${cdefs${i}}))
+cppflagshack?=
+
+CPPFLAGS:=\
+	$(strip \
+		${cppflagshack} \
+		${CCPLATFORM} \
+		$(if $(filter win32,${&os}),${CC_CRT_${CRT}}) \
+		$(if $(filter ps2,${&os}),-DGCC -DSKY) \
+		${CPP_doreldefs_${doreldefs}} \
+		${CPP_BUILD_${BUILD}} \
+		${&cdefs} $(addprefix -I,${&incpath}) \
+	)
+
+CFLAGS:= \
+	$(strip \
+		${CPPFLAGS} \
+		${CC_SYMB_${SYMBOLS}} \
+		${CC_OPTS_${OPTS}} \
+		${CC_inline_${inline}} \
+		$(if $(filter win32,${&os}),${CC_browse_${browse}}) \
+		${CC_codegoing_${codegoing}} \
+	)
+#$(error [${CFLAGS}][${CC_targettype_shared}][${CC_targettype_${targettype}}][${targettype}])
+CXXFLAGS:=${CFLAGS}
+LDFLAGS:=${&libpath} ${EXTRALDFLAGS} ${LDFLAGS_SYMB_${SYMBOLS}}# NB output file follows
+
+_pattern_library:=${mklibname}
+_pattern_shared:=${mkdllname}
+_pattern_executable:=${mkexename}
+_pattern_none:=all
+
+&targetfile:=${&targetdir}$(patsubst %,${_pattern_${targettype}},${&targetname})# Used in Elate
+target:=${builddir}${&targetfile}
+&installtarget:=${libdir}${&targetfile}
+
+$(call &ensureset,&targetfile,cowpat: internal error: &targetfile must be set)
+
+&explicitlibs:=
+&explicitdlls:=
+
+#######################################################################
+# Linking
+
+# Karma ---------------------------------------------------------------
+
+ifeq (karma,${buildcontext})
+meuberlibs?= \
+	MeFile \
+	MeApp \
+	Mst
+
+medynamicslibs?= \
+	Mdt \
+	MdtBcl \
+	MdtKea
+
+mecdlibs?= \
+	McdConvex \
+	McdPrimitives \
+	McdFrame\
+	McdConvexCreateHull \
+	McdRGHeightField \
+	McdCommon\
+
+&systemlibs+=tiff glut GL GLU
+
+# for the moment:
+#	McdParticle
+
+ifneq (trimedia,${PLATFORM})
+mecdlibs += McdTriangleMesh
+endif
+
+ifeq (ps2,${PLATFORM})
+mecdlibs+=McdRwBSP
+endif
+
+mecorelibs?= \
+	${meviewer} \
+	MeGlobals \
+
+# For the moment:
+#	Mps
+
+&explicitlibs+=$(addprefix ${libdir},${&meuberlibs} ${medynamicslibs} ${mecdlibs} ${mecorelibs})
+endif # ${buildcontext} karma
+
+# Moth ----------------------------------------------------------------
+
+ifeq (moth,${buildcontext})
+
+ifeq (executable,${targettype})
+# At the mo. we simply have the dll in ${topdir}${builddir}
+ifeq (elate,${&os})
+&explicitdlls+=${topdir}${builddir}com/mathengine/mz/lib/Zenon# HACKETY HACK HACK!
+else
+&explicitdlls+=${topdir}${builddir}Zenon${&dsuff}
+endif # else elate
+endif # executable
+endif # ${buildcontext} moth
+
+# Common --------------------------------------------------------------
+
+# Turn the system independent list of static libs/dlls into system
+# specific ones ready for linking, using patterns mkdllimportlibname &
+# mklibname. (Note: "for linking" implies we want the import libraries
+# (.lib on win32, not .dll).)
+#
+# Convert &explicitdlls to "path/libblah.so" on Linux, and "path/blah.lib" on win32
+# Convert &explicitlibs to "path/libblah.a" on Linux, and "path/blah.lib" on win32
+&explicitdependencies:=\
+	$(foreach l,${&explicitdlls},$(dir ${l})$(patsubst %,${mkdllimportlibname},$(notdir ${l}))) \
+	$(foreach l,${&explicitlibs},$(dir ${l})$(patsubst %,${mklibname},$(notdir ${l})))
+
+# Complete the list of stems
+&systemlibs+=${libs} $(foreach i,${&0toMAKELEVEL},${libs${i}})
+
+# Convert &systemlibs to "-lblah" on Linux, and "blah.lib" on win32
+&ldlibs:=\
+	$(patsubst %,${mkldlinksystemlibs},${&systemlibs}) \
+	${&explicitdependencies}
+
+#######################################################################
+# ..Then some more useful internal defs
+
+# In order to simplify the cowpat makefiles a bit, we allow
+#	SOURCES:=f1.c f2.c
+#	SOURCES_ps2:=f3.c
+#	SOURCES_ifnot_linux:=f1.c
+
+# We put these into ${&sources}
+&sources:=${SOURCES} ${SOURCES_${&os}} ${&extrasources}
+&sources+=$(foreach plat,$(filter-out ${&os},${&osses}),${SOURCES_ifnot_${plat}})
+
+ifdef ME_X86
+&sources+=${SOURCES_linux_x86}
+endif
+ifdef ME_586
+&sources+=${SOURCES_linux_586}
+endif
+ifdef ME_MMX
+&sources+=${SOURCES_linux_mmx}
+endif
+
+ifndef &sources
+$(error cowpat: I have no sources to build (set $${SOURCES}, $${SOURCES}_${&os} etc.))
+endif
+
+# Make a list of the target objects we will attempt to make. They all go
+# in ${builddir}.  $(notdir...) covers the case where the _source_ file is
+# in a subdir
+
+# First remove any libs from &sources (these are simply linked to)
+&specifiedlibs:=$(filter %.lib %.a %.so,${&sources})
+&sources:=$(filter-out %.lib %.a %.so,${&sources})
+&baresrcs:=$(notdir ${&sources})
+
+# Make lists of basenames of things in builddir (e.g., _b/1 from d/e/1.c)
+
+# target-bnams
+#	$1: suffix
+#
+# e.g.,
+#	f1_ps2.c f2_ps2.c f3.c --> $(call &target-bnams,_ps2.c) --> _b/f1_ps2 _b/f2_ps2
+&filterme:=${&baresrcs}
+&target-bnams=$(addprefix ${builddir},$(basename $(filter %$1,${&filterme})))
+
+&tgtbnams_ps2.c  :=$(call &target-bnams,_ps2.c)
+&tgtbnams_ps2.cpp:=$(call &target-bnams,_ps2.cpp)
+&tgtbnams_sse.cpp:=$(call &target-bnams,_sse.cpp)
+
+&filterme:=$(filter-out %_ps2.c %_ps2.cpp %_sse.cpp,${&filterme})
+
+&tgtbnams.c    :=$(call &target-bnams,.c)
+&tgtbnams.cpp  :=$(call &target-bnams,.cpp)
+&tgtbnams.m    :=$(call &target-bnams,.m)
+&tgtbnams.mm    :=$(call &target-bnams,.mm)
+&tgtbnams.ec   :=$(call &target-bnams,.ec)
+&tgtbnams.ecpp :=$(call &target-bnams,.ecpp)
+&tgtbnams.dsm  :=$(call &target-bnams,.dsm)
+&tgtbnams.s    :=$(call &target-bnams,.s)
+&tgtbnams.nas  :=$(call &target-bnams,.nas)
+&tgtbnams.evsm :=$(call &target-bnams,.evsm)
+&tgtbnams.rc   :=$(call &target-bnams,.rc)
+
+# A few friendly(!) asserts
+ifneq (win32,${&os})
+$(if ${&tgtbnams_sse.cpp},$(error Attempt to compile _sse file on non-windows platform))
+$(if ${&tgtbnams.rc},$(error Request to compile .rc file on non-windows platform))
+endif
+
+ifneq (ps2,${&os})
+$(if ${&tgtbnams_ps2.c}${&tgtbnams_ps2.cpp},$(error Attempt to compile _ps2 file on non-ps2 platform))
+endif
+
+# ${&objects} contain everything that gets compiled then linked. Mostly
+# these are things with a ${o} extension. Not everything has a .${o}
+# extension though (e.g, .res on win32).
+
+&bare-obj-generating-srcs:=$(filter %.c %.cpp %.m %.mm %.ec %.ecpp %.dsm %.s %.nas,${&baresrcs})
+&bare-res-generating-srcs:=$(filter %.rc,${&baresrcs})
+# Note: evsm & .vsm don't contribute to &objects
+&objects:= \
+	$(patsubst %,${builddir}%.${o},$(basename ${&bare-obj-generating-srcs})) \
+	$(patsubst %.rc,${builddir}%.res,${&bare-res-generating-srcs})
+
+## Assert that all sources have targets in &objects
+&bare-other-srcs:=$(filter-out ${&bare-obj-generating-srcs} ${&bare-res-generating-srcs},${&baresrcs})
+$(if ${&bare-other-srcs},$(error cowpat: Cannot handle source file(s): ${&bare-other-srcs}))
+
+## Assert no duplicates in &objects
+## (i.e., no two files are compiled to the same thing)
+ifneq "$(words ${&objects})" "$(words $(sort ${&objects}))"
+$(error cowpat: Source clash: Two or more files compile to the same target)
+endif
+
+## Assert that we have some objects
+$(if ${&objects},,$(error cowpat: We have no objects to build!))
+
+# For ps2, we sometimes need to pre-generate the .vsm file from the
+# corresponding .evsm files.  The trick is we have to do this _before_
+# trying to generate the .d files for the corresponding .dsm files.
+#dsms:=$(filter %.dsms,${&sources})
+evsms:=$(filter %.evsm,${&sources})
+vsms:=$(filter %.vsm,${&sources}) $(evsms:%.evsm=${builddir}%.vsm)
+
+# And also a list of the .mak files ...which correspond closely to the .d files
+&maks:=${&objects:%.${o}=%.mak}
+&maks:=${&maks:%.res=%.mak}
+
+&nonmaks:=$(filter-out %.mak,${&maks})
+$(if ${&nonmaks},$(error cowpat: Internal error: Cannot handle .mak(s): ${&nonmaks}))
+
+#######################################################################
+# Rules (output files are generally in ${builddir})
+#
+# Now we have standardised on Make 3.79, we clean things up a bit by using
+# target-specific static pattern rules (yeah!).
+
+# ${if} ${testdirexists} ${builddir} ${then} echo y ${else} mkdir ${builddir} ${fi}
+#case -- ${!glob {} {contents.html} !c} {1} {echo -- {File exists}} {*} {echo -- {File does not exist}}
+
+ifeq (no,${genmaks})
+&do-maks:=# Backwards compatability!
+endif
+
+ifdef &do-maks
+#----------------------------------------------------------------------
+#
+# .mak file generation
+#
+# .mak files contain the make rule used to make the .d and .o files, and
+# also explicitly include the .d files.
+#
+# Each generated .d file is post-processed to also name each dependency on
+# its own followed by a colon; e.g.,
+#
+#	_b_blah/f.obj _b_blah/f.d: f.c f.h \
+#	 ../../util/include/globals.h \
+#	 h.h
+#
+#	f.c f.h:
+#	../../util/include/globals.h:
+#
+#
+# WHY?
+# "Rules without Commands or Prerequisites
+#   If a rule has no prerequisites or commands, and the target of the rule
+#   is a nonexistent file, then make imagines this target to have been
+#   updated whenever its rule is run."
+#
+# This allows you to move an include file to another directory. The
+# header file will not be found at the place mentioned in the .d file.
+# These lines will allow Make to pretend to itself that the header has
+# been created afresh, causing the .d file to be out of date (it depends
+# on the missing header). The .d file is thus re-calculated removing the
+# error. (In an earlier version of cowpat, this case was covered by a
+# pattern rule in this file. Since the dependant makefiles now handle
+# dependency generation, we are effectively expanding the pattern rule
+# there.)
+
+${&maks}: ${builddir}${&recordcreationtime} # Force builddir to be created
+
+&feedback=echo 'cowpat: ${&targetname} - genmaks .mak in ${@D} for ${&<}'
+
+# Note 1: Echo escapes:
+#	Careful with "echo -e" -- Some interpret \nnn like the C escape, some
+#	don't (e.g., cygwin v. linux). Use sparingly.
+#
+# Note 2: Quoting:
+#	There are of course problems with nested ' quotes. To get around this,
+#	we once did the echoing from a shell script.
+#
+# Note 3: What's this ${&<}?
+#	In the pattern rules to make the .maks, we need the source file which
+#	they will compile (remember, the .c files may not be in the current
+#	directory). Once upon a time, we relied on a pattern rule which set $<
+#	by looking in vpath. This changed so that instead the source file is
+#	pulled from ${&sources}. ${&<} is analagous to $< -- it is the
+#	source file.
+#
+#	${&<} uses ${&ext} to generate the correct filter pattern. ${&ext}
+#	needs to be set correctly. Target specific variables fit the bill
+#	nicely here.
+#
+#	Note there's a bit of subtlety here: Consider the case where $@ is
+#	"_b/file.mak", and ${&sources} contains both "file.c" AND "pfixfile.c"
+
+&d=${@:.mak=.d}
+&obj=${@:.mak=.${o}}
+&res=${@:.mak=.res}
+&baresrc=$(basename $(notdir $@))${&ext}
+#&<=$(filter %/${&baresrc} ${&baresrc},${&sources})
+
+# Check ${&<} gives a result (this can be commented out and the above
+# simpler definition used).
+&&=$(filter %/${&baresrc} ${&baresrc},${&sources})
+&<err=$(error Internal error: \
+	${&baresrc} not found in $${SOURCES}\
+	${&nl}(perhaps $${&ext} not set for target [$@]?))
+&<=$(if ${&&},${&&},${&<err})
+
+# &sed-d-to-d-rule: Convert a .d file in the format output by "gcc -MMD"
+# into one that is suitable for use with cowpat. Note that this is used as
+# parameters to "echo", with output destined for linux and elate --
+# Careful with that quoting, Eugene!
+#
+# Wait -- there are more problems (sheesh!). Mingw make on win32 seems to
+# remove too many back-slashes if they prefix something that looks like a
+# path name.  Thus you won't find something like "\\\\\$$$$" below (as it
+# once was), but the more reasonable "[\\]\?".
+
+&sed-d-to-d-rule="sed -n"
+# Prefix the .o with the builddir, and output all lines (hope the
+# filename doesn't contain metacharacters!)
+&sed-d-to-d-rule+="-e ${&lq}s|^\([^ /]*/\)*${@F:.mak=}\.o *:|${@:.mak=.o}:|;p${&rq}"
+# Kill anything before (& including) a ':', leading white space, trailing '\\'.
+# Append a ':' to that and append the resulting line to the Hold Space
+&sed-d-to-d-rule+="-e ${&lq}s/.*://; s/^[ 	]\+//; s/ *[\\]\?\$$$$/:/; H${&rq}"
+# Print out the hold space at the end of the file
+&sed-d-to-d-rule+="-e ${&lq}\$$$$ {g;p;}${&rq}"
+# Initial .d file is left in current dir by gcc < 3.0 (grrr) and in same place as object file by GCC >= 3.0
+&sed-d-to-d-rule+="<$(notdir ${&d}) >${&d}; rm -f $(notdir ${&d});"
+
+# Do nothing rule for debugging
+#&sed-d-to-d-rule="cat $(notdir ${&d}) >${&d}"
+
+&echo-compile-c-to-d-and-o-rules=$(error cowpat: $${&echo-compile-c-to-d-and-o-rules} not implemented)
+&echo-compile-cpp-to-d-and-o-rules=$(error cowpat: $${&echo-compile-cpp-to-d-and-o-rules} not implemented)
+&cc-command-line=${CFLAGS} -c ${&<} ${CCOBJ}${&obj}
+&cc-command-line-literal:=${CFLAGS} -c $$$${&<} ${CCOBJ}$$$${&obj}
+
+ifeq (elate,${&os})
+&echo-compile-c-to-d-and-o-rules=\
+echo "	$${quiet}${CPP} ${CPPMAKEDEPS} ${CPPFLAGS} ${&<} >$(notdir ${&d})" ;\
+echo "	$${quiet}"${&sed-d-to-d-rule} ;\
+echo "	${CC} ${&cc-command-line}"
+&echo-compile-cpp-to-d-and-o-rules=\
+echo "	$${quiet}${CPP} ${CPPMAKEDEPS} ${CPPFLAGS} ${&<} >$(notdir ${&d})" ;\
+echo "	$${quiet}"${&sed-d-to-d-rule} ;\
+echo "	${CXX} ${&cc-command-line}"
+endif # elate
+
+ifneq (,$(filter linux macosx,${&os}))
+# Note: On macosx, a .m is compiled as if it were a .c
+&echo-compile-c-to-d-and-o-rules=\
+echo "	$${quiet}echo ${&lq}cowpat: ${&targetname} - compile .${o} in ${@D} from ${&<}${&rq}" ;\
+echo "	${CC} -MMD ${&cc-command-line}" ;\
+echo "	$${quiet}"${&sed-d-to-d-rule}
+&echo-compile-cpp-to-d-and-o-rules=\
+echo "	$${quiet}echo ${&lq}cowpat: ${&targetname} - compile .${o} in ${@D} from ${&<}${&rq}" ;\
+echo "	${CXX} -MMD ${&cc-command-line}" ;\
+echo "	$${quiet}"${&sed-d-to-d-rule}
+endif # linux or macosx
+
+# TODO: cl.exe always prints the filename to stderr. I'd like to suppress
+# this during the perl, but this seems more trouble than it's worth (it
+# costs 25% runtime if you play with "grep -v" and stderr. Humpf).
+
+ifeq (1,2)
+And that`s basically it -- you get the idea. It works for me.
+I also have a "hack" that lets you read the dependency information
+generated by Microsoft`s compiler. VC++ can generate a .IDB file
+containing dependency information in some alien, unreadable binary
+format. I played around with extracting dependencies using the
+following command:
+
+strings /tmp/cl/Debug/vc60.idb | grep /ipm/header/
+  | sed -e `s//ipm/header///` | grep .h | sort | uniq
+
+This appears to give the same results as makedepend, but if you
+can get the makedepend solution to work, I would trust makedepend
+more than this kludge. :)
+endif
+
+ifeq (win32,${&os})
+&echo-compile-c-to-d-and-o-rules=\
+echo "	$${quiet}perl -w ${makerulesdir}makdeps.pl '${CPP} ${CPPMAKEDEPS} ${CPPFLAGS} ${&<}' '${builddir}' '${&d}'" ;\
+echo "	$${quiet}${CC} ${&cc-command-line}"
+&echo-compile-cpp-to-d-and-o-rules=\
+echo "	$${quiet}perl -w ${makerulesdir}makdeps.pl '${CPP} ${CPPMAKEDEPS} ${CPPFLAGS} ${&<}' '${builddir}' '${&d}'" ;\
+echo "	$${quiet}${CXX} ${&cc-command-line}"
+endif # win32
+
+ifneq (,$(filter naivedeps,${&ikwid}))
+&echo-compile-c-to-d-and-o-rules=\
+echo "	$${quiet}touch '${&d}'" ;\
+echo "	$${quiet}${CC} ${&cc-command-line}"
+&echo-compile-cpp-to-d-and-o-rules=\
+echo "	$${quiet}touch '${&d}'" ;\
+echo "	$${quiet}${CXX} ${&cc-command-line}"
+endif
+
+${&tgtbnams.c:=.mak}: &ext:=.c
+${&tgtbnams.c:=.mak}: ${builddir}%.mak:
+	${q}${&feedback}							;\
+	{											 \
+		quiet='$${q}'							;\
+		echo ${&d}:								;\
+		echo "	$${quiet}rm -f ${&obj}"			;\
+		echo									;\
+		echo -include ${&d}						;\
+		echo									;\
+		echo ${&obj}: ${&<}						;\
+		${&echo-compile-c-to-d-and-o-rules}		;\
+		echo									;\
+	} >$@
+
+${&tgtbnams.cpp:=.mak}: &ext:=.cpp
+${&tgtbnams.cpp:=.mak}: ${builddir}%.mak:
+	${q}${&feedback}							;\
+	{											 \
+		quiet='$${q}'							;\
+		echo ${&d}:								;\
+		echo "	$${quiet}rm -f ${&obj}"			;\
+		echo									;\
+		echo -include ${&d}						;\
+		echo									;\
+		echo ${&obj}: ${&<}						;\
+		${&echo-compile-cpp-to-d-and-o-rules}	;\
+		echo ;\
+	} >$@
+
+${&tgtbnams.m:=.mak}: &ext:=.m
+${&tgtbnams.m:=.mak}: ${builddir}%.mak:
+	${q}${&feedback}							;\
+	{											 \
+		quiet='$${q}'							;\
+		echo ${&d}:								;\
+		echo "	$${quiet}rm -f ${&obj}"			;\
+		echo									;\
+		echo -include ${&d}						;\
+		echo									;\
+		echo ${&obj}: ${&<}						;\
+		${&echo-compile-c-to-d-and-o-rules}		;\
+		echo									;\
+	} >$@
+
+${&tgtbnams.mm:=.mak}: &ext:=.mm
+${&tgtbnams.mm:=.mak}: ${builddir}%.mak:
+	${q}${&feedback}							;\
+	{											 \
+		quiet='$${q}'							;\
+		echo ${&d}:								;\
+		echo "	$${quiet}rm -f ${&obj}"			;\
+		echo									;\
+		echo -include ${&d}						;\
+		echo									;\
+		echo ${&obj}: ${&<}						;\
+		${&echo-compile-cpp-to-d-and-o-rules}	;\
+		echo ;\
+	} >$@
+
+${&tgtbnams.nas:=.mak}: &ext:=.nas
+${&tgtbnams.nas:=.mak}: ${builddir}%.mak:
+	${q}${&feedback}							;\
+	{											 \
+		quiet='$${q}'							;\
+		echo ${&d}:								;\
+		echo "	$${quiet}rm -f ${&obj}"			;\
+		echo									;\
+		echo -include ${&d}						;\
+		echo									;\
+		echo ${&obj}: ${&<}						;\
+		echo "	$${quiet}echo ${&lq}cowpat: ${&targetname} - compile .${o} in ${@D} from ${&<}${&rq}" ;\
+		echo "	$${quiet}${NASM} -i $(dir ${&<}) ${NASMMAKEDEPS} ${&<} -o ${&obj} >$(notdir ${&d})" ;\
+		echo "	$${quiet}"${&sed-d-to-d-rule}	;\
+		echo "	${NASM} -i $(dir ${&<}) ${NASMFLAGS} ${&<} -o ${&obj}"	;\
+		echo ;\
+	} >$@
+
+# "rc.exe /l 0x409 /fo".\win32\libpng\dll/png.res" /i "..\.." /d "NDEBUG" "png.rc""
+
+&codepage-english-us:=0x409
+&codepage-english-uk:=0x809
+&codepage:=${&codepage-english-us}
+
+${&tgtbnams.rc:=.mak}: &ext:=.rc
+${&tgtbnams.rc:=.mak}: ${builddir}%.mak:
+	${q}${&feedback}							;\
+	{											 \
+		quiet='$${q}'							;\
+		echo ${&d}:								;\
+		echo "	$${quiet}rm -f ${&res}"			;\
+		echo									;\
+		echo -include ${&d}						;\
+		echo									;\
+		echo ${&res}: ${&<}						;\
+		echo "	$${quiet}echo ${&lq}cowpat: ${&targetname} - compile .res in ${@D} from ${&<}${&rq}"		;\
+		echo "	$${quiet}echo ${&lq}cowpat: Warning: Dependencies not supported on .rc files yet${&rq}"	;\
+		echo "	$${quiet}touch ${&d}"			;\
+		echo "	rc -l ${&codepage} $(filter -D% -U%,${CPPFLAGS}) -fo ${@:.mak=.res} ${&<}" ;\
+		echo ;\
+	} >$@
+
+# Default (pattern) rule to give error if file not available
+${builddir}%.mak:
+	$(error cowpat: Cannot Make $@ -- No suitable source file available)
+	exit 1
+endif # &do-maks
+
+#######################################################################
+#
+# T a r g e t s
+#
+
+_cowpat-makefiles:=${memakefile} $(addprefix ${makerulesdir}, ${&cpincfiles})
+
+# Keep maks in sync with build system
+# Two TODOs:
+# 1. Although the maks are updated, maybe the objects need to be remade
+# 2. Urg, I can't remember...
+${&maks}: ${_cowpat-makefiles}
+
+#----------------------------------------------------------------------
+# Force directory creation.
+#
+# Note:
+#	We record the creation time of _dir_ in file ${&recordcreationtime}.
+#	This is because the modification time of _dir_ keeps changing as its
+#	contents change. Thus we use another file who's time does not change.
+
+%${&recordcreationtime}:
+	${q}[ -d ${@D} ] || { mkdir -p ${@D} && echo 'cowpat: Creating ${@D}'; }
+	${q}[ -f $@ ] || touch $@
+
+#	${q}case -- $${!glob {} {$(dir $@)} !c} {1} {} {*} {mkdir $(dir $@); ${verbatim} 'Creating $(dir $@)'}
+#	${q}case -- $${!glob {} {$@} !c} {1} {} {*} {touch $@}
+
+#----------------------------------------------------------------------
+# Cleaning
+
+.PHONY: distclean
+distclean: clean
+	-${q}rm -f ${builddir}${&recordcreationtime}
+	-${q}rmdir ${builddir}
+
+.PHONY: clean
+clean: cleandeps cleanmaks cleanobjs cleantarget
+ifdef targetpdbname
+	-${q}rm -f ${targetpdbname}
+endif
+
+.PHONY: cleandeps
+cleandeps:
+	-${q}rm -f $(addsuffix .d,$(basename ${&objects}))
+
+.PHONY: cleanmaks
+cleanmaks:
+	-${q}rm -f ${themakefile}
+	-${q}rm -f ${&maks}
+
+.PHONY: cleanobjs
+cleanobjs:
+	-${q}rm -f ${&objects}
+#Don't want to remove the vsms if there are some (as opposed to evsms!)
+#FixMe: Warning - does this break the dependencies?
+#ifneq '' "${vsms}"
+#	-${q}rm -f ${vsms}
+#endif
+
+.PHONY: cleantarget
+cleantarget:
+	-${q}rm -f ${target}
+
+#----------------------------------------------------------------------
+# Create the Makefile that actually does the work
+#
+# Note 1: (depracated due to note 2)
+#	The ${target} is dependant on the &maks. This covers the case where a
+#	user removes a source file from ${SOURCES} in their MeMakefile. The
+#	lib now needs to be re-linked (which wouldn't otherwise happen). We
+#	use &maks rather than ${themakefile} as there's no-need to re-make the
+#	directory if only a .d file (say) changes.
+#
+# Note 2:
+#	The generated makefile uses very little make syntax. At the moment is
+#	relies on a few GNU niceties: It now "-include"s the .d files, and
+#	sets a few macros at the top (${q}). [Subnote: Due to it including the
+#	.d files, rather than having them catted in, ${target} can now once
+#	again depend on ${themakefile}. Slight TODO problem here: a user must
+#	set memakefile in their makefiles properly otherwise they get the
+#	problem described in note 1.]
+
+#ifdef &parallel
+# Give warning if -j > 1
+# (This is hard as -j doesn't make it into MAKEFLAGS until commands are
+# actually running. Hmmm)
+#endif
+
+&fmt-long-lines:=$(if $(filter elate,${&os}),sed -ne l,fmt)
+
+${themakefile}: ${_cowpat-makefiles} ${&maks}
+ifndef &do-themak
+	@:
+else
+${themakefile}:
+	${q}echo 'cowpat: Creating makefile ($@)'
+	${q}{ 										 	 \
+		echo '# Cowpat auto-generated makefile'		;\
+		echo '# Note:'								;\
+		echo '# This makefile should be run from the original cowpat makefile dir [usually ..]' ;\
+		echo '# (i.e., "cd .. && make -f $@")'		;\
+		echo '.SUFFIXES:'							;\
+		echo										;\
+		echo 'q=@'									;\
+		echo										;\
+		echo '.PHONY: all'							;\
+		echo 'all: info ${target}'					;\
+		echo '${&parallel}'							;\
+		echo '${target}: $@'						;\
+		echo										;\
+		echo '.PHONY: info'							;\
+		echo 'info:'								;\
+		echo '${&tab}$${q}echo '"${&lq}"'$@: Compile command is:'"${&rq}" ;\
+		echo '${&tab}$${q}echo '"${&lq}"'  "${CC} ${&cc-command-line-literal}"'"${&rq}"' | ${&fmt-long-lines}' ;\
+		echo										;\
+	} >$@
+# ------------------------------------------------------------- library
+  ifeq (library,${targettype})
+  # Note that the Makefile.targetname copies target to &installtarget
+  # cd into the builddir to avoid paths on the object files in Win32 builds
+	${q}{											 \
+		echo '${target}: ${&objects}'				;\
+		echo '${&tab}cd ${builddir} ${andthen} ${AR} ${ARFLAGS}$(notdir ${target} ${&objects})' ;\
+		echo										;\
+		echo 'all: ${&installtarget}'				;\
+		echo '${&installtarget}: ${target}'			;\
+		echo '${&tab}cp $$< $$@'					;\
+		echo										;\
+	} >> $@
+  endif
+# -------------------------------------------------------------- shared
+  ifeq (shared,${targettype})
+   ifneq (,$(filter-out macosx linux elate win32,${&os}))
+	$(error Not yet implemented: $$targettype=${targettype} for ${&os})
+   endif
+	${q}echo '${target}: ${&objects}' >> $@
+   ifeq (elate,${&os})
+# Need to link against C++ library here (-lcp) for tools calling the library
+	${q}echo '${&tab}vpcc -shared -lcp -Wl,--whole-archive ${&objects} ${LDFLAGS}${target} -t ${&targetfile} -build $$$${!lit ${builddir}!absname}' >> $@
+   endif # elate
+   ifeq (win32,${&os})
+	${q}echo '${&tab}${LD} ${&objects} ${&ldlibs} ${&specifiedlibs} -dll ${LDFLAGS}${target}' >> $@
+   endif # win32
+   ifeq (linux,${&os})
+	${q}echo '${&tab}${LD} -shared -Wl,-soname,$(notdir ${target}).0 ${&objects} ${&ldlibs} ${&specifiedlibs} ${LDFLAGS}${target}' >> $@
+   endif # linux
+   ifeq (macosx,${&os}) # ToDo: soname equivalents, dynamically linked shared library stuff is very different on OSX because of ObjC.
+	${q}echo '${&tab}${LD} -Wl,-dylib -Wl,-framework,Foundation -Wl,-framework,Cocoa -shared -nostartfiles ${&objects} ${&ldlibs} ${&specifiedlibs} -lcc_dynamic /usr/lib/dylib1.o ${LDFLAGS}${target}' >> $@
+   endif # macosx
+  endif
+# --------------------------------------------------------- executable|test
+  ifeq (executable,${targettype})
+	${q}echo '${target}: ${&objects} ${extraobjects} ${&specifiedlibs} ${&explicitdependencies}' >> $@
+   ifeq (elate,${&os})
+	${q}echo '${&tab}${LD} ${&objects} ${&ldlibs} ${&specifiedlibs} ${LDFLAGS}${target} -t ${&targetfile} -build $$$${!lit ${builddir}!absname}' >> $@
+   else # ! elate
+	${q}echo '${&tab}${LD} ${&objects} ${&ldlibs} ${&specifiedlibs} ${LDFLAGS}${target}' >> $@
+	${q}{ \
+		echo               ;\
+		echo '.PHONY: run' ;\
+		echo 'run: all'    ;\
+		echo '${&tab}$${q}echo "[run $@]"' ;\
+		echo '${&tab}$${q1}PATH="${topdir}${builddir}:$$$$PATH" ${target} $${args}' ;\
+	} >> $@
+   endif # else elate
+  endif # executable
+# -------------------------------------------------------------- common
+	${q}echo >>$@
+	${q}cat ${&maks} >>$@
+endif # &do-themak
+
+#######################################################################
+#
+# The Business End
+#
+
+${target}: ${themakefile}
+${&installtarget}: ${target}
+
+ifeq  (library,${targettype})
+&the-makefile-builds-this:=${&installtarget}
+else
+&the-makefile-builds-this:=${target}
+endif
+
+.PHONY: all
+all: ${&the-makefile-builds-this}
+
+# We pass the target "run" onto the makefile
+.PHONY: run
+run: all
+	@: $(if $(filter run,${MAKECMDGOALS}),,\
+		$(error cowpat: Internal error: "run" target requesed but not in MAKECMDGOALS))
+
+# Serialize cleaning and building in parallel makes
+ifneq (,$(filter clean% %clean,${MAKECMDGOALS}))
+${&the-makefile-builds-this}: $(filter clean% %clean,${MAKECMDGOALS})
+# Incase you "make -j cleanmaks all" -- Make only checks which maks exist
+# on startup, and does not look again after they have been deleted.  We
+# force it to make them again if they have been cleaned.
+${&maks}: $(filter cleanmaks clean,${MAKECMDGOALS})
+endif
+
+.PHONY: ${&the-makefile-builds-this}# Force the target specific makefiles to be run _every_ time
+
+# Make switches: a command-line override
+#
+# Useful for those makes that can't properly do -j4 for example, and other
+# things.
+msw:=
+
+${&the-makefile-builds-this}:
+ifndef &do-runmak
+	@: # Define empty commands incase someone asks to run the mak
+else
+	@echo 'cowpat: Running makefile (${themakefile})'
+ifeq (elate,${&os})
+	${makerulesdir}callintent.sh -v make ${msw} q:=${q} -r -f ${themakefile}
+else
+	${q}${MAKE} --no-print-directory -R ${msw} -f ${themakefile} $(filter run,${MAKECMDGOALS})
+endif # !elate
+endif # &do-runmak
+
+# Since ${target} is PHONY, ${&installtarget} will also be considered always
+# out of date. I want it only to be copied if it is actually out of date.
+# Rather than use hackey shell stuff, we'll use a recursive make...
+
+${target}: $(dir ${target})${&recordcreationtime} ${browsedir}${&recordcreationtime}
+
+${&installtarget}: ${libdir}${&recordcreationtime}
+
+#######################################################################
+#
+# Turn off implicit rule search for cowpat files
+#
+
+${_cowpat-makefiles}: ;

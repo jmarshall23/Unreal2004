@@ -1,0 +1,435 @@
+----------------------------------------------
+File:       main.c
+Function:   InitialiseMEWorld(..)
+Identifier:     PASTE_01
+----------------------------------------------
+    /* Set the default Universe Pool sizes */
+    sizes = MstUniverseDefaultSizes;
+
+    /* Initialise Universe Pool sizes */
+    sizes.dynamicBodiesMaxCount = 20;
+    sizes.dynamicConstraintsMaxCount = 1000;
+    sizes.materialsMaxCount = 10;
+    sizes.collisionModelsMaxCount = 300;
+    sizes.collisionPairsMaxCount = 1000;
+    sizes.collisionUserGeometryTypesMaxCount = 0;
+    sizes.collisionGeometryInstancesMaxCount = 0;
+
+    /* Create a basic MathEngine Environment    */
+    universe = MstUniverseCreate(&sizes);
+    if(!universe)
+        return 0;
+
+    world     = MstUniverseGetWorld(universe);
+    space     = MstUniverseGetSpace(universe);
+    bridge    = MstUniverseGetBridge(universe);
+    framework = MstUniverseGetFramework(universe);
+
+    /* Initialise some fundamental world properties */
+    MdtWorldSetEpsilon(world, 0.0001f);
+    MdtWorldSetGamma(world, timeStep*10);
+    MdtWorldSetGravity(world, 0, (MeReal)-20, 0);
+
+----------------------------------------------
+File:       main.c
+Function:   InitialiseMaterials(..)
+Identifier:     PASTE_02
+----------------------------------------------
+    groundMat = MstBridgeGetDefaultMaterial();
+    wheelMat  = MstBridgeGetNewMaterial(bridge);
+    chassisMat = MstBridgeGetNewMaterial(bridge);
+
+    /* Set contact parameters for wheels */
+    params = MstBridgeGetContactParams(bridge,groundMat, wheelMat);
+    MdtContactParamsSetType(params,MdtContactTypeFriction2D);
+    MdtContactParamsSetPrimarySlip(params,0.0001f);
+    MdtContactParamsSetSecondarySlip(params,0.005f);
+    MdtContactParamsSetSoftness(params,0.0001f);
+
+    /* Set contact parameters for chassis */
+    params = MstBridgeGetContactParams(bridge,groundMat, chassisMat);
+    MdtContactParamsSetType(params,MdtContactTypeFriction2D);
+    MdtContactParamsSetSoftness(params,0.0001f);
+
+----------------------------------------------
+File:       main.c
+Function:   tick(..)
+Identifier:     PASTE_03
+----------------------------------------------
+    McdSpaceUpdateAll(space);
+    MstBridgeUpdateContacts(bridge, space, world);
+
+----------------------------------------------
+File:       main.c
+Function:   tick(..)
+Identifier:     PASTE_04
+----------------------------------------------
+    MdtWorldStep(world, timeStep);
+
+----------------------------------------------
+File:       terrain.c
+Function:   InitialiseTerrain(..)
+Identifier: PASTE_05
+----------------------------------------------
+#if USE_TRI_LIST
+#define TRI_LIST_SIZE 50
+    MeVector3 min = {-10000,-10000,-10000}, max = {10000,10000,10000};
+
+    MeALIGNDATA(MeMatrix4,tm,16) =
+    {
+      {  1,  0,  0,  0},
+      {  0,  1,  0,  0},
+      {  0,  0,  1,  0},
+      {  0,  0,  0,  1}
+    };
+
+    /* Terrain height field */
+    HeightFieldFromBMP(&landscape.heightField, "terrain2", 15);
+
+    /* Just use a real big bounding-box... crude */
+    landscape.collGeom = McdTriangleListCreate(framework,
+					       min,max,TRI_LIST_SIZE,
+					       TriListGeneratorCB);
+    ((McdTriangleList*)landscape.collGeom)->triangleMaxCount = TRILIST_SIZE;
+#else
+    MeALIGNDATA(MeMatrix4,tm,16) =
+    {
+    /* Defaults to XY plane so rotate by PI/2 about x-axis to orientate with XZ plane*/
+      {  1,  0,  0,  0},
+      {  0,  0, -1,  0},
+      {  0,  1,  0,  0},
+      {  0,  0,  0,  1}
+    };
+    landscape.collGeom = McdPlaneCreate(framework);
+#endif
+
+    landscape.collModel = McdModelCreate(landscape.collGeom);
+    MeMatrix4Copy(landscape.transform, tm);
+    McdModelSetTransformPtr(landscape.collModel, landscape.transform);
+    McdSpaceInsertModel(space, landscape.collModel);
+    McdModelSetMaterial(landscape.collModel, groundMat);
+    McdSpaceUpdateModel(landscape.collModel);
+    McdSpaceFreezeModel(landscape.collModel);
+
+----------------------------------------------
+File:       vehicle.c
+Function:   InitialiseVehicle(..)
+Identifier: PASTE_06
+----------------------------------------------
+    veh->chassisBody = MdtBodyCreate(world);
+    veh->chassisGeom = McdBoxCreate(framework,
+    veh->data->chassisDims[0],
+    veh->data->chassisDims[1],
+    veh->data->chassisDims[2]);
+    veh->chassisCM = McdModelCreate(veh->chassisGeom) ;
+    McdModelSetBody(veh->chassisCM, veh->chassisBody);
+    McdModelSetMaterial(veh->chassisCM, chassisMat);
+    McdSpaceInsertModel(space, veh->chassisCM);
+    MdtBodyEnable( veh->chassisBody );
+    MdtBodySetPosition(veh->chassisBody,startPos[0],startPos[1],startPos[2]);
+    MdtBodySetMass(veh->chassisBody, 150);
+    Ixyz[0][0] = 5; /* 1/12 * m * (y2 + z2) */
+    Ixyz[1][1] = 45; /* 1/12 * m * (x2 + z2) */
+    Ixyz[2][2] = 40; /* 1/12 * m * (x2 + y2) */
+    MdtBodySetInertiaTensor(veh->chassisBody, Ixyz);
+    MdtBodySetCenterOfMassRelativeTransform(veh->chassisBody, comTM);
+----------------------------------------------
+File:       vehicle.c
+Function:   InitialiseVehicle(..)
+Identifier: PASTE_07
+----------------------------------------------
+    for(i = 0; i < 4; i++)
+    {
+        veh->wheelBody[i] = MdtBodyCreate(world);
+        veh->wheelGeom[i] = McdSphereCreate(framework,veh->data->wheelRadius);
+        veh->wheelCM[i] = McdModelCreate(veh->wheelGeom[i]) ;
+        McdModelSetBody(veh->wheelCM[i], veh->wheelBody[i]);
+        McdModelSetMaterial(veh->wheelCM[i], wheelMat);
+        McdSpaceInsertModel(space, veh->wheelCM[i]);
+        MdtBodyEnable( veh->wheelBody[i] );
+        MdtBodySetMass(veh->wheelBody[i], 10);
+
+        Ixyz[0][0] = Ixyz[1][1] = Ixyz[2][2] = 0.25;/* 2/5 * m * r2 */
+
+        MdtBodySetInertiaTensor(veh->wheelBody[i], Ixyz);
+        MeVector3Add(pos, startPos, veh->data->wheelOffset[i]);
+        MdtBodySetPosition(veh->wheelBody[i], pos[0], pos[1], pos[2]);
+
+        /* Disable collision between wheel and chassis  */
+        McdSpaceDisablePair(veh->wheelCM[i], veh->chassisCM);
+
+        /* Disable collision between wheel and other wheels */
+        for(j = i-1; j >= 0; j--)
+        {
+            McdSpaceDisablePair(veh->wheelCM[i], veh->wheelCM[j]);
+        }
+    }
+
+----------------------------------------------
+File:       vehicle.c
+Function:   InitialiseVehicle(..)
+Identifier: PASTE_08
+----------------------------------------------
+    for(i = 0; i < 4; i++)
+    {
+        veh->wheelJoint[i] = MdtCarWheelCreate(world);
+	MdtCarWheelSetBodies(
+		   veh->wheelJoint[i],
+		   veh->chassisBody, /* chassis body must be specified first */
+		   veh->wheelBody[i]);
+	
+	MdtBodyGetPosition(veh->wheelBody[i], pos);
+	MdtCarWheelSetPosition(veh->wheelJoint[i], pos[0], pos[1], pos[2]);
+	MdtCarWheelSetSteeringAndHingeAxes(veh->wheelJoint[i],
+		  0, 1, 0/* along the Y axis */,0, 0, 1/* along the Z axis */);
+
+	if (i == BACK_LEFT || i == BACK_RIGHT)
+	{
+	    /* We don't want steering on the back wheels so lock them. */
+	    MdtCarWheelSetSteeringLock(veh->wheelJoint[i], 1);
+	}
+	MdtCarWheelSetSuspension(veh->wheelJoint[i], 50000, 0.4f, 0.001f,
+		-0.15f, 0.15f, 0);
+	MdtCarWheelEnable(veh->wheelJoint[i]);
+	MdtBodySetUserData(veh->wheelBody[i], (void *)veh->wheelJoint[i]);
+    }
+----------------------------------------------
+File:       vehicle.c
+Function:   InitialiseVehicle(..)
+Identifier: PASTE_09
+----------------------------------------------
+    veh->hBarBody = MdtBodyCreate(world);
+    MdtBodyEnable( veh->hBarBody );
+    MeVector3Add(pos, startPos, veh->data->hBarOffset);
+    MdtBodySetPosition(veh->hBarBody, pos[0], pos[1], startPos[2]);
+
+    veh->hBarJoint = MdtHingeCreate(world);
+    MdtHingeSetBodies(veh->hBarJoint, veh->chassisBody, veh->hBarBody);
+    MdtHingeSetAxis(veh->hBarJoint, 0, 1, 0);
+    MdtBodyGetPosition(veh->hBarBody, pos);
+    MdtHingeSetPosition(veh->hBarJoint, pos[0], pos[1], pos[2]);
+    MdtHingeEnable(veh->hBarJoint);
+
+----------------------------------------------
+File:       vehicle.c
+Function:   UpdateVehicleControls(..)
+Identifier: PASTE_10
+----------------------------------------------
+    torque = veh->throttleInput * -200;
+    
+    /* Apply torque to wheel body */
+    MdtBodyAddTorque(veh->wheelBody[i],  
+    		    torque * haxis[0],
+    		    torque * haxis[1],
+    		    torque * haxis[2]);
+    /* Apply opposite torque to chassis body */
+    MdtBodyAddTorque(veh->chassisBody,
+    		    -torque * haxis[0],
+    		    -torque * haxis[1],
+    		    -torque * haxis[2]);
+----------------------------------------------
+File:       vehicle.c
+Function:   UpdateVehicleControls(..)
+Identifier: PASTE_11
+----------------------------------------------
+    else
+    {
+        /* Apply brakes */
+        MeReal maxBrakeTorque = veh->brakeInput*500;
+        MdtCarWheelSetHingeLimitedForceMotor(veh->wheelJoint[i], 0, 
+					     maxBrakeTorque);
+    }
+
+----------------------------------------------
+File:       vehicle.c
+Function:   UpdateVehicleControls(..)
+Identifier: PASTE_12
+----------------------------------------------
+    /* Front wheel do the steering proportional gap (radians). */
+    theta = MdtCarWheelGetSteeringAngle(veh->wheelJoint[i]);
+
+    desired_vel = veh->steeringInput * width + theta;
+
+    desired_vel = max(-pgap, min(desired_vel, pgap));
+    
+    MdtCarWheelSetSteeringLimitedForceMotor(veh->wheelJoint[i],
+    maxSpeed * desired_vel, maxForce);
+
+----------------------------------------------
+File:       vehicle.c
+Function:   UpdateVehicleControls(..)
+Identifier: PASTE_13
+----------------------------------------------
+    MdtLimitController(MdtHingeGetLimit(veh->hBarJoint),
+                -veh->steeringInput * width, pgap, maxSpeed, maxForce);
+
+----------------------------------------------
+File:       main.c
+Function:   InitialiseMaterials(..)
+Identifier: PASTE_14
+----------------------------------------------
+    MstBridgeSetPerContactCB(bridge, wheelMat, groundMat, WheelGroundCB);
+
+----------------------------------------------
+File:       vehicle.c
+Function:   WheelGroundCB(..)
+Identifier: PASTE_15
+----------------------------------------------
+    body = MdtContactGetBody(dynC, 0); /* terrain has no body so wheel must be body 0 */
+
+    wj = (MdtCarWheelID)MdtBodyGetUserData(body);
+
+    if(wj)
+    {
+        /* Create principal friction axis (normal x hinge_axis). */
+
+        MdtCarWheelGetHingeAxis(wj, haxis);
+        MdtContactGetNormal(dynC, normal);
+
+        MeVector3Cross(dir, normal, haxis);
+        MeVector3Normalize(dir);
+
+        MdtContactSetDirection(dynC, dir[0], dir[1], dir[2]);
+
+        /* Increase lateral slip with increasing camber angle   */
+        params = MdtContactGetParams(dynC);
+        slip = 0.001f + MeFabs(MeVector3Dot(normal, haxis));
+        MdtContactParamsSetSecondarySlip(params, slip);
+    }
+
+----------------------------------------------
+File:       rider.c
+Function:   InitialiseRider(..)
+Identifier: PASTE_16
+----------------------------------------------
+    for(i = 0; i < NUM_LIMBS; i++)
+    {
+        rider->limbBody[i] = MdtBodyCreate(world);
+        MeVector3Add(pos, startPos, rider->data->limbPos[i]);
+        MdtBodySetPosition(rider->limbBody[i], pos[0], pos[1], pos[2]);
+        MeMatrix3FromEulerAngles(R, rider->data->limbAng[i][0], 
+`	                          rider->data->limbAng[i][1], 
+          	                  rider->data->limbAng[i][2]);
+
+        MdtBodySetOrientation(rider->limbBody[i], R);
+        MdtBodyEnable(rider->limbBody[i]);
+
+        /* Collision    */
+        rider->limbGeom[i] = McdBoxCreate(framework, 
+					rider->data->limbDim[i][0], 
+                            		rider->data->limbDim[i][1],
+                            		rider->data->limbDim[i][2]);
+        rider->limbCM[i] = McdModelCreate(rider->limbGeom[i]) ;
+        McdModelSetBody(rider->limbCM[i], rider->limbBody[i]);
+        McdSpaceInsertModel(space, rider->limbCM[i]);
+
+        /* Disable collision between all the various limbs  */
+        for(j = i-1; j >= 0; j--)
+        {
+            McdSpaceDisablePair(rider->limbCM[i], rider->limbCM[j]);
+        }
+
+        /* Disable collision rider & vehicle    */
+        McdSpaceDisablePair(rider->limbCM[i], quadBike.chassisCM);
+        for(j = 0; j < 4; j++)
+        {
+            McdSpaceDisablePair(rider->limbCM[i], quadBike.wheelCM[j]);
+        }
+    }
+
+----------------------------------------------
+File:       rider.c
+Function:   InitialiseRider(..)
+Identifier: PASTE_17
+----------------------------------------------
+    for(i = 0; i < NUM_JOINTS; i++)
+    {
+        /* Determine joint bodies   */
+        body1 = rider->limbBody[rider->data->jointBodies[i][0]];
+
+        if(rider->data->jointBodies[i][1] == -1)
+        {
+            if(rider->data->jointBodies[i][0] == LOWER_LEGS)
+            {
+                body2 = quadBike.chassisBody;
+            } else {
+                body2 = quadBike.hBarBody;
+            }
+        } else {
+            body2 = rider->limbBody[rider->data->jointBodies[i][1]];
+        }
+
+        /* Create appropriate joint */
+        if(rider->data->isHinge & 1<<i)
+        {
+            hinge = MdtHingeCreate(world);
+            MdtHingeSetBodies(hinge, body1, body2);
+            MeVector3Add(pos, startPos, rider->data->jointPos[i]);
+            MdtHingeSetPosition(hinge, pos[0], pos[1], pos[2]);
+            MdtHingeSetAxis(hinge, rider->data->jointAxis[i][0],
+                            rider->data->jointAxis[i][1],
+                            rider->data->jointAxis[i][2]);
+
+            rider->joint[i] = MdtHingeQuaConstraint(hinge);
+
+            /* Add hinge joint limit code here  */
+            /* PASTE_18 */
+        }
+        else
+        {
+            bsj = MdtBSJointCreate(world);
+            MdtBSJointSetBodies(bsj, body1, body2);
+            MeVector3Add(pos, startPos, rider->data->jointPos[i]);
+            MdtBSJointSetPosition(bsj, pos[0], pos[1], pos[2]);
+
+            rider->joint[i] = MdtBSJointQuaConstraint(bsj);
+        }
+        MdtConstraintEnable(rider->joint[i]);
+    }
+
+----------------------------------------------
+File:       rider.c
+Function:   InitialiseRider(..)
+Identifier: PASTE_18
+----------------------------------------------
+    if(rider->data->jointParam[i][0])
+    {
+        limit = MdtHingeGetLimit(hinge);
+        MdtSingleLimitSetStiffness(MdtLimitGetUpperLimit(limit),
+            rider->data->jointParam[i][0]);
+        MdtSingleLimitSetStiffness(MdtLimitGetLowerLimit(limit), 
+            rider->data->jointParam[i][0]);
+        MdtSingleLimitSetDamping(MdtLimitGetUpperLimit(limit), 
+            rider->data->jointParam[i][1]);
+        MdtSingleLimitSetDamping(MdtLimitGetLowerLimit(limit), 
+            rider->data->jointParam[i][1]);
+        MdtLimitActivateLimits(limit, 1);
+    }
+
+----------------------------------------------
+File:       rider.c
+Function:   UpdateRiderControls(..)
+Identifier: PASTE_19
+----------------------------------------------
+    /* Make the crouch angle proportional to forward velocity   */
+    MdtBodyGetLinearVelocity(quadBike.chassisBody, vel);
+    xAxis = (MeVector3Ptr)MdtBodyGetTransformPtr(quadBike.chassisBody);
+    speed = max(0, MeVector3Dot(xAxis, vel));
+    angle = speed * 0.035f;
+    angle = min(angle,maxAng);
+    angle = -quadBike.steeringInput * angle;
+
+    /* Move hip joint limit to force rider to lean into turn    */
+    limit = MdtHingeGetLimit(MdtConstraintDCastHinge(rider->joint[HIPS]));
+    MdtSingleLimitSetStop(MdtLimitGetLowerLimit(limit), angle);
+    MdtSingleLimitSetStop(MdtLimitGetUpperLimit(limit), angle);
+
+    /* Force rider to bend knees to crouch lower    */
+    angle = MeFabs(angle);
+    limit = MdtHingeGetLimit(MdtConstraintDCastHinge(rider->joint[KNEES]));
+    MdtSingleLimitSetStop(MdtLimitGetLowerLimit(limit), angle*2);
+    MdtSingleLimitSetStop(MdtLimitGetUpperLimit(limit), angle*2);
+
+    limit = MdtHingeGetLimit(MdtConstraintDCastHinge(rider->joint[ANKLES]));
+    MdtSingleLimitSetStop(MdtLimitGetLowerLimit(limit), -angle*1.2);
+    MdtSingleLimitSetStop(MdtLimitGetUpperLimit(limit), -angle*1.2);

@@ -1,0 +1,115 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Classes">
+      <UniqueIdentifier>{6c8be794-71a0-425d-9544-0facf0604ec2}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Classes\DamTypeIonTankBlast.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\DamTypeMASCannon.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\FX_IonPlasmaTank_AimLaser.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\FX_IonPlasmaTank_ShockWave.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\MutVehicleArena.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSAutoBomber.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSAutoBomberBomb.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSAutoBomberWarpEffect.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSBomb.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSBombDropExplosion.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSBombDropper.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSBomber.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSBomberFactory.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSBomberRocketProjectile.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSGenericSD.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSHoverTank_IonPlasma.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSHoverTank_IonPlasma_BeamFire.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSHoverTank_IonPlasma_Weapon.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSMASCannon.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSMASCannonBeamEffect.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSMASCannonImplosionEffect.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSMASFactory.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSMASPlasmaProjectile.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSMASRocketPack.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSMASRocketProjectile.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSMASRocketTrailEffect.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSMASSideGun.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSMASSideGunPawn.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSMobileAssaultStation.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSPainter.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSPainterFire.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSPainterPickup.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSTankSecondaryTurret_IonPlasma.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSTankSecondaryTurretPawn_IonPlasma.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\ONSVehDeathMAS.uc">
+      <Filter>Classes</Filter>
+    </None>
+  </ItemGroup>
+</Project>

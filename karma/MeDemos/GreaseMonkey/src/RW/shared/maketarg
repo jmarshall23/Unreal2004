@@ -1,0 +1,56 @@
+
+OBJ += $(patsubst %.c,$(OBJDIR)/%.$(O),$(notdir $(CSRC)))
+OBJ += $(SKELOBJ)
+
+ifeq ("$(RWTARGET)", "xbox")
+TARGET = $(XBOXPROJS)
+else
+TARGET = $(PROJS)
+endif
+
+# VALIDATE will be done first, if set.
+demo:  $(VALIDATE) $(OBJDIR) $(TARGET)
+
+$(OBJDIR):
+	$(MD) $@
+
+$(PROJS): $(OPTPROJ) $(OBJ) $(RWLIBS)
+	$(LD) $(SYSOBJ) $(OBJ) $(RWLIBS) $(SYSLIBS) $(LOUT)$@ $(LFLAGS)
+
+run: demo
+	$(RUN) $(PROJS)
+
+doscheck:
+	cygfind . -print | doschk
+
+distclean: clean $(OPTDISTCLEAN)
+	$(RM) *.dsw *.elf *.exe *.lst *.prf *.xbe crt0.* .map
+	$(RM) -r obj $(DEMO)_*Data
+
+clean:
+	$(RM) $(OBJ) $(OPTPROJ)
+
+# Rules
+
+$(OBJDIR)/%.$(O): $(SKEL)/%.c
+	$(CC) $(CFLAGS) $(COUT)$@ $<
+
+$(OBJDIR)/%.$(O): $(SKELPS)/%.c
+	$(CC) $(CFLAGS) $(COUT)$@ $<
+
+$(OBJDIR)/%.$(O): $(COMMON)/%.c
+	$(CC) $(CFLAGS) $(COUT)$@ $<
+
+$(OBJDIR)/%.$(O): $(SRC)/%.c
+	$(CC) $(CFLAGS) $(COUT)$@ $<
+
+
+$(OBJDIR)/%.$(O): $(SRC)/$(RWOS)/%.c
+	$(CC) $(CFLAGS) $(COUT)$@ $<
+
+%.$(O) : %.c
+	$(CC) $(CFLAGS) $(COUT)$@ $<
+
+# $(OBJDIR)/%.$(O): $(FXNODES)/%.c
+# 	$(CC) $(CFLAGS) $(COUT)$@ $<
+

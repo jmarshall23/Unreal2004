@@ -1,0 +1,112 @@
+# $Id: Make.defs.xbox,v 1.2.2.1 2002/04/11 03:45:34 jamesg Exp $
+# ($Name: t-stevet-RWSpre-030110 $)
+#
+# vim:syntax=make:
+
+# Cowpat macro definitions for win32
+
+#######################################################################
+#
+# VC++ Note:
+# Interestingly uSoft's "Maximize speed" optimisations include /Oy- with
+# /Ox -- i.e., the frame pointer is *included*. You have to do "Customize"
+# and select _both_ "Full Optimisation" and "Frame-Pointer Omission" to
+# avoid the /Oy-
+#
+# -Ox = /Og /Oi /Ot /Oy /Ob1 /Gs
+# -O2 = /Og /Oi /Ot /Oy /Ob1 /Gs /Gf /Gy
+#
+# -Ow: assume aliasing across function calls:
+# -Oa: assumes no aliasing. Possibly dodgy: Both these not included in -Ox
+# -Gz: stdcall
+# -Gy: function level linking
+# -ML[d]: single threaded lib (LIBC)
+# -MT[d]: multi-threaded lib (LIBCMT)
+# -MD[d]: multi-threaded dll (MSVCRT)
+# -Fm: map file
+# -Fo: object file
+# -F[Rr]: browser files
+# -GZ: catch release errors in debug build
+# -GX: enable exception handling
+# -Zi: debug symbols in PDB
+# -Fd: name pdb file
+#
+
+ifneq 'win32' "${PLATFORM}"
+$(error Make.defs.win32: Only for win32 builds)
+endif
+
+CC:=cl.exe -nologo
+CPP:=${CC}
+CCINTEL:=${CC} -D_USE_INTEL_COMPILER
+CCPLATFORM:=-DWIN32
+CPPMAKEDEPS:=-E
+o:=obj
+CCOBJ=-Fo# no trailing space
+# CC_OPTS_${OPTS}
+ccwarn?=-W3# overridable
+CC_OPTS_none:=${ccwarn} -G6 -Od -Gi -GZ# GZ: Catch release errors in debug builds
+CC_OPTS_full:=${ccwarn} -G6 -Ox -Oa
+CC_inline_none:=-Ob0
+CC_inline_specified:=-Ob1
+CC_inline_any:=-Ob2
+# CC_codegoing_${codegoing}
+CC_codegoing_intodll:=
+CC_codegoing_intoexe:=
+CC_browse_none:=
+CC_browse_nonlocal:=/Fr${browsedir}
+CC_browse_complete:=/FR${browsedir}
+CCINTEL_OPTS_none:=-Qrestrict
+CCINTEL_OPTS_full:=-Qsox- -QxK -Qunroll0 -Qvec- -Qrestrict
+# CC_CRT_${CRT}
+CC_CRT_static:=-ML
+CC_CRT_mthread:=-MT
+CC_CRT_dll:=-MD
+CC_CRT_staticd:=-MLd
+CC_CRT_mthreadd:=-MTd
+CC_CRT_dlld:=-MDd
+# CPP_doreldefs_${doreldefs}
+CPP_doreldefs_release:=-DNDEBUG
+CPP_doreldefs_debug:=-D_DEBUG
+# Microsoft docs aren't clear, but my best guess is that it best to keep
+# the debug info for the .obj files in a different .pdb from that for the
+# .exe
+objpdbname:=${builddir}${&targetname}-obj.pdb
+targetpdbname:=${builddir}${&targetname}.pdb
+# CC_SYMB_${SYMBOLS}
+CC_SYMB_none:=
+CC_SYMB_all:=-Zi -Fd${objpdbname}
+
+# Simultaneous cl.exe sessions tend to step on each others' toes as they
+# try to access the same .pdb. .NOTPARALLEL forces serial execution (but
+# other sub-makes may still run in parallel (wow)).
+ifeq (all,${SYMBOLS})
+&parallel:=.NOTPARALLEL:
+endif
+
+AR:=lib -nologo
+ARFLAGS:=-OUT:# no trailing space
+LDFLAGS_SYMB_none:=-OUT:# no trailing space
+LDFLAGS_SYMB_all:=/DEBUG /PDB:${targetpdbname} -OUT:# no trailing space
+# LIBS_${BUILD}: extra libraries on the link line
+LIBS_BUILD_check:=
+LIBS_BUILD_free:=
+LDLIBPATH:=$(addprefix -libpath:,${libpath}) kernel32.lib user32.lib gdi32.lib advapi32.lib
+#ifeq '1' "$(words $(filter ${noise},($(wordlist 3,64,${noises}))))" 
+#LD:=link -nologo -verbose
+#else
+LD:=link -nologo -warn:3
+#endif
+# pre/post for link libs ("Link with this lib")
+# Patterns used in $(patsubst %,${mklibname},png) --> png.lib
+mklibname:=%.lib
+mkdllname:=%.dll
+mkdllimportlibname:=%.lib
+mkldlinksystemlibs=%.lib
+mkexename:=%.exe
+#exesuffix:=.exe
+andthen:=&&
+# Strong quoting. Don't use " here.
+&lq:='
+&rq:='
+

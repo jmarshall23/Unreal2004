@@ -1,0 +1,8 @@
+# -*- makefile -*- vim:noet:ts=8:sw=4:ft=make:
+
+# Rules related to linking PS2 apps
+#
+vpath	app.cmd	$(PS2_DIR)/lib
+vpath	%.s	$(PS2_DIR)/lib
+
+EXTRA_OBJECTS	:= app.cmd crt0.o

@@ -1,0 +1,145 @@
+# -*- makefile -*- vim:noet:ts=8:sw=4:ft=make:
+
+########################################################################### PS2
+
+#AC_MSG_RESULT(configuring for $PLATFORM)
+
+DEF_PLATFORM            :=PS2
+
+###################
+#
+#  File name elements (prefix & suffix)
+#
+
+S_OBJ                   :=.o
+S_EXE                   :=.elf
+P_LIB                   :=lib
+S_LIB                   :=.a
+S_DEP                   :=.d
+S_ASM                   :=.s
+
+###################
+#
+# Basic Options
+#
+
+O_DEF                   :=-D
+O_UNDEF                 :=-U
+_O_EXE                  :=-o$S
+_O_OBJ                  :=-o$S
+_O_LIB                  :=-r$S
+_L			:=-L
+
+#############################
+#
+# Tool and flag-set definitions
+#
+
+ME_COMPILE              :=ee-gcc
+ME_COMPILE_C            :=ee-gcc
+ME_COMPILE_CXX          :=ee-g++
+ME_ASSEMBLE             :=ee-as
+ME_LIBRARY              :=ee-ar
+ME_CMD                  :=app.cmd
+ME_LINK			:=$(ME_COMPILE)
+
+ME_DEPEND               :=ee-gcc
+ME_AS                   :=ee-gcc
+ME_DVPASM               :=ee-dvp-as
+
+ME_DEPENDFLAGS          :=-w -M -DDEPENDENCY_PHASE
+
+CPPFLAGS_RELEASE        :=-DNDEBUG
+CPPFLAGS_CHECK_RELEASE  :=-D_MECHECK -DMCDCHECK
+CPPFLAGS_DEBUG          :=$(CPPFLAGS_CHECK_RELEASE) -D_DEBUG
+
+# '-fschedule-insns' breaks 'keaLCP' with EGCS 1.1.2.
+# '-funroll-loops' unsuitable with GCC 2.96 and later.
+# '-fstrict-aliasing' breaks a few things esp. on PS2.
+# '-mlong32' is accepted but has no effect.
+CFLAGS_OPT		:=-O6 -ffast-math -fomit-frame-pointer \
+  -fno-common -fno-strict-aliasing -fexpensive-optimizations
+
+CFLAGS_RELEASE          :=-G0 $(CFLAGS_OPT)
+CFLAGS_DEBUG            :=-G0 -ggdb3 -O0 -Wall
+
+CXXFLAGS_RELEASE        :=-G0 $(CFLAGS_OPT)
+CXXFLAGS_DEBUG          :=-G0 -ggdb3 -O0 -Wall
+
+ME_ASFLAGS_RELEASE      :=-c -xassembler-with-cpp
+ME_ASFLAGS_DEBUG        :=-c -xassembler-with-cpp -Wa,-alh
+
+ME_COMPILERPREFIX       :=
+
+# '-mno-crt0' for GCC 2.96 and later, '-nostartfiles' for earlier
+ME_LDFL			:=-mno-crt0
+ME_LDFL			:=-nostartfiles
+
+ME_CCLINKFLAGS_RELEASE  =$(ME_LDFL) -T __FULL_OBJ_DIR__/$(ME_CMD)
+ME_CCLINKFLAGS_DEBUG    =$(ME_LDFL) -T __FULL_OBJ_DIR__/$(ME_CMD) -Wl,-Map,debug.map
+
+LDFLAGS                 :=-rs
+
+RM			:=rm -r -f
+
+# Tools
+ifneq '$(windir)_$(WINDIR)' '_'
+ME_EAC			:=$(ME_TOOLS_DIR)/win32eac/eac.exe
+else
+ME_EAC                  :=$(ME_TOOLS_DIR)/eac
+endif
+
+ifneq '$(INNER)' '1'
+
+# Detemine if we have access to the PS2 expression assembler
+# (a MathEngine internal tool)
+EAC_LOCATION	:=$(firstword \
+		    $(wildcard $(EAC)) \
+			unavailable)
+
+ifeq '$(EAC_LOCATION)' 'unavailable'
+EAC_LOCATION	:=$(firstword \
+		    $(wildcard $(ME_EAC)) \
+			unavailable)
+endif
+
+ifeq '$(EAC_LOCATION)' 'unavailable'
+EAC_LOCATION	:=$(firstword \
+		    $(wildcard $(T_SRC_DIR)$(TOOLS_DIR)$(notdir $(EAC))) \
+			unavailable)
+endif
+
+ifeq '$(EAC_LOCATION)' 'unavailable'
+EAC_LOCATION	:=$(firstword \
+		    $(firstword $(wildcard $(addsuffix /eac,$(subst :, ,$(PATH))))) \
+			unavailable)
+endif
+
+endif
+
+# Default PS2 include/library paths
+# These SHOULD be picked up elsewhere, but since these
+# tools won't work anywhere but there, assume for now
+PS2_DIR         	:=/usr/local/sce/ee
+PS2GL_DIR               :=../../tools/ps2gl
+INCLUDE_PATH    	:=:$(PS2_DIR)/include:$(PS2GL_DIR)/include:$(INCLUDE_PATH)
+PLATFORM_LIBRARY_PATH  	:=:$(PS2_DIR)/lib:$(PS2GL_DIR)/lib
+
+
+# Macros for handling Expression Assembler pre-processing of source
+
+ifeq '$(EAC_LOCATION)' 'unavailable'
+    ALLOW_EAC_RULES	:=0
+else
+    ALLOW_EAC_RULES	:=1
+endif
+TO_EAC_FILES	:=ec ecpp evsm dsm
+EAC_CLASS	 =$(filter %.$(suffix), $(notdir $(SOURCES)))
+EACED_FILES	:=$(foreach suffix, $(TO_EAC_FILES), $(EAC_CLASS))
+
+EACED_SOURCE 	:=$(EACED_FILES:.ec=.c)
+EACED_SOURCE 	:=$(EACED_SOURCE:.ecpp=.cpp)
+EACED_SOURCE 	:=$(EACED_SOURCE:.evsm=.vsm)
+EACED_SOURCE 	:=$(EACED_SOURCE:.dsm=.vsm)
+
+.SECONDARY: $(EACED_SOURCE);

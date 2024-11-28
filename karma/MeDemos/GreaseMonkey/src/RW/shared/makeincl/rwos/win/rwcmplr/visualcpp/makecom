@@ -1,0 +1,7 @@
+#########################################
+# These are for Visual C++ -- in C++ mode
+#########################################
+
+CFLAGS += -TP -WX
+
+include $(RWSDK)/../app/makecom/visualc

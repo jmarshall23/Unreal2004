@@ -1,0 +1,110 @@
+                  MathEngine Dynamics Toolkit
+                  ---------------------------
+
+For the release notes for releases newer than 1.0.2
+look at 'CHANGES.txt' in the documentation directory.
+
+***  Version 1.0.2  ***   15/mar/2001
+
+No API Changes.
+
+***  Version 1.0.0  ***   12/mar/2001
+
+No API Changes
+
+***  Version 0.3.0  ***   12/feb/2001
+
+- XML functionality moved into MeFile.lib.
+- CheckMacros.h moved from Mdt/src to Mdt/include
+- MeGlobals/include/MeFile.h renamed to MeSimpleFile.h
+
+***  Version 0.2.0  ***   12/jan/2001
+
+No API Changes
+
+***  Version 0.1.0  ***   01/dec/2000
+
+New features:
+    - A new scene loader and saver
+      (MdtLoadXML.c and MdtSaveXML.c)
+
+API Changes:
+    Three new joints have been added:
+     - MdtAngular3
+     - MdtSpring
+     - MdtRPROJoint
+
+    The accessor/mutator functions specific to MdtFPFOJoint
+    have been deprecated.
+
+***  Version 0.0.5  ***   08/aug/2000
+
+New features:
+    - Soft and hard joint limits for Hinge and Prismattic joints
+    - x86 and Pentium3 performance optimisations
+    - Release-Check libraries output error and debug info 
+
+Improvements:
+    - Standardization of API (Mdt, MdtBcl, MdtKea)
+
+API changes (see UpgradeNotes.html for details):
+    - memory allocation
+    - creating and destroying worlds
+    - creating and destroying objects
+    - enabling and disabling bodies and constraints
+    - Joint-limits API
+    - ContactParams API
+
+***  Version 0.0.4  ***   19/may/2000
+
+Improvements:
+
+ (1)  New MdtConstraints library. The lowest-level joint abstraction has been 
+      brought out of the Kea module thus making it possible for application 
+      developers to develop their own joint types and have them integrated by 
+      the Kea solver. The MdtConstraints library functions compute the Jacobian
+      matrices and forces acting on the Mdt joints and constraints. 
+
+ (2)  There are now functions for getting the forces applied to bodies by 
+      constraints (e.g. MdtHingeGetBody1Force etc.). These are not implemented 
+      on PlayStation2 and therefore return (0,0,0).
+
+ (3)  The new full constraint joint, MdtFPFOJoint (fixed-path-fixed-orientation), 
+      constrains both the position and the orientation of a physical body. 
+      One example usage is for driving the motion of a physical body from an 
+      animation.
+
+ (4)  The Linear2 joint constrains a body such that it is free to slide along 
+      the joint axis and to rotate at any angle.
+
+ (5)  GreaseMonkey (car demo) is now fully reconfigurable via script files. 
+  
+ (6)  Example Source code improvements: 
+      -  cd_topple - now has a friction toggle.
+      -  fixedpath - now toggles the fixing of orientation on and off.
+      -  keaBSjoint - an example using the kea interface directly and
+         implements a simple ball and socket joint.
+    
+API changes:
+
+ (7)  Include Mdt.h instead of MdtKea.h. 
+      Link to MdtConstraints.lib and add the MdtConstraints include path.
+      Remove references to MdtWorldInit.
+      MdtWorldKeaInit has been renamed to MdtWorldInit
+      Kea renaming:
+      - keaContactType... -> MdtContactType...
+      - keaFrictionModel... -> MdtFrictionModel...
+      - keaImmContactParams -> MdtConContactParams
+      - keaImmContactOption... -> MdtConContactOption...
+
+ (8)  The input format to the keaStep function has changed to allow input of  
+      constraint Jacobean matrices etc. It also accepts many partitions at once
+      and now returns the forces (Lagrange multipliers) for each timestep.
+      Working space is provided to the function in the form of a memory pool
+      which is allocated on the stack. 
+      keaCalculateMemoryRequired() is provided for figuring out how much memory
+      is needed for keaStep(). 
+
+***  Version 0.0.3  ***   15/april/2000
+
+  No changes since initial release in March 2000.

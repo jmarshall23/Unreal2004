@@ -1,0 +1,1 @@
+windiff test_format_1_0.ka test_format_1_0_copy.ka

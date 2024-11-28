@@ -1,0 +1,170 @@
+
+NOTES MAINLY ON CONVEX-CONVEX 20/6/00  JN
+
+(There are many more notes written as comments in the code.)
+
+Gjk Penetration Distance
+    - special case code (eg. starting with 1, 2, or 3 vertices) is too long and
+    complicated.  It might be better to quickly complete the tetrahedron (using
+    whichever directions) and then use the general code.
+
+    - backfacing tris aren't being dropped from the list, and probably should be.
+
+    - penetration distance hacks, such as using the previous (global) direction,
+    or using the previous features (edge pair, or face in local c.s.) work well in
+    some circumstances.  Moving the objects apart, then calling gjk again (as
+    Zhaoheng has already done for cones/cylinders) might work better.  All of
+    these solutions are problematic if you don't have a previous timestep.  We will
+    probably always want a solid algorithm to fall back on in difficult cases.
+
+    - Many of the asserts in the penetration code might be false when in fact
+    nothing has gone wrong.  I put them in there to find out when things looked
+    like they might be going wrong;  If it says MeAssert(r < epsilon), and r is in
+    fact ==1000, then something has probably gone wrong, however if r ==epsilon*1.1
+    then everything is probably fine.
+
+    - In some cases, I'm using a single penetration distance for all contacts, in
+    other cases, I'm working out a different distance for each contact.  Should
+    probably stick with one or the other of these.
+
+Gjk Separation Test
+    - I've recently removed the backup distance, since Gino says it isn't
+    necessary.  Topple still works, but this hasn't been more thoroughly tested.
+
+    - Some of the dot products and delta values could be cached between calls to
+    the distance subalgorithm (as GJK and Gino) describe.  This isn't being done
+    at the moment.
+
+    - Maybe we could take advantage of the fact that we might have a smaller number
+    of distinct vertices in the simplex in normal space than in configuration
+    space, and we could maybe do a lineSeg-lineSeg distance test, rather than a
+    point-tetrahedron test.
+
+    - We could use a direction for coherence, instead of the simplex.  However,
+    this would mean more loops of gjk.
+
+GjkSup and GjkMe
+    - We have an unneccessary level of indirection in the simplex for primitives
+    (could just have "lsVec3 simplex1[4]" instead of "lsVec3Ptr simplex1[4]").
+    - The support functions (both in the local c.s., one returning a maximal
+    point, and the other a maximal feature) badly need (writing and) tidying.
+    - There is also currently one version of the primitive MaxPoint function that
+    effectively uses a pool of vertices, and another which just takes a vec3 as
+    input.
+    - Memory for the GjkLocalCoords in the coherence struct should only be
+    allocated for primitives - the CylinderPolyHello function should be different
+    from the PolyPolyHello function.
+    - The coherenceData structs are currently being newed and deleted, and should
+    probably be pooled instead.
+    - I'm not using relative transformation matrices everywhere I should be.  Most
+    things should now work with NULL as an identity matrix.  Things could be
+    slightly more optimised for a relative matrix (only need half the coords
+    struct etc.), but it might be worth thinking more about this before making that
+    change.  For example, we might have a function that gets Vertex(0) in global
+    coordinates without doing a matrix multiply - as a prelim step create a list of
+    vertices in global coordinates (possibly used by a number of pairs), or for
+    procedurally generated objects (such as a box) it's easy to create a vertex in
+    global coords.
+    - RegisterInteraction type functions still need sorting out.
+
+Contact Generation for verts/edges/faces/circles
+    - Should maybe use relative transforms a little more.
+    - FaceFaceIntersect can return zero points.  It probably ought to return the
+    closest point(s) on one face to the other.  However, we don't have the closest
+    point(s), so maybe zero points is a better plan?
+
+Polyhedron structs
+    - At the moment, none of the code is using the face information in the
+    CnvPolyhedron struct (except for rendering).  I've tried to use only the edge
+    information, however, there are a few places where things like face normals
+    would help.
+    - There is an (old) function calculating face normals, so that I can give
+    different penetration distances for different contacts in the face-face case -
+    it might make sense to take this out.
+    - For boxes, it's not necessary to store a polyhedral representation for each
+    box, this can be generated each time the test is called.  It might be a good
+    idea to produce procedurally generated representations of many other convex
+    polys, and avoid storing polyhedron structs.  (VertexID's could no longer be
+    pointers, but this is not a problem.)  See above notes on vertices in global
+    coords.
+
+Convex-HeightField test
+    - this is not a well written function.  Much as it is now a lot better than it
+    was a couple of weeks ago, it's still slow, and it doesn't produce very
+    satisfactory results.  (Sorry.)
+
+File names
+    - The sphere convex test isn't in IxSphereConvex.cpp, it's in IxGjkBoxBox.cpp.
+    (Obviously.)  Shouldn't be much work to tidy this kind of thing up.
+    - The sphyl files and functions are all old, obselete, and should be replaced
+    by something completely new.  The only things that are uptodate are
+    McdConvexMeshCreateSphyl (and associated functions), which basically creates a
+    CnvPolyhedron representation of a sphylinder.
+
+Vis Tools Etc.
+    - It's now trivial to set up any demo so that you can press 's' to stop the
+    simulation and move the objects about with the mouse.  See convexOnConvex for
+    an example of this, drawing contacts as you drag the object.
+
+    - visPoints can draw the convex polyhedron in configuration space generated by
+    the penetration algorithm.  There's a function to save this polyhedron to file,
+    then press return to load it up in vis.exe
+
+    - It's important to look at what is going on in each loop of gjk, (or the
+    penetration test), rather than just what has happened when it exits the loop.
+
+    - There are many things it would be useful to visualize, and with hindsight I'm
+    sure I haven't spent enough time writing tools to do this.  For example, it
+    might be useful to display the two faces found by the extended support
+    function, or the simplices on the objects, or...
+
+    - It's important to note that some calls to ConvexConvex will much slower than
+    the average.  Disjointness can be determined relatively quickly, especially
+    with coherence, but penetration and face-face intersects can take much much
+    longer.
+
+    - I was planning to put in counters to work out things like:  How many times
+    does gjk loop per call to the function?  Should we be using hill climbing?  How
+    useful is the coherence?  Should we work in global coords (maybe with a list of
+    ready transformed vertices), or with two transforms, or with a relative tm..?
+    How large are connected groups of objects?  How do things generally scale with
+    the number of vertices?  What size is the average simplex?  How many distinct
+    vertices are there in the simplex?  What's going on in the penetration distance
+    test - For polyhedra? For primitives?...
+
+Testing
+
+    - There are probably a number of things I haven't tested yet.  (But I can't
+    think of anything in particular.)  It would be great to have something like a
+    "Topple2" example, which could use HeightField (maybe) and various simple
+    convex objects.
+
+General Planning (ignore this section)
+
+    - Nothing to do with Marek but, ... Blah, Blah, Blah...
+    Useful for Ian T, etc., and Paul T, the FAE's, etc...
+    If Lucy writes the plan, that's great, as long as you take some notice of the
+    plan, and * keep it up to date *.
+    Should be on a "Zhaoheng will be checking in Cylinder-Soup-ContactGen-Test on
+    14th Jan," kind of scale, rather than, "Soup will be appearing in about a
+    month." Blah, Blah, Blah...
+
+Contact Culling
+
+    - Should be moved asap into the intersect function.
+    - And we need a faster function to do this.  (Bryan's is pretty, but too slow.)
+
+Impact handling
+
+    - Do we have an impact or contact?  - use relative velocity, or state of
+    previous few timesteps.
+
+    - In the impact case, when do we put in a contact point?  Dot the relative
+    linear velocity with the direction given by the closest two points, multiply by
+    the timestep, add (for each object) angular velocity * bounding sphere radius,
+    then compare to the distance.  Check also bounding spheres (large angular
+    velocities can be ignored if you just look at the bounding sphere).  If both
+    tests give a collision in the next timestep, then put a (single) contact point
+    in on this timestep.  This point should be somewhere between the closest
+    points, with the normal given by these points, and zero penetration.
+

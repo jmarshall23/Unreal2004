@@ -1,0 +1,43 @@
+[LevelInfo0]
+Title="Crossfire"
+
+[LevelSummary]
+Title="Crossfire"
+Description="In 2352, an anomalous volcanic eruption on the outskirts of Jerusalem partially unearthed a city far below the lost city of Ekron. Four years of intensive excavation revealed a civilization that predated all known human history. Purchased by Liandri corporation for the price of excavation, the souls of arena combatants now join the forgotten dead of the unremembered past."
+
+[Volume0]
+LocationName="Blue Base"
+
+[Volume1]
+LocationName="Blue Base"
+
+[Volume10]
+LocationName="Central Node"
+
+[Volume2]
+LocationName="Red Base"
+
+[Volume3]
+LocationName="Red Base"
+
+[Volume4]
+LocationName="West Node"
+
+[Volume5]
+LocationName="North Node"
+
+[Volume6]
+LocationName="North Node"
+
+[Volume7]
+LocationName="East Node"
+
+[Volume8]
+LocationName="South Node"
+
+[Volume9]
+LocationName="South Node"
+
+[ZoneInfo0]
+LocationName="Outside"
+

@@ -1,0 +1,21 @@
+#
+# Assuming GNU make (>v3.76)
+# $Header: /proj/Toolkits/MeSamples/MeshChain/MeMakefile,v 1.3 2001/05/21 15:58:27 williamg Exp $
+# ($Name: t-stevet-RWSpre-030110 $)
+
+# vim:syntax=make:
+
+#------------------------------
+# ManyPendulums
+#------------------------------
+
+# What's to be built
+targetname:=MeshChain
+targettype:=executeable
+
+SOURCES	:= MeshChain.cpp
+
+
+# Standard incantation
+makerulesdir:=../../build/makerules/
+include ${makerulesdir}/Make.rules

@@ -1,0 +1,56 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Src">
+      <UniqueIdentifier>{44b4d29c-73ef-434b-8a28-d6a5abdbeb07}</UniqueIdentifier>
+      <Extensions>*.cpp</Extensions>
+    </Filter>
+    <Filter Include="Inc">
+      <UniqueIdentifier>{bad8a125-eca6-467c-8378-0853bf8c612e}</UniqueIdentifier>
+      <Extensions>*.h</Extensions>
+    </Filter>
+    <Filter Include="Classes">
+      <UniqueIdentifier>{01eaf0dd-b4fc-4e40-8639-b019803a5942}</UniqueIdentifier>
+      <Extensions>*.uc</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="UWeb.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="WebServer.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\Inc\UWeb.h">
+      <Filter>Inc</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\Classes\HelloWeb.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\ImageServer.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\UWeb.upkg">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\WebApplication.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\WebConnection.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\WebRequest.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\WebResponse.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\WebServer.uc">
+      <Filter>Classes</Filter>
+    </None>
+  </ItemGroup>
+</Project>

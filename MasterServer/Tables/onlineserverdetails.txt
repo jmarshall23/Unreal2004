@@ -1,0 +1,12 @@
+create table onlineserverdetails
+(
+	id int not null auto_increment,
+
+	serverid int not null,					/* servers.id */
+	detailkey varchar(32) not null,
+	detailvalue varchar(66),				/* max 32 chars, possibly unicode */
+	
+	primary key(id),
+	index idx_onlineserverdetails_serverid (serverid),
+	index idx_onlineserverdetails_serverid_detailkey (serverid, detailkey)
+);

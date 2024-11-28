@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Classes">
+      <UniqueIdentifier>{f1ad1f77-a594-4478-a763-23feb5f77fea}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Classes\AccessControlIni.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\AdminIni.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\GameConfigSet.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\xAdminCommandlet.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\xAdminConfigIni.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\xExtraPrivs.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\xGamePrivs.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\xKickPrivs.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="Classes\xUserGroupPrivs.uc">
+      <Filter>Classes</Filter>
+    </None>
+  </ItemGroup>
+</Project>

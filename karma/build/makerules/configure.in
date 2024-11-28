@@ -1,0 +1,50 @@
+dnl Process this file with autoconf to produce a configure script.
+AC_INIT()
+
+dnl make sure we are using a recent autoconf version
+AC_PREREQ(2.13)
+
+dnl Checks for programs.
+AC_PROG_CPP
+AC_PROG_MAKE_SET
+
+dnl Checks for X (for OpenGL headers)
+AC_PATH_X
+AC_SUBST(ac_x_includes)
+AC_SUBST(ac_x_libraries)
+
+dnl setup the platform specific environment
+if test "$PLATFORM" = win32; then
+  AC_MSG_RESULT(configuring for $PLATFORM)
+  :
+elif test "$PLATFORM" = xbox; then
+  AC_MSG_RESULT(configuring for $PLATFORM)
+  :
+elif test "$PLATFORM" = ps2; then
+  AC_MSG_RESULT(configuring for $PLATFORM)
+  :
+elif test "$PLATFORM" = ngc; then
+  AC_MSG_RESULT(configuring for $PLATFORM)
+  :
+elif test "$PLATFORM" = linux; then
+  AC_MSG_RESULT(configuring for $PLATFORM)
+  :
+elif test "$PLATFORM" = macos; then
+  AC_MSG_RESULT(configuring for $PLATFORM)
+  :
+elif test "$PLATFORM" = irix; then
+  AC_MSG_RESULT(configuring for $PLATFORM)
+  :
+elif test "$PLATFORM" = mips3; then
+  AC_MSG_RESULT(configuring for $PLATFORM)
+  :
+elif test "$PLATFORM" = irix_o32; then
+  AC_MSG_RESULT(configuring for $PLATFORM)
+  :
+else
+  AC_MSG_RESULT(error: Environment variable '\$PLATFORM' must be set.)
+  AC_MSG_RESULT(error: Supported platforms are: win32 xbox ps2 ngc linux macos irix)
+  AC_MSG_ERROR('\$PLATFORM' unspecified or value unrecognized)
+fi
+
+AC_OUTPUT(makefile.common)

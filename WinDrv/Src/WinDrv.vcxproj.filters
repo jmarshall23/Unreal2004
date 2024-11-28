@@ -1,0 +1,190 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Src">
+      <UniqueIdentifier>{d1b12aa1-77d1-49a9-8946-d193c65e202d}</UniqueIdentifier>
+      <Extensions>*.cpp;*.h</Extensions>
+    </Filter>
+    <Filter Include="Res">
+      <UniqueIdentifier>{3f0b7f79-5ec6-4f65-a3d0-832b2e178d5b}</UniqueIdentifier>
+      <Extensions>*.rc</Extensions>
+    </Filter>
+    <Filter Include="Int">
+      <UniqueIdentifier>{91f9db31-0afd-496d-b65f-0dad3a834958}</UniqueIdentifier>
+      <Extensions>*.int</Extensions>
+    </Filter>
+    <Filter Include="Inc">
+      <UniqueIdentifier>{fd2ba8db-3136-4b80-8cd6-e7bb8967315b}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="UnDebuggerCore.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="UnDelphiInterface.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="WinClient.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="WinDivX.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="WinDrv.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="WinSpeech.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="WinViewport.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Res\ADDACTOR.CUR">
+      <Filter>Res</Filter>
+    </None>
+    <None Include="Res\BRUSHFR.CUR">
+      <Filter>Res</Filter>
+    </None>
+    <None Include="Res\BRUSHMOV.CUR">
+      <Filter>Res</Filter>
+    </None>
+    <None Include="Res\BRUSHROT.CUR">
+      <Filter>Res</Filter>
+    </None>
+    <None Include="Res\BRUSHSCA.CUR">
+      <Filter>Res</Filter>
+    </None>
+    <None Include="Res\BRUSHSHR.CUR">
+      <Filter>Res</Filter>
+    </None>
+    <None Include="Res\BrushSna.cur">
+      <Filter>Res</Filter>
+    </None>
+    <None Include="Res\BRUSHSTR.CUR">
+      <Filter>Res</Filter>
+    </None>
+    <None Include="Res\BrushWrp.cur">
+      <Filter>Res</Filter>
+    </None>
+    <None Include="Res\CAMZOOM.CUR">
+      <Filter>Res</Filter>
+    </None>
+    <None Include="Res\cur00001.cur">
+      <Filter>Res</Filter>
+    </None>
+    <None Include="Res\cur00002.cur">
+      <Filter>Res</Filter>
+    </None>
+    <None Include="Res\cur00003.cur">
+      <Filter>Res</Filter>
+    </None>
+    <None Include="Res\cur00004.cur">
+      <Filter>Res</Filter>
+    </None>
+    <None Include="Res\cur00005.cur">
+      <Filter>Res</Filter>
+    </None>
+    <None Include="Res\cur00006.cur">
+      <Filter>Res</Filter>
+    </None>
+    <None Include="Res\cur00007.cur">
+      <Filter>Res</Filter>
+    </None>
+    <None Include="Res\cur00008.cur">
+      <Filter>Res</Filter>
+    </None>
+    <None Include="Res\cur00009.cur">
+      <Filter>Res</Filter>
+    </None>
+    <None Include="Res\cur00010.cur">
+      <Filter>Res</Filter>
+    </None>
+    <None Include="Res\cur00011.cur">
+      <Filter>Res</Filter>
+    </None>
+    <None Include="Res\cur00012.cur">
+      <Filter>Res</Filter>
+    </None>
+    <None Include="Res\cur00013.cur">
+      <Filter>Res</Filter>
+    </None>
+    <None Include="Res\cur00014.cur">
+      <Filter>Res</Filter>
+    </None>
+    <None Include="Res\cur00015.cur">
+      <Filter>Res</Filter>
+    </None>
+    <None Include="Res\cur00016.cur">
+      <Filter>Res</Filter>
+    </None>
+    <None Include="Res\idcursor.cur">
+      <Filter>Res</Filter>
+    </None>
+    <None Include="Res\idicon_m.ico">
+      <Filter>Res</Filter>
+    </None>
+    <None Include="Res\MOVEACT.CUR">
+      <Filter>Res</Filter>
+    </None>
+    <None Include="Res\SELACTOR.CUR">
+      <Filter>Res</Filter>
+    </None>
+    <None Include="Res\SELECTPO.CUR">
+      <Filter>Res</Filter>
+    </None>
+    <None Include="Res\terrafor.cur">
+      <Filter>Res</Filter>
+    </None>
+    <None Include="Res\TEXGRAB.CUR">
+      <Filter>Res</Filter>
+    </None>
+    <None Include="Res\TEXPAN.CUR">
+      <Filter>Res</Filter>
+    </None>
+    <None Include="Res\TEXROT.CUR">
+      <Filter>Res</Filter>
+    </None>
+    <None Include="Res\TEXSCALE.CUR">
+      <Filter>Res</Filter>
+    </None>
+    <None Include="Res\TEXSET.CUR">
+      <Filter>Res</Filter>
+    </None>
+    <None Include="Res\Unreal.ico">
+      <Filter>Res</Filter>
+    </None>
+    <None Include="..\..\System\WinDrv.int">
+      <Filter>Int</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Res\WinDrvRes.rc">
+      <Filter>Res</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\Inc\UnDebuggerCore.h">
+      <Filter>Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Inc\UnDebuggerInterface.h">
+      <Filter>Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Inc\UnDelphiInterface.h">
+      <Filter>Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Inc\WinDivX.h">
+      <Filter>Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\inc\WinDrv.h">
+      <Filter>Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Res\WinDrvRes.h">
+      <Filter>Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Inc\WinSpeech.h">
+      <Filter>Inc</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

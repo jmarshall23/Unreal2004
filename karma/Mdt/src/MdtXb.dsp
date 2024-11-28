@@ -1,0 +1,324 @@
+# Microsoft Developer Studio Project File - Name="MdtXb" - Package Owner=<4>
+# Microsoft Developer Studio Generated Build File, Format Version 60000
+# ** DO NOT EDIT **
+
+# TARGTYPE "Xbox Static Library" 0x0b04
+
+CFG=MdtXb - Xbox Debug
+!MESSAGE This is not a valid makefile. To build this project using NMAKE,
+!MESSAGE use the Export Makefile command and run
+!MESSAGE 
+!MESSAGE NMAKE /f "MdtXb.mak".
+!MESSAGE 
+!MESSAGE You can specify a configuration when running NMAKE
+!MESSAGE by defining the macro CFG on the command line. For example:
+!MESSAGE 
+!MESSAGE NMAKE /f "MdtXb.mak" CFG="MdtXb - Xbox Debug"
+!MESSAGE 
+!MESSAGE Possible choices for configuration are:
+!MESSAGE 
+!MESSAGE "MdtXb - Xbox Release" (based on "Xbox Static Library")
+!MESSAGE "MdtXb - Xbox Debug" (based on "Xbox Static Library")
+!MESSAGE 
+
+# Begin Project
+# PROP AllowPerConfigDependencies 0
+# PROP Scc_ProjName ""
+# PROP Scc_LocalPath ""
+CPP=cl.exe
+
+!IF  "$(CFG)" == "MdtXb - Xbox Release"
+
+# PROP BASE Use_MFC 0
+# PROP BASE Use_Debug_Libraries 0
+# PROP BASE Output_Dir "Release"
+# PROP BASE Intermediate_Dir "Release"
+# PROP BASE Target_Dir ""
+# PROP Use_MFC 0
+# PROP Use_Debug_Libraries 0
+# PROP Output_Dir "Release"
+# PROP Intermediate_Dir "Release"
+# PROP Target_Dir ""
+# ADD BASE CPP /nologo /W3 /GX /O2 /D "WIN32" /D "_XBOX" /D "NDEBUG" /YX /FD /G6 /Zvc6 /c
+# ADD CPP /nologo /W3 /GX /O2 /I "../include" /I "../src" /I "../../Mst/include" /I "../../MdtBcl/include" /I "../../MeViewer2/include" /I "../../MdtKea/include" /I "../../MeGlobals/include" /I "../../Mdt/include" /I "../../Mcd/include" /I "../../MeAssetDB/include" /I "../../MeAssetDBXMLIO/include" /I "../../MeAssetFactory/include" /I "../../MeXML/include" /D "WIN32" /D "_XBOX" /D "NDEBUG" /D "_ME_API_SINGLE" /YX /FD /G6 /Zvc6 /c
+BSC32=bscmake.exe
+# ADD BASE BSC32 /nologo
+# ADD BSC32 /nologo
+LIB32=link.exe -lib
+# ADD BASE LIB32 /nologo
+# ADD LIB32 /out:"../../lib.rel/xbox/Mdt.lib"
+# SUBTRACT LIB32 /nologo
+
+!ELSEIF  "$(CFG)" == "MdtXb - Xbox Debug"
+
+# PROP BASE Use_MFC 0
+# PROP BASE Use_Debug_Libraries 1
+# PROP BASE Output_Dir "MdtXb___Xbox_Debug"
+# PROP BASE Intermediate_Dir "MdtXb___Xbox_Debug"
+# PROP BASE Target_Dir ""
+# PROP Use_MFC 0
+# PROP Use_Debug_Libraries 1
+# PROP Output_Dir "Debug"
+# PROP Intermediate_Dir "Debug"
+# PROP Target_Dir ""
+# ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_XBOX" /D "_DEBUG" /YX /FD /G6 /Zvc6 /c
+# ADD CPP /nologo /W3 /Gm /GX /Zi /Od /I "../include" /I "../src" /I "../../Mst/include" /I "../../MdtBcl/include" /I "../../MeViewer2/include" /I "../../MdtKea/include" /I "../../MeGlobals/include" /I "../../Mdt/include" /I "../../Mcd/include" /I "../../MeAssetDB/include" /I "../../MeAssetDBXMLIO/include" /I "../../MeAssetFactory/include" /I "../../MeXML/include" /D "WIN32" /D "_XBOX" /D "_DEBUG" /D "_MECHECK" /D "MCDCHECK" /D "_ME_API_SINGLE" /YX /FD /G6 /Zvc6 /c
+BSC32=bscmake.exe
+# ADD BASE BSC32 /nologo
+# ADD BSC32 /nologo
+LIB32=link.exe -lib
+# ADD BASE LIB32 /nologo
+# ADD LIB32 /nologo /out:"../../lib.dbg/xbox/Mdt.lib"
+
+!ENDIF 
+
+# Begin Target
+
+# Name "MdtXb - Xbox Release"
+# Name "MdtXb - Xbox Debug"
+# Begin Group "public headers"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=..\include\Mdt.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\include\MdtAlignment.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\include\MdtAngular3.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\include\MdtBody.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\include\MdtBSJoint.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\include\MdtCarWheel.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\include\MdtCheckMacros.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\include\MdtConeLimit.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\include\MdtConstraint.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\include\MdtContact.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\include\MdtContactGroup.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\include\MdtContactParams.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\include\MdtDefaults.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\include\MdtFixedPath.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\include\MdtFPFOJoint.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\include\MdtHinge.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\include\MdtLimit.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\include\MdtLinear1.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\include\MdtLinear2.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\include\MdtMainLoop.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\include\MdtPartition.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\include\MdtPrismatic.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\include\MdtRPROJoint.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\include\MdtSkeletal.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\include\MdtSpring.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\include\MdtSpring6.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\include\MdtTypes.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\include\MdtUniversal.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\include\MdtUserConstraint.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\include\MdtUtilities.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\include\MdtWorld.h
+# End Source File
+# End Group
+# Begin Group "Internal headers"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=.\MdtUtils.h
+# End Source File
+# End Group
+# Begin Group "Source Files"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=.\MdtAngular3.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\MdtBody.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\MdtBSJoint.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\MdtCarWheel.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\MdtConeLimit.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\MdtConstraint.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\MdtContact.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\MdtContactGroup.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\MdtContactParams.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\MdtFixedPath.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\MdtHinge.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\MdtLimit.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\MdtLinear1.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\MdtLinear2.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\MdtLOD.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\MdtMainLoop.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\MdtPartition.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\MdtPrismatic.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\MdtRPROJoint.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\MdtSkeletal.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\MdtSpring.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\MdtSpring6.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\MdtUniversal.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\MdtUserConstraint.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\MdtUtils.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\MdtWorld.c
+# End Source File
+# End Group
+# End Target
+# End Project

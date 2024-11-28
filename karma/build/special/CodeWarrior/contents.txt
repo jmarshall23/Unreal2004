@@ -1,0 +1,22 @@
+This subdirectory contains a few files as follows.
+
+This file is a modified version of the CodeWarrior default linker
+configuration file, and technically we don't have permission to
+redistribute it. In any case this is a patch:
+
+  include/MeCWPS2.lcf
+
+This directory contains a simple template project, and can be copied
+with a name like "MathEngine PS2" to the 'Stationery' directory
+of the CodeWarrior install:
+
+  src/cwstationery
+  src/cwstationery/Program.c
+  src/cwstationery/Program.mcp
+
+The stationery is only for C, but should also supports C++.
+
+These are the project file for the 'examples' and 'tutorials':
+
+  src/examples/examples.mcp
+  src/tutorials/tutorials.mcp

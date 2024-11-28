@@ -1,0 +1,8 @@
+create table versions
+(
+	version			int not null,
+	minnetver		int not null,
+	maxnetver		int,
+
+	primary key(version)
+);

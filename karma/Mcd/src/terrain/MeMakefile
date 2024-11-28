@@ -1,0 +1,28 @@
+# Assuming GNU make {>v3.76}
+# $Header: /proj/Toolkits/Mcd/src/terrain/MeMakefile,v 1.1 2000/11/08 21:38:00 scottb Exp $
+# ($Name: t-stevet-RWSpre-030110 $)
+
+# vim:syntax=make:
+
+#------------------------------
+#Platform independent Makefile
+#------------------------------
+
+# What's to be built
+targetname:=McdRGHeightField
+targettype:=library
+
+SOURCES:=\
+	terrain/CxRGHeightField.cpp\
+	terrain/IxSphereRGHeightField.cpp\
+	terrain/IxBoxRGHeightField.cpp\
+	terrain/IxCylinderRGHeightField.cpp\
+	terrain/McdRGHeightField.cpp\
+	terrain/QuadTree.cpp\
+	terrain/IxRGHeightFieldLineSegment.cpp\
+	terrain/version.c\
+
+# Standard incantation
+makerulesdir:=../../build/makerules/
+include ${makerulesdir}Make.rules
+

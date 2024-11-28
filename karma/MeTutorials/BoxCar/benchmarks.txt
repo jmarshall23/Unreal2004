@@ -1,0 +1,173 @@
+20000502 18:41
+
+Optimised
+---------
+Averages over 1 frames
+Counter is TICKS16
+                               Cpu cycles    %    Sat|VU0 cycles    %    Sat|Fpu cycles    %    Sat
+calculate Iworld and invIworld      17536   6.5  66.8|         0   0.0   0.0|      5814  24.0  33.2
+   Make packed J and JM blocks      37248  13.9  82.9|      1156   4.6   3.1|      5208  21.5  14.0
+                   compute RHS       7104   2.6  79.2|       658   2.6   9.3|       822   3.4  11.6
+               New Calculate A      10560   3.9  71.6|      2976  11.9  28.2|        24   0.1   0.2
+      Copy lower,mod diag,copy      16576   6.2  87.7|       576   2.3   3.5|      1464   6.0   8.8
+                     factorize      18816   7.0  72.1|      5220  20.9  27.7|        24   0.1   0.1
+                           LCP     150144  55.9  84.5|     12420  49.7   8.3|     10824  44.6   7.2
+    calculate resultant forces       6400   2.4  81.7|      1148   4.6  17.9|        24   0.1   0.4
+            update vel,pos,rot       3584   1.3  75.2|       860   3.4  24.0|        28   0.1   0.8
+
+total                              268544                  25014                  24242
+
+Unoptimised
+-----------
+
+Averages over 1 frames
+Counter is TICKS16
+                               Cpu cycles    %    Sat|VU0 cycles    %    Sat|Fpu cycles    %    Sat
+calculate Iworld and invIworld      15264   6.7  77.2|         0   NaN   0.0|      3483   4.7  22.8
+                  calculate MJ       7008   3.1  67.0|         0   NaN   0.0|      2316   3.1  33.0
+                   calculate A      52320  23.0  69.8|         0   NaN   0.0|     15807  21.2  30.2
+       compute right hand side       9376   4.1  77.8|         0   NaN   0.0|      2086   2.8  22.2
+                     factorize      50048  22.0  61.4|         0   NaN   0.0|     19338  25.9  38.6
+                        do LCP      81760  35.9  65.2|         0   NaN   0.0|     28486  38.2  34.8
+    calculate resultant forces       6432   2.8  75.6|         0   NaN   0.0|      1572   2.1  24.4
+             update velocities       1792   0.8  75.9|         0   NaN   0.0|       432   0.6  24.1
+Update positions and rotations       3328   1.5  66.7|         0   NaN   0.0|      1109   1.5  33.3
+
+total                              227552                      0                  74634
+
+Summary
+-------
+                                Optimised Unoptimised Speedup
+calculate Iworld and invIworld      17536 15264       0.87
+   Make packed J and JM blocks      37248  7008       0.18
+                   compute RHS       7104  9376       1.32
+               New Calculate A      10560 52320       4.95
+      Copy lower,mod diag,copy      16576     0       0  
+                     factorize      18816 50048       2.66
+                           LCP     150144 81760       0.54
+    calculate resultant forces       6400  6432       1.01
+            update vel,pos,rot       3584  5120       1.98
+
+overall speedup 0.84
+
+20000519 15:34
+                               Cpu cycles    %    ms    Sat|VU0 cycles    %    Sat|Fpu cycles    %    Sat
+calculate Iworld and invIworld       9737   5.0  0.03  70.1|         0   0.0   0.0|      2907  20.6  29.9
+                     Convert J      10673   5.5  0.04  87.9|         0   0.0   0.0|      1287   9.1  12.1
+   Make packed J and JM blocks      30938  15.8  0.10  86.8|       852   4.4   2.8|      3221  22.8  10.4
+                   compute RHS       4385   2.2  0.01  80.1|       463   2.4  10.6|       411   2.9   9.4
+               New Calculate A      10377   5.3  0.03  76.4|      2433  12.4  23.4|        12   0.1   0.1
+      Copy lower,mod diag,copy      18352   9.4  0.06  88.5|       631   3.2   3.4|      1486  10.5   8.1
+                     factorize      24449  12.5  0.08  71.3|      6991  35.7  28.6|        15   0.1   0.1
+             LCP initial solve      11237   5.7  0.04  86.4|      1232   6.3  11.0|       295   2.1   2.6
+                LCP iterations      13201   6.7  0.04  89.8|         0   0.0   0.0|      1343   9.5  10.2
+                    iterations       1550   0.8  0.01  98.7|         0   0.0   0.0|        20   0.1   1.3
+              auxiliary matrix      39468  20.2  0.13  84.4|      4982  25.5  12.6|      1164   8.2   2.9
+                        make Q       2125   1.1  0.01  97.1|         0   0.0   0.0|        61   0.4   2.9
+                      factor Q        788   0.4  0.00  85.1|         0   0.0   0.0|       118   0.8  14.9
+                       solve Q       4267   2.2  0.01  73.7|         0   0.0   0.0|      1120   7.9  26.3
+            calculate residual       7129   3.6  0.02  83.5|       736   3.8  10.3|       440   3.1   6.2
+    calculate resultant forces       4295   2.2  0.01  81.1|       801   4.1  18.7|        12   0.1   0.3
+            update vel,pos,rot       1865   1.0  0.01  76.4|       426   2.2  22.8|        14   0.1   0.8
+
+total                              195599                  19572                  14107
+
+Dynamics is performing 261.78 million floating point operations per second
+Dynamics allocates VU0 for 0.65 milliseconds and uses it for  10.01% of that time
+
+Average   time to compute dynamics   0.65 milli seconds (  3.91% of a 60hz frame) 
+Maximimum time to compute dynamics   0.93 milli seconds (  5.60% of a 60hz frame) 
+
+20000523 13:40
+--------------
+Jstripper now superficially working, but its output is not used so cant be sure
+
+Averages over 1000 frames
+Counter is TICKS256
+                               Cpu cycles    %    ms    Sat|VU0 cycles    %    Sat|Fpu cycles    %    Sat
+calculate Iworld and invIworld       9926   4.9  0.03  70.7|         0   0.0   0.0|      2907  20.6  29.3
+                     Convert J      10703   5.3  0.04  88.0|         0   0.0   0.0|      1287   9.1  12.0
+     New J and JM blocks maker      16415   8.1  0.05  94.0|       977   4.8   5.9|        12   0.1   0.1
+   Make packed J and JM blocks      26168  12.9  0.09  84.4|       852   4.1   3.3|      3221  22.8  12.3
+                   compute RHS       4098   2.0  0.01  78.7|       463   2.3  11.3|       411   2.9  10.0
+               New Calculate A      10100   5.0  0.03  75.8|      2433  11.8  24.1|        12   0.1   0.1
+      Copy lower,mod diag,copy      18394   9.1  0.06  88.5|       631   3.1   3.4|      1486  10.5   8.1
+                     factorize      19896   9.8  0.07  64.8|      6991  34.0  35.1|        15   0.1   0.1
+             LCP initial solve      10904   5.4  0.04  86.0|      1232   6.0  11.3|       295   2.1   2.7
+                LCP iterations      13401   6.6  0.04  90.0|         0   0.0   0.0|      1343   9.5  10.0
+                    iterations       1579   0.8  0.01  98.7|         0   0.0   0.0|        20   0.1   1.3
+              auxiliary matrix      39048  19.3  0.13  84.3|      4982  24.2  12.8|      1164   8.2   3.0
+                        make Q       1961   1.0  0.01  96.9|         0   0.0   0.0|        61   0.4   3.1
+                      factor Q        723   0.4  0.00  83.7|         0   0.0   0.0|       118   0.8  16.3
+                       solve Q       4365   2.2  0.01  74.3|         0   0.0   0.0|      1120   7.9  25.7
+            calculate residual       7694   3.8  0.03  84.7|       736   3.6   9.6|       440   3.1   5.7
+    calculate resultant forces       4242   2.1  0.01  80.8|       801   3.9  18.9|        12   0.1   0.3
+            update vel,pos,rot       1742   0.9  0.01  74.7|       426   2.1  24.5|        14   0.1   0.8
+
+total                              202362                  20548                  14119
+
+Dynamics is performing 264.63 million floating point operations per second
+Dynamics allocates VU0 for 0.67 milliseconds and uses it for  10.15% of that time
+
+20000524 15:11
+
+New J stripper/JM maker in and working, 19% faster!
+
+Average   time to compute dynamics   0.67 milli seconds (  4.05% of a 60hz frame) 
+Maximimum time to compute dynamics   0.96 milli seconds (  5.73% of a 60hz frame) 
+
+                               Cpu cycles    %    ms    Sat|VU0 cycles    %    Sat|Fpu cycles    %    Sat
+calculate Iworld and invIworld      10291   6.1  0.03  71.8|         0   0.0   0.0|      2907  30.2  28.2
+     New J and JM blocks maker      20762  12.2  0.07  94.4|      1148   5.8   5.5|        12   0.1   0.1
+                   compute RHS       4209   2.5  0.01  79.2|       463   2.3  11.0|       411   4.3   9.8
+               New Calculate A      10226   6.0  0.03  76.1|      2433  12.2  23.8|        12   0.1   0.1
+      Copy lower,mod diag,copy      18391  10.8  0.06  88.5|       631   3.2   3.4|      1486  15.5   8.1
+                     factorize      19970  11.8  0.07  64.9|      6991  35.2  35.0|        15   0.2   0.1
+             LCP initial solve      11017   6.5  0.04  86.1|      1232   6.2  11.2|       295   3.1   2.7
+                LCP iterations      13243   7.8  0.04  89.9|         0   0.0   0.0|      1343  14.0  10.1
+                    iterations       1522   0.9  0.01  98.7|         0   0.0   0.0|        20   0.2   1.3
+              auxiliary matrix      38582  22.7  0.13  84.1|      4982  25.1  12.9|      1164  12.1   3.0
+                        make Q       1895   1.1  0.01  96.8|         0   0.0   0.0|        61   0.6   3.2
+                      factor Q        751   0.4  0.00  84.3|         0   0.0   0.0|       118   1.2  15.7
+                       solve Q       4195   2.5  0.01  73.3|         0   0.0   0.0|      1120  11.7  26.7
+            calculate residual       7520   4.4  0.03  84.4|       736   3.7   9.8|       440   4.6   5.8
+    calculate resultant forces       4520   2.7  0.02  82.0|       801   4.0  17.7|        12   0.1   0.3
+            update vel,pos,rot       1845   1.1  0.01  76.1|       426   2.1  23.1|        14   0.1   0.8
+
+total                              169711                  19867                   9611
+
+Dynamics is performing 297.95 million floating point operations per second
+Dynamics allocates VU0 for 0.57 milliseconds and uses it for  11.71% of that time
+
+Average   time to compute dynamics   0.57 milli seconds (  3.39% of a 60hz frame) 
+Maximimum time to compute dynamics   0.84 milli seconds (  5.05% of a 60hz frame) 
+
+20000531 18:26
+
+Stopped it doing LCP unnecessarily
+put in new J stripper
+put in new calculate A
+
+Averages over 1000 frames
+Counter is TICKS256
+                               Cpu cycles    %    ms    Sat|VU0 cycles    %    Sat|Fpu cycles    %    Sat
+calculate Iworld and invIworld      10696  12.8  0.04  72.8|         0   0.0   0.0|      2907  55.4  27.2
+        Make J and JM blocks 2      15392  18.4  0.05  92.5|      1148   9.9   7.5|        12   0.2   0.1
+                   compute RHS       4837   5.8  0.02  82.5|       434   3.7   9.0|       411   7.8   8.5
+               New Calculate A       6568   7.9  0.02  67.5|      2122  18.3  32.3|        12   0.2   0.2
+  Copy lower to upper,mod diag       8979  10.7  0.03  86.7|         0   0.0   0.0|      1195  22.8  13.3
+                        Copy A       3873   4.6  0.01  86.9|       497   4.3  12.8|        12   0.2   0.3
+                     factorize      15866  19.0  0.05  67.4|      5163  44.4  32.5|        15   0.3   0.1
+                           LCP      11123  13.3  0.04  85.8|      1059   9.1   9.5|       524  10.0   4.7
+    calculate resultant forces       3924   4.7  0.01  80.1|       767   6.6  19.6|        12   0.2   0.3
+            update vel,pos,rot       1894   2.3  0.01  76.6|       430   3.7  22.7|        14   0.3   0.7
+
+total                               83599                  11621                   5245
+
+Dynamics is performing 352.45 million floating point operations per second
+Dynamics allocates VU0 for 0.28 milliseconds and uses it for  13.90% of that time
+
+Average   time to compute dynamics   0.28 milli seconds (  1.67% of a 60hz frame) 
+Maximimum time to compute dynamics   0.48 milli seconds (  2.89% of a 60hz frame) 
+
+

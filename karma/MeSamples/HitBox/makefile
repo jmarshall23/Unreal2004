@@ -1,0 +1,35 @@
+# ====================================================
+#  Copyright (c) 1997-2002 MathEngine PLC
+#
+#  Makefile for example based on generic template and
+#  common core rules and definitions.
+#
+#  Requires makefile.lib and makefile.common
+# ====================================================
+
+# The desired name for the resulting executable
+OUTNAME 	:= HitBox
+OUTTYPE		:= EXE
+
+# The name of the directory that this example is found in.
+DIRNAME 	:= $(OUTNAME)
+
+# The list of source files needed for compilation.
+SOURCES 	:= $(OUTNAME).c
+
+# The location of the common makefile elements
+MAKEDIR		:= ..
+
+# Settings for the common code for building MathEngine examples
+MAKESYS_DIR 	 = ../../build/makerules
+MAKE_RULES	:= $(MAKESYS_DIR)/makefile.common
+
+# List of libraries to link against.
+LIB_LIST 	:= $(LIB_MEAPP) $(LIB_MST) $(LIB_$(VIEWER)) \
+			$(LIB_MDTALL) $(LIB_MCDALL) \
+			$(LIB_MEGLOBALS) $(LIB_SYSTEM)
+
+# The generic rules for building MathEngine examples
+include $(MAKE_RULES)
+$(MAKE_RULES): $(MAKE_RULES).in
+	$(MAKE) -C$(MAKESYS_DIR) makefile.common

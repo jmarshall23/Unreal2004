@@ -1,0 +1,43 @@
+# Assuming GNU make {>v3.76}
+# $Header$
+# ($Name$)
+
+# vim:syntax=make:
+
+#------------------------------
+#Platform independent Makefile
+#------------------------------
+
+#include Makefile.defs
+
+# What's to be built
+targetname:=McdConvex
+targettype:=library
+
+SOURCES_CONVEX:=\
+	convex/GjkSup.cpp \
+        convex/GjkTables.cpp
+
+SOURCES_CONVEXMESH:=\
+	convex/ConvexConvex.cpp\
+	convex/CxConvex.cpp\
+	convex/GjkMe.cpp\
+	convex/IxBoxConvex.cpp\
+	convex/IxConvexLineSegment.cpp\
+	convex/IxConvexPlane.cpp\
+	convex/IxConvexRGHeightField.cpp\
+	convex/IxConvexTriList.cpp\
+	convex/IxGjkBoxBox.cpp\
+	convex/IxSphereConvex.cpp\
+	convex/LineSegment.cpp\
+	convex/McdConvexMesh.cpp\
+	convex/cnvCreate.c\
+	math/Ix2D.cpp\
+
+SOURCES:=$(SOURCES_CONVEX)
+SOURCES+=$(SOURCES_CONVEXMESH)
+
+# Standard incantation
+makerulesdir:=../../build/makerules/
+include ${makerulesdir}Make.rules
+

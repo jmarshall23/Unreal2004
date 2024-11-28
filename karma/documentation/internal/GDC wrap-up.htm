@@ -1,0 +1,297 @@
+<HTML>
+<HEAD>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1252">
+<META NAME="Generator" CONTENT="Microsoft Word 97">
+<TITLE>This is Hummingbird's Normal.dot for RoboHelp</TITLE>
+</HEAD>
+<BODY>
+
+<B><FONT FACE="Arial" SIZE=5><P ALIGN="CENTER">GDC Wrapup Meeting </P>
+<P ALIGN="CENTER">Montreal</P>
+</B></FONT><FONT SIZE=3><P ALIGN="CENTER">March 24, 2000</P>
+<P ALIGN="CENTER"></P>
+</FONT><B><FONT SIZE=2><P>Overview&#9;</B></FONT><A HREF="#_Toc478843366">*</A><DIR>
+
+<FONT SIZE=2><P>Who Was There&#9;</FONT><A HREF="#_Toc478843367">*</A></P>
+<FONT SIZE=2><P>Agenda&#9;</FONT><A HREF="#_Toc478843368">*</A></P></DIR>
+
+<B><FONT SIZE=2><P>Past Development Phase&#9;</B></FONT><A HREF="#_Toc478843369">*</A></P>
+<B><FONT SIZE=2><P>Next Development Phase&#9;</B></FONT><A HREF="#_Toc478843370">*</A></P>
+<B><FONT SIZE=2><P>What Worked&#9;</B></FONT><A HREF="#_Toc478843371">*</A></P>
+<B><FONT SIZE=2><P>What Didn’t Work&#9;</B></FONT><A HREF="#_Toc478843372">*</A></P>
+<B><FONT SIZE=2><P>Issues for Improvement / Discussion&#9;</B></FONT><A HREF="#_Toc478843373">*</A></P>
+<B><FONT SIZE=2><P>Discussions&#9;</B></FONT><A HREF="#_Toc478843374">*</A></P><DIR>
+
+<FONT SIZE=2><P>Release Process&#9;</FONT><A HREF="#_Toc478843375">*</A></P>
+<FONT SIZE=2><P>Technology Selection /  Product Feature Changes&#9;</FONT><A HREF="#_Toc478843376">*</A></P>
+<FONT SIZE=2><P>SW Building&#9;</FONT><A HREF="#_Toc478843377">*</A></P>
+<FONT SIZE=2><P>Reasons for Technical Success&#9;</FONT><A HREF="#_Toc478843378">*</A></P>
+<FONT SIZE=2><P>Communication&#9;</FONT><A HREF="#_Toc478843379">*</A></P>
+<FONT SIZE=2><P>SRB&#9;</FONT><A HREF="#_Toc478843380">*</A></P>
+<FONT SIZE=2><P>Project Visibility Needed&#9;</FONT><A HREF="#_Toc478843381">*</A></P>
+<FONT SIZE=2><P>Multiple Prototypes Yields Good Results.&#9;</FONT><A HREF="#_Toc478843382">*</A></P>
+<FONT SIZE=2><P>Setting Up the Team&#9;</FONT><A HREF="#_Toc478843383">*</A></P>
+<FONT SIZE=2><P>Documentation&#9;</FONT><A HREF="#_Toc478843384">*</A></P>
+<FONT SIZE=2><P>Common Documentation Format Needed&#9;</FONT><A HREF="#_Toc478843385">*</A></P>
+<FONT SIZE=2><P>Intranet&#9;</FONT><A HREF="#_Toc478843386">*</A></P>
+<FONT SIZE=2><P>Peer Reviews&#9;</FONT><A HREF="#_Toc478843387">*</A></P>
+<FONT SIZE=3></DIR>
+</P>
+<P>&nbsp;</P>
+<P>&nbsp;</P>
+</FONT><B><FONT FACE="Arial" SIZE=4><P><A NAME="_Toc478843366">Overview</A></P>
+</FONT><FONT FACE="Arial"><P><A NAME="_Toc478843367">Who Was There</A> </P>
+</B></FONT><FONT SIZE=3><P>Lucy, Lorna, Claude, Francois, Chris Barton, Manny, Andy Hook, James , Zhaoheng, Marek, Bob Donnovan, Charles, John Outerbridge, Chris Larnder, probably others</P>
+
+<P>Manny took meeting notes</P>
+<P>Lucy produced final document</P>
+</FONT><B><FONT FACE="Arial"><P><A NAME="_Toc478843368">Agenda</A></P>
+
+<UL>
+</B></FONT><FONT SIZE=3><LI>Review Past Development Phase (Jan – March)</LI>
+<LI>Outline next Development Phase (March – July)</LI>
+<LI>List What worked / didn’t work</LI>
+<LI>Discussion Topics</LI>
+<LI>Recommendations (we didn’t really get to this)</LI></UL>
+
+</FONT><B><FONT FACE="Arial" SIZE=4><P><A NAME="_Toc478843369">Past Development Phase</A></P>
+</B></FONT><FONT SIZE=3><P>The major efforts in the past development phase were:</P>
+
+<UL>
+<LI>Definition of basic API, naming and coding conventions for the developmnent.</LI>
+<LI>C-API definition for both Collision and Karma </LI>
+<LI>Architecture design and implementation for collision and karma</LI>
+<LI>PS2 optimization</LI>
+<LI>Demo development for GDC</LI>
+<LI>User documentation (user guides and reference manuals) written from scratch</LI>
+<LI>Build and CVS organisation, </LI>
+<LI>Product installation and delivery</LI></UL>
+
+
+<P>Past development phase could be characterised by ‘frantic coding’.</P>
+
+<P>Lucy distributed a rough timeline chart of the main events and activities. (chart appended below). </P>
+
+<P>Summary comments on timeline chart:</P>
+
+<UL>
+<LI>The team assembled in mid-January.</LI></UL>
+
+
+<UL>
+<LI>API conventions weren’t stable till mid February. This was a strain on development.</LI></UL>
+
+
+<UL>
+<LI>There was a 911 release in Jan which meant that Russel had to deal with 2 clients (F1 group and GDC development). </LI></UL>
+
+
+<UL>
+<LI>Kea branch in Jan: original C++ kea used by F1; new C-API started for GDC development.</LI>
+<LI>There were 2 parallel collision developments happening up to the end of January: Bryan’s game collision SDK and the collision team’s new architecture. These 2 architectures were synchronised during the last week in January when Bryan and John were in Montreal. After that the collision C-API was born and implemented during the following 2 weeks. The collision C-API was first available for use with usage docs (from Bryan) in mid-february. This was a remarkable feat that Bryan and the collision team pulled off. It was also a strain on the demo developers not getting collision so late in the day. And the PS2 version of collision wasn’t ready till end of February. Interface between collision and dynamics was also developed only just in time.</LI>
+<LI>All the user docs were written in only 4 weeks and there was no source material till the second week.</LI></UL>
+
+
+<P>Almost everything that was delivered was entirely new code/architecture/docs and developed in an extremely short period of 6-8 weeks. The only thing that existed before January was Kea. Kea was stable which was a good starting point. Karma was new. Collision was new (even though a lot of the ideas in collision were carried over from the previous sdk). And Docs were new.</P>
+
+<P>Manny summarised the effort: &quot;You people did an amazing job, but don’t do it again&quot;.</P>
+</FONT><B><FONT FACE="Arial" SIZE=4><P><A NAME="_Toc478843370">Next Development Phase</A></P>
+</B></FONT><FONT SIZE=3><P>These are the key activities that will characterise the next development phase:</P>
+
+<UL>
+<LI>Alpha sites</LI>
+<LI>Customer support</LI>
+<LI>We will be getting feedback, bug reports and enhancement requests from alpha sites</LI>
+<LI>We’ll probably have to do intermediate bugfixes and a second alpha release.</LI>
+<LI>New development will include some of the following:</LI>
+<LI>Vehicle lib</LI>
+<LI>Particles</LI>
+<LI>SRB</LI>
+<LI>Cloth</LI>
+<LI>IVH</LI>
+<LI>Collision: convex, meshes, cylinders, and features to support all of the above.</LI>
+<LI>ME File format</LI>
+<LI>Stats, performance profiling, and file format for the ACME viewer</LI>
+<LI>Plugins</LI>
+<LI>SIGGRAPH demos</LI></UL>
+
+
+<P>So aswell as a lot of design and development that needs to be done, we will also have to be supporting alpha sites, putting some propper QA in place and doing intermediate releases. This will necessarily change the development style considerably.</P>
+</FONT><B><FONT FACE="Arial" SIZE=4><P><A NAME="_Toc478843371">What Worked</A></P>
+
+<UL>
+</B></FONT><FONT SIZE=3><LI>The technology worked. Inspite of the extremely short time frame and strained development the technology actually worked in the end. Kea is fast and stable. The collision architecture is good.</LI></UL>
+
+
+<UL>
+<LI>The two strong components (dynamics and collision) were the resulting experience from several previous designs. A lot of the ideas in collision carried over from the (old) sdk. Kea was the result of both previous lateral logic experience and SDK1 experience. Re-architecting code seems to work.</LI>
+<LI>The demos could work because the technology was good.</LI></UL>
+
+
+<UL>
+<LI>It really helped having many of the developers in one place. There was good communication (in the form of technology discussions) in Montreal because people were here. Much tutoring was going on from Russel and Claude. Similarly it really helped having Bryan and John for the one week in January so that the 2 collision architectures could be synchronised.</LI></UL>
+
+
+<UL>
+<LI>It helps a lot when people are given the authority to make decisions and then do so. Delegation with empowerment works (John).</LI></UL>
+
+
+<UL>
+<LI>Clear goals in Montreal.</LI>
+<LI>Having a fulltime buildmaster not only worked but was essential.</LI>
+<LI>Research demo organisation (Lorna) worked well.</LI>
+<LI>User documentation turned out very well considering it was done in 4 weeks only. Good source material was provided and a little bit of time for first reviews.</LI></UL>
+
+</FONT><B><FONT FACE="Arial" SIZE=4><P><A NAME="_Toc478843372">What Didn’t Work</A></P>
+
+<UL>
+</B></FONT><FONT SIZE=3><LI>Developing so much in such a short time strained the system considerably and many corners wer cut. There was no time for properly evaluating many of the decisions. There was a lot of technology being developed which simply could not get into the release because there was not enough bandwidth to evaluate and integrate it. It was very difficult for demo developers to get demos working on sw that was continuously changing and breaking.</LI>
+<LI>There were no schedules or status information maintained anywhere. All communication was verbal. This was ok for people speaking on a daily basis (e.g. developers in Montreal), but was very bad for communication between offices.</LI>
+<LI>Trying to do a release in a single day doesn’t work. Code freeze, docs freeze, installation, release testing, web testing actually took about a week.</LI>
+<LI>Also it is very difficult doing a release and a tradeshow for the same deadline. Both require thousands of last minute details to be attended to but tradeshow details are completely different from release packaging details. So having to deal with both simultaneously is MUCH work.</LI>
+<LI>API conventions were stabilised late in the process which caused much strain. It was also difficult not having basic utilities available (memory management, messaging, math conventions).</LI>
+<LI>Technology selection was haphazard. There was very little communication as to which features were dropped and added to the release. Some features and designs emerged from the development rather than being planned. Other technology was developed but no time for integration (particles &amp; SRB).</LI>
+<LI>FrameMaker vs MS Word vs Latek. There were some strong complaints about using FrameMaker for the user docs for several reasons: developers don’t have FrameMaker so only the tech writers can make changes; Frame files are binary, so diffs and CVS merging is not possible; file conversion only goes from Latek to Word to Frame and not in the other direction.</LI></UL>
+
+</FONT><B><FONT FACE="Arial" SIZE=4><P><A NAME="_Toc478843373">Issues for Improvement / Discussion</A></P>
+
+<UL>
+</B></FONT><FONT SIZE=3><LI>SW quality needs discussion: testing, testplans, automated testing, bug tracking, checkin process, cross-platform testing before checkin, code reviews.</LI>
+<LI>A common documentation format is needed at least for internal docs. There is still some controversy as to whether EVERYone needs to be able to edit the final user docs.</LI>
+<LI>A number of build issues to be worked out.</LI>
+<LI>Doc content - doc reviews needed.</LI>
+<LI>Technology development and selection – i.e. the SW design process. Requirements and feature specs and client-supplied use-cases are needed. </LI>
+<LI>Communication needs improving: schedules, status info, internal websites etc.</LI>
+<LI>Scheduling and tracking needed - who does what developement and when</LI>
+<LI>Bug reporting and tracking needed. Bugzilla review and training is needed.</LI>
+<LI>Release management needs improvement – lets not try to do a release in one day again.</LI>
+<LI>Meeting/communication is needed on what is expected for the next development phase up to Siggraph.</LI></UL>
+
+</FONT><B><FONT FACE="Arial" SIZE=4><P><A NAME="_Toc478843374">Discussions</A></P>
+</B></FONT><FONT SIZE=3><P>This section contains transcripts of the actual discussions which took place in the meeting, roughly organised into topics.</P>
+<P>These are not decisions or group recommendations, most of the text below are simply quotes from the meeting.  Some editing was done to clarify the context and to reduce repetition.</P>
+</FONT><B><FONT FACE="Arial"><P><A NAME="_Toc478843375">Release Process</A></P>
+</B></FONT><FONT SIZE=3><P>One thing that did not work was trying to do a release in a single day. The following events were expected to happen in one day:</P>
+
+<UL>
+<LI>Code freeze</LI>
+<LI>Docs freeze</LI>
+<LI>Run Install scripts and last minute install fixes</LI>
+<LI>Release testing</LI></UL>
+
+
+<P>Code and file and directory names were changing up to the very last minute.</P>
+<P>Last minute changes did not break build.</P>
+<P>But they do affect the docs.</P>
+</FONT><B><FONT FACE="Arial"><P><A NAME="_Toc478843376">Technology Selection /  Product Feature Changes</A></P>
+</B></FONT><FONT SIZE=3><P>Until December, fast dynamics SDK was what we were going to release at GDC.</P>
+<P>Mayfly was also planned for this period – it was dropped very late in the game.</P>
+<P>Even now we are not sure of the status of Mayfly – will it be developed further?</P>
+
+<P>Russ passed ownership of PS2 Kea development to Richard and Karma team (James Golding, James French). Karma just emerged, not planned. Karma was just supposed to be simply a C++ wrapper on Kea. Whereas Mayfly was supposed to be a C++ wrapper that would wrap Featherstone, Kea, etc.</P>
+
+<P>Particles were being done in Oxford. We didn’t have the bandwidth to get it in: feature review, evaluate, code review, integrate in karma.</P>
+<P>Same with SRB. It got checked in the last week, but that was probably a mistake since we then had to keep it out of the release.</P>
+</FONT><B><FONT FACE="Arial"><P><A NAME="_Toc478843377">SW Building</A></P>
+</B></FONT><FONT SIZE=3><P>Having a buildmaster on site in Montreal was something that worked – it was essential.</P>
+<P>Chris was there full time fixing the builds.</P>
+<P>The build was breaking constantly since it was not easy for developers to test a change on multiple platforms. PS2 checkins broke PC and IRIX builds and vice-versa.</P>
+<P>ChrisB - It wasn’t that bad. In fact working on 3 different platforms made it easier. </P>
+<P>This phenomenon may not occur again – I.e. the basic architecture is now in place.</P>
+</FONT><B><FONT FACE="Arial"><P><A NAME="_Toc478843378">Reasons for Technical Success</A></P>
+</B></FONT><FONT SIZE=3><P>It happened for a few reasons:</P>
+
+<UL>
+<LI>Kea source code was very clean, and the dynamics were stable. </LI>
+<LI>The two strong components (dynamics and collision) were the resulting experience from previous designs. A lot of the ideas in collision carried over from the (old) sdk. Kea was the result of both previous lateral logic experience and SDK1 experience.</LI></UL>
+
+
+<UL>
+<LI>A lot of tutoring was going on. Russell was available. Everyone felt that they could change the code, because they could understand what it did. New features could go in without architecting or planning.</LI></UL>
+
+</FONT><B><FONT FACE="Arial"><P><A NAME="_Toc478843379">Communication</A></P>
+</B></FONT><FONT SIZE=3><P>Communication was very difficult between offices. And sometimes even within an office.</P>
+<P>Collision was scattered: Bryan in SF, and Ben was involved in PS2 port in Oxford (part time or late?). Ben had conflicting priorities: he was responsible for PS2 collision and he also had to deal with strategic demos in Oxford. </P>
+
+<P>I had no idea that collision had to be released at GDC until a few days before GDC – Chris B.</P>
+
+<P>Lorna: she had no communication problems.</P>
+</FONT><B><FONT FACE="Arial"><P><A NAME="_Toc478843380">SRB</A></P>
+</B></FONT><FONT SIZE=3><P>Why was Koala low priority? it was checked in in the last week, but how does it plug into karma? It wasn’t low priority it was just that other stuff was higher priority – e.g. partitioning.</P>
+
+<P>There was a discussion: do we need a separate single rigid body tool, or can Kea do it?</P>
+<P>SRB was expected to be an important optimization. Not being articulated (bodies), it would be faster.</P>
+<P>It overlaps with Kea—is the performance benefit clear.</P>
+<P>Use cases: shrapnel. no collision</P>
+<P>Bob was in agreement that SRB adds value. Bob wanted it in.</P>
+
+<P>[Diagram]</P>
+
+<P>       Karma</P>
+<P>    /       |          \</P>
+<P>Kea, FastSRB, other solvers</P>
+</FONT><B><FONT FACE="Arial"><P><A NAME="_Toc478843381">Project Visibility Needed</A></P>
+</B></FONT><FONT SIZE=3><P>On the topic of SRB and particles, Andy made the point that projects which have more visibility/advocacy are more likely to be adopted.</P>
+
+<P>Perhaps an RFC would make it clear. As a user of the technology, I could look at an RFC and comment.</P>
+<P>It wasn’t a question of SRB and particles not having enough advocacy. We were simply out of time. No time for writing nor even reading documents. In fact there were docs written but there still wasn’t time to evaluate them or integrate the technology, or to do integrated demos or documentation.</P>
+
+<P>Russell did a lot of advocacy for Kea—a web site, etc. People bought into the product.</P>
+<P>It just took someone to use it and find out that it was more stable (Chris B).</P>
+<P>It had a visibility that made it easier to accept.</P>
+<P>They didn’t buy in to Kea because of the website, the buy-in happened cos the technology was more stable and faster.</P>
+
+<P>But it was agreed that visibility and documentation and communication is a ‘good thing’ during the design process.</P>
+</FONT><B><FONT FACE="Arial"><P><A NAME="_Toc478843382">Multiple Prototypes Yields Good Results.</A></P>
+</B></FONT><FONT SIZE=3><P>Kea grew out of the Oxford experience. and out of the Montreal experience (911 etc).</P>
+<P>Kea went through three stages of prototyping.</P>
+<P>We had learned from 3 rigid body toolkits</P>
+<P>This made clarity and optimization possible.</P>
+<P>Every single line of Kea was rewritten in Jan and February.</P>
+
+<P>If we want to repeat this success, we allow the time to do a couple of versions that we are going to scratch.</P>
+
+<P>But in order to be competitive we also need to ship products with competitive features, the technology may change underneath but we need an API that is stable.</P>
+
+<P>But if we bring out a much better product with many changes, people will be happy, justifying a changed API. We now have the experience so that we can do a total rewrite.</P>
+</FONT><B><FONT FACE="Arial"><P><A NAME="_Toc478843383">Setting Up the Team</A></P>
+</B></FONT><FONT SIZE=3><P>Bob brought people over from Oxford to help with the GDC development.</P>
+<P>And Oxford developers will also be needed for the next development phase.</P>
+<P>Buildmaster was critically important.</P>
+</FONT><B><FONT FACE="Arial"><P><A NAME="_Toc478843384">Documentation</A></P>
+</B></FONT><FONT SIZE=3><P>Documentation worked out really well.</P>
+<P>4 weeks from the day Manny started. No source material for first week, just old stuff to read.</P>
+<P>People finally started providing source material.</P>
+<P>In the last week Manny couldn't process all the information he was getting fast enough.</P>
+</FONT><B><FONT FACE="Arial"><P><A NAME="_Toc478843385">Common Documentation Format Needed</A></P>
+</B></FONT><FONT SIZE=3><P>There were complaints about using Framemaker for the user docs, since developers do not have framemaker. Also a problem merging changes since frame files are binary.</P>
+
+<P>We want to be able to go into the docs, make small changes publishable, visible. If there is a module that is broken, you can go in and fix it: docs should be the same.</P>
+<P>A problem in the doc was a big hassle, we had to wait until Manny returned to do the fix.</P>
+
+<P>Counter-argument:</P>
+<P>Ownership is the norm in software. There are many modules that need the owner to do the fix since they are the only ones that understand the code.</P>
+<P>In documentation or source code, you can’t expect everyone to go in and fix any bug.</P>
+<P>We can use bug tracking to manage documentation bugs, same as sw bugs.</P>
+<P>We need the sense to not go in fix stuff that we don’t know about.</P>
+
+<P>But for a tiny bug in SW or docs it should be easy for anyone to fix.</P>
+<P>This shouldn’t be stopped because of tool-inaccessibility.</P>
+<P>Everything should be allowed.</P>
+<P>A flexible process, with rules on top.</P>
+
+<P>John: We haven’t explored Frame on Linux.</P>
+<P>Marek: problem with merging binary files (in CVS). He likes open source projects – you have it driven by one team, but every can see it.</P>
+<P>LaTeX is not like Word. It can do everything that Frame can do. But it has no GUI.</P>
+<P>The problem is that running diffs on LaTeX is really ugly.</P>
+</FONT><B><FONT FACE="Arial"><P><A NAME="_Toc478843386">Intranet</A></P>
+</B></FONT><FONT SIZE=3><P>Everyone should be able to go into the root page.</P>
+<P>The intranet is so valuable, everyone needs access.</P>
+<P>Everything should be in CVS.</P>
+<P>Someone should be responsible.</P>
+<P>Processes should work even if people aren't there. (Andy)</P>
+</FONT><B><FONT FACE="Arial"><P><A NAME="_Toc478843387">Peer Reviews</A></P>
+</B></FONT><FONT SIZE=3><P>Idea was promoted by Lucy, rejected by Andy.</P>
+<P>CVS Good -- Peer reviews bad. (Manny's summary of Andy's position)</P>
+<P>Suggestion: a core group may reject submissions.</P></FONT></BODY>
+</HTML>

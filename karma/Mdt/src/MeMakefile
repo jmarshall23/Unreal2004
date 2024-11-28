@@ -1,0 +1,44 @@
+# Assuming GNU make (>v3.76)
+# $Header: /proj/Toolkits/Mdt/src/MeMakefile,v 1.12 2001/05/21 18:25:36 jamesg Exp $
+# ($Name: t-stevet-RWSpre-030110 $)
+
+# vim:syntax=make:
+
+#------------------------------
+# Mdt
+#------------------------------
+
+# What's to be built
+targetname:=Mdt
+targettype:=library
+
+SOURCES:=\
+	MdtAngular3.c \
+	MdtBSJoint.c \
+	MdtBody.c \
+	MdtCarWheel.c \
+	MdtConeLimit.c \
+	MdtConstraint.c \
+	MdtContact.c \
+	MdtContactParams.c \
+	MdtFPFOJoint.c \
+	MdtFixedPath.c \
+	MdtHinge.c \
+	MdtLimit.c \
+	MdtLinear1.c \
+	MdtLinear2.c \
+	MdtPartition.c \
+	MdtPrismatic.c \
+	MdtRPROJoint.c \
+	MdtSpring.c \
+	MdtUniversal.c \
+	MdtUserConstraint.c \
+	MdtUtils.c \
+	MdtWorld.c \
+	MdtMainLoop.c
+
+
+# Standard incantation
+makerulesdir:=../../build/makerules/
+include ${makerulesdir}Make.rules
+

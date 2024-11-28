@@ -1,0 +1,76 @@
+.PHONY: all components examples tutorials warning clean
+.EXPORT_ALL_VARIABLES: ;
+
+#
+# Top level rules that enforce existence of PLATFORM variable
+#
+
+ifeq ($(strip $(PLATFORM)),)
+
+all debug release check_release clean:
+	@echo 'Environment variable PLATFORM must be set in order to compile.'
+
+else
+
+CONFIG = release
+
+all: components examples tutorials ;
+
+debug: CONFIG = debug
+debug: all ;
+
+release: CONFIG = release
+release: all ;
+
+check_release: CONFIG = check_release
+check_release: all ;
+
+clean: CONFIG = clean
+clean: all ;
+
+
+#
+# Additional include paths for global include directories
+#
+
+ME_INCLUDE   := ../../../../include
+GLUT_INCLUDE := ../../../../3rdParty/glut
+ifeq ($(strip $(INCLUDE_PATH)),)
+  INCLUDE_PATH := $(ME_INCLUDE):$(GLUT_INCLUDE)
+else
+  INCLUDE_PATH := $(ME_INCLUDE):$(GLUT_INCLUDE):$(INCLUDE_PATH)
+endif
+
+
+
+#
+# Rules to compile the provided MeToolkit source code
+#
+
+components: warning
+	cd Mdt/src       && ${MAKE} $(CONFIG)
+	cd MeApp/src     && ${MAKE} $(CONFIG)
+	cd MeGlobals/src && ${MAKE} $(CONFIG)
+	cd MeMessage/src && ${MAKE} $(CONFIG)
+	cd MeViewer2/src && ${MAKE} $(CONFIG)
+	cd Mst/src       && ${MAKE} $(CONFIG)
+
+.PHONY: components_debug components_check
+
+components_debug: CONFIG = debug
+components_debug: components ;
+
+components_check: CONFIG = check_release
+components_check: components ;
+
+
+
+warning:
+	@echo "**********************************************************"
+	@echo "Please note: compilation here will NOT replace the files"
+	@echo "  originally provided. The output will all be found within"
+	@echo "  this subdirectory."
+	@echo "**********************************************************"
+
+
+endif

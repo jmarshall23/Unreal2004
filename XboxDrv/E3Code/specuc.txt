@@ -1,0 +1,32 @@
+XE3UC.LIB
+
+BOOL XE3GetUCPlayer (
+PSTR szName, // name of player
+PUINT puiTeam // 1 for team1 , 2 for team2
+);
+
+Reads the user and team settings from T:\E3USERIN.INI (format below) and returns the data. The function caches the timestamp of the e3userin.ini. 
+
+ReturnValue: The function should return FALSE if the file does not exist, cannot be read, etc, or if the timestamp on the file matches the last cached timestamp. Otherwise, it should return TRUE.
+ 
+E3USERIN.INI Format:
+Name= <TextString, max 12 Characters>
+Team=1|2 (team 1 or Team 2)
+ 
+BOOL XE3WriteUCPlayer (
+PSTR szName, // name of player.
+UINT uiTeam, // 1 for team 1, 2 for team 2
+UINT uiTeamWin, // 1 for team 1, 2 for team 2
+UINT uiFrags, // Player frags during match.
+UINT uiFlagCaptures // Player flag captures during match.
+ );
+
+ 
+Writes to the file T:\E3USEROUT.INI in the following format.
+
+E3USEROUT.INI Format:
+Name = <TextString, max 12 characters>
+Team=1|2 (team 1 or Team 2)
+TeamWin= 1|2 (team 1 or Team 2)
+Frags=<Integer number of frags for player>
+FlagCaptures=<Integer number of flag captures for player during match>

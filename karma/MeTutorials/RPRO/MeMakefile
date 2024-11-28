@@ -1,0 +1,20 @@
+# Assuming GNU make (>v3.76)
+# $Header: /proj/Toolkits/MeTutorials/RPRO/MeMakefile,v 1.1 2000/12/22 22:00:51 claude Exp $
+# ($Name: t-stevet-RWSpre-030110 $)
+
+# vim:syntax=make:
+
+#------------------------------
+# Mdt
+#------------------------------
+
+# What's to be built
+targetname:=RPRO
+targettype:=executeable
+
+SOURCES	:= RPRO.c
+
+# Standard incantation
+makerulesdir:=../../build/makerules/
+include ${makerulesdir}Make.rules
+

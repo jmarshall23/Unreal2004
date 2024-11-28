@@ -1,0 +1,389 @@
+MathEngine collision detection toolkit release history file
+
+CURRENT DEVELOPMENT BRANCHES:
+
+RELEASES:
+WARNING:: Tags related to everything ABOVE them!
+
+---------------------------------------------------------------------------
+| tag : t-release-0-0-1
+| branch: b-release-0-0-1
+| date: 3-14-2000
+| note: first GDC release
+---------------------------------------------------------------------------
+
+  (1) New features: In this release, interactions between cone and others
+      primitives (box, sphere and plane) have been added. These interactions
+      report only if they collide or not, for now, there is no contact 
+      information generated. The contact info generation will be available
+      very shortly.
+
+  (2) Coordinate systems: In the latest version of rendering library used in 
+      MathEngine, the cone's origin is at the middle height and y-axis goes
+      through the apex. However for the collision model, we choose the
+      cone's orgin at the center of mass corresponding to a solid cone. This
+      is basically due to the consideration of convenience for dynamic 
+      simulation. In the example code, the function "cs_convert_cone(...)"
+      takes care for convesion from graphics transformation matrix to collison
+      model transformation matrix. The value (ME_CONE_OFFSET*height) is the 
+      distance from cone's base to its center of mass in y-direction.
+
+
+-------------------------
+| tag : t-release-0-0-2
+| branch: b-release-0-0-2
+| date: 4-12-2000
+| note: special release for Mev
+---------------------------------------------------------------------------
+
+Date of this release:     15/april/2000
+
+  (1) Cylinder primitive has been added into the library. 
+      All primitive intersections are now implemented except for
+      cylinder/cylinder and cylinder/cone.
+
+  (2) Line Segment intersection is completly implemented with all other
+      primitives.
+
+  (3) Bug fix:	Unimplemented intersections between primitive elements 
+      no longer	trigger a crash.
+
+-------------------------
+| tag : t-release-0-0-3
+| branch: b-release-0-0-3
+| date: 4-15-2000
+| note: another release for Mev
+---------------------------------------------------------------------------
+
+
+Bug fix:
+  1
+    McdModelSetInteractionDisabled(McdModelID, McdModelID);
+    only worked if the specified models were not in contact at the
+    time of the call.
+    Fixed, with the following caveat:
+    1) Overlapping pairs cannot be enabled and then disabled (or vice-versa)
+    *between* collision updates.  If this is attempted, the "SetEnabled"
+    function in CxSpace will return false upon the second (and subsequent)
+    attempts.  Of course, now you can re-toggle the enabled status after the
+    next update and it works as you would expect.
+    
+    2) Non-overlapping pairs may be trivially toggled enabled/disabled as many
+    times as you like, between updates or otherwise.
+    
+    3) If an object has come to rest, and you disable its collisions, you must
+    wake it so that it will fall (possibly) through the thing it was resting on.
+    This is of course not a collision issue.
+    
+  2
+    pair handler: pairs can now have a NULL response 
+    (ie. bridge) associated with them.
+    
+API changes:
+    McdDtBridgeSetRelativeTransformPtr( McdModelID model, MeMatrix4 relativeTM,
+                                  MeMatrix4 compoundTM );
+    now takes 2 parameters, and replaces two calls:
+ 	McdModelSetTransformPtr( model, compoundTM ); 
+ 	McdModelSetRelativeTransformPtr( model, relativeTM ); 
+    
+    Cylinder now a primitive with its own header file.
+
+New release features:
+    Cylinder/cylinder working.
+
+New Internal features:
+    ConvexMesh integrated
+    New geometry: McdRGHeightField
+    McdRGHeightField-sphere interaction
+    McdRGHeightField-ConvexMesh interaction (not fully functional yet)
+    McdConvexMesh replaces McdConvex    
+    Particle system collision started
+
+Internal changes:
+ -  "C" implementation of polymorphism for geometry types.
+ -  "wrapper-less" "C" declarations for concrete geometry types: ongoing.
+ -  explicit registration mechanism ( as opposed to preprocessor-based
+      header-file inclusion mechanism )  for geometry types: ongoing.
+ -  full user control ( per-geometry-type and per-interaction ) 
+      of which library code segments are loaded: ongoing.
+    
+
+-------------------------
+| tag : t-release-0-0-4
+| branch: b-release-0-0-4
+| date: 25 May 2000
+---------------------------------------------------------------------------
+
+ - CxPairHandler::Term() no longer deletes its spaces.
+   User must explicitely delete space s/he creates.
+ - {Box,Cylinder}-RGHeightField interaction
+ - new functions McdSpacePairCreate/Term( pair ) to allow user 
+   creation of pairs. - GONE.
+ - cone-cylinder function (collision test only)
+ - explicit registration in place: API change for Mcd system initialization.
+ - Mcdu*.h files now non-duplicated versions in mcd/include.
+
+ - McdDispatchHello/Goodbye
+   McdIntersectHello now needs to be called on all pairs coming 
+   from McdSpaceGetNewPairs, of before you use a pair you created on your own.
+   McdIntersectGoodbye needs to be called on all pairs obtained from 
+   McdSpaceGetOldPairs or when a pair of objects will no longer be used for
+   collision for your own pairs.
+
+ - McdContactSimplify() to reduce number of contacts.
+
+ - primitive geometry API mods:
+  
+McdBox uses dimensions instead of radii.
+McdCylinder takes height, not half-height.
+McdZPlane renamed McdPlane.
+ME_CONE_OFFSET, previously by-hand added to each example needing it,
+replaced by McdConeGetZOffset(McdConeID).
+
+ - API name changes:
+   McdSpacePair --> McdModelPair
+   McdInteractionResult --> McdIntersectResult
+   McdInteractionLSResult --> McdLineSegIntersectResult
+   McdSpaceGetLineSegmentOverlapList --> McdSpaceGetLineSegIntersections
+   McdModelGetLineSegmentOverlapInfo -->  McdLineSegIntersect
+
+   Renamed some new direct-access functions:
+   int McdIntersectHello( McdModelPair* );
+   int McdIntersect( McdModelPair*, McdIntersectResult* ); 
+	     >>> replaces McdDispatchPair
+   int McdIntersectGoodbye( McdModelPair* );
+
+   McdModelPairInit, Term
+   McdDispather* functions renamed to McdIntersect* to make room
+   for other dispatchers and their requests
+
+
+ - libMcd broken up into libMcdFrame, libMcdPrimitives
+ - API additions: McdDtBridgeGetNearbyPairs(), returning a McdPackedPairs
+   struct, + the API for McdPackedPairs. Suggested rename is to
+   McdModelPairArray, and to McdDtBridgeGetPairArray(). For now, all of
+   this API has been hidden, because of possible optimization mods.
+ - API renames:
+   McdDtBridgeInit( materialIDMaxCount );
+   McdDtBridgeGetDefaultMaterialID();
+   McdDtBridgeGetNewMaterialID();
+   McdDtBridgeGetMaterialIDMaxCount();
+
+   McdIntersectSetContactPointMaxCount -> McdIntersectSetContactBufferSize
+   McdIntersectGetContactPointMaxCount -> McdIntersectGetContactBufferSize
+   McdIntersectSetMaxContactCount -> McdIntersectRequestSetContactMaxCount
+   McdIntersectGetMaxContactCount -> McdIntersectRequestGetContactMaxCount
+
+ - API mods/additions:
+ McdContact.seperation --> McdCOntact.penetration
+ McdDtBridgeUpdateCompound --> McdDtBridgeUpdateModelTransfromFromBody
+ added:McdDtBridgeUpdateBodyTransfromFromModel
+ added: McdGeometryGetMassProperties(..). with approximate implementations
+
+ McdDtBridgeSetRelativeTransformPtr -> McdDtBridgeSetRelativeTransformPtrToBody
+
+ - API mod:
+  McdSpaceGetNewPairs, McdSpaceGetNearbyPairs, McdSpaceGetOldPairs
+  -->
+  McdSpaceGetHelloPairs McdSpaceGetStayingPairs McdSpaceGetGoodbyePairs
+   and rely on an explicit pair iterator obtained from:
+   McdSpaceGetHelloPairIterator McdSpaceGetStayingPairIterator 
+   McdSpaceGetGoodbyePairIterator
+
+
+Internal changes:
+ - cdAlone.cpp now works.
+ - BoxOnBox worked.
+ - GjkSup: new distance function.
+ - Mdtcontact pool now holds MdtContactIDs instead of contacts
+ - McdPrimitives.h/c and Mcd..Register.. definitions implementing
+    individual and group loading of geo types and geo-geo interactions.
+ - physical restructuring:
+    killed dir mcd/, migrating files to primitives/, terrain/, frame/
+    added dirs terrain/
+    renamed dirs mcddtbridge --> dtbridge/, mcdrwbsp --> rwbsp/
+ - new files:	     
+    McdPlane.cpp, McdSphere,cpp, McdBox,cpp. Allows true individual
+    same names in header files too.
+ - extracted a "CxPackedPairs" struct from CxResponse struct.
+ - committed first pieces of trimesh type:
+    src/mesh/McdTriMesh.h/cpp
+    src/mesh/CxTriMesh.h/cpp
+    src/mesh/IxTriMeshBox.h/cpp
+    src/mesh/IxTriMeshTrimesh.h/cpp
+    examples/trimesh/..
+
+    
+-------------------------
+| tag : t-release-0-0-5
+| branch: b-release-0-0-5
+| date: Aug 2000
+---------------------------------------------------------------------------
+
+API Changes:
+
+The Mcd framework has significant changes.
+
+ - McdLineSegIntersectResult.icstPoint now called .position
+ - McdIntersectResult.maxContactCount now called .contactMaxCount
+ - McdIntersectResult now points to McdModelPair
+ - McdIntersectHello, now called McdHello,
+   will swap order of McdModelPair if needed.
+ - name changes:
+    OLDNAMES:
+	McdModelRemoveFromSpace( McdModelID cm )
+	McdUpdateModelInSpace( McdModelID cm )
+	McdModelFreezeInSpace( McdModelID cm )
+	McdModelUnfreezeInSpace( McdModelID cm )
+	McdModelIsFrozenInSpace( McdModelID cm )
+	McdModelSetInteractionEnabled( McdModelID cm1, McdModelID cm2 )
+	McdModelSetInteractionDisabled( McdModelID cm1, McdModelID cm2 )
+	McdModelInteractionIsEnabled( McdModelID cm1, McdModelID cm2 )
+	McdIntersectHello( McdModelID m )
+	McdIntersectGoodbye( McdModelID m )
+	McdModelPairInit( McdModelPair *, McdModelID, McdModelID )
+	McdSpaceUpdate( McdSpaceID s )
+     NEWNAMES:
+	McdSpaceFreezeModel( McdModelID )
+	McdSpaceUnfreezeModel( McdModelID )
+	McdSpaceModelIsFrozen( McdModelID )
+	McdSpaceRemoveModel( McdModelID )
+	McdSpaceUpdateModel( McdModelID )
+	McdSpaceEnableInteraction( McdModelID cm1, McdModelID cm2 )
+	McdSpaceDisableInteraction( McdModelID cm1, McdModelID cm2 )
+	McdSpaceInteractionIsEnabled( McdModelID cm1, McdModelID cm2 )
+	McdHello( McdModelID m )
+	McdGoodbye( McdModelID m )
+	McdModelPairReset( McdModelPairID, McdModelID, McdModelID )
+	McdSpaceUpdateAll( McdSpaceID s )
+
+   McdContact.auxPtr, .auxTag renamed to element.tag[1,2], element.ptr[1,2]
+   To get renderware-related information from contacts use:
+   McdRwBSPGetTriangleIndex( McdContact *), McdRwBSPGetSector( McdContact* )
+
+ - McdContact.curvature1,2 does not exist anymore.
+
+ - McdDtBridge now replaced by MstBridge.
+ - McdDtBridgeSetBody renamed to McdModelSetBody
+ - McdPairHandler does not exist anymore. 
+   Replace McdPairHandlerUpdate by McdSpaceUpdateAll or MstBridgeStep.
+ - McdInit now takes maximum number of models as arguments.
+
+ - many McduDraw functions replaced by MeApp utilities
+ - McdHelloCallback allows setting of request using a default request
+   (McdGetDefaultRequest) or an optional request table (McduRequestTable).
+   McdIntersectGetNewRequestID(), McdIntersectSetRequestID() 
+   McdIntersectRequestSetContactMaxCount()
+   replaced by corresponding McduRequestTable functionality.
+ - registration of geometries and interactions needs to be done explicitely
+ - McdCylinder is now part of the primitives library.
+ - McdHelloEach, McdGoodbyeEach call McdHello/Goodbye for each pair in list.
+ - McdModelPairContainer holds pairs output in McdSpace
+    McdSpacePairIterator is used to loop over them.
+
+ - McdConvexMeshRegisterInteractions() renamed to 
+	McdConvexMeshPrimitivesRegisterInteractions()
+   McdRGHeightFieldRegisterInteractions() renamed to
+	McdRGHeightFieldPrimitivesRegisterInteractions()
+   McdConvexMeshRGHeightFieldRegisterInteraction() added
+ - McdIntersectSetContactBufferSize() no longer required
+   The buffer size is set automatically per interaction.
+
+- McdIntersectS/GetRequestID() renamed to McdModelS/GetRequestID
+
+Bug fixes:
+ - McdSpaceIsFrozen used to return 1 if the object was _not_ frozen, 
+   zero otherwise.
+ - McdSpace correctly handles pair overflows
+ - all other reported bugs
+
+Functional Changes:
+ - McdHello now must be called before McdIntersect or a pair.
+   This is handled automatically if McdSpace is used.
+
+ - McdSpaceGetPairs no longer returns pairs involving both models frozen
+
+ - Space semantics changed to improve handling of removed models, removed pairs
+   and other changes in space.
+
+   New functions:
+   McdSpaceBeginChanges, McdSpaceEndChanges
+   Any changes in McdSpace should happen between those functions.
+   Changes include: McdSpaceInsertModel, McdSpaceRemoveModel, 
+   McdSpaceUpdateModel, McdSpaceUpdateAll,
+   McdSpaceDisablePair, McdSpaceEnablePair.
+   
+   The standard procedure is now:
+      McdSpaceCreate (implicit BeginChanges)
+      ... removes, inserts, updateModel, Update, disable/enable pairs
+   loop {
+       ... removes, inserts, updateModel, Update, disable/enable pairs
+       McdSpaceEndChanges(space)
+       McdSpaceGetPairs
+       handle pairs
+       McdSpaceBeginChanges(space)
+       ... removes, inserts, updateModel, Update, disable/enable pairs
+   }
+   
+   McdSpaceGetPairs will collate all the changes up to now and return the same
+   pairs until the next change.
+
+    
+New Features:
+ - TriangleMesh geometry and TriangleMesh-TriangleMesh collision
+ - Composite model geometry and collision
+ - McdSafeTime time of impact calculations for primitives
+ - more linesegment queries
+ - McdTriangleNE collision tests with free user triangles.
+
+-------------------------
+| tag : t-release-0-1-0
+| branch:
+| date: Dec 1 2000
+---------------------------------------------------------------------------
+
+ - TriangleMesh Loading and saving with vertex merging
+ - ConvexMesh loading with vertex merging
+ - RGHeightfield loading from .bmp
+
+-------------------------
+| tag : t-release-0-2-0
+| branch:
+| date: 
+---------------------------------------------------------------------------
+
+New Features
+ - Cone-plane and cone-sphere interactions (full contact generation)
+ - TriangleMesh exact distance function.
+   TriangleMesh can now be created to allow efficient distance calculations.
+   Slightly more memory is required. 
+   Additional parameter in cduTriangleMeshCreateFromObj loader function to
+   allow for this.
+ - Support functions for above mesh/mesh distance (SSR/SSR distance and Tri/Tri 
+   distance) have been adapted into the current toolkits.
+ - Add new algorithm to find optimal SSR.
+ - OBB optimization put in, faster mesh-mesh collision
+ - McdSpace line segment filtered intersection query
+     ( McdSpaceGetLineSegFirstEnabledIntersection )
+   Allows filtering of models through a callback and
+   returns the closest model to the linesegment source point for which
+   the callback returns 1.
+ - Particle system collision
+ - McdTriangleList released (api changes from previous unofficially
+   released versions). Collides with spheres and boxes.
+
+Bug fixes:
+ - Convex/linesegment returns correct distance.
+ - linesegment/space interaction: correctly traverses all active models
+   in space. 
+
+Updates
+ - documentation
+ - faster mesh collision
+ - XML file io moved to MeFile
+
+-------------------------
+| tag : t-release-0-3-0
+| branch:
+| date: Feb 12 2001
+---------------------------------------------------------------------------

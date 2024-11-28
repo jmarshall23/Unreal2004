@@ -1,0 +1,114 @@
+# Assuming GNU make (>v3.76)
+# $Header: /proj/Toolkits/MdtKea/src/MeMakefile,v 1.17 2001/04/09 14:37:31 williamg Exp $
+# ($Name: t-stevet-RWSpre-030110 $)
+
+# vim:syntax=make:
+
+#------------------------------
+#Platform independent Makefile
+#------------------------------
+
+# What's to be built
+targetname:=MdtKea
+targettype:=library
+
+# Specific lists to eventually build SOURCES
+
+SOURCES:=\
+	keaStuff.cpp \
+	keaDebug.cpp \
+	keaLCP.cpp \
+	keaMemory.cpp
+
+SOURCES_ps2:=\
+	MicrocodeBkMat1212_sgemm_strsm.dsm \
+	MicrocodeBkMat1212_sgemm_strsm.evsm \
+	MicrocodeBkMat1212_chol.dsm \
+	MicrocodeBkMat1212_chol.evsm \
+	MicrocodeBkMat1212_ssyrk.evsm \
+	MicrocodeBkMat1212_ssyrk.dsm \
+	keaCalcConstraintForces_ps2.cpp \
+	keaCalcResultantForces_ps2.cpp \
+	cf_block_ps2.cpp \
+	keaCalcIworldandNonInertialForceandVhmf.cpp \
+	JM_block_ps2.cpp \
+	keaDma_ps2.cpp \
+	calcA_ps2.cpp \
+	keaCalcJinvMandRHS_ps2.cpp \
+	keaIntegrate_ps2.cpp \
+	keaMakejlenandbl2body.cpp \
+	keaMathStuff_ps2.cpp \
+	keaRbdCore_ps2.cpp \
+	keaLCPMatrix_ps2smalldense.cpp \
+	keaLCPMatrix_ps2smalldense_micro.dsm \
+	keaLCPMatrix_ps2smalldense_micro.evsm \
+	keaLCPMatrix_ps2sparse.cpp \
+	keaLCPMatrix_ps2sparse_micro.dsm \
+	keaLCPMatrix_ps2sparse_micro.evsm
+
+# Note: These sources are for the vanilla build. SOURCES_ifnot_ps2 may
+# be overidden below for PC optimised builds
+SOURCES_ifnot_ps2:=\
+	keaCalcConstraintForces_vanilla.cpp \
+	keaCalcIworldandNonInertialForceandVhmf.cpp \
+	keaCalcJinvMandRHS_vanilla.cpp \
+	keaIntegrate_pc.cpp \
+	keaLCPMatrix_PcSparse_vanilla.cpp \
+	keaMakejlenandbl2body.cpp \
+	keaRbdCore_pc.cpp
+
+# Grab canned definitions before config specific code
+makerulesdir:=../../build/makerules/
+
+ifeq "${PLATFORM}" 'linux'
+EXTRACPPFLAGS+=-D_BUILD_VANILLA
+endif
+
+ifeq "${PLATFORM}" 'trimedia'
+EXTRACPPFLAGS+=-D_BUILD_VANILLA
+endif
+
+ifeq "${PLATFORM}" 'win32'
+	# We worry about floating-point options on Win32
+	# We allow
+	#    mefpu=opt1:opt2:op3...
+	# where opt_n_ is
+	#    vanilla    -- Standard C
+	#    x86        -- PII optimised
+	#    sse        -- PIII optimised
+	#    sse2       -- P4 optimised
+	#
+	# At the moment we only support
+	#    mefpu=vanilla (the default)
+	#    mefpu=x86:sse
+	mefpu:=vanilla# default
+	override mefpu:=$(sort $(subst :, ,${mefpu}))# for now, make x86:sse into "sse x86"
+	ifeq "${mefpu}" 'vanilla'
+		EXTRACPPFLAGS+="-DMEFPARCH=MEFPVANILLA"
+	else
+		ifeq '${mefpu}' 'sse x86'
+			EXTRACPPFLAGS+="-DMEFPARCH=(MEFPX86|MEFPSSE)"
+			# Yes, I do mean "_ifnot_ps2" even though this is win32
+			# (This overrides the variable set above for vanilla builds)
+			SOURCES_ifnot_ps2:=\
+				keaCalcConstraintForces_x86.cpp \
+				keaCalcConstraintForces_sse.cpp \
+				keaCalcIworldandNonInertialForceandVhmf.cpp \
+				keaCalcJinvMandRHS_x86.cpp \
+				keaCalcJinvMandRHS_sse.cpp \
+				keaCheckCPU_sse.cpp \
+				keaIntegrate_pc.cpp \
+				keaMakejlenandbl2body.cpp \
+				keaRbdCore_pc.cpp \
+				keaLCPMatrix_PcSparse_x86.cpp \
+				keaLCPMatrix_PcSparse_sse.cpp
+			else
+			errormsg:=make: mefpu must be one of [vanilla|x86:sse] (for now)
+			dummy:=$(error ${errormsg})
+		endif
+	endif
+endif
+
+# Standard incantation
+include ${makerulesdir}Make.rules
+

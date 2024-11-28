@@ -1,0 +1,462 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="INI">
+      <UniqueIdentifier>{8091edae-70e8-4b09-a7e9-a1a63630d86c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="LOG">
+      <UniqueIdentifier>{464d7485-ed4c-44c0-b40f-d4886c299eab}</UniqueIdentifier>
+      <Extensions>*.log</Extensions>
+    </Filter>
+    <Filter Include="Installer">
+      <UniqueIdentifier>{4f8d1432-f856-49d6-8033-f100ee71cf1e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="BAT">
+      <UniqueIdentifier>{cd863a1a-4bac-46bb-9a22-83a29777fb62}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Localization">
+      <UniqueIdentifier>{8e961372-9520-4f1c-a6a1-746c36d2633a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Localization\INT">
+      <UniqueIdentifier>{cf1e7d19-3700-4d25-8735-273d31285684}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Localization\frt">
+      <UniqueIdentifier>{fea206ec-cbbf-4d86-a142-842710a603cf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Localization\est">
+      <UniqueIdentifier>{166d49e7-2e50-423c-bd69-79d01bbc5ed2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Localization\det">
+      <UniqueIdentifier>{83ae4ea2-0d76-4f1c-8628-463f926d6155}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Localization\itt">
+      <UniqueIdentifier>{ac9152cd-e365-451d-a4e8-cf6765340b59}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="build.ini">
+      <Filter>INI</Filter>
+    </None>
+    <None Include="Default.ini">
+      <Filter>INI</Filter>
+    </None>
+    <None Include="DefaultXbox.ini">
+      <Filter>INI</Filter>
+    </None>
+    <None Include="DefUnrealEd.ini">
+      <Filter>INI</Filter>
+    </None>
+    <None Include="DefUser.ini">
+      <Filter>INI</Filter>
+    </None>
+    <None Include="DefUserXbox.ini">
+      <Filter>INI</Filter>
+    </None>
+    <None Include="UnrealEd.ini">
+      <Filter>INI</Filter>
+    </None>
+    <None Include="User.ini">
+      <Filter>INI</Filter>
+    </None>
+    <None Include="UT2004.ini">
+      <Filter>INI</Filter>
+    </None>
+    <None Include="Editor.log">
+      <Filter>LOG</Filter>
+    </None>
+    <None Include="UCC.log">
+      <Filter>LOG</Filter>
+    </None>
+    <None Include="ut2003.log">
+      <Filter>LOG</Filter>
+    </None>
+    <None Include="makedemo.bat">
+      <Filter>Installer</Filter>
+    </None>
+    <None Include="SetupUT2003_Demo.ini">
+      <Filter>Installer</Filter>
+    </None>
+    <None Include="SetupUT2003_Demo.int">
+      <Filter>Installer</Filter>
+    </None>
+    <None Include="SetupUT2003_Full.ini">
+      <Filter>Installer</Filter>
+    </None>
+    <None Include="SetupUT2003_Full.int">
+      <Filter>Installer</Filter>
+    </None>
+    <None Include="XDemoMaps.int">
+      <Filter>Installer</Filter>
+    </None>
+    <None Include="doX.bat">
+      <Filter>BAT</Filter>
+    </None>
+    <None Include="Soak.bat">
+      <Filter>BAT</Filter>
+    </None>
+    <None Include="ALAudio.int">
+      <Filter>Localization\INT</Filter>
+    </None>
+    <None Include="Core.int">
+      <Filter>Localization\INT</Filter>
+    </None>
+    <None Include="D3DDrv.int">
+      <Filter>Localization\INT</Filter>
+    </None>
+    <None Include="Editor.int">
+      <Filter>Localization\INT</Filter>
+    </None>
+    <None Include="Engine.int">
+      <Filter>Localization\INT</Filter>
+    </None>
+    <None Include="GamePlay.int">
+      <Filter>Localization\INT</Filter>
+    </None>
+    <None Include="IpDrv.int">
+      <Filter>Localization\INT</Filter>
+    </None>
+    <None Include="Manifest.int">
+      <Filter>Localization\INT</Filter>
+    </None>
+    <None Include="Onslaught.int">
+      <Filter>Localization\INT</Filter>
+    </None>
+    <None Include="Setup.int">
+      <Filter>Localization\INT</Filter>
+    </None>
+    <None Include="Startup.int">
+      <Filter>Localization\INT</Filter>
+    </None>
+    <None Include="TeamSymbols_UT2003.int">
+      <Filter>Localization\INT</Filter>
+    </None>
+    <None Include="UC.int">
+      <Filter>Localization\INT</Filter>
+    </None>
+    <None Include="UnrealEd.int">
+      <Filter>Localization\INT</Filter>
+    </None>
+    <None Include="UnrealGame.int">
+      <Filter>Localization\INT</Filter>
+    </None>
+    <None Include="UT2003.int">
+      <Filter>Localization\INT</Filter>
+    </None>
+    <None Include="UWeb.int">
+      <Filter>Localization\INT</Filter>
+    </None>
+    <None Include="Window.int">
+      <Filter>Localization\INT</Filter>
+    </None>
+    <None Include="WinDrv.int">
+      <Filter>Localization\INT</Filter>
+    </None>
+    <None Include="XGame.int">
+      <Filter>Localization\INT</Filter>
+    </None>
+    <None Include="XGameList.int">
+      <Filter>Localization\INT</Filter>
+    </None>
+    <None Include="XInterface.int">
+      <Filter>Localization\INT</Filter>
+    </None>
+    <None Include="XMapList.int">
+      <Filter>Localization\INT</Filter>
+    </None>
+    <None Include="XMaps.int">
+      <Filter>Localization\INT</Filter>
+    </None>
+    <None Include="XPickups.int">
+      <Filter>Localization\INT</Filter>
+    </None>
+    <None Include="XPlayers.int">
+      <Filter>Localization\INT</Filter>
+    </None>
+    <None Include="XPlayersL1.int">
+      <Filter>Localization\INT</Filter>
+    </None>
+    <None Include="XWeaponList.int">
+      <Filter>Localization\INT</Filter>
+    </None>
+    <None Include="XWeapons.int">
+      <Filter>Localization\INT</Filter>
+    </None>
+    <None Include="ALAudio.frt">
+      <Filter>Localization\frt</Filter>
+    </None>
+    <None Include="Core.frt">
+      <Filter>Localization\frt</Filter>
+    </None>
+    <None Include="D3DDrv.frt">
+      <Filter>Localization\frt</Filter>
+    </None>
+    <None Include="Editor.frt">
+      <Filter>Localization\frt</Filter>
+    </None>
+    <None Include="Engine.frt">
+      <Filter>Localization\frt</Filter>
+    </None>
+    <None Include="IpDrv.frt">
+      <Filter>Localization\frt</Filter>
+    </None>
+    <None Include="Setup.frt">
+      <Filter>Localization\frt</Filter>
+    </None>
+    <None Include="SetupUT2003_Demo.frt">
+      <Filter>Localization\frt</Filter>
+    </None>
+    <None Include="SetupUT2003_Full.frt">
+      <Filter>Localization\frt</Filter>
+    </None>
+    <None Include="Startup.frt">
+      <Filter>Localization\frt</Filter>
+    </None>
+    <None Include="UnrealEd.frt">
+      <Filter>Localization\frt</Filter>
+    </None>
+    <None Include="UnrealGame.frt">
+      <Filter>Localization\frt</Filter>
+    </None>
+    <None Include="ut2003.frt">
+      <Filter>Localization\frt</Filter>
+    </None>
+    <None Include="UWeb.frt">
+      <Filter>Localization\frt</Filter>
+    </None>
+    <None Include="Window.frt">
+      <Filter>Localization\frt</Filter>
+    </None>
+    <None Include="WinDrv.frt">
+      <Filter>Localization\frt</Filter>
+    </None>
+    <None Include="XGame.frt">
+      <Filter>Localization\frt</Filter>
+    </None>
+    <None Include="XInterface.frt">
+      <Filter>Localization\frt</Filter>
+    </None>
+    <None Include="XMaps.frt">
+      <Filter>Localization\frt</Filter>
+    </None>
+    <None Include="XPickups.frt">
+      <Filter>Localization\frt</Filter>
+    </None>
+    <None Include="XPlayers.frt">
+      <Filter>Localization\frt</Filter>
+    </None>
+    <None Include="XWeapons.frt">
+      <Filter>Localization\frt</Filter>
+    </None>
+    <None Include="ALAudio.est">
+      <Filter>Localization\est</Filter>
+    </None>
+    <None Include="Core.est">
+      <Filter>Localization\est</Filter>
+    </None>
+    <None Include="D3DDrv.est">
+      <Filter>Localization\est</Filter>
+    </None>
+    <None Include="Editor.est">
+      <Filter>Localization\est</Filter>
+    </None>
+    <None Include="Engine.est">
+      <Filter>Localization\est</Filter>
+    </None>
+    <None Include="GamePlay.est">
+      <Filter>Localization\est</Filter>
+    </None>
+    <None Include="IpDrv.est">
+      <Filter>Localization\est</Filter>
+    </None>
+    <None Include="Manifest.est">
+      <Filter>Localization\est</Filter>
+    </None>
+    <None Include="Setup.est">
+      <Filter>Localization\est</Filter>
+    </None>
+    <None Include="SetupUT2003_Demo.est">
+      <Filter>Localization\est</Filter>
+    </None>
+    <None Include="SetupUT2003_Full.est">
+      <Filter>Localization\est</Filter>
+    </None>
+    <None Include="Startup.est">
+      <Filter>Localization\est</Filter>
+    </None>
+    <None Include="UnrealEd.est">
+      <Filter>Localization\est</Filter>
+    </None>
+    <None Include="UnrealGame.est">
+      <Filter>Localization\est</Filter>
+    </None>
+    <None Include="ut2003.est">
+      <Filter>Localization\est</Filter>
+    </None>
+    <None Include="UWeb.est">
+      <Filter>Localization\est</Filter>
+    </None>
+    <None Include="Window.est">
+      <Filter>Localization\est</Filter>
+    </None>
+    <None Include="WinDrv.est">
+      <Filter>Localization\est</Filter>
+    </None>
+    <None Include="XGame.est">
+      <Filter>Localization\est</Filter>
+    </None>
+    <None Include="XInterface.est">
+      <Filter>Localization\est</Filter>
+    </None>
+    <None Include="XMaps.est">
+      <Filter>Localization\est</Filter>
+    </None>
+    <None Include="XPickups.est">
+      <Filter>Localization\est</Filter>
+    </None>
+    <None Include="XPlayers.est">
+      <Filter>Localization\est</Filter>
+    </None>
+    <None Include="XWeapons.est">
+      <Filter>Localization\est</Filter>
+    </None>
+    <None Include="ALAudio.det">
+      <Filter>Localization\det</Filter>
+    </None>
+    <None Include="Core.det">
+      <Filter>Localization\det</Filter>
+    </None>
+    <None Include="D3DDrv.det">
+      <Filter>Localization\det</Filter>
+    </None>
+    <None Include="Editor.det">
+      <Filter>Localization\det</Filter>
+    </None>
+    <None Include="Engine.det">
+      <Filter>Localization\det</Filter>
+    </None>
+    <None Include="IpDrv.det">
+      <Filter>Localization\det</Filter>
+    </None>
+    <None Include="Setup.det">
+      <Filter>Localization\det</Filter>
+    </None>
+    <None Include="SetupUT2003_Demo.det">
+      <Filter>Localization\det</Filter>
+    </None>
+    <None Include="SetupUT2003_Full.det">
+      <Filter>Localization\det</Filter>
+    </None>
+    <None Include="Startup.det">
+      <Filter>Localization\det</Filter>
+    </None>
+    <None Include="UnrealEd.det">
+      <Filter>Localization\det</Filter>
+    </None>
+    <None Include="UnrealGame.det">
+      <Filter>Localization\det</Filter>
+    </None>
+    <None Include="ut2003.det">
+      <Filter>Localization\det</Filter>
+    </None>
+    <None Include="UWeb.det">
+      <Filter>Localization\det</Filter>
+    </None>
+    <None Include="Window.det">
+      <Filter>Localization\det</Filter>
+    </None>
+    <None Include="WinDrv.det">
+      <Filter>Localization\det</Filter>
+    </None>
+    <None Include="XGame.det">
+      <Filter>Localization\det</Filter>
+    </None>
+    <None Include="XInterface.det">
+      <Filter>Localization\det</Filter>
+    </None>
+    <None Include="XMaps.det">
+      <Filter>Localization\det</Filter>
+    </None>
+    <None Include="XPickups.det">
+      <Filter>Localization\det</Filter>
+    </None>
+    <None Include="XPlayers.det">
+      <Filter>Localization\det</Filter>
+    </None>
+    <None Include="XWeapons.det">
+      <Filter>Localization\det</Filter>
+    </None>
+    <None Include="ALAudio.itt">
+      <Filter>Localization\itt</Filter>
+    </None>
+    <None Include="Core.itt">
+      <Filter>Localization\itt</Filter>
+    </None>
+    <None Include="D3DDrv.itt">
+      <Filter>Localization\itt</Filter>
+    </None>
+    <None Include="Editor.itt">
+      <Filter>Localization\itt</Filter>
+    </None>
+    <None Include="Engine.itt">
+      <Filter>Localization\itt</Filter>
+    </None>
+    <None Include="GamePlay.itt">
+      <Filter>Localization\itt</Filter>
+    </None>
+    <None Include="IpDrv.itt">
+      <Filter>Localization\itt</Filter>
+    </None>
+    <None Include="Manifest.itt">
+      <Filter>Localization\itt</Filter>
+    </None>
+    <None Include="Setup.itt">
+      <Filter>Localization\itt</Filter>
+    </None>
+    <None Include="SetupUT2003_Demo.itt">
+      <Filter>Localization\itt</Filter>
+    </None>
+    <None Include="SetupUT2003_Full.itt">
+      <Filter>Localization\itt</Filter>
+    </None>
+    <None Include="Startup.itt">
+      <Filter>Localization\itt</Filter>
+    </None>
+    <None Include="UnrealEd.itt">
+      <Filter>Localization\itt</Filter>
+    </None>
+    <None Include="UnrealGame.itt">
+      <Filter>Localization\itt</Filter>
+    </None>
+    <None Include="ut2003.itt">
+      <Filter>Localization\itt</Filter>
+    </None>
+    <None Include="UWeb.itt">
+      <Filter>Localization\itt</Filter>
+    </None>
+    <None Include="Window.itt">
+      <Filter>Localization\itt</Filter>
+    </None>
+    <None Include="WinDrv.itt">
+      <Filter>Localization\itt</Filter>
+    </None>
+    <None Include="XGame.itt">
+      <Filter>Localization\itt</Filter>
+    </None>
+    <None Include="XInterface.itt">
+      <Filter>Localization\itt</Filter>
+    </None>
+    <None Include="XMaps.itt">
+      <Filter>Localization\itt</Filter>
+    </None>
+    <None Include="XPickups.itt">
+      <Filter>Localization\itt</Filter>
+    </None>
+    <None Include="XPlayers.itt">
+      <Filter>Localization\itt</Filter>
+    </None>
+    <None Include="Xweapons.itt">
+      <Filter>Localization\itt</Filter>
+    </None>
+    <None Include="xplayersL1.upl" />
+  </ItemGroup>
+</Project>

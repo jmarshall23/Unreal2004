@@ -1,0 +1,1049 @@
+__expression_asm
+
+# keaSmallChol_ps2.evsm
+# =====================
+# 
+# This little beauty does Cholesky decomposition, and lower- and upper- triangular solve.
+# 
+# It works with symmetric positive definite matrices of dimension <= 36, and solves for one
+# right-hand-side at a time.
+# 
+# It is in parallel eac for VU0. Compile with eac -x micro.
+# 
+# It works like this:
+# 
+# Put the A matrix in VUMEM starting at the beginning.
+# 
+# The A matrix is square and should be in 'half-wallpapered' format. 
+# 
+# This is the same as wallpapered, but only stores the upper triangle, so the quadwords go like
+# this:
+# 
+# aaaa  eeee  mmmm
+# bbbb  ffff  nnnn
+# cccc  gggg  oooo
+# dddd  hhhh  pppp
+#       iiii  qqqq
+#       jjjj  rrrr
+#       kkkk  ssss
+#       llll  tttt
+#             uuuu
+#             vvvv
+#             wwww
+#             xxxx
+# 
+# and so on... (if that makes any sense).
+# 
+# Clearly, you only need to store the upper triangle because the matrix is symmetric.
+# 
+# So, that's where the A matrix goes. You will find that the number of quadwords is given by
+# 
+# (n*n)/8 + n/2 where n is the dimension of the square matrix.
+# 
+# Then leave a gap of n quadwords. This is where this program will store reciprocal square
+# roots of diagonal elements.
+# 
+# Then put in one right hand side vector, which will take up n/4 quadwords.
+# 
+# Finally, the last quadword in VUMEM, number 255, is used for parameters.
+# 
+# VUMEM[255].x = n    (dimension of matrix) 
+# VUMEM[255].y = qwc  (quadword count of A matrix, i.e. (n*n)/8 + n/2)
+# VUMEM[255].z = bqwc (quadword count of rhs vector, i.e. n/4)
+# VUMEM[255].w should be set to zero.
+# 
+# With the VUMEM set up like that- A matrix, gap of n quadwords, rhs, and, right at the end, the
+# parameters, {n, qwc, bqwc, 0}, run the code from the top and it'll factorize A in place, leaving
+# G there instead, and solve for the rhs, replacing it with its solution. 
+# 
+# It will also set VUMEM[255].w to 1. 
+# 
+# Think of VUMEM[255].w as a boolean saying "is this a factorized matrix?".
+# 
+# You can then upload a different rhs in the same place as the previous one and run it from
+# the top again. Finding that VUMEM[255].w is now ==1, it will skip the factor and go straight
+# to the solve.
+# 
+# Alternatively, you can just call it from solve_only, if you can figure out how to call
+# microprograms otherwise than from the top.
+
+%qi
+%qi2
+%ri
+%mi
+%mibase
+%i
+%j
+%tmp
+%tmp2
+%rsq
+%rsqi
+%sl
+%si
+%qend
+%param_qwc
+q0
+q1
+q2
+q3
+r0
+r1
+r2
+r3
+m0
+m1
+m2
+m3
+rs0
+rs1
+rs2
+rs3
+
+    %qi         = %K + %K
+    %qi2        = %K + %K
+    %ri         = %K + %K
+    %mi         = %K + %K
+    %mibase     = %K + %K
+    %i          = %K + %K
+    %j          = %K + %K
+    %si         = %K + %K
+
+    # Load parameters
+    'NOP    ||    'ILW.y  @%param_qwc, 255(@%K)
+
+~%rsq
+%is_factorized
+
+    'NOP   ||    'ILW.w   @%is_factorized, 255(@%K)
+
+    'NOP   ||    'NOP
+    (%is_factorized != %K) solve_only
+    'NOP   ||    'NOP
+
+~%is_factorized
+%rsq
+
+    %qend = %K + %param_qwc
+    %rsq  = %K + %qend
+    %rsqi = %K + %qend
+
+    %sl   = %K + 4u
+
+'main_loop:
+
+    %tmp  = %sl - 4u
+    %tmp  = %ri - %tmp
+    q0    << (%qi++)
+    (%tmp < %K) not_triangle
+    %i    = %K + %ri
+
+'triangle:
+
+    %tmp = %i - 3u
+    ACC  = q0 * K.w      ||    %mi  = %K + %mibase
+
+'ms_triangle_0:
+
+    # if(!(i>3)) goto skip0
+
+    (%tmp <= %K) skip0
+
+    %j = %qi - %i
+    %j = %j  - 1u
+
+    m0 << (%mi++)
+    r0 << (%j++)
+    r1 << (%j++)
+
+'loop0:
+
+    m1   << (%mi++)
+    r2   << (%j++)
+    ACC  = ACC - r0 * m0.x    ||    m2 << (%mi++)    
+    r3   << (%j++)
+    ACC  = ACC - r1 * m1.x    ||    m3 << (%mi++)
+    r0   << (%j++)
+    ACC  = ACC - r2 * m2.x    ||    %i  = %i  - 4u
+    %tmp = %i - 3u
+    ACC  = ACC - r3 * m3.x    ||    m0 << (%mi++)
+
+    (%tmp > %K) loop0
+    r1 << (%j++)
+
+'skip0:
+
+    # No epilog
+
+    q0  = ACC + K * K.x    ||    %ri = %ri + 1u
+    q1  << (%qi++)
+    %i  = %K + %ri
+    %mi = %K + %mibase
+
+    Q = K.w / | q0.x
+
+    # End of 0, Start of 1
+
+    %tmp = %i - 3u
+    ACC  = q1 * K.w
+
+'ms_triangle_1:
+
+    # if(!(i>3)) goto skip1
+
+    (%tmp <= %K) skip1
+    %j = %qi - %i
+    %j = %j  - 1u
+
+    m0 << (%mi++)
+    r0 << (%j++)
+    r1 << (%j++)
+
+'loop1:
+
+    m1   << (%mi++)
+    r2   << (%j++)
+    ACC  = ACC - r0 * m0.y    ||    m2 << (%mi++)
+    r3   << (%j++)
+    ACC  = ACC - r1 * m1.y    ||    m3 << (%mi++)
+    r0   << (%j++)
+    ACC  = ACC - r2 * m2.y    ||    %i  = %i  - 4u
+    %tmp = %i - 3u
+    ACC  = ACC - r3 * m3.y    ||    m0 << (%mi++)
+
+    (%tmp > %K) loop1
+    r1 << (%j++)
+
+    'NOP  ||  'B skip11
+    %mi = %mi - 1u
+
+'skip1:
+
+    'NOP    ||    'NOP
+    'NOP    ||    'NOP
+    'NOP    ||    'NOP
+    'NOP    ||    'NOP
+    'NOP    ||    'NOP
+    'NOP    ||    'NOP
+    'NOP    ||    'NOP
+    'NOP    ||    'NOP
+
+'skip11:
+
+    # Epilog length 1
+    
+    rs0.x = K.x + Q
+    q0 = q0 * Q
+
+    # 2 stalls here
+
+    rs0 >> (%rsqi++)
+    q0 >> (%qi2++)
+
+    m0 << (%mi++)
+
+    # 3 stalls here
+
+    ACC = ACC - q0 * m0.y
+
+    q1 = ACC + K * K.x    ||    %ri = %ri + 1u
+    q2 << (%qi++)
+    %i  = %K + %ri
+    %mi = %K + %mibase
+    Q = K.w / | q1.y
+
+    # End of 1, Start of 2
+
+    %tmp = %i - 3u
+    ACC = q2 * K.w
+
+'ms_triangle_2:
+
+    # if(!(i>3)) goto skip2
+
+    (%tmp <= %K) skip2
+    %j = %qi - %i
+    %j = %j  - 1u
+
+    r0 << (%j++)
+    m0 << (%mi++)
+    r1 << (%j++)
+
+'loop2:
+
+    m1 << (%mi++)
+    r2 << (%j++)
+    ACC = ACC - r0 * m0.z    ||    m2 << (%mi++)
+    r3 << (%j++)
+    ACC = ACC - r1 * m1.z    ||    m3 << (%mi++)
+    r0 << (%j++)
+    ACC = ACC - r2 * m2.z    ||    %i  = %i  - 4u
+    %tmp = %i - 3u
+    ACC = ACC - r3 * m3.z    ||    m0 << (%mi++)
+
+    (%tmp > %K) loop2
+    r1 << (%j++)
+
+    'NOP  ||  'B skip21
+    %mi = %mi - 1u
+
+'skip2:
+
+    'NOP    ||    'NOP
+    'NOP    ||    'NOP
+    'NOP    ||    'NOP
+    'NOP    ||    'NOP
+    'NOP    ||    'NOP
+    'NOP    ||    'NOP
+    'NOP    ||    'NOP
+    'NOP    ||    'NOP
+
+'skip21:
+
+    # Epilog length 2
+
+    rs0.x = K.x + Q
+    q1   = q1 * Q
+    rs0  >> (%rsqi++)
+    q1   >> (%qi2++)
+ 
+    m0 << (%mi++)
+    m1 << (%mi++)
+
+    ACC = ACC - q0 * m0.z
+    ACC = ACC - q1 * m1.z
+
+    q2 = ACC + K * K.x    ||    %ri = %ri + 1u
+    q3 << (%qi++)
+    %i  = %K + %ri
+    %mi = %K + %mibase
+    Q = K.w / | q2.z
+
+    # End of 2, Start of 3
+    %tmp = %i - 3u
+    ACC = q3 * K.w
+
+'ms_triangle_3:
+
+    # if(!(i>3)) goto skip3
+
+    (%tmp <= %K) skip3
+    %j = %qi - %i
+    %j = %j  - 1u
+
+    r0 << (%j++)
+    m0 << (%mi++)
+    r1 << (%j++)
+
+'loop3:
+
+    m1 << (%mi++)
+    r2 << (%j++)
+    ACC = ACC - r0 * m0.w    ||    m2 << (%mi++)
+    r3 << (%j++)
+    ACC = ACC - r1 * m1.w    ||    m3 << (%mi++)
+    r0 << (%j++)
+    ACC = ACC - r2 * m2.w    ||    %i  = %i  - 4u
+    %tmp = %i - 3u
+    ACC = ACC - r3 * m3.w    ||    m0 << (%mi++)
+
+    (%tmp > %K) loop3
+    r1 << (%j++)
+
+    'NOP  || 'B skip31
+    %mi = %mi - 1u
+
+'skip3:
+
+    'NOP    ||    'NOP
+    'NOP    ||    'NOP
+    'NOP    ||    'NOP
+    'NOP    ||    'NOP
+    'NOP    ||    'NOP
+    'NOP    ||    'NOP
+    'NOP    ||    'NOP
+    'NOP    ||    'NOP
+
+'skip31:
+
+    # Epilog length 3
+
+    rs0.x = K.x + Q
+    q2 = q2 * Q
+    
+    rs0 >> (%rsqi++)
+    q2 >> (%qi2++)
+
+    m0 << (%mi++)
+    m1 << (%mi++)
+    m2 << (%mi++)
+
+    ACC = ACC - q0 * m0.w
+    ACC = ACC - q1 * m1.w
+    ACC = ACC - q2 * m2.w
+
+    q3 = ACC + K * K.x       ||    %ri = %ri + 1u
+
+    Q = K.w / | q3.w
+
+    'NOP  ||  'NOP
+    'NOP  ||  'NOP
+    'NOP  ||  'NOP
+    'NOP  ||  'NOP
+    'NOP  ||  'NOP
+    'NOP  ||  'NOP
+    'NOP  ||  'NOP
+    'NOP  ||  'NOP
+
+    %si = %si + 1u
+    %ri = %K  + %K
+    %sl = %sl + 4u
+    %mibase = %K + %K
+
+    rs0.x = K.x + Q
+    q3    = q3 * Q
+    rs0   >> (%rsqi++)
+    q3    >> (%qi2++)
+
+    (%qi == %qend) end
+    'NOP  ||  'NOP
+
+    'NOP  ||  'B main_loop
+    %mibase = %mibase + %ri
+
+'not_triangle:
+
+    # Start of 0
+
+    %mi = %K + %mibase
+    %tmp = %i - 3u
+    ACC =  q0 * K.w
+
+'ms_not_triangle_0:
+
+    # if(!(i>3)) goto skip4
+
+    (%tmp <= %K) skip4
+    %tmp2 =  %rsq + %ri
+
+    %j = %qi - %i
+    %j = %j  - 1u
+
+    r0 << (%j++)
+    m0 << (%mi++)
+    r1 << (%j++)
+
+'loop4:
+
+    m1 << (%mi++)
+    r2 << (%j++)
+    ACC = ACC - r0 * m0.x    ||    m2 << (%mi++)
+    r3 << (%j++)
+    ACC = ACC - r1 * m1.x    ||    m3 << (%mi++)
+    r0 << (%j++)
+    ACC = ACC - r2 * m2.x    ||    %i  = %i  - 4u
+    %tmp = %i - 3u
+    ACC = ACC - r3 * m3.x    ||    m0 << (%mi++)
+
+    (%tmp > %K) loop4
+    r1 << (%j++)
+
+'skip4:
+
+    # No epilog
+
+    q0 = ACC + K * K.x     ||    rs0   << (%tmp2++)
+
+    rs1   << (%tmp2++)
+    rs2   << (%tmp2++)
+    rs3   << (%tmp2++)
+
+    q0    =  q0 * rs0.x    ||    %ri = %ri + 1u
+
+    # End of 0, Start of 1
+
+    q1   << (%qi++)
+    %i  = %K + %ri
+    %mi = %K + %mibase
+    %tmp = %i - 3u
+    ACC =  q1 * K.w    ||    q0   >> (%qi2++)
+
+'ms_not_triangle_1:
+
+    # if(!(i>3)) goto skip5
+
+    (%tmp <= %K) skip5
+    %j = %qi - %i
+    %j = %j  - 1u
+
+    r0 << (%j++)
+    m0 << (%mi++)
+    r1 << (%j++)
+
+'loop5:
+
+    m1 << (%mi++)
+    r2 << (%j++)
+    ACC = ACC - r0 * m0.y    ||    m2 << (%mi++)
+    r3 << (%j++)
+    ACC = ACC - r1 * m1.y    ||    m3 << (%mi++)
+    r0 << (%j++)
+    ACC = ACC - r2 * m2.y    ||    %i  = %i  - 4u
+    %tmp = %i - 3u
+    ACC = ACC - r3 * m3.y    ||    m0 << (%mi++)
+
+    (%tmp > %K) loop5
+    r1 << (%j++)
+
+    %mi = %mi - 1u
+
+'skip5:
+
+    # Epilog length 1
+
+    m0   << (%mi++)
+
+    ACC = ACC - q0 * m0.y
+    q1 = ACC + K * K.x
+
+    q1   =  q1 * rs1.x    ||    %ri  =  %ri + 1u     # ri++
+
+    # End of 1, Start of 2
+
+    q2   << (%qi++)
+    %i  = %K + %ri
+    %mi = %K + %mibase
+    %tmp = %i - 3u
+    ACC =  q2 * K.w    ||    q1   >> (%qi2++)
+
+'ms_not_triangle_2:
+
+    # if(!(i>3)) goto skip6
+
+    (%tmp <= %K) skip6
+    %j = %qi - %i
+    %j = %j  - 1u
+
+    r0 << (%j++)
+    m0 << (%mi++)
+    r1 << (%j++)
+
+'loop6:
+
+    m1 << (%mi++)
+    r2 << (%j++)
+    ACC = ACC - r0 * m0.z    ||    m2 << (%mi++)
+    r3 << (%j++)
+    ACC = ACC - r1 * m1.z    ||    m3 << (%mi++)
+    r0 << (%j++)
+    ACC = ACC - r2 * m2.z    ||    %i  = %i  - 4u
+    %tmp = %i - 3u
+    ACC = ACC - r3 * m3.z    ||    m0 << (%mi++)
+
+    (%tmp > %K) loop6
+    r1 << (%j++)
+
+    %mi = %mi - 1u
+
+'skip6:
+
+    # Epilog length 2
+
+    m0   << (%mi++)
+    m1   << (%mi++)
+
+    ACC = ACC - q0 * m0.z
+    ACC = ACC - q1 * m1.z
+
+    q2 = ACC + K * K.x
+    q2    =  q2 * rs2.x    ||    %ri  =  %ri + 1u     # ri++
+
+    # End of 2, Start of 3
+
+    q3   << (%qi++)
+    %i  = %K + %ri
+    %mi = %K + %mibase
+    %tmp = %i - 3u
+    ACC =  q3 * K.w    ||    q2    >> (%qi2++)
+
+'ms_not_triangle_3:
+
+    # if(!(i>3)) goto skip7
+
+    (%tmp <= %K) skip7
+    %j = %qi - %i
+    %j = %j  - 1u
+
+    r0 << (%j++)
+    m0 << (%mi++)
+    r1 << (%j++)
+
+'loop7:
+
+    m1 << (%mi++)
+    r2 << (%j++)
+    ACC = ACC - r0 * m0.w    ||    m2 << (%mi++)
+    r3 << (%j++)
+    ACC = ACC - r1 * m1.w    ||    m3 << (%mi++)
+    r0 << (%j++)
+    ACC = ACC - r2 * m2.w    ||    %i  = %i  - 4u
+    %tmp = %i - 3u
+    ACC = ACC - r3 * m3.w    ||    m0 << (%mi++)
+
+    (%tmp > %K) loop7
+    r1 << (%j++)
+
+    %mi = %mi - 1u
+
+'skip7:
+
+    # Epilog length 3
+
+    m0   << (%mi++)
+    m1   << (%mi++)
+    m2   << (%mi++)
+
+    ACC = ACC - q0 * m0.w
+    ACC = ACC - q1 * m1.w
+    ACC = ACC - q2 * m2.w
+
+    q3 = ACC + K * K.x    ||    %ri  =  %ri + 1u
+    q3   =  q3 * rs3.x    ||    %mibase = %mibase + %ri
+
+'endif_triangle:
+
+    'NOP  ||  'B main_loop
+    q3   >> (%qi2++)
+
+'end:
+    'NOP[E]  ||  'NOP
+    'NOP     ||  'NOP
+~%qi
+~%qi2
+~%ri
+~%mi
+~%mibase
+~%i
+~%j
+~%tmp
+~%tmp2
+~%rsq
+~%rsqi
+~%sl
+~%si
+~%qend
+~q0
+~q1
+~q2
+~q3
+~r0
+~r1
+~r2
+~r3
+~m0
+~m1
+~m2
+~m3
+~rs0
+~rs1
+~rs2
+~rs3
+
+%x0
+%xi
+%xi2
+%xend
+%ai
+%rsqi
+%bi
+%t
+%param_n
+%param_bqwc
+b
+x
+t
+a0
+a1
+a2
+a3
+rs0
+rs1
+rs2
+rs3
+
+'solve_only:
+
+    # Load parameters
+    'NOP    ||    'ILW.x  @%param_n, 255(@%K)
+    'NOP    ||    'ILW.z  @%param_bqwc, 255(@%K)
+    'NOP    ||    'ILW.y  @%param_qwc, 255(@%K)
+
+    # Lower solve
+
+    %rsqi = %K + %param_qwc     # Start of reciprocal square roots array 
+    %x0 = %rsqi + %param_n      # Start of xb 
+    %xi = %K + %x0              # Start of xb 
+    %xend = %x0 + %param_bqwc   # End of xb (xb + xbqwc) 
+    %xi2 = %K + %x0             # Start of xb
+    %ai = %K + %K
+
+
+'main_loop_low:
+
+    (%xi == %xend) end_low
+    %bi = %K + %x0      # Start of xb 
+
+    x << (%xi++)
+
+    a0 << (%ai++)
+    a1 << (%ai++)
+
+    %t = %bi - %xi2
+    a2 << (%ai++)
+    (%t >= %K) triangle_low
+    a3 << (%ai++)
+    
+    ACC = K * K.x           ||    b << (%bi++)
+
+'quad_low:
+
+    ACC = ACC - a0 * b.x    ||    a0 << (%ai++)
+    ACC = ACC - a1 * b.y    ||    a1 << (%ai++)
+    ACC = ACC - a2 * b.z    ||    a2 << (%ai++)
+    ACC = ACC - a3 * b.w    ||    b  << (%bi++)
+
+    %t = %bi - %xi2
+    a3 << (%ai++)
+    (%t <= %K) quad_low
+    'NOP  ||  'NOP
+    
+    ACC = ACC + x * K.w
+    x = ACC + K * K.x    
+
+'triangle_low:
+
+    rs0 << (%rsqi++)
+    rs1 << (%rsqi++)
+    rs2 << (%rsqi++)
+    rs3 << (%rsqi++)
+
+    x.x = x * rs0.x
+
+    ACC = a0 * x.x
+    t = ACC + K * K.x
+
+    x.y = x - t
+    x.y = x * rs1.x
+
+    ACC = ACC + a1 * x.y
+    t = ACC + K * K.x
+
+    x.z = x - t
+    x.z = x * rs2.x
+
+    ACC = ACC + a2 * x.z
+    t = ACC + K * K.x
+
+    x.w = x - t
+    x.w = x * rs3.x
+
+    'nop  ||  'B main_loop_low
+    x >> (%xi2++)
+
+'end_low:
+
+~%xi
+~%xi2
+~%xend
+~%ai
+~%rsqi
+~%bi
+~%t
+~b
+~x
+~t
+~a0
+~a1
+~a2
+~a3
+~rs0
+~rs1
+~rs2
+~rs3
+
+    # Flip all the blocks
+
+%qi
+%qi2
+%qend
+a0
+a1
+a2
+a3
+t0
+t1
+t2
+t3
+zero
+
+# 622 cycles to transpose 144 quadwords at the moment. 
+# This one does it properly (the minor diagonal transpose)
+
+    zero = K * K.x    ||    %qi = %K + %K
+    %qi2 = %K + %K
+    
+    %qend = %param_qwc + 4u # 4 more than you expect
+
+    a0 << (%qi++)
+    a1 << (%qi++)
+    a2 << (%qi++)
+    a3 << (%qi++)
+
+'loop:
+
+    t0.x = zero + a3.w    ||    'MOVE.z  @t1, @a1
+    t0.y = zero + a2.w    ||    'MR32.y  @t1, @a2
+
+    t1.x = zero + a3.z    ||    'MOVE.w  @t0, @a0
+    t1.w = zero + a0.z    ||    'MR32.z  @t0, @a1
+
+    t2.z = zero + a1.y    ||    'MOVE.x  @t3, @a3
+    t2.w = zero + a0.y    ||    'MR32.w  @t3, @a0
+
+    t3.y = zero + a2.x    ||    'MOVE.y  @t2, @a2
+    t3.z = zero + a1.x    ||    'MR32.x  @t2, @a3
+
+    a0 << (%qi++)
+    a1 << (%qi++)
+    a2 << (%qi++)
+    a3 << (%qi++)
+
+    t0 >> (%qi2++)
+    t1 >> (%qi2++)
+    t2 >> (%qi2++)
+
+    (%qi != %qend) loop
+    t3 >> (%qi2++)
+
+    'NOP  ||  'NOP
+
+~%qi
+~%qi2
+~%qend
+~a0
+~a1
+~a2
+~a3
+~t0
+~t1
+~t2
+~t3
+~zero
+
+    # Now we can do the upper solve, which is the same as the lower
+    # solve, except with dodgy indexing.
+
+%xi
+%xi2
+%xend
+%ai
+%rsqi
+%bi
+%t
+%sl
+%basei
+%step
+b
+x
+t
+t2
+a0
+a1
+a2
+a3
+rs0
+rs1
+rs2
+rs3
+
+    # Upper solve
+
+    %rsqi = %param_qwc + %param_n  # End of rsq (rsq + rsqqwc) 
+    %xi = %x0 + %param_bqwc        # End of xb  (xb  + xbqwc) 
+    %xi2 = %K + %xi                # End of xb  (xb  + xbqwc)
+    %xend = %param_qwc + %param_n  # Start of xb 
+    %ai = %param_qwc - 4u          # Start of last block of G 
+    %sl = %K + 4u
+    %basei = %ai + %K
+
+'main_loop_upp:
+
+    (%xi == %xend) end_upp
+    t2 = K * K.x    ||    %step = %K + %param_n       # Initial step size is 4(N-1)+4
+
+    %bi = %x0 + %param_bqwc       # End of xb (xb + xbqwc) 
+    %t = %bi - %xi2
+
+    x << (--%xi)
+    (%t <= %K) triangle_upp
+    ACC = K * K.x    ||    b << (--%bi)
+
+'quad_upp:
+
+    a0 << (%ai++)
+    a1 << (%ai++)
+    a2 << (%ai++)
+    a3 << (%ai++)
+
+    ACC = ACC - a3 * b.x
+    ACC = ACC - a2 * b.y
+    ACC = ACC - a1 * b.z
+    ACC = ACC - a0 * b.w    ||    b << (--%bi)
+
+    %t = %bi - %xi2
+
+    # Adjust %ai to do transposed traversal
+
+    %ai = %ai - %step
+    (%t >= %K) quad_upp
+    %step = %step - 4u
+
+'triangle_upp:
+
+    # You need to reverse x
+
+    t2 = ACC + K * K.x    ||        rs0 << (--%rsqi)
+    x.x = x + t2.w        ||        a0  << (%ai++)
+    x.y = x + t2.z        ||        rs1 << (--%rsqi)
+    x.z = x + t2.y        ||        a1  << (%ai++)
+    x.w = x + t2.x        ||        rs2 << (--%rsqi)
+    x.w = x * rs0.x       ||        a2  << (%ai++)
+    ACC = a0 * x.w        ||        %ai =  %ai + 1u
+    t = ACC + K * K.x     ||        rs3 << (--%rsqi)
+
+    x.z = x - t.y
+    x.z = x * rs1.x
+
+    %ai = %basei - 4u
+    %basei = %K + %ai
+    %step = %K + %param_n
+
+    ACC = ACC + a1 * x.z
+    t = ACC + K * K.x
+
+    x.y = x - t.z
+    x.y = x * rs2.x
+
+    ACC = ACC + a2 * x.y
+    t = ACC + K * K.x
+
+    x.x = x - t.w
+    x.x = x * rs3.x
+
+    'NOP  ||  'B main_loop_upp
+    x >> (--%xi2)
+
+'end_upp:
+
+~%xi
+~%x0
+~%xi2
+~%xend
+~%ai
+~%rsqi
+~%bi
+~%t
+~%sl
+~%basei
+~%step
+~b
+~x
+~t
+~t2
+~a0
+~a1
+~a2
+~a3
+~rs0
+~rs1
+~rs2
+~rs3
+
+    # Flip all the blocks (back again)
+
+%qi
+%qi2
+%qend
+a0
+a1
+a2
+a3
+t0
+t1
+t2
+t3
+zero
+
+    zero = K * K.x    ||    %qi = %K + %K
+    %qi2 = %K + %K
+    
+    %qend = %param_qwc + 4u # 4 more than you expect
+
+    a0 << (%qi++)
+    a1 << (%qi++)
+    a2 << (%qi++)
+    a3 << (%qi++)
+
+'loop_flip_2:
+
+    t0.x = zero + a3.w    ||    'MOVE.z  @t1, @a1
+    t0.y = zero + a2.w    ||    'MR32.y  @t1, @a2
+
+    t1.x = zero + a3.z    ||    'MOVE.w  @t0, @a0
+    t1.w = zero + a0.z    ||    'MR32.z  @t0, @a1
+
+    t2.z = zero + a1.y    ||    'MOVE.x  @t3, @a3
+    t2.w = zero + a0.y    ||    'MR32.w  @t3, @a0
+
+    t3.y = zero + a2.x    ||    'MOVE.y  @t2, @a2
+    t3.z = zero + a1.x    ||    'MR32.x  @t2, @a3
+
+    a0 << (%qi++)
+    a1 << (%qi++)
+    a2 << (%qi++)
+    a3 << (%qi++)
+
+    t0 >> (%qi2++)
+    t1 >> (%qi2++)
+    t2 >> (%qi2++)
+
+    (%qi != %qend) loop_flip_2
+    t3 >> (%qi2++)
+
+%is_factorized
+    %is_factorized = %K + 1u
+    'NOP     ||   'ISW.w  @%is_factorized, 255(@%K)
+    'NOP     ||   'NOP
+    'NOP     ||   'NOP
+~%is_factorized
+
+    'NOP[E]  ||  'NOP 
+    'NOP     ||  'NOP
+
+
+~%qi
+~%qi2
+~%qend
+~a0
+~a1
+~a2
+~a3
+~t0
+~t1
+~t2
+~t3
+~zero
+~%param_n
+~%param_bqwc
+~%param_qwc
+
+__end_expression_asm

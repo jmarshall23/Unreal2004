@@ -1,0 +1,328 @@
+# ====================================================
+#  MathEngine Canada                     (c) 2000-2001
+#
+#  Makefile common core rules and definitions file as
+#  input for configure script.
+# ====================================================
+
+
+#
+# Required feature still missing: 
+#   - input hooks for defines, include paths, and lib paths
+#
+
+
+#
+# Definitions of main compilation tools
+#
+
+CC		:= @ME_COMPILE_C@
+CXX		:= @ME_COMPILE_CXX@
+AS		:= @ME_AS@
+EAC		 = $(T_SRC_DIR)@ME_EAC@
+DVPASM		:= @ME_DVPASM@
+STRIP		:= @ME_STRIP@
+STRIP		?= echo
+
+#
+# Definitions of tool flags
+#
+
+ifeq '$(MAKECMDGOALS)' 'release'
+	OBJECT_DIR:=obj
+	CPPFLAGS_X:=@CPPFLAGS_RELEASE@
+	CFLAGS:=@CFLAGS_RELEASE@
+	CXXFLAGS:=@CXXFLAGS_RELEASE@
+	ASFLAGS:=@ME_ASFLAGS_RELEASE@
+	CCLINKFLAGS:=@LDFLAGS_RELEASE@ @ME_CCLINKFLAGS_RELEASE@
+	DVPASMFLAGS:=@ME_DVPASMFLAGS@
+endif
+ifeq '$(MAKECMDGOALS)' 'check_release'
+	OBJECT_DIR:=obj.chk
+	CPPFLAGS_X:=@CPPFLAGS_CHECK_RELEASE@
+	CFLAGS:=@CFLAGS_RELEASE@
+	CXXFLAGS:=@CXXFLAGS_RELEASE@
+	ASFLAGS:=@ME_ASFLAGS_RELEASE@
+	CCLINKFLAGS:=@LDFLAGS_RELEASE@ @ME_CCLINKFLAGS_RELEASE@
+	DVPASMFLAGS:=@ME_DVPASMFLAGS@
+endif
+ifeq '$(MAKECMDGOALS)' 'debug'
+	OBJECT_DIR:=obj.dbg
+	CPPFLAGS_X:=@CPPFLAGS_DEBUG@
+	CFLAGS:=@CFLAGS_DEBUG@
+	CXXFLAGS:=@CXXFLAGS_DEBUG@
+	ASFLAGS:=@ME_ASFLAGS_DEBUG@
+	CCLINKFLAGS:=@LDFLAGS_DEBUG@ @ME_CCLINKFLAGS_DEBUG@
+	DVPASMFLAGS:=@ME_DVPASMFLAGS@
+endif
+
+CPPFLAGS+=$(CPPFLAGS_X)
+
+#
+# Pathing rules and rules to generate paths relative to example directories
+#
+
+T_SRC_DIR	= ../
+
+MEVIEWER_MODULE_DIR  := @MEVIEWER_MODULE_DIR@
+MEVIEWER2_MODULE_DIR := @MEVIEWER2_MODULE_DIR@
+VIEWER          ?= MEVIEWER
+
+
+ME_SRC_PATH	:=
+ME_SRC_PATH	:= $(strip $(ME_SRC_PATH))
+ME_SRC_PATH	:= $(subst :, ,$(ME_SRC_PATH))
+ME_SRC_PATH	:= $(addprefix $(T_SRC_DIR),$(ME_SRC_PATH))
+
+ME_INC_PATH	:= @ME_INC_PATH@
+ME_INC_PATH	:= $(strip $(ME_INC_PATH))
+ME_INC_PATH	:= $(subst :, ,$(ME_INC_PATH))
+ME_INC_PATH	:= $(addprefix -I$(T_SRC_DIR),$(ME_INC_PATH))
+
+ME_LIB_PATH	:= @ME_LIB_PATH@
+ME_LIB_PATH	:= $(strip $(ME_LIB_PATH))
+ME_LIB_PATH	:= $(subst :, ,$(ME_LIB_PATH))
+ME_LIB_PATH	:= $(addprefix $(T_SRC_DIR),$(ME_LIB_PATH))
+
+
+ifeq '@ME_PLATFORMFLAG@' 'linux'
+	INCLUDE_PATH	:= @ac_x_includes@:$(INCLUDE_PATH)
+	LIBRARY_PATH	:= @ac_x_libraries@:$(LIBRARY_PATH)
+endif
+
+ifeq '@ME_PLATFORMFLAG@' 'ps2'
+
+# Default PS2 include/library paths
+# These SHOULD be picked up elsewhere, but since these
+# tools won't work anywhere but there, assume for now
+	PS2_DIR		:= /usr/local/sce/ee
+	INCLUDE_PATH	:= $(PS2_DIR)/include:$(INCLUDE_PATH)
+	LIBRARY_PATH	:= $(PS2_DIR)/lib:$(LIBRARY_PATH)
+
+endif
+
+#format the environment include path
+INCLUDE_PATH	:= $(strip $(INCLUDE_PATH))
+INCLUDE_PATH	:= $(subst :, ,$(INCLUDE_PATH))
+INCLUDE_PATH	:= $(addprefix -I,$(INCLUDE_PATH))
+
+#format the environment library path
+LIBRARY_PATH	:= $(strip $(LIBRARY_PATH))
+LIBRARY_PATH	:= $(subst :, ,$(LIBRARY_PATH))
+
+ifeq '@ME_PLATFORMFLAG@' 'win32'
+	LIBRARY_PATH	:= $(addprefix /LIBPATH:,$(LIBRARY_PATH))
+	ME_LIB_PATH	:= $(addprefix /LIBPATH:,$(ME_LIB_PATH))
+else	# Linux/Irix/PS2 compatible link syntax
+	LIBRARY_PATH	:= $(addprefix -L,$(LIBRARY_PATH))
+	ME_LIB_PATH	:= $(addprefix -L,$(ME_LIB_PATH))
+endif
+
+BIN_DIR		:= $(T_SRC_DIR)bin
+
+# set up the source search path, remembering to add the environment source path
+VPATH		+:= $(ME_SRC_PATH):$(SOURCE_PATH):$(T_SRC_DIR):$(PS2_DIR)/lib
+vpath	%.s	$(PS2_DIR)/lib
+vpath	app.cmd	$(PS2_DIR)/lib
+
+#
+# Define the objects from the list of source files, then decorate for use
+#
+
+SOURCES_NAMES	:= $(notdir $(SOURCES))
+OBJECTS		:= $(SOURCES_NAMES:.c=.o)
+OBJECTS		:= $(OBJECTS:.cpp=.o)
+OBJECTS		:= $(OBJECTS:.ec=.o)
+OBJECTS		:= $(OBJECTS:.ecpp=.o)
+
+ifeq '@ME_PLATFORMFLAG@' 'ps2'
+OBJECTS		:= app.cmd crt0.o $(OBJECTS)
+endif
+
+OBJECTS_REL	:= $(addprefix $(OBJECT_DIR)/,$(OBJECTS))
+OBJECTS_DBG	:= $(addprefix $(OBJECT_DIR)/,$(OBJECTS))
+OBJECTS_CHK	:= $(addprefix $(OBJECT_DIR)/,$(OBJECTS))
+
+#
+# Construct the names of the executable(s) to build
+#
+
+EXE_SUFFIX	:=
+ifeq '@ME_PLATFORMFLAG@' 'ps2'
+EXE_SUFFIX	:= .elf
+endif
+ifeq '@ME_PLATFORMFLAG@' 'win32'
+EXE_SUFFIX	:= .exe
+endif
+
+OUTPUT_FILE_REL	:= $(OUTNAME)
+OUTPUT_FILE_DBG	:= $(OUTNAME)_debug
+OUTPUT_FILE_CHK	:= $(OUTNAME)_check
+
+OUTPUT_FILE_REL	:= $(BIN_DIR)/$(OUTPUT_FILE_REL)$(EXE_SUFFIX)
+OUTPUT_FILE_DBG	:= $(BIN_DIR)/$(OUTPUT_FILE_DBG)$(EXE_SUFFIX)
+OUTPUT_FILE_CHK	:= $(BIN_DIR)/$(OUTPUT_FILE_CHK)$(EXE_SUFFIX)
+
+
+#
+# Define how we wish to log the output
+# Default is to dump output to the tty
+#
+
+LOGGING_SUFFIX	=
+
+ifeq '$(LOGGING)' 'log'
+	LOGGING_SUFFIX	= 2>&1 | tee $(OBJECT_DIR)/$*.lst
+endif
+ifeq '$(LOGGING)' 'logonly'
+	LOGGING_SUFFIX	= 2>&1 > $(OBJECT_DIR)/$*.lst
+endif
+
+
+#
+# Main targets
+#
+
+.PHONY: all default release debug
+
+ifeq ($(strip $(PLATFORM)),)
+
+all:
+	@echo 'Required environment variable (PLATFORM) not set.'
+
+else
+
+all: default release ;
+
+endif
+
+HELP1 := "Usage: make <target>"
+HELP2 := "Where <target> is one of:"
+HELP3 := "   release|debug|check_release  - Compile (if necessary)"
+HELP4 := "   run|run_debug|run_check      - Compile (if necessary), then execute"
+HELP5 := "   cleanish|clean|clobber       - Remove intermediates and executables"
+
+default:
+	@echo $(HELP1)
+	@echo $(HELP2)
+	@echo $(HELP3)
+	@echo $(HELP4)
+	@echo $(HELP5)
+
+release: $(BIN_DIR) $(OBJECT_DIR) $(OUTPUT_FILE_REL)
+	@echo "finished release build!"
+
+debug:   $(BIN_DIR) $(OBJECT_DIR) $(OUTPUT_FILE_DBG)
+	@echo "finished debug build!"
+
+check_release:   $(BIN_DIR) $(OBJECT_DIR) $(OUTPUT_FILE_CHK)
+	@echo "finished check_release build!"
+
+
+$(OUTPUT_FILE_REL): $(OBJECTS_REL)
+	set -e ; @ME_COMPILE@ @ME_OUT_EXE_PREFIX@$@ $(OBJECTS_REL) \
+          $(CCLINKFLAGS) $(ME_LIB_PATH) $(LIBRARY_PATH) $(LIB_LIST) \
+          $(LOGGING_SUFFIX)
+	$(STRIP) $@
+#	-@cp -a $@ $(T_SRC_DIR)bin/$@
+
+$(OUTPUT_FILE_DBG): $(OBJECTS_DBG)
+	set -e ; @ME_COMPILE@ @ME_OUT_EXE_PREFIX@$@ $(OBJECTS_DBG) \
+          $(CCLINKFLAGS) $(ME_LIB_PATH) $(LIBRARY_PATH) $(LIB_LIST_DEBUG) \
+          $(LOGGING_SUFFIX)
+#	-@cp -a $@ $(T_SRC_DIR)bin/$@
+
+$(OUTPUT_FILE_CHK): $(OBJECTS_CHK)
+	set -e ; @ME_COMPILE@ @ME_OUT_EXE_PREFIX@$@ $(OBJECTS_CHK) \
+          $(CCLINKFLAGS) $(ME_LIB_PATH) $(LIBRARY_PATH) $(LIB_LIST_CHECK) \
+          $(LOGGING_SUFFIX)
+#	-@cp -a $@ $(T_SRC_DIR)bin/$@
+
+
+#
+# Convenience rules
+#
+
+.PHONY: freshen freshen_dbg freshen_rel run run_debug
+
+freshen: clean release debug ;
+
+freshen_rel: clean release ;
+
+freshen_dbg: clean debug ;
+
+freshen_chk: clean check_release ;
+
+run: clean release
+	@[ ! -x $(OUTPUT_FILE_REL) ] && echo ERROR: Unable to execute $(OUTPUT_FILE_REL) && exit 1
+	@echo Executing $(OUTPUT_FILE_REL)
+	@[   -x $(OUTPUT_FILE_REL) ] && $(OUTPUT_FILE_REL)
+
+run_debug: clean debug
+	@[ ! -x $(OUTPUT_FILE_DBG) ] && echo ERROR: Unable to execute $(OUTPUT_FILE_DBG) && exit 1
+	@echo Executing $(OUTPUT_FILE_DBG)
+	@[   -x $(OUTPUT_FILE_DBG) ] && $(OUTPUT_FILE_DBG)
+
+run_check: clean check_release
+	@[ ! -x $(OUTPUT_FILE_CHK) ] && echo ERROR: Unable to execute $(OUTPUT_FILE_CHK) && exit 1
+	@echo Executing $(OUTPUT_FILE_CHK)
+	@[   -x $(OUTPUT_FILE_CHK) ] && $(OUTPUT_FILE_CHK)
+
+
+#
+# Generalized compilation rules
+#
+
+$(OBJECT_DIR)/%.o : %.s
+	set -e ; $(AS) $(ASFLAGS) $(ME_INC_DIR) -o $@ $< $(LOGGING_SUFFIX)
+
+$(OBJECT_DIR)/%.o : %.c
+	set -e ; $(CC) -c $(CPPFLAGS) $(CFLAGS) @ME_OUT_PREFIX@$@ \
+	   $(INCLUDE_PATH) $(ME_INC_PATH) $< $(LOGGING_SUFFIX)
+
+$(OBJECT_DIR)/%.o : %.cpp
+	set -e ; $(CXX) -c $(CPPFLAGS) $(CXXFLAGS) @ME_OUT_PREFIX@$@ \
+	  $(ME_INC_PATH) $(INCLUDE_PATH) $< $(LOGGING_SUFFIX)
+
+
+# Playstation2-specific rules
+
+$(OBJECT_DIR)/%.o : %.dsm
+	set -e ; $(DVPASM) $(DVPASMFLAGS) $(ME_INC_DIR) -o $@ $< \
+          $(LOGGING_SUFFIX)
+
+
+%/app.cmd : app.cmd %
+	sed -e "s/[\t ]*crt0.o/$*\/crt0.o/g" < $< > $@
+
+%.c : %.ec
+	$(EAC) $< $@
+
+%.cpp : %.ecpp
+	$(EAC) $< $@
+
+
+#
+# Directory rules
+#
+
+$(BIN_DIR) $(OBJECT_DIR) :
+	-@mkdir -p $@
+
+
+#
+# Cleanup and maintenance rules
+#
+
+.PHONY: clean cleanish clobber
+
+clean: cleanish
+	-@rm -frv $(OUTPUT_FILE_REL) $(OUTPUT_FILE_DBG) $(OUTPUT_FILE_CHK)
+	@echo "cleaned!"
+
+cleanish:
+	-@rm -frv obj obj.dbg obj.chk *.pdb *.idb *.map *.plg *.bsc
+	@echo "intermediate files removed!"
+
+clobber: clean
+	@echo "clobbered!"

@@ -1,0 +1,24 @@
+# Assuming GNU make (>v3.76)
+# $Header$
+# ($Name$)
+
+# vim:syntax=make:
+
+#------------------------------
+# Mdt
+#------------------------------
+
+makerulesdir:=../../build/makerules/
+
+# What's to be built
+targetname:=BallHitsWall1
+targettype:=executeable
+
+SOURCES	:= BallHitsWall1.c
+
+# Only want collision libs:
+medynamicslibs= 
+
+# Standard incantation
+include ${makerulesdir}/Make.rules
+

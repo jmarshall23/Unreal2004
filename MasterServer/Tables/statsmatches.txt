@@ -1,0 +1,13 @@
+CREATE TABLE statsmatches (
+  matchid int NOT NULL,
+  serverid int NOT NULL,
+
+  lastupdated datetime not null,
+  matchcomplete varchar(1),   
+
+  PRIMARY KEY (matchid) 
+);
+
+create index idx_statsmatches_lastupdated on statsmatches(lastupdated);
+create index idx_statsmatches_matchcomplete on statsmatches(matchcomplete);
+alter table statsmatches add matchstarted datetime not null;

@@ -1,0 +1,98 @@
+# Assuming GNU make {>v3.76}
+# $Header$
+# ($Name$)
+
+#------------------------------
+#Platform independent Makefile
+#------------------------------
+
+#include Makefile.defs
+
+# What's to be built
+targetname:=McdPrimitives
+targettype:=library
+
+SOURCES_GROUPINGS:=\
+	primitives/version.c\
+	primitives/McdPrimitives.cpp\
+	primitives/McdPrimitivesRegisterTypes.cpp\
+	primitives/McdPrimitivesRegisterInteractions.cpp\
+	primitives/McdSphereBoxPlaneRegisterTypes.cpp\
+	primitives/McdSphereBoxPlaneRegisterInteractions.cpp\
+
+SOURCES_BOXPLANESPHERE:=\
+	primitives/McdBox.cpp \
+	primitives/McdPlane.cpp \
+	primitives/McdSphere.cpp \
+	primitives/IxSphereSphere.cpp \
+	primitives/IxSpherePlane.cpp \
+	primitives/IxBoxSphere.cpp \
+	primitives/IxBoxPlane.cpp \
+	primitives/IxBoxBox.cpp \
+	primitives/MovingBoxBoxIntersect.cpp \
+
+SOURCES_CYLINDER:=\
+        primitives/IxBoxCylinder.cpp \
+        primitives/IxCylinderCylinder.cpp \
+        primitives/IxCylinderPlane.cpp \
+        primitives/IxCylinderSphere.cpp \
+        primitives/IxCylinderLineSegment.cpp\
+        primitives/McdCylinder.cpp \
+	math/mesffnmin.cpp
+
+SOURCES_CONE:=\
+        primitives/McdCone.cpp \
+        primitives/IxConeBox.cpp \
+        primitives/IxConeCone.cpp \
+        primitives/IxConePlane.cpp \
+        primitives/IxConeSphere.cpp \
+        primitives/IxConeCylinder.cpp \
+        primitives/IxConeLineSegment.cpp \
+
+SOURCES_GJK:=\
+	convex/GjkSup.cpp \
+        convex/GjkTables.cpp
+
+SOURCES_LINESEG:=\
+	primitives/IxPrimitiveLineSegment.cpp 
+
+SOURCES_TRIANGLE:=\
+	primitives/CxTriangle.cpp 
+
+SOURCES_CONVEX:=\
+        convex/McdConvexMesh.cpp\
+        convex/CxConvex.cpp\
+        convex/ConvexConvex.cpp\
+        convex/IxBoxConvex.cpp\
+        convex/IxSphereConvex.cpp\
+        convex/IxConvexRGHeightField.cpp
+
+SOURCES_SPHYL:=\
+	convex/McdSphyl.cpp\
+	convex/IxSphylSphyl.cpp\
+	convex/IxSphylBox.cpp\
+	convex/IxSphylSphere.cpp
+
+SOURCES_TRILIST:=\
+	primitives/McdTriangleList.cpp\
+	primitives/IxSphereTriList.cpp\
+	primitives/IxBoxTriList.cpp
+#	IxPrimitiveTriangleNE.cpp
+
+# accumulate groups of sources into the SOURCES variable
+SOURCES:=$(SOURCES_GROUPINGS)
+SOURCES+=$(SOURCES_BOXPLANESPHERE)
+SOURCES+=$(SOURCES_CYLINDER)
+SOURCES+=$(SOURCES_CONE)
+SOURCES+=$(SOURCES_GJK)
+
+SOURCES+=$(SOURCES_LINESEG)
+SOURCES+=$(SOURCES_TRILIST)
+#SOURCES+=$(SOURCES_TRIANGLE)
+#SOURCES+=$(SOURCES_SPHYL)
+
+
+# Standard incantation
+makerulesdir:=../../build/makerules/
+include ${makerulesdir}Make.rules
+

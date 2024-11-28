@@ -1,0 +1,37 @@
+EEDIR    = /usr/local/sce/ee
+MEDIR    = ../..
+INCOPTS  = -I$(EEDIR)/include -I$(MEDIR)/include
+LINKOPTS = -L$(EEDIR)/lib -L$(MEDIR)/lib
+EELIBDIR = $(EEDIR)/lib
+TARGET   = Bounce1
+OBJS     = crt0.o $(TARGET).o pad.o
+LCFILE   = $(EELIBDIR)/app.cmd
+CC       = ee-gcc
+LD       = ee-gcc
+AS       = ee-gcc
+RUN      = dsedb -r run
+RM       = rm -f
+
+CFLAGS  = -O2 -Wa,-al -fno-common -DGCC -D_ME_API_SINGLE -DRENDER_SINGLE_PRECISION
+ASFLAGS = -c -xassembler-with-cpp -Wa,-al
+LDFLAGS = -Wl,-Map,$(TARGET).map -nostartfiles $(LINKOPTS) -lMeFastDynamics -lRender -lgraph -ldma -ldev -lpkt -lvu0 -lm -lstdc++
+
+.SUFFIXES:
+.SUFFIXES: .c .o
+
+all: $(TARGET).elf
+
+$(TARGET).elf: $(OBJS)
+	$(LD) -o $@ -T $(LCFILE) $(OBJS) $(LDFLAGS)
+
+crt0.o: $(EELIBDIR)/crt0.s
+	$(AS) $(ASFLAGS) -o $@ $< > $*.lst
+
+.c.o:
+	$(CC) $(CFLAGS) $(INCOPTS) -c $< -o $*.o > $*.lst
+
+run: $(TARGET).elf
+	$(RUN) $(TARGET).elf
+
+clean:
+	$(RM) *.o *.map *.lst core *.dis *.elf

@@ -1,0 +1,20 @@
+# Assuming GNU make (>v3.76)
+# $Header: /proj/Toolkits/MdtBcl/src/MeMakefile,v 1.4 2000/11/07 11:20:23 iestyn Exp $
+# ($Name: t-stevet-RWSpre-030110 $)
+
+#------------------------------
+#Platform independent Makefile
+#------------------------------
+
+# What's to be built
+targetname:=MdtBcl
+targettype:=library
+
+SOURCES:=\
+	MdtBcl.cpp
+
+
+# Standard incantation
+makerulesdir:=../../build/makerules/
+include ${makerulesdir}Make.rules
+

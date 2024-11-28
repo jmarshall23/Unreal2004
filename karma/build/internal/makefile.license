@@ -1,0 +1,329 @@
+# -*- makefile -*- vim:noet:ts=8:sw=4:ft=make:
+#################################################################
+#
+# Makefile for license generation and embedding
+#
+
+ifeq '$(PLATFORM)' 'ps2'
+
+all .DEFAULT:
+	@echo "FLEXlm and license management not supported for PlayStation2."
+	@echo "Thanks for playing and have a nice day..."
+
+else
+
+
+############
+# Need to worry about:
+#   OPTIMISATION=mefpu=x86:sse
+
+.EXPORT_ALL_VARIABLES: ;
+
+SRC_ROOT 		:= ../..
+
+MAKESYS_DIR		:= ../makerules
+include $(MAKESYS_DIR)/makefile.defs
+include $(MAKESYS_DIR)/makefile.lib
+
+ifeq '$(PLATFORM)' 'win32'
+ME_AGGREGATE 		:= LIB /nologo
+ME_AGGREGATE_OUT	:= /OUT:
+flex_plat 		:= i86_n3
+ifeq '$(DEF_C_LIBRARY)' 'DLLMT'
+MD_MOD			:= _md
+endif
+endif
+
+ifeq '$(PLATFORM)' 'linux'
+ME_AGGREGATE 		:= ld -r
+ME_AGGREGATE_OUT	:= -o
+flex_plat 		:= i86_r6
+flex_lib		:= liblmgr.a
+endif
+
+ifeq '$(PLATFORM)' 'irix'
+ME_AGGREGATE 		:= ld -r
+ME_AGGREGATE_OUT	:= -o
+flex_plat 		:= sgi32_u6
+flex_lib		:= liblmgr.a
+endif
+
+
+ifeq '$(flex_dir)' ''
+flex_dir 		:= $(SRC_ROOT)/tools/flexlm
+endif
+flex_exe_dir		:= $(flex_dir)/$(flex_plat)
+flex_lib_dir		:= $(flex_dir)/$(flex_plat)
+flex_inc_dir		:= $(flex_dir)/machind
+LICENSE_SDK_PATH	:= $(flex_dir)
+
+flex_obj1		:= lm_new$(MD_MOD)$(S_OBJ)
+flex_lib1		:= $(P_LIB)lmgr$(MD_MOD)$(S_LIB)
+flex_lib2		:= libcrvs$(MD_MOD)$(S_LIB)
+flex_lib3		:= libsb$(MD_MOD)$(S_LIB)
+
+all_flex_files		:= $(foreach F,obj1 lib1 lib2 lib3 exe1,$(flex_$(F)))
+
+all_me_libs		:= MdtKea McdCommon McdTriangleMesh
+all_me_libs		:= $(foreach F,$(all_me_libs),$(P_LIB)$(F)$(S_LIB))
+
+all_tostrip_files	:= $(foreach F,obj1 lib1 lib2 lib3,$(flex_$(F))) $(all_me_libs)
+
+INCLUDE_STRIP_STEP	:= 0
+
+ifeq '$(INCLUDE_STRIP_STEP)' '1'
+LMSTRIP			:= ./lmstrip
+else
+LMSTRIP			:= echo
+endif
+
+BLDTYPES	:=rel chk
+ifneq '$(WITH_DEBUG)' 'NO'
+BLDTYPES	+:=dbg
+endif
+
+FLEX_FILE_LIST	:= $(foreach BLDTYPE,$(BLDTYPES),$(foreach FILE,lib1 lib2 lib3 obj1 exe1,$(SRC_ROOT)/lib.$(BLDTYPE)/$(PLATFORM)$(DIR_MODIFIER)/$(flex_$(FILE))))
+# .PRECIOUS: $(FLEX_FILE_LIST)
+
+FLEX_LIST	:= $(foreach FILE,lib1 lib2 lib3 obj1 exe1,$(flex_$(FILE)))
+FLEXED_LIBS	:= MdtKea
+FLEXED_LIBS	:= $(foreach LIB,$(FLEXED_LIBS),$(P_LIB)$(LIB)$(S_LIB))
+FLEX_IN_LIBS	:= $(FLEXED_LIBS:$(S_LIB)=_l$(S_LIB)) $(FLEXED_LIBS:$(S_LIB)=_l2$(S_LIB))
+
+
+#################################################################
+#
+# Flex me up!
+#
+
+DIR_REL = $(SRC_ROOT)/lib.rel/$(PLATFORM)$(DIR_MODIFIER)
+DIR_CHK = $(SRC_ROOT)/lib.chk/$(PLATFORM)$(DIR_MODIFIER)
+DIR_DBG = $(SRC_ROOT)/lib.dbg/$(PLATFORM)$(DIR_MODIFIER)
+
+
+flex: \
+      killMapFiles_for_$(PLATFORM) \
+      flexfiles_for_$(PLATFORM) \
+      flexed_MdtKea_for_$(PLATFORM) flexed_McdCommon_for_$(PLATFORM) flexed_McdTriangleMesh_for_$(PLATFORM) \
+      stuffed_McdCommon_for_$(PLATFORM) \
+      copied_MdtKea_for_$(PLATFORM) copied_McdTriangleMesh_for_$(PLATFORM) \
+      strippedFiles
+	-@test -s $(DIR_REL)/lmstrip.map && cp -a $(DIR_REL)/lmstrip.map $(DIR_REL)/lmstrip.map.lastrun
+	-@test -s $(DIR_CHK)/lmstrip.map && cp -a $(DIR_CHK)/lmstrip.map $(DIR_CHK)/lmstrip.map.lastrun
+	-@test -d $(DIR_DBG) -a -s $(DIR_DBG)/lmstrip.map && cp -a $(DIR_DBG)/lmstrip.map $(DIR_DBG)/lmstrip.map.lastrun
+	echo "totally flexed!"
+
+
+#################################################################
+# Rule to freshen the symbol table(s)
+#
+
+killMapFiles_for_%:
+	echo Wiping map file
+	-cd $(DIR_REL) && rm -f lmstrip.map $(FLEX_LIST) $(FLEXED_LIBS:$(S_LIB)=_l$(S_LIB)) $(FLEXED_LIBS:$(S_LIB)=_l2$(S_LIB))
+	-cd $(DIR_CHK) && rm -f lmstrip.map $(FLEX_LIST) $(FLEXED_LIBS:$(S_LIB)=_l$(S_LIB)) $(FLEXED_LIBS:$(S_LIB)=_l2$(S_LIB))
+	-test -d $(DIR_DBG) && cd $(DIR_DBG) && rm -f lmstrip.map $(FLEX_LIST) $(FLEXED_LIBS:$(S_LIB)=_l$(S_LIB)) $(FLEXED_LIBS:$(S_LIB)=_l2$(S_LIB))
+
+
+#################################################################
+# Null rule that, by way of intermediate dependencies, copies
+# the FLEXlm files to the library dirs for a brief time
+#
+
+flexfiles_for_%: $(FLEX_FILE_LIST)
+flexfiles_for_win32: $(FLEX_FILE_LIST)
+flexfiles_for_irix: $(FLEX_FILE_LIST)
+
+
+copied_%_for_win32 copied_%_for_irix copied_%_for_linux:
+	cp -a $(DIR_REL)/$(P_LIB)$*_l$(S_LIB) $(DIR_REL)/$(P_LIB)$*_l2$(S_LIB)
+	cp -a $(DIR_CHK)/$(P_LIB)$*_l$(S_LIB) $(DIR_CHK)/$(P_LIB)$*_l2$(S_LIB)
+	-test -d $(DIR_DBG) && cp -a $(DIR_DBG)/$(P_LIB)$*_l$(S_LIB) $(DIR_DBG)/$(P_LIB)$*_l2$(S_LIB)
+
+#################################################################
+# Rules to incorporate the FLEXlm objects and libraries into
+# our libraries
+#
+
+stuffed_%_for_win32: flexfiles_for_win32
+	echo Creating $*_2 library
+	cd $(DIR_REL) && \
+	LIB /OUT:$*_l2.lib $(flex_obj1) $(flex_lib1) $(flex_lib2) $(flex_lib3) $*_l.lib
+	cd $(DIR_CHK) && \
+	LIB /OUT:$*_l2.lib $(flex_obj1) $(flex_lib1) $(flex_lib2) $(flex_lib3) $*_l.lib
+	-test -d $(DIR_DBG) && cd $(DIR_DBG) && \
+	LIB /OUT:$*_l2.lib $(flex_obj1) $(flex_lib1) $(flex_lib2) $(flex_lib3) $*_l.lib
+ifeq '$(CLOBBER_ORIGINAL_LIBRARIES)' '1'
+	cp -a $(DIR_REL)/$(P_LIB)$*_l2$(S_LIB) $(DIR_REL)/$(P_LIB)$*$(S_LIB)
+	cp -a $(DIR_CHK)/$(P_LIB)$*_l2$(S_LIB) $(DIR_CHK)/$(P_LIB)$*$(S_LIB)
+	-test -d $(DIR_DBG) && cp -a $(DIR_DBG)/$(P_LIB)$*_l2$(S_LIB) $(DIR_DBG)/$(P_LIB)$*$(S_LIB)
+endif
+
+OBJ_MdtKea 	:= keaLCP
+OBJ_McdFrame 	:= McdInteractions
+OBJ_McdCommon 	:= McdContact
+
+stuffed_%_for_irix: flexfiles_for_irix
+	cd $(DIR_REL) && \
+		[ -d _Working ] || mkdir _Working && \
+		cd _Working && \
+		ar x ../$(P_LIB)$*_l$(S_LIB) $(OBJ_$*)_l$(S_OBJ) && \
+		ld -r -o $(OBJ_$*)_l2$(S_OBJ) $(OBJ_$*)_l$(S_OBJ) ../lm_new$(S_OBJ) -L.. -llmgr -lcrvs -lsb && \
+		if [ -s ../lmstrip.map ] ; then cp ../lmstrip.map . ; fi && \
+		$(LMSTRIP) -m -f _Working/$(OBJ_$*)_l2$(S_OBJ) && \
+		if [ -s ./lmstrip.map ] ; then cp ./lmstrip.map .. ; fi && \
+		cp ../$(P_LIB)$*_l$(S_LIB) ../$(P_LIB)$*_l2$(S_LIB) && \
+		ar d ../$(P_LIB)$*_l2$(S_LIB) $(OBJ_$*)_l$(S_OBJ) && \
+		ar r ../$(P_LIB)$*_l2$(S_LIB) $(OBJ_$*)_l2$(S_OBJ) && \
+		cd .. && rm -rf _Working
+	cd $(DIR_CHK) && \
+		[ -d _Working ] || mkdir _Working && \
+		cd _Working && \
+		ar x ../$(P_LIB)$*_l$(S_LIB) $(OBJ_$*)_l$(S_OBJ) && \
+		ld -r -o $(OBJ_$*)_l2$(S_OBJ) $(OBJ_$*)_l$(S_OBJ) ../lm_new$(S_OBJ) -L.. -llmgr -lcrvs -lsb && \
+		if [ -s ../lmstrip.map ] ; then cp ../lmstrip.map . ; fi && \
+		$(LMSTRIP) -m -f _Working/$(OBJ_$*)_l2$(S_OBJ) && \
+		if [ -s ./lmstrip.map ] ; then cp ./lmstrip.map .. ; fi && \
+		cp ../$(P_LIB)$*_l$(S_LIB) ../$(P_LIB)$*_l2$(S_LIB)  && \
+		ar d ../$(P_LIB)$*_l2$(S_LIB) $(OBJ_$*)_l$(S_OBJ) && \
+		ar r ../$(P_LIB)$*_l2$(S_LIB) $(OBJ_$*)_l2$(S_OBJ) && \
+		cd .. && rm -rf _Working
+	-test -d $(DIR_DBG) && cd $(DIR_DBG) && \
+		[ -d _Working ] || mkdir _Working && \
+		cd _Working && \
+		ar x ../$(P_LIB)$*_l$(S_LIB) $(OBJ_$*)_l$(S_OBJ) && \
+		ld -r -o $(OBJ_$*)_l2$(S_OBJ) $(OBJ_$*)_l$(S_OBJ) ../lm_new$(S_OBJ) -L.. -llmgr -lcrvs -lsb && \
+		if [ -s ../lmstrip.map ] ; then cp ../lmstrip.map . ; fi && \
+		$(LMSTRIP) -m -f _Working/$(OBJ_$*)_l2$(S_OBJ) && \
+		if [ -s ./lmstrip.map ] ; then cp ./lmstrip.map .. ; fi && \
+		cp ../$(P_LIB)$*_l$(S_LIB) ../$(P_LIB)$*_l2$(S_LIB) && \
+		ar d ../$(P_LIB)$*_l2$(S_LIB) $(OBJ_$*)_l$(S_OBJ) && \
+		ar r ../$(P_LIB)$*_l2$(S_LIB) $(OBJ_$*)_l2$(S_OBJ) && \
+		cd .. && rm -rf _Working
+
+
+stuffed_%_for_linux: flexfiles_for_linux
+	cd $(DIR_REL) && \
+		[ -d _Working ] || mkdir _Working && \
+		cd _Working && \
+		ar x ../$(P_LIB)$*_l$(S_LIB) $(OBJ_$*)_l$(S_OBJ) && \
+		ld -r -o $(OBJ_$*)_l2$(S_OBJ) $(OBJ_$*)_l$(S_OBJ) ../lm_new$(S_OBJ) -L.. -llmgr -lcrvs -lsb && \
+		if [ -s ../lmstrip.map ] ; then cp ../lmstrip.map . ; fi && \
+		$(LMSTRIP) -m -f _Working/$(OBJ_$*)_l2$(S_OBJ) && \
+		if [ -s ./lmstrip.map ] ; then cp ./lmstrip.map .. ; fi && \
+		cp ../$(P_LIB)$*_l$(S_LIB) ../$(P_LIB)$*_l2$(S_LIB) && \
+		ar d ../$(P_LIB)$*_l2$(S_LIB) $(OBJ_$*)_l$(S_OBJ) && \
+		ar r ../$(P_LIB)$*_l2$(S_LIB) $(OBJ_$*)_l2$(S_OBJ) && \
+		cd .. && rm -rf _Working
+	cd $(DIR_CHK) && \
+		[ -d _Working ] || mkdir _Working && \
+		cd _Working && \
+		ar x ../$(P_LIB)$*_l$(S_LIB) $(OBJ_$*)_l$(S_OBJ) && \
+		ld -r -o $(OBJ_$*)_l2$(S_OBJ) $(OBJ_$*)_l$(S_OBJ) ../lm_new$(S_OBJ) -L.. -llmgr -lcrvs -lsb && \
+		if [ -s ../lmstrip.map ] ; then cp ../lmstrip.map . ; fi && \
+		$(LMSTRIP) -m -f _Working/$(OBJ_$*)_l2$(S_OBJ) && \
+		if [ -s ./lmstrip.map ] ; then cp ./lmstrip.map .. ; fi && \
+		cp ../$(P_LIB)$*_l$(S_LIB) ../$(P_LIB)$*_l2$(S_LIB)  && \
+		ar d ../$(P_LIB)$*_l2$(S_LIB) $(OBJ_$*)_l$(S_OBJ) && \
+		ar r ../$(P_LIB)$*_l2$(S_LIB) $(OBJ_$*)_l2$(S_OBJ) && \
+		cd .. && rm -rf _Working
+	-test -d $(DIR_DBG) && cd $(DIR_DBG) && \
+		[ -d _Working ] || mkdir _Working && \
+		cd _Working && \
+		ar x ../$(P_LIB)$*_l$(S_LIB) $(OBJ_$*)_l$(S_OBJ) && \
+		ld -r -o $(OBJ_$*)_l2$(S_OBJ) $(OBJ_$*)_l$(S_OBJ) ../lm_new$(S_OBJ) -L.. -llmgr -lcrvs -lsb && \
+		if [ -s ../lmstrip.map ] ; then cp ../lmstrip.map . ; fi && \
+		$(LMSTRIP) -m -f _Working/$(OBJ_$*)_l2$(S_OBJ) && \
+		if [ -s ./lmstrip.map ] ; then cp ./lmstrip.map .. ; fi && \
+		cp ../$(P_LIB)$*_l$(S_LIB) ../$(P_LIB)$*_l2$(S_LIB) && \
+		ar d ../$(P_LIB)$*_l2$(S_LIB) $(OBJ_$*)_l$(S_OBJ) && \
+		ar r ../$(P_LIB)$*_l2$(S_LIB) $(OBJ_$*)_l2$(S_OBJ) && \
+		cd .. && rm -rf _Working
+
+#$(ME_AGGREGATE) $(P_LIB)$*_l2$(S_LIB) $(ME_AGGREGATE_OUT) $(P_LIB)$*$(S_LIB) $(flex_obj1) $(flex_lib1) $(flex_lib2) $(flex_lib3) 
+#	cd $(DIR_CHK) && $(ME_AGGREGATE) $(P_LIB)$*_l2$(S_LIB) $(ME_AGGREGATE_OUT) $(P_LIB)$*$(S_LIB) $(flex_obj1) $(flex_lib1) $(flex_lib2) $(flex_lib3)
+#	cd $(DIR_DBG) && $(ME_AGGREGATE) $(P_LIB)$*_l2$(S_LIB) $(ME_AGGREGATE_OUT) $(P_LIB)$*$(S_LIB) $(flex_obj1) $(flex_lib1) $(flex_lib2) $(flex_lib3)
+#ifeq '$(CLOBBER_ORIGINAL_LIBRARIES)' '1'
+#	cp $(DIR_REL)/$(P_LIB)$*_l2$(S_LIB) $(DIR_REL)/$(P_LIB)$*$(S_LIB)
+#	cp $(DIR_CHK)/$(P_LIB)$*_l2$(S_LIB) $(DIR_CHK)/$(P_LIB)$*$(S_LIB)
+#	cp $(DIR_DBG)/$(P_LIB)$*_l2$(S_LIB) $(DIR_DBG)/$(P_LIB)$*$(S_LIB)
+#endif
+
+
+strippedFiles:
+	echo Stripping files
+ifeq '$(INCLUDE_STRIP_STEP)' '1'
+	for DIR in $(DIR_REL) $(DIR_CHK) $(DIR_DBG) ; do \
+	    test -d ${DIR} && ( cd $${DIR} && \
+	    echo "" && \
+	    echo Stripping\($${DIR}\): $(all_tostrip_files) && \
+	    chmod u+w $(all_tostrip_files) && \
+	    echo $(LMSTRIP) -m $(foreach FFILE,$(all_tostrip_files),-f $(FFILE)) && \
+	    $(LMSTRIP) -m $(foreach FFILE,$(all_tostrip_files),-f $(FFILE)) && \
+	    wc -c lmstrip.map && \
+	    echo "" \
+	  ) ; \
+	done
+endif
+
+
+#################################################################
+# Rules to compile libraries with calls into FLEXlm
+#
+
+flexed_MdtKea_for_%:
+	${MAKE} INCLUDE_LICENSING=1 -C$(SRC_ROOT)/MdtKea/src release
+	${MAKE} INCLUDE_LICENSING=1 -C$(SRC_ROOT)/MdtKea/src check_release
+ifneq '$(WITH_DEBUG)' 'NO'
+	${MAKE} INCLUDE_LICENSING=1 -C$(SRC_ROOT)/MdtKea/src debug
+endif
+
+flexed_McdCommon_for_%:
+	${MAKE} INCLUDE_LICENSING=1 -C$(SRC_ROOT)/Mcd/src/util release
+	${MAKE} INCLUDE_LICENSING=1 -C$(SRC_ROOT)/Mcd/src/util check_release
+ifneq '$(WITH_DEBUG)' 'NO'
+	${MAKE} INCLUDE_LICENSING=1 -C$(SRC_ROOT)/Mcd/src/util debug
+endif
+
+flexed_McdTriangleMesh_for_%:
+	${MAKE} INCLUDE_LICENSING=1 -C$(SRC_ROOT)/Mcd/src/mesh release
+	${MAKE} INCLUDE_LICENSING=1 -C$(SRC_ROOT)/Mcd/src/mesh check_release
+ifneq '$(WITH_DEBUG)' 'NO'
+	${MAKE} INCLUDE_LICENSING=1 -C$(SRC_ROOT)/Mcd/src/mesh debug
+endif
+
+#################################################################
+# Rules to move around libraries
+#
+
+$(SRC_ROOT)/lib.rel/$(PLATFORM)$(DIR_MODIFIER)/% : $(flex_dir)/$(flex_plat)/%
+	cp $< $@
+
+$(SRC_ROOT)/lib.chk/$(PLATFORM)$(DIR_MODIFIER)/% : $(flex_dir)/$(flex_plat)/%
+	cp $< $@
+
+$(SRC_ROOT)/lib.dbg/$(PLATFORM)$(DIR_MODIFIER)/% : $(flex_dir)/$(flex_plat)/%
+	cp $< $@
+
+
+#################################################################
+# Rules to mask the FLEXlm symbols in the libraries
+#
+
+stripped_MeGlobals:
+	cd $(SRC_ROOT)/lib.rel/$(PLATFORM)$(DIR_MODIFIER) && $(flex_exe_dir)/lmstrip -m $(P_LIB)MeGlobals_l$(S_LIB)
+	cd $(SRC_ROOT)/lib.chk/$(PLATFORM)$(DIR_MODIFIER) && $(flex_exe_dir)/lmstrip -m $(P_LIB)MeGlobals_l$(S_LIB)
+	-test -d $(SRC_ROOT)/lib.dbg && cd $(SRC_ROOT)/lib.dbg/$(PLATFORM)$(DIR_MODIFIER) && $(flex_exe_dir)/lmstrip -m $(P_LIB)MeGlobals_l$(S_LIB)
+
+stripped_MdtKea:
+	cd $(SRC_ROOT)/lib.rel/$(PLATFORM)$(DIR_MODIFIER) && $(flex_exe_dir)/lmstrip -m $(P_LIB)MdtKea_l$(S_LIB)
+	cd $(SRC_ROOT)/lib.chk/$(PLATFORM)$(DIR_MODIFIER) && $(flex_exe_dir)/lmstrip -m $(P_LIB)MdtKea_l$(S_LIB)
+	-test -d $(SRC_ROOT)/lib.dbg && cd $(SRC_ROOT)/lib.dbg/$(PLATFORM)$(DIR_MODIFIER) && $(flex_exe_dir)/lmstrip -m $(P_LIB)MdtKea_l$(S_LIB)
+
+stripped_McdFrame:
+	cd $(SRC_ROOT)/lib.rel/$(PLATFORM)$(DIR_MODIFIER) && $(flex_exe_dir)/lmstrip -m $(P_LIB)McdFrame_l$(S_LIB)
+	cd $(SRC_ROOT)/lib.chk/$(PLATFORM)$(DIR_MODIFIER) && $(flex_exe_dir)/lmstrip -m $(P_LIB)McdFrame_l$(S_LIB)
+	-test -d $(SRC_ROOT)/lib.dbg && cd $(SRC_ROOT)/lib.dbg/$(PLATFORM)$(DIR_MODIFIER) && $(flex_exe_dir)/lmstrip -m $(P_LIB)McdFrame_l$(S_LIB)
+
+
+endif

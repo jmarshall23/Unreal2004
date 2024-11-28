@@ -1,0 +1,17 @@
+# $Id: Make.canned.idw,v 1.1.10.1 2002/04/11 03:45:35 jamesg Exp $
+# $Name: t-stevet-RWSpre-030110 $
+#
+# vim:syntax=make:
+#
+# See Readme.txt for comments
+
+PRECISION:=single
+buildcontext?=moth
+BUILD?=free
+CRT?=dll
+OPTS?=full
+SYMBOLS?=none
+inline?=specified
+doreldefs?=release
+profiling?=no
+include ${makerulesdir}configs/Make.canned.simplebuilddir

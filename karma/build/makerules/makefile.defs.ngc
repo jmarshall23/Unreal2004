@@ -1,0 +1,202 @@
+# -*- makefile -*- vim:noet:ts=8:sw=4:ft=make:
+
+#AC_MSG_RESULT(configuring for $PLATFORM)
+
+DEF_PLATFORM		:=NGC
+# "CW" or "PRODG"
+TOOLCHAIN		?=CW
+
+ARCH_TARGET		:=HW2
+EPPC			:=TRUE
+MARLIN			:=DI
+ORCA			:=TRUE
+PROCESSOR		:=gekko
+GX_REV			:=2
+TRK_INTEGRATION		:=TRUE
+BUGLIST			:=BUG_CLR_LOAD_DLY BUG_XF_STALL
+
+
+#############################
+#
+# System/Nintendo SDK paths
+#
+
+DOLPHIN_ROOT		:=$(subst \,/,${DOLPHIN_ROOT})
+AMCDDKBIN		:=$(subst \,/,${AMCDDKBIN})
+
+export NGC_INC
+export NGC_LIB
+export NGC_DDK
+
+NGC_INC			:=${DOLPHIN_ROOT}/include
+NGC_LIB			:=${DOLPHIN_ROOT}/$(ARCH_TARGET)/lib
+# Host and targert commands
+NGC_HBIN		:=${DOLPHIN_ROOT}/$(ARCH_TARGET)/bin/tools
+NGC_TBIN		:=${DOLPHIN_ROOT}/X86/bin
+
+NGC_DDK			:=$(patsubst %/bin,%/lib,${AMCDDKBIN})
+
+###################
+#
+#  File name elements (prefix & suffix)
+#
+
+ifeq '$(TOOLCHAIN)' 'CW'
+    S_OBJ		:=.o
+    S_EXE		:=.elf
+    P_LIB		:=lib
+endif
+
+ifeq '$(TOOLCHAIN)' 'PRODG'
+    S_OBJ		:=.obj
+    S_EXE		:=.elf
+    P_LIB		:=lib
+endif
+
+S_LIB			:=.a
+S_DEP			:=.d
+S_ASM			:=.s
+
+###################
+#
+# Basic Options
+#
+
+O_DEF			:=-D
+O_UNDEF			:=-U
+_O_EXE			:=-o$S
+_O_OBJ			:=-o$S
+_L			:=-L
+
+#############################
+#
+# Tool and flag-set definitions
+#
+
+RM			:=rm -r -f
+
+CPPFLAGS_RELEASE	:=-DNDEBUG
+CPPFLAGS_CHECK_RELEASE	:=-D_MECHECK -DMCDCHECK
+CPPFLAGS_DEBUG		:=$(CPPFLAGS_CHECK_RELEASE) -D_DEBUG
+
+ifeq '$(TOOLCHAIN)' 'CW'
+    # '-L.' is necessary with '-nodefaults' otherwise a bug is triggered
+    _O_LIB		:=-nodefaults -xm l -L. -o$S
+
+export MWDIR
+export CWNGC_EABI
+export CWNGC_LIBC
+export CWNGC_LIBCXX
+export CWNGC_RTLIB
+
+    MWDIR		:=$(subst \,/,${CWFOLDER})
+
+    MWCLDIR		:=$(MWDIR)/PowerPC_EABI_TOOLS/Command_Line_Tools
+
+    CWNGC_EABI		:=$(MWDIR)/PowerPC_EABI_Support
+
+    CWNGC_RTINC		:=$$$$CWNGC_EABI/Runtime/Inc
+    CWNGC_RTLIB		:=${CWNGC_EABI}/Runtime/Lib
+
+    CWNGC_INC		:=$$$$CWNGC_EABI/Msl/MSL_C/PPC_EABI/Include \
+			  $$$$CWNGC_EABI/Msl/MSL_C/MSL_Common/Include
+    CWNGC_INCXX		:=$$$$CWNGC_EABI/Msl/MSL_C++/MSL_Common/Include
+
+    CWNGC_LIBC		:=${CWNGC_EABI}/Msl/MSL_C/PPC_EABI/LIB
+    CWNGC_LIBCXX	:=${CWNGC_EABI}/Msl/MSL_C++/PPC_EABI/LIB
+
+    CWNGC_STATD		:=$$$$MWDIR/Stationery/GAMECUBE_$(ARCH_TARGET)_SDK_01-22-2001
+
+    CWNGC_PREFIX	:=C/$(ARCH_TARGET)_prefix.h
+    CWNGC_LCF		:=dolphin/eppc.$(ARCH_TARGET).lcf
+
+    CWNGC_LIBSC		:=MSL_C.PPCEABI.bare.H.a
+    CWNGC_LIBSCXX	:=MSL_C++.PPCEABI.bare.H.a
+
+    CWNGC_RT		:=Runtime.PPCEABI.H.a
+    CWNGC_MATH		:=fdlibm.PPCEABI.H.a sp_mathlib.H.a
+    CWNGC_MINNOW	:=TRK_MINNOW_DOLPHIN.a
+
+    ME_COMPILE		:=mwcceppc
+    ME_COMPILE_C	:=mwcceppc
+    ME_COMPILE_CXX	:=mwcceppc
+    ME_ASSEMBLE		:=mwasmeppc
+    ME_LIBRARY		:=mwldeppc
+    ME_LINK		:=mwldeppc
+    ME_CMD		:=
+
+    ME_DEPEND		:=mwcceppc
+    ME_AS		:=mwasmeppc
+
+    FLAGSCW		:=-nodefaults -proc $(PROCESSOR)
+    # Quite amazingly 'fmadd' seems around 10% slower than
+    # 'hardware'. So there is a reason why the Nintendo
+    # build defaults to 'hardware'.
+    FLAGSFP		:=-fp hardware
+
+    CFLAGS_CW		:=$(FLAGSCW) $(FLAGSFP) -align powerpc -enum int \
+			  -I$(CWNGC_STATD) -prefix $(CWNGC_PREFIX) \
+			  -I- $(addprefix -I,$(CWNGC_RTINC) $(CWNGC_INC))
+    CFLAGS_CWXX		:=$(CFLAGS_CW) $(addprefix -I,$(CWNGC_INCXX))
+
+    CFLAGS_CW		+=$(addprefix -I,$(NGC_INC))
+    CFLAGS_CWXX		+=$(addprefix -I,$(NGC_INC))
+
+    ME_DEPENDFLAGS	:=-M -DDEPENDENCY_PHASE $(CFLAGS_CWXX)
+
+    CFLAGS_RELEASE	:=$(CFLAGS_CW) -O4,p -inline auto -DNDEBUG
+    CFLAGS_DEBUG	:=$(CFLAGS_CW) -g -opt off -inline off
+
+    CXXFLAGS_RELEASE	:=$(CFLAGS_CWXX) -O4,p -inline auto -DNDEBUG
+    CXXFLAGS_DEBUG	:=$(CFLAGS_CWXX) -g -opt off -inline off
+
+    ME_ASFLAGS_RELEASE	:=$(FLAGSCW) -preprocess -c -D$(ARCH_TARGET)
+    ME_ASFLAGS_DEBUG	:=$(FLAGSCW) -preprocess -c -D$(ARCH_TARGET) -g
+
+    ME_COMPILERPREFIX	:=
+
+    ME_CCLINKFLAGS_RELEASE =$(FLAGSCW) $(FLAGSFP) -map \
+				-lcf $(NGC_INC)/$(CWNGC_LCF)
+    ME_CCLINKFLAGS_DEBUG   =$(ME_CCLINKFLAGS_RELEASE) -g
+endif
+
+ifeq '$(TOOLCHAIN)' 'PRODG'
+    # Oops I haven't tried this, should almost work.
+
+    _O_LIB		:=-r$S
+
+    PRODGD		:=/fs/d/Tools/SNSys/ngc/
+
+    INCLUDE_PATH	:=:$(PRODGD)/include:$(INCLUDE_PATH)
+    PLATFORM_LIBRARY_PATH :=:$(PRODGD)/lib
+
+    ME_COMPILE		:=ngccc
+    ME_COMPILE_C	:=ngccc
+    ME_COMPILE_CXX	:=ngccc
+    ME_ASSEMBLE		:=ngcAs
+    ME_LIBRARY		:=snarl
+    ME_LINK		:=$(ME_COMPILE) -lsn
+    ME_CMD		:=app.cmd
+
+    ME_DEPEND		:=ngccc
+    ME_AS		:=ngccc
+
+    ME_DEPENDFLAGS	:=-w -M -DDEPENDENCY_PHASE
+
+    CFLAGS_PRODG	:=-noasmpp -fdevstudio -DSNSYS
+
+    CFLAGS_RELEASE	:=$(CFLAGS_PRODG) -O6 -fno-omit-frame-pointer
+    CFLAGS_DEBUG	:=$(CFLAGS_PRODG) -O0 -ggdb3 -Wall
+
+    CXXFLAGS_RELEASE	:=$(CFLAGS_PRODG) -O6 -fno-omit-frame-pointer
+    CXXFLAGS_DEBUG	:=$(CFLAGS_PRODG) -O0 -ggdb3 -Wall
+
+    ME_ASFLAGS_RELEASE	:=-c -xassembler-with-cpp
+    ME_ASFLAGS_DEBUG	:=-c -xassembler-with-cpp -Wa,-al
+
+    ME_COMPILERPREFIX	:=
+
+    ME_CCLINKFLAGS_RELEASE =--start-group -lm -lc -lsn -lgcc \
+			    $(NGCLIBS) --end-group
+    ME_CCLINKFLAGS_DEBUG   =$(ME_CCLINKFLAGS_RELEASE) -Wl,-Map,debug.map
+endif

@@ -1,0 +1,93 @@
+# Assuming GNU make (>v3.79)
+# $Id: Make.sanity,v 1.31.2.1 2002/04/11 03:45:34 jamesg Exp $
+# $Name: t-stevet-RWSpre-030110 $
+
+# vim:syntax=make:
+
+ifdef &Make.sanity.seen # avoid "undefined variable..." you get if you use $(if...)
+$(error Make.sanity has already been included -- Check your make logic)
+endif
+
+&Make.sanity.seen:=yes
+
+#######################################################################
+#
+# This file is part of cowpat make
+#
+# Sanity check make command-line args (amongst other stuff)
+#
+# Note that the inclusion of this file is optional (it's a programmers'
+# aid) and that therefore no variables should be set here.
+#
+# Note also that some variable definitions are in Make.standalone.* files,
+# so that's where their sanity checking is (necessarily) too.
+#
+#######################################################################
+#
+# Check various stuff
+#
+
+$(if $(filter 79 80 81 82,$(word 2,$(subst ., ,${MAKE_VERSION}))),, \
+	$(error You need GNUmake version 3.79 or above (you have ${MAKE_VERSION})))
+
+#$(if ${COMPUTERNAME},,$(error I don't know what computer you are on (set COMPUTERNAME)))
+
+$(call &ensurefinalslash,makerulesdir)
+$(call &ensureset,PLATFORM)# Proper sanity in Make.standalone.platform
+$(call &ensureoneof,targettype,${&targettypes})
+$(call &ensureset,targetname)
+#$(call &ensureset,SOURCES)
+$(call &ensureoneof,buildcontext,karma moth standalone)
+$(call &ensureoneof,api,internal external)
+$(call &ensureoneof,BUILD,free checked)
+$(call &ensureoneof,OPTS,none full)
+$(call &ensureoneof,PRECISION,${&precisions})
+$(call &ensureoneof,inline,${&inlines})
+$(call &ensureoneof,SYMBOLS,none all)
+$(call &ensureoneof,noise,${&noises}, (${&defaultnoise} by default))
+$(call &ensureoneof,codegoing,intoexe intodll)
+$(call &ensureoneof,doreldefs,debug release)
+$(call &ensure-one-or-more-of,do,${&phases})
+$(call &ensure-zero-or-more-of,dont,${&phases})
+$(call &ensureoneof,profiling,yes no)
+
+$(call &ensureoneof,&os,${&osses})
+$(call &ensureset,&cpu)# TODO: check this more
+
+$(if ${builddir},,$(error cowpat: builddir cannot be empty (perhaps you meant builddir=./) [but probably not!]))
+$(call &ensurefinalslash,builddir)
+
+ifeq (win32,${&os})
+  # Win32 specific at the mo.
+  $(call &ensureoneof,CRT,${&crts})
+  $(call &ensureoneof,browse,${&browses})
+# Issue warning if $doreldefs doesn't match $CRT
+  &doreldefs_static:=release
+  &doreldefs_mthread:=release
+  &doreldefs_dll:=release
+  &doreldefs_staticd:=debug
+  &doreldefs_mthreadd:=debug
+  &doreldefs_dlld:=debug
+  $(if $(filter ${doreldefs},${&doreldefs_${CRT}}),,$(warning $${doreldefs} should probably be ${&doreldefs_${CRT}} for $${CRT} ${CRT}))
+endif # win32
+
+ifeq (ps2,${&os})
+  # Need access to ${sonylibdir}
+  $(if $(wildcard ${sonylibdir}),,$(error cowpat: ${sonylibdir} not found -- Please set sonylibdir manually))
+endif # ps2
+
+ifneq (,$(filter elate linux ps2,${&os}))
+  # Problem with gcc: Can't inline in C properly if not
+  # optimizing. For now, this is an unsupported combination in Cowpat
+  ifeq (none,${OPTS})
+    ifneq (none,${inline})
+      $(error cowpat: Must have $${inline}:=none when $${OPTS}:=none on gcc platforms (pah!))
+    endif # inline none
+  endif # OPTS none
+endif # linux
+
+ifeq (trimedia,${&os})
+  $(if $(wildcard ${trimedialibdir}),,$(error cowpat: ${trimedialibdir} not found -- Please set trimedialibdir manually))
+endif # trimedia
+
+

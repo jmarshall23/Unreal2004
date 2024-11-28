@@ -1,0 +1,175 @@
+# -*- makefile -*- vim:noet:ts=8:sw=4:ft=make:
+
+SHELL   = /bin/sh
+
+TOPINC		:=../..
+SRCDIR 		:=./src
+
+SCEDIR  	:=/usr/local/sce/ee
+RWDIR   	:=$(wildcard /usr/local/rw ../../renderware/v3.30/ps2/rwsdk)
+
+CC      	=$(SCEDIR)/gcc/bin/ee-g++
+
+ifdef DEBUG
+    BUILD	:=dbg
+    OBJDIR	:=./obj.d
+    TARGET	:=GreaseMonkey_debug
+else
+    BUILD	:=rel
+    OBJDIR	:=./obj
+    TARGET	:=GreaseMonkey
+endif
+
+PLATINC 	:=$(TOPINC)/platform_globals/include
+MCDINC		:=$(TOPINC)/Mcd/include
+MCDINC		:=$(TOPINC)/Mcd/include
+MDTINC		:=$(TOPINC)/Mdt/include
+MEPRECISIONINC	:=$(TOPINC)/MeGlobals/include
+MDTKEAINC	:=$(TOPINC)/MdtKea/include
+MSTINC		:=$(TOPINC)/Mst/include
+MDTCONINC	:=$(TOPINC)/MdtBcl/include
+
+GMINC           :=$(SRCDIR)/RW/shared/skel
+GMINC		:=$(GMINC) $(SRCDIR)/Karma/app
+GMINC		:=$(GMINC) $(SRCDIR)/Karma/plat
+GMINC		:=$(GMINC) $(SRCDIR)/RW/shared/democom
+GMINC		:=$(addprefix -I,$(GMINC))
+
+#MCDLIB		:=$(TOPINC)/Mcd/lib
+#MDTLIB		:=$(TOPINC)/Mdt/lib
+#MDTKEALIB	:=$(TOPINC)/MdtKea/lib
+#MDTCONLIB	:=$(TOPINC)/MdtBcl/lib
+#MSTLIB		:=$(TOPINC)/Mst/lib
+#MEGLOBALSLIB	:=$(TOPINC)/MeGlobals/lib
+
+#format the environment include path
+INCLUDE_PATH	:=$(strip $(INCLUDE_PATH))
+INCLUDE_PATH	:=$(subst :, ,$(INCLUDE_PATH))
+INCLUDE_PATH	:=$(addprefix -I,$(INCLUDE_PATH))
+
+#format the environment library path
+LIBRARY_PATH	:=$(strip $(LIBRARY_PATH))
+LIBRARY_PATH	:=$(subst :, ,$(LIBRARY_PATH))
+LIBRARY_PATH	:=$(addprefix -L,$(LIBRARY_PATH))
+
+MELINKS		:=-L$(TOPINC)/lib.$(BUILD)/ps2 $(LIBRARY_PATH)
+
+SCELIB 		:=$(SCEDIR)/lib
+SCEINC		:=$(SCEDIR)/include
+RWINC		:=$(RWDIR)/include/sky2
+
+ifdef DEBUG
+
+RWLIB	:=$(RWDIR)/lib/sky2/debug
+OFLAGS	=-ggdb3 -O1 -Wall -D_MECHECK -D_DEBUG -DRWDEBUG
+
+LFLAGS  =  -mno-crt0 -Wl,-Map,.map \
+	   -L$(RWLIB) -L$(SCELIB)  $(MELINKS) \
+           -lMst -lMcdPrimitives -lMcdCommon -lMcdFrame -lMcdCommon\
+           -lMdt -lMdtBcl -lMdtKea -lMeGlobals \
+	   -lrt2d -lrtbmp -lrplogo -lrtcharse \
+	   -lrtslerp -lrtimport -lrpcollis -lrtintsec \
+	   -lrpworld -lrwcore -lrtpng \
+	   -lgraph -ldma -ldev -lpkt -lpad -lm -lpc
+
+else
+
+RWLIB	:=$(RWDIR)/lib/sky2/release
+OFLAGS	=-O6 -fno-omit-frame-pointer -DNDEBUG -URWDEBUG
+
+LFLAGS  =-mno-crt0 -Wl,-Map,.map \
+	   -L$(RWLIB) -L$(SCELIB)  $(MELINKS) \
+           -lMst -lMcdPrimitives -lMcdCommon -lMcdFrame -lMcdCommon\
+           -lMdt -lMdtBcl -lMdtKea -lMeGlobals \
+	   -lrt2d -lrtbmp -lrplogo -lrtcharse \
+	   -lrtslerp -lrtimport -lrpcollis -lrtintsec \
+	   -lrpworld -lrwcore -lrtpng \
+	   -lgraph -ldma -ldev -lpkt -lpad -lm  -lpc
+
+endif
+
+
+CFLAGS  =$(OFLAGS) -G0 -DGCC -fshort-double -DPS2 -DSKY \
+	   -I$(RWINC) -I$(SCEINC) \
+           -I$(PLATINC) -I$(MSTINC) -I$(MDTCONINC) -I$(MDTKEAINC) \
+           -I$(MCDINC) -I$(MDTINC) -I$(MEPRECISIONINC) \
+	   $(GMINC) $(INCLUDE_PATH)
+
+#-DPERFORMANCE_METRICS
+#-DRWLOGO
+
+SOURCES =	$(SRCDIR)/Karma/app/MdtCar.cpp \
+		$(SRCDIR)/Karma/app/RwFuncs.cpp \
+		$(SRCDIR)/Karma/app/car.cpp \
+		$(SRCDIR)/Karma/app/carAPI.cpp \
+		$(SRCDIR)/Karma/app/control.cpp \
+		$(SRCDIR)/Karma/app/driver.cpp \
+		$(SRCDIR)/Karma/app/events.cpp \
+		$(SRCDIR)/Karma/app/init.cpp \
+		$(SRCDIR)/Karma/app/parser.cpp \
+		$(SRCDIR)/Karma/app/smoke.cpp \
+		$(SRCDIR)/Karma/app/utils.cpp \
+		$(SRCDIR)/RW/shared/skel/skeleton.c \
+		$(SRCDIR)/RW/shared/skel/sky/sky.c \
+		$(SRCDIR)/RW/shared/skel/sky/skyextra.c \
+		$(SRCDIR)/RW/shared/skel/sky/skyfs.c \
+		$(SRCDIR)/RW/shared/democom/camera.c \
+		$(SRCDIR)/RW/OldRW/padmap.c
+
+OBJS =		crt0.o \
+		$(OBJDIR)/MdtCar.o \
+		$(OBJDIR)/RwFuncs.o \
+		$(OBJDIR)/car.o \
+		$(OBJDIR)/carAPI.o \
+		$(OBJDIR)/control.o \
+		$(OBJDIR)/driver.o \
+		$(OBJDIR)/events.o \
+		$(OBJDIR)/init.o \
+		$(OBJDIR)/parser.o \
+		$(OBJDIR)/skeleton.o \
+		$(OBJDIR)/smoke.o \
+		$(OBJDIR)/utils.o \
+	 	$(OBJDIR)/camera.o \
+		$(OBJDIR)/sky.o \
+		$(OBJDIR)/skyextra.o \
+		$(OBJDIR)/skyfs.o \
+	 	$(OBJDIR)/padmap.o 
+
+
+all : $(OBJDIR) $(TARGET).elf
+
+run	: all
+	dsedb -d tool.ox.mathengine.com -r run $(TARGET).elf
+
+run_mtl	: all
+	dsedb -d tool.mtl.mathengine.com -r run $(TARGET).elf
+
+$(TARGET).elf : $(OBJS) $(OBJDIR)
+	$(CC) -o $@ -T /usr/local/sce/ee/lib/app.cmd $(OBJS) $(LFLAGS)
+
+crt0.o : $(SCELIB)/crt0.s
+	$(CC) -c -xassembler-with-cpp -Wa,-al -o $@ $< > $*.lst
+
+$(OBJDIR)/%.o 	: $(SRCDIR)/Karma/plat/%.c 
+	$(CC) $(CFLAGS) -c $< -o $@
+
+$(OBJDIR)/%.o 	: $(SRCDIR)/RW/shared/skel/%.c
+	$(CC) $(CFLAGS) -c $< -o $@
+
+$(OBJDIR)/%.o 	: $(SRCDIR)/RW/shared/skel/sky/%.c
+	$(CC) $(CFLAGS) -c $< -o $@
+
+$(OBJDIR)/%.o 	: $(SRCDIR)/RW/shared/democom/%.c
+	$(CC) $(CFLAGS) -c $< -o $@
+
+$(OBJDIR)/%.o 	: $(SRCDIR)/RW/OldRW/%.c
+	$(CC) $(CFLAGS) -c $< -o $@
+
+$(OBJDIR)/%.o 	: $(SRCDIR)/Karma/app/%.cpp 
+	$(CC) $(CFLAGS) -c $< -o $@
+
+$(OBJDIR):
+	-mkdir $@
+
+clean:
+	rm -rf obj obj.d *.elf

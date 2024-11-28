@@ -1,0 +1,21 @@
+Microsoft Visual Studio Solution File, Format Version 8.00
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AutoRun", "AutoRun.vcproj", "{F10CC80C-9368-405A-9573-2F44853F8BE7}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfiguration) = preSolution
+		AutoRun = AutoRun
+		ExtrasAutoRun = ExtrasAutoRun
+	EndGlobalSection
+	GlobalSection(ProjectConfiguration) = postSolution
+		{F10CC80C-9368-405A-9573-2F44853F8BE7}.AutoRun.ActiveCfg = AutoRun|Win32
+		{F10CC80C-9368-405A-9573-2F44853F8BE7}.AutoRun.Build.0 = AutoRun|Win32
+		{F10CC80C-9368-405A-9573-2F44853F8BE7}.ExtrasAutoRun.ActiveCfg = ExtrasAutoRun|Win32
+		{F10CC80C-9368-405A-9573-2F44853F8BE7}.ExtrasAutoRun.Build.0 = ExtrasAutoRun|Win32
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+	EndGlobalSection
+	GlobalSection(ExtensibilityAddIns) = postSolution
+	EndGlobalSection
+EndGlobal

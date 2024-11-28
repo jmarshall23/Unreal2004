@@ -1,0 +1,29 @@
+<!-- #include file="header.inc" -->
+<form method="post" action="<%PostAction%>">
+
+<table class="sectionheader">
+<tr>
+	<td>
+    Conflicting settings were found and should be resolved.<br><br>
+	Command Line values have precedence over defaults, please select which values you want to override. Checkmarked entries will use the default value instead of the Command Line value.<br><br>
+	</td>
+</tr>
+</table>
+
+<table>
+<tr>
+	<th class="left">Setting</th>
+	<th>Defaults</th>
+	<th>Command Line</th>
+	<th class="right">Override</th>
+</tr>
+<%Conflicts%>
+</table>
+
+<input class="button" type="submit" name="Save" value="<%SubmitValue%>">
+<input class="button" type="reset" value="Reset">
+<input type="hidden" name="GameType" value="<%GameType%>">
+<input type="hidden" name="MapName" value="<%MapName%>">
+
+</form>
+<!-- #include file="footer.inc" -->

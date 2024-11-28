@@ -1,0 +1,207 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug_AMD64|Win32">
+      <Configuration>Debug_AMD64</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="UnrealScript|Win32">
+      <Configuration>UnrealScript</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{CB660AD1-6079-4ECC-96F8-7F1D88F4C560}</ProjectGuid>
+    <Keyword>MakeFileProj</Keyword>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug_AMD64|Win32'" Label="Configuration">
+    <ConfigurationType>Utility</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='UnrealScript|Win32'" Label="Configuration">
+    <ConfigurationType>Utility</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug_AMD64|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='UnrealScript|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.40219.1</_ProjectFileVersion>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='UnrealScript|Win32'">.\.\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='UnrealScript|Win32'">.\.\</IntDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug_AMD64|Win32'">$(Configuration)\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug_AMD64|Win32'">$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <None Include="Classes\AssaultAmmo.uc" />
+    <None Include="Classes\AssaultAmmoPickup.uc" />
+    <None Include="Classes\AssaultAttachment.uc" />
+    <None Include="Classes\AssaultFire.uc" />
+    <None Include="Classes\AssaultGrenade.uc" />
+    <None Include="Classes\AssaultRifle.uc" />
+    <None Include="Classes\AssaultRiflePickup.uc" />
+    <None Include="Classes\BallAmmo.uc" />
+    <None Include="Classes\BallAttachment.uc" />
+    <None Include="Classes\BallLauncher.uc" />
+    <None Include="Classes\BallShoot.uc" />
+    <None Include="Classes\BallTarget.uc" />
+    <None Include="Classes\BioAmmo.uc" />
+    <None Include="Classes\BioAmmoPickup.uc" />
+    <None Include="Classes\BioAttachment.uc" />
+    <None Include="Classes\BioChargedFire.uc" />
+    <None Include="Classes\BioFire.uc" />
+    <None Include="Classes\BioGlob.uc" />
+    <None Include="Classes\BioRifle.uc" />
+    <None Include="Classes\BioRiflePickup.uc" />
+    <None Include="Classes\BlueBeacon.uc" />
+    <None Include="Classes\BlueSuperShockBeam.uc" />
+    <None Include="Classes\FlakAltFire.uc" />
+    <None Include="Classes\FlakAmmo.uc" />
+    <None Include="Classes\FlakAmmoPickup.uc" />
+    <None Include="Classes\FlakAttachment.uc" />
+    <None Include="Classes\FlakCannon.uc" />
+    <None Include="Classes\FlakCannonPickup.uc" />
+    <None Include="Classes\FlakChunk.uc" />
+    <None Include="Classes\FlakFire.uc" />
+    <None Include="Classes\FlakShell.uc" />
+    <None Include="Classes\FX_WeaponLocker.uc" />
+    <None Include="Classes\Grenade.uc" />
+    <None Include="Classes\GrenadeAmmo.uc" />
+    <None Include="Classes\HitEffect.uc" />
+    <None Include="Classes\HitScanBlockingVolume.uc" />
+    <None Include="Classes\InstantFire.uc" />
+    <None Include="Classes\IonCannon.uc" />
+    <None Include="Classes\LimitationVolume.uc" />
+    <None Include="Classes\LinkAltFire.uc" />
+    <None Include="Classes\LinkAmmo.uc" />
+    <None Include="Classes\LinkAmmoPickup.uc" />
+    <None Include="Classes\LinkAttachment.uc" />
+    <None Include="Classes\LinkBeamChild.uc" />
+    <None Include="Classes\LinkBeamEffect.uc" />
+    <None Include="Classes\LinkFire.uc" />
+    <None Include="Classes\LinkGun.uc" />
+    <None Include="Classes\LinkGunPickup.uc" />
+    <None Include="Classes\LinkPassEffect.uc" />
+    <None Include="Classes\LinkProjectile.uc" />
+    <None Include="Classes\LockerWeapon.uc" />
+    <None Include="Classes\Minigun.uc" />
+    <None Include="Classes\MinigunAltFire.uc" />
+    <None Include="Classes\MinigunAmmo.uc" />
+    <None Include="Classes\MinigunAmmoPickup.uc" />
+    <None Include="Classes\MinigunAttachment.uc" />
+    <None Include="Classes\MinigunFire.uc" />
+    <None Include="Classes\MinigunPickup.uc" />
+    <None Include="Classes\MutArena.uc" />
+    <None Include="Classes\MutNoSuperWeapon.uc" />
+    <None Include="Classes\NewLightningBolt.uc" />
+    <None Include="Classes\Painter.uc" />
+    <None Include="Classes\PainterAttachment.uc" />
+    <None Include="Classes\PainterBeamEffect.uc" />
+    <None Include="Classes\PainterFire.uc" />
+    <None Include="Classes\PainterPickup.uc" />
+    <None Include="Classes\PainterZoom.uc" />
+    <None Include="Classes\ProjectileFire.uc" />
+    <None Include="Classes\RedBeacon.uc" />
+    <None Include="Classes\Redeemer.uc" />
+    <None Include="Classes\RedeemerAmmo.uc" />
+    <None Include="Classes\RedeemerAttachment.uc" />
+    <None Include="Classes\RedeemerFire.uc" />
+    <None Include="Classes\RedeemerGuidedFire.uc" />
+    <None Include="Classes\RedeemerPickup.uc" />
+    <None Include="Classes\RedeemerProjectile.uc" />
+    <None Include="Classes\RedeemerWarhead.uc" />
+    <None Include="Classes\RocketAmmo.uc" />
+    <None Include="Classes\RocketAmmoPickup.uc" />
+    <None Include="Classes\RocketAttachment.uc" />
+    <None Include="Classes\RocketFire.uc" />
+    <None Include="Classes\RocketLauncher.uc" />
+    <None Include="Classes\RocketLauncherPickup.uc" />
+    <None Include="Classes\RocketMultiFire.uc" />
+    <None Include="Classes\RocketProj.uc" />
+    <None Include="Classes\SeekingRocketProj.uc" />
+    <None Include="Classes\ShieldAltFire.uc" />
+    <None Include="Classes\ShieldAmmo.uc" />
+    <None Include="Classes\ShieldAttachment.uc" />
+    <None Include="Classes\ShieldEffect.uc" />
+    <None Include="Classes\ShieldEffect3rd.uc" />
+    <None Include="Classes\ShieldEffect3rdBLUE.uc" />
+    <None Include="Classes\ShieldEffect3rdRed.uc" />
+    <None Include="Classes\ShieldFire.uc" />
+    <None Include="Classes\ShieldGun.uc" />
+    <None Include="Classes\ShieldGunPickup.uc" />
+    <None Include="Classes\ShockAmmo.uc" />
+    <None Include="Classes\ShockAmmoPickup.uc" />
+    <None Include="Classes\ShockAttachment.uc" />
+    <None Include="..\XEffects\Classes\ShockBeamCoil.uc" />
+    <None Include="Classes\ShockBeamCoilBlue.uc" />
+    <None Include="Classes\ShockBeamEffect.uc" />
+    <None Include="Classes\ShockBeamFire.uc" />
+    <None Include="Classes\ShockProjectile.uc" />
+    <None Include="Classes\ShockProjFire.uc" />
+    <None Include="Classes\ShockRifle.uc" />
+    <None Include="Classes\ShockRiflePickup.uc" />
+    <None Include="Classes\SniperAmmo.uc" />
+    <None Include="Classes\SniperAmmoPickup.uc" />
+    <None Include="Classes\SniperAttachment.uc" />
+    <None Include="Classes\SniperFire.uc" />
+    <None Include="Classes\SniperRifle.uc" />
+    <None Include="Classes\SniperRiflePickup.uc" />
+    <None Include="Classes\SniperZoom.uc" />
+    <None Include="Classes\SuperShockAmmo.uc" />
+    <None Include="Classes\SuperShockBeamEffect.uc" />
+    <None Include="Classes\SuperShockBeamFire.uc" />
+    <None Include="Classes\SuperShockRifle.uc" />
+    <None Include="Classes\SuperShockRiflePickup.uc" />
+    <None Include="Classes\TransAmmo.uc" />
+    <None Include="Classes\TransAttachment.uc" />
+    <None Include="Classes\TransBeacon.uc" />
+    <None Include="Classes\TransbeaconTeleporter.uc" />
+    <None Include="Classes\TransDummyBeacon.uc" />
+    <None Include="Classes\TransFire.uc" />
+    <None Include="Classes\TransLauncher.uc" />
+    <None Include="Classes\Transpickup.uc" />
+    <None Include="Classes\TransRecall.uc" />
+    <None Include="Classes\UTAmmoPickup.uc" />
+    <None Include="Classes\UTWeaponPickup.uc" />
+    <None Include="Classes\WeaponLocker.uc" />
+    <None Include="Classes\ZoomSuperShockBeamDamage.uc" />
+    <None Include="Classes\ZoomSuperShockBeamFire.uc" />
+    <None Include="Classes\ZoomSuperShockRifle.uc" />
+    <None Include="Classes\DamTypeAssaultBullet.uc" />
+    <None Include="Classes\DamTypeAssaultGrenade.uc" />
+    <None Include="Classes\DamTypeBioGlob.uc" />
+    <None Include="Classes\DamTypeFlakChunk.uc" />
+    <None Include="Classes\DamTypeFlakShell.uc" />
+    <None Include="Classes\DamTypeIonBlast.uc" />
+    <None Include="Classes\DamTypeLinkPlasma.uc" />
+    <None Include="Classes\DamTypeLinkShaft.uc" />
+    <None Include="Classes\DamTypeMinigunAlt.uc" />
+    <None Include="Classes\DamTypeMinigunBullet.uc" />
+    <None Include="Classes\DamTypeRedeemer.uc" />
+    <None Include="Classes\DamTypeRocket.uc" />
+    <None Include="Classes\DamTypeRocketHoming.uc" />
+    <None Include="Classes\DamTypeShieldImpact.uc" />
+    <None Include="Classes\DamTypeShockBall.uc" />
+    <None Include="Classes\DamTypeShockBeam.uc" />
+    <None Include="Classes\DamTypeShockCombo.uc" />
+    <None Include="Classes\DamTypeSniperHeadShot.uc" />
+    <None Include="Classes\DamTypeSniperShot.uc" />
+    <None Include="Classes\DamTypeSuperShockBeam.uc" />
+    <None Include="Classes\DamTypeTeleFrag.uc" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

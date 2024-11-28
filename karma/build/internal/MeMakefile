@@ -1,0 +1,65 @@
+# Assuming GNU make (>v3.76)
+# $Header: /proj/Toolkits/build/internal/MeMakefile,v 1.28 2001/05/21 10:30:01 williamg Exp $
+# ($Name: t-stevet-RWSpre-030110 $)
+
+# vim:syntax=make:
+
+#------------------------------
+# Top-level recursive makefile
+#------------------------------
+
+meviewer:=MeViewer2
+
+LIBRARIES:= \
+	${meviewer}\
+	Mdt \
+	MdtBcl \
+	MdtKea \
+	MeApp \
+	MeFile \
+	MeGlobals \
+	Mst \
+
+# While Dilip's doing his upheaval: (!)
+#	Mcd \
+#	Mps \
+
+EXECUTABLES:=\
+	MeTutorials \
+	MeTests \
+	MeSamples \
+
+PACKAGES:=${LIBRARIES} ${EXECUTABLES}
+
+# Get list of requested packages from the command line
+packages:=$(filter ${PACKAGES},${MAKECMDGOALS})
+nonpackages:=$(filter-out ${PACKAGES} libs exes,${MAKECMDGOALS})
+
+ifeq '' "${packages}"
+packages:=${PACKAGES}# default to all
+endif
+
+# Make all _other_ command-line targets legal (they will be passed on to the sub-makes)
+all ${nonpackages}: ${packages}
+
+libs: ${LIBRARIES}
+
+exes: ${EXECUTABLES}
+
+# -r, --no-builtin-rules      Disable the built-in implicit rules.
+# -R, --no-builtin-variables  Disable the built-in variable settings.
+# (-R implies -r)
+#
+# -R is only supported on 3.78 and above, but is usefully faster
+# [This code is in Make.rules, but is duplicated here for convenience]
+no-builtin-defs:=-r
+ifneq '' "$(filter 78 79 80 81 82,$(word 2,$(subst ., ,${MAKE_VERSION})))"
+no-builtin-defs:=-R
+endif
+
+# We should really pass ${nonpackages} one at a time
+${LIBRARIES}:
+	${MAKE} -C../../$@/src ${no-builtin-defs} -f MeMakefile ${nonpackages}
+
+${EXECUTABLES}:
+	${MAKE} -C../../$@ ${no-builtin-defs} -f MeMakefile ${nonpackages}

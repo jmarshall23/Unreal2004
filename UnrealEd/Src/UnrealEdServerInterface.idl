@@ -1,0 +1,101 @@
+//----------------------------------------------------------------------
+//UnrealEdServerInterface.idl
+//
+// Travis Johnston, Joshua Lee of Secret Level
+//----------------------------------------------------------------------
+
+import "oaidl.idl";
+import "ocidl.idl";
+
+
+//IID_IUnrealEdServerInterface
+//These are the attributes of the IUnrealEdInterface interface
+[
+	object,
+	uuid(2BE948B6-627C-48be-818C-A454851D8B1B),
+	helpstring("IUnrealEdInterface Interface.")
+]
+
+
+//----------------------------------------------------------------------
+//Declaration of the IUserInfo interface
+//----------------------------------------------------------------------
+
+interface IUnrealEdServerInterface : IUnknown
+{
+	//List of function definitions for each method supported by the interface
+	//
+	//[attributes] returntype [calling convention] funcname(params);
+	//
+
+	// Ping the server.  This allows a client to probe an existintg
+	// instance of the interface to see if the server is alive,
+	// useful for detecting stale handles.
+	HRESULT Ping();
+
+	// Loads a static mesh; the mesh data is serialized in "buffer" 
+	// according to the schema described in SerializedDataTypes.h
+	HRESULT LoadMesh(  
+				[in, string] const char * packageName, 
+				[in, string] const char * groupName, 
+				[in, string] const char * objName, 
+				[in] int   byteCount, [in, size_is( byteCount )] const char * buffer ); 
+
+	// Loads a skin, i.e. a mesh bound to a skeleton; the skin data is serialized 
+	//in "buffer" according to the schema described in SerializedDataTypes.h
+	HRESULT LoadSkin(  
+				[in, string] const char * packageName, 
+				[in, string] const char * objName, 
+				[in] float scale,
+				[in] int byteCount, [in, size_is( byteCount )] const char * buffer ); 
+
+	// Loads animations for a skin; the animation data is serialized in "buffer" 
+	// according to the schema described in SerializedDataTypes.h
+	HRESULT LoadAnimation( 
+				[in, string] const char * packageName, 
+				[in, string] const char * objName, 
+				[in] int byteCount, [in, size_is( byteCount )] const char * buffer ); 
+
+	// Execute an unreal command.  This sets resultBufferSize to the number
+	// of bytes required to return the result.  If resultBufferSize is non-zero,
+	// you should fetch the result using FetchCommandResult. Note that the
+	// result will only be valid until the next time ExecCommand() executes, or
+	// the result is fetched.
+	HRESULT ExecCommand(
+				[in, string] const char * command,
+				[out] int * resultBufferSize );
+
+	// Fetch the result of the last ExecCommand().  [See ExecCommand() description
+	// regarding the buffer size.]  After returning this result, the server will
+	// release its internal copy; further invocations of this method will be invalid
+	// until the next ExecCommand() concludes.
+	HRESULT FetchCommandResult(
+				[in] int resultBufferSize,
+				[out, size_is( resultBufferSize )] char * resultBuffer );
+}
+
+
+//LIBID_IUnrealEdInterface
+//These are the attributes of the type library 
+[
+	uuid(762E122D-53C3-42b0-824A-2613958C6F25),
+	helpstring("UnrealEdServerInterface Type Library."),
+	version(1.0)
+]
+
+//Definition of the UserInfo type library
+library UnrealEdServerInterface
+{
+	//CLSID_UnrealEdInterface
+	//Attributes of the UserInfo object 
+	[
+		uuid(A45A07A4-6BF0-4221-99CE-B966343198B0),
+		helpstring("UnrealEdServerInterface Object.")
+	]
+	//Definition of the UnrealEdInterface object
+	coclass UnrealEdServerInterface
+	{
+		//List all of the interfaces supported by the object
+		[default] interface IUnrealEdServerInterface;
+	}
+} 

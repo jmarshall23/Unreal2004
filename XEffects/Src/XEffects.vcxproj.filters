@@ -1,0 +1,683 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Classes">
+      <UniqueIdentifier>{8673b944-44e1-4b13-9a82-773d31e7f292}</UniqueIdentifier>
+      <Extensions>*.uc</Extensions>
+    </Filter>
+    <Filter Include="Shock Classes">
+      <UniqueIdentifier>{171e118d-76e9-4f83-b6bd-aaeb61bbc21a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Rocket Classes">
+      <UniqueIdentifier>{2d0b0583-97d4-4421-a2bc-f2ce417ee12a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Link Classes">
+      <UniqueIdentifier>{cd493a01-865f-42d0-a555-a3b1b2776693}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Gibs">
+      <UniqueIdentifier>{d4c1efdd-82f6-4845-bab3-c3b39572006d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Bio Classes">
+      <UniqueIdentifier>{cc2c3ea5-4084-455a-97b9-d16285c2a745}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Ion Classes">
+      <UniqueIdentifier>{a90fee57-85ca-446e-93c3-e59ad63a14c9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shield Classes">
+      <UniqueIdentifier>{95430321-a27b-4aef-ad8b-5aeaf4ac8d64}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Combos">
+      <UniqueIdentifier>{86045726-c6cc-4bf1-8c4c-ce224e7ec5bf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Translocator Classes">
+      <UniqueIdentifier>{075648e6-a01e-465f-a416-b4cbd9d08cc3}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\Classes\AlienBloodExplosion.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\AlienBloodJet.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\AlienSmallHit.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\AssaultMuzFlash1st.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\AssaultMuzFlash3rd.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\BioDecal.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\BioSmoke.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\Blackmuzzlesmoke.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\BloodExplosion.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\BloodJet.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\BloodSmallHit.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\BloodSplat.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\BloodSplatter.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\bloodsplatterpurple.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\BloodSpurt.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\BlueSparks.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\BlueWhisp.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\BodyDeRes.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\BotBloodExplosion.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\BotSmallHit.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\BotSparks.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\Bubble.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\BulletDecal.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\ChildBlueSparks.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\ChildLightningBolt.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\ComboDecal.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\DamTeleportEffect.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\DeResPart.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\DirtImpact.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\ExplosionCrap.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\ExploWallHit.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\FastBotSparks.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\FlakDirectionalBlast.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\FlakExplosion.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\FlakGlow.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\FlakMuzFlash1st.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\FlakMuzFlash3rd.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\FlakShellTrail.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\FlakTrail.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\FlashExplosion.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\GrenadeSmokeTrail.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\HitFlame.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\HitFlameBig.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\HitSmoke.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\ImpactDust.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\LavaDeath.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\Lightning.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\LightningBolt.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\LightningCharge.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\LightningCharge3rd.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\MeshEffect.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\MinigunAltMuzzleSmoke.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\MinigunMuzAltFlash3rd.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\MinigunMuzFlash1st.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\MinigunMuzFlash3rd.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\MinigunMuzzleSmoke.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\muzzlesmoke.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\muzzlesmokerifle.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\NewExplosionC.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\NewLinkTrail.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\NewMinigunMFlash.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\NewRedeemerTrail.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\NewTracer.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\NewTransDeresBlue.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\NewTransDeresRed.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\NewTransEffect.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\NewTransEffectBlue.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\PainterBeamSpot.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\PainterBoltSparks.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\PainterDecal.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\PainterMark.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\pclBioMuzzleFlash.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\pclflakMuzFlash.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\pclImpactSmoke.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\PCLlightsmoke.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\pclLinkmuzflash.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\pclMinigunMuzFlash.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\pclmuzflashA.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\pclMuzFlashRocket.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\pclmuzflashWhite.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\pclredsmoke.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\pclShockMuzFlash.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\pclSmallSmoke.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\pclSmoke.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\PlayerSpawnEffect.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\rain.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\RedeemerExplosion.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\RedeemerTrail.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\RedWhisp.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\RocketMark.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\Shark.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\ShellSpewer.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\ShockAltDecal.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\ShockAltExplosion.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\ShockBeamMuzFlash.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\ShockBoltEffect.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\ShockDarkDecal.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\ShockDecal.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\ShockSparks.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\SmallExplosion.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\SmallRedeemerExplosion.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\..\XWeapons\Classes\SniperAttachment.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\Spiral.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\TankVictim.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\Tracer.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\TransDeRes.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\TranseDeResBlue.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\VMeshActor.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\WallSparks.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\WeaponFadeEffect.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\xAlienGibGroup.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\xBotGibGroup.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\xHeavyWallHitEffect.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\xpawngibgroup.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\XScorch.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\xShieldBeltEffect.uc">
+      <Filter>Classes</Filter>
+    </None>
+    <None Include="..\Classes\ShockBeamCoil.uc">
+      <Filter>Shock Classes</Filter>
+    </None>
+    <None Include="..\Classes\ShockBeamCoilB.uc">
+      <Filter>Shock Classes</Filter>
+    </None>
+    <None Include="..\Classes\ShockCombo.uc">
+      <Filter>Shock Classes</Filter>
+    </None>
+    <None Include="..\Classes\ShockComboCore.uc">
+      <Filter>Shock Classes</Filter>
+    </None>
+    <None Include="..\Classes\ShockComboExpRing.uc">
+      <Filter>Shock Classes</Filter>
+    </None>
+    <None Include="..\Classes\ShockComboFlare.uc">
+      <Filter>Shock Classes</Filter>
+    </None>
+    <None Include="..\Classes\ShockComboFlash.uc">
+      <Filter>Shock Classes</Filter>
+    </None>
+    <None Include="..\Classes\ShockComboSparkles.uc">
+      <Filter>Shock Classes</Filter>
+    </None>
+    <None Include="..\Classes\ShockComboSphereDark.uc">
+      <Filter>Shock Classes</Filter>
+    </None>
+    <None Include="..\Classes\ShockComboVortex.uc">
+      <Filter>Shock Classes</Filter>
+    </None>
+    <None Include="..\Classes\ShockComboWiggles.uc">
+      <Filter>Shock Classes</Filter>
+    </None>
+    <None Include="..\Classes\ShockExplosion.uc">
+      <Filter>Shock Classes</Filter>
+    </None>
+    <None Include="..\Classes\ShockExplosionCore.uc">
+      <Filter>Shock Classes</Filter>
+    </None>
+    <None Include="..\Classes\ShockExplosionCoreB.uc">
+      <Filter>Shock Classes</Filter>
+    </None>
+    <None Include="..\Classes\ShockImpactFlare.uc">
+      <Filter>Shock Classes</Filter>
+    </None>
+    <None Include="..\Classes\ShockImpactFlareB.uc">
+      <Filter>Shock Classes</Filter>
+    </None>
+    <None Include="..\Classes\ShockImpactRing.uc">
+      <Filter>Shock Classes</Filter>
+    </None>
+    <None Include="..\Classes\ShockImpactRingB.uc">
+      <Filter>Shock Classes</Filter>
+    </None>
+    <None Include="..\Classes\ShockImpactScorch.uc">
+      <Filter>Shock Classes</Filter>
+    </None>
+    <None Include="..\Classes\ShockMuzFlash.uc">
+      <Filter>Shock Classes</Filter>
+    </None>
+    <None Include="..\Classes\ShockMuzFlash3rd.uc">
+      <Filter>Shock Classes</Filter>
+    </None>
+    <None Include="..\Classes\ShockMuzFlashB.uc">
+      <Filter>Shock Classes</Filter>
+    </None>
+    <None Include="..\Classes\ShockMuzFlashB3rd.uc">
+      <Filter>Shock Classes</Filter>
+    </None>
+    <None Include="..\Classes\ShockProjElec.uc">
+      <Filter>Shock Classes</Filter>
+    </None>
+    <None Include="..\Classes\ShockProjMuzFlash.uc">
+      <Filter>Shock Classes</Filter>
+    </None>
+    <None Include="..\Classes\ShockProjMuzFlash3rd.uc">
+      <Filter>Shock Classes</Filter>
+    </None>
+    <None Include="..\Classes\ShockProjSparkles.uc">
+      <Filter>Shock Classes</Filter>
+    </None>
+    <None Include="..\Classes\NewExplosionA.uc">
+      <Filter>Rocket Classes</Filter>
+    </None>
+    <None Include="..\Classes\NewExplosionB.uc">
+      <Filter>Rocket Classes</Filter>
+    </None>
+    <None Include="..\Classes\RocketCorona.uc">
+      <Filter>Rocket Classes</Filter>
+    </None>
+    <None Include="..\Classes\RocketExplosion.uc">
+      <Filter>Rocket Classes</Filter>
+    </None>
+    <None Include="..\Classes\RocketMuzFlash1st.uc">
+      <Filter>Rocket Classes</Filter>
+    </None>
+    <None Include="..\Classes\RocketMuzFlash3rd.uc">
+      <Filter>Rocket Classes</Filter>
+    </None>
+    <None Include="..\Classes\RocketSmokeRing.uc">
+      <Filter>Rocket Classes</Filter>
+    </None>
+    <None Include="..\Classes\RocketTrailSmoke.uc">
+      <Filter>Rocket Classes</Filter>
+    </None>
+    <None Include="..\Classes\LinkBoltEffect.uc">
+      <Filter>Link Classes</Filter>
+    </None>
+    <None Include="..\Classes\LinkBoltScorch.uc">
+      <Filter>Link Classes</Filter>
+    </None>
+    <None Include="..\Classes\LinkExpRing.uc">
+      <Filter>Link Classes</Filter>
+    </None>
+    <None Include="..\Classes\LinkExpRingYellow.uc">
+      <Filter>Link Classes</Filter>
+    </None>
+    <None Include="..\Classes\LinkMuzFlashBeam1st.uc">
+      <Filter>Link Classes</Filter>
+    </None>
+    <None Include="..\Classes\LinkMuzFlashBeam3rd.uc">
+      <Filter>Link Classes</Filter>
+    </None>
+    <None Include="..\Classes\LinkMuzFlashProj1st.uc">
+      <Filter>Link Classes</Filter>
+    </None>
+    <None Include="..\Classes\LinkMuzFlashProj3rd.uc">
+      <Filter>Link Classes</Filter>
+    </None>
+    <None Include="..\Classes\LinkProjEffect.uc">
+      <Filter>Link Classes</Filter>
+    </None>
+    <None Include="..\Classes\LinkProjSparks.uc">
+      <Filter>Link Classes</Filter>
+    </None>
+    <None Include="..\Classes\LinkProjSparksYellow.uc">
+      <Filter>Link Classes</Filter>
+    </None>
+    <None Include="..\Classes\LinkProtSphere.uc">
+      <Filter>Link Classes</Filter>
+    </None>
+    <None Include="..\Classes\LinkScorch.uc">
+      <Filter>Link Classes</Filter>
+    </None>
+    <None Include="..\Classes\LinkSmoke.uc">
+      <Filter>Link Classes</Filter>
+    </None>
+    <None Include="..\Classes\LinkSmokeYellow.uc">
+      <Filter>Link Classes</Filter>
+    </None>
+    <None Include="..\Classes\LinkSparks.uc">
+      <Filter>Link Classes</Filter>
+    </None>
+    <None Include="..\Classes\Gib.uc">
+      <Filter>Gibs</Filter>
+    </None>
+    <None Include="..\Classes\GibBotCalf.uc">
+      <Filter>Gibs</Filter>
+    </None>
+    <None Include="..\Classes\GibBotForearm.uc">
+      <Filter>Gibs</Filter>
+    </None>
+    <None Include="..\Classes\GibBotHand.uc">
+      <Filter>Gibs</Filter>
+    </None>
+    <None Include="..\Classes\GibBotHead.uc">
+      <Filter>Gibs</Filter>
+    </None>
+    <None Include="..\Classes\GibBotTorso.uc">
+      <Filter>Gibs</Filter>
+    </None>
+    <None Include="..\Classes\GibBotUpperArm.uc">
+      <Filter>Gibs</Filter>
+    </None>
+    <None Include="..\Classes\GibHead.uc">
+      <Filter>Gibs</Filter>
+    </None>
+    <None Include="..\Classes\GibOrganic_rc.uc">
+      <Filter>Gibs</Filter>
+    </None>
+    <None Include="..\Classes\GibOrganicGreenCalf.uc">
+      <Filter>Gibs</Filter>
+    </None>
+    <None Include="..\Classes\GibOrganicGreenForearm.uc">
+      <Filter>Gibs</Filter>
+    </None>
+    <None Include="..\Classes\GibOrganicGreenHand.uc">
+      <Filter>Gibs</Filter>
+    </None>
+    <None Include="..\Classes\GibOrganicGreenHead.uc">
+      <Filter>Gibs</Filter>
+    </None>
+    <None Include="..\Classes\GibOrganicGreenTorso.uc">
+      <Filter>Gibs</Filter>
+    </None>
+    <None Include="..\Classes\GibOrganicGreenUpperArm.uc">
+      <Filter>Gibs</Filter>
+    </None>
+    <None Include="..\Classes\GibOrganicRedCalf.uc">
+      <Filter>Gibs</Filter>
+    </None>
+    <None Include="..\Classes\GibOrganicRedForearm.uc">
+      <Filter>Gibs</Filter>
+    </None>
+    <None Include="..\Classes\GibOrganicRedHand.uc">
+      <Filter>Gibs</Filter>
+    </None>
+    <None Include="..\Classes\GibOrganicRedHead.uc">
+      <Filter>Gibs</Filter>
+    </None>
+    <None Include="..\Classes\GibOrganicRedTorso.uc">
+      <Filter>Gibs</Filter>
+    </None>
+    <None Include="..\Classes\GibOrganicRedUpperArm.uc">
+      <Filter>Gibs</Filter>
+    </None>
+    <None Include="..\Classes\BioMuzFlash1st.uc">
+      <Filter>Bio Classes</Filter>
+    </None>
+    <None Include="..\Classes\GoopSmoke.uc">
+      <Filter>Bio Classes</Filter>
+    </None>
+    <None Include="..\Classes\GoopSparks.uc">
+      <Filter>Bio Classes</Filter>
+    </None>
+    <None Include="..\Classes\IonCannonDeathEffect.uc">
+      <Filter>Ion Classes</Filter>
+    </None>
+    <None Include="..\Classes\IonCore.uc">
+      <Filter>Ion Classes</Filter>
+    </None>
+    <None Include="..\Classes\IonEffect.uc">
+      <Filter>Ion Classes</Filter>
+    </None>
+    <None Include="..\Classes\IonLightBeam.uc">
+      <Filter>Ion Classes</Filter>
+    </None>
+    <None Include="..\Classes\IonShaft.uc">
+      <Filter>Ion Classes</Filter>
+    </None>
+    <None Include="..\Classes\NewIonEffect.uc">
+      <Filter>Ion Classes</Filter>
+    </None>
+    <None Include="..\Classes\ForceRing.uc">
+      <Filter>Shield Classes</Filter>
+    </None>
+    <None Include="..\Classes\ForceRingA.uc">
+      <Filter>Shield Classes</Filter>
+    </None>
+    <None Include="..\Classes\ShieldCharge.uc">
+      <Filter>Shield Classes</Filter>
+    </None>
+    <None Include="..\Classes\ShieldSparks.uc">
+      <Filter>Shield Classes</Filter>
+    </None>
+    <None Include="..\Classes\ComboActivation.uc">
+      <Filter>Combos</Filter>
+    </None>
+    <None Include="..\Classes\OffensiveEffect.uc">
+      <Filter>Combos</Filter>
+    </None>
+    <None Include="..\Classes\RegenCrosses.uc">
+      <Filter>Combos</Filter>
+    </None>
+    <None Include="..\Classes\SpeedTrail.uc">
+      <Filter>Combos</Filter>
+    </None>
+    <None Include="..\Classes\TransBeaconSparks.uc">
+      <Filter>Translocator Classes</Filter>
+    </None>
+    <None Include="..\Classes\TransEffect.uc">
+      <Filter>Translocator Classes</Filter>
+    </None>
+    <None Include="..\Classes\TransEffectBlue.uc">
+      <Filter>Translocator Classes</Filter>
+    </None>
+    <None Include="..\Classes\TransEffectRed.uc">
+      <Filter>Translocator Classes</Filter>
+    </None>
+    <None Include="..\Classes\TransFlareBlue.uc">
+      <Filter>Translocator Classes</Filter>
+    </None>
+    <None Include="..\Classes\TransFlareRed.uc">
+      <Filter>Translocator Classes</Filter>
+    </None>
+    <None Include="..\Classes\TransRecallEffect.uc">
+      <Filter>Translocator Classes</Filter>
+    </None>
+    <None Include="..\Classes\TransTrail.uc">
+      <Filter>Translocator Classes</Filter>
+    </None>
+    <None Include="..\Classes\TransTrailBlue.uc">
+      <Filter>Translocator Classes</Filter>
+    </None>
+    <None Include="..\Classes\TransTrailRed.uc">
+      <Filter>Translocator Classes</Filter>
+    </None>
+  </ItemGroup>
+</Project>

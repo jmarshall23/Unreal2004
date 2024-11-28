@@ -1,0 +1,336 @@
+# -*- makefile -*- vim:noet:ts=8:sw=4:ft=make:
+
+################################################
+#
+#  Platform definitions
+
+# Define macros and shorthand for whitespace and...
+
+SPACE			:=$@ $@
+S			:=$@ $@
+TAB			:=$@	$@
+T			:=$@	$@
+COMMA			:=$@,$@
+C			:=$@,$@
+
+# Determine important paths
+
+# Path 'up' to the MODULE/src directory -- blank if _in_ MODULE/src
+ifeq '$(T_SRC_DIR)' ''
+    T_SRC_DIR 		:=
+endif
+ifneq '$(T_SRC_DIR)' ''
+    T_SRC_DIR		:=$(T_SRC_DIR:%/=%)/
+endif
+
+# Path to where the common makefile rules live
+MAKESYS_DIR		?=.
+#MAKESYS_DIR		 =$(MAKESYS_DIR:%/,%)
+
+# Path to where the modules all live
+ME_COMPONENTS_DIR	?=../..
+ME_COMPONENTS_DIR	:=$(T_SRC_DIR)$(ME_COMPONENTS_DIR)
+ME_TOP_DIR		:=$(ME_COMPONENTS_DIR)
+
+# Path to where some 3rd party tools might live
+ifeq "$(TOOLS_DIR)" ""
+    TOOLS_DIR		 =$(ME_TOP_DIR)/tools/
+endif
+
+INC_DIR			:=$(T_SRC_DIR)../include
+DIR_MODIFIER		:=
+
+# Modules in the toolkit
+MST_MODULES		:=MST MEAPP
+MCD_MODULES		:=MCD
+MDT_MODULES		:=MDT MDTKEA MDTBCL
+VIEWER			?=MEVIEWER2
+UTIL_MODULES		:=MEGLOBALS $(VIEWER) MEASSETDB \
+                           MEASSETDBXMLIO MEASSETFACTORY MEXML 
+
+# Source directories
+MEAPP_MODULE_DIR	:=$(ME_COMPONENTS_DIR)/MeApp
+MEASSETDB_MODULE_DIR	:=$(ME_COMPONENTS_DIR)/MeAssetDB
+MEASSETDBXMLIO_MODULE_DIR:=$(ME_COMPONENTS_DIR)/MeAssetDBXMLIO
+MEASSETFACTORY_MODULE_DIR:=$(ME_COMPONENTS_DIR)/MeAssetFactory
+MEXML_MODULE_DIR	:=$(ME_COMPONENTS_DIR)/MeXML
+MST_MODULE_DIR		:=$(ME_COMPONENTS_DIR)/Mst
+MCD_MODULE_DIR		:=$(ME_COMPONENTS_DIR)/Mcd
+MDT_MODULE_DIR		:=$(ME_COMPONENTS_DIR)/Mdt
+MDTKEA_MODULE_DIR	:=$(ME_COMPONENTS_DIR)/MdtKea
+MDTBCL_MODULE_DIR	:=$(ME_COMPONENTS_DIR)/MdtBcl
+MEGLOBALS_MODULE_DIR	:=$(ME_COMPONENTS_DIR)/MeGlobals
+MEVIEWER_MODULE_DIR	:=$(ME_COMPONENTS_DIR)/MeViewer
+MEVIEWER2_MODULE_DIR	:=$(ME_COMPONENTS_DIR)/MeViewer2
+MPA_MODULE_DIR		:=$(ME_COMPONENTS_DIR)/Mpa
+
+ME_TOOLS_DIR		:=$(ME_TOP_DIR)/tools
+
+ifeq "$(PLATFORM)" "ps2"
+    GLUT_DIR		:=$(ME_TOOLS_DIR)/ps2glut
+else
+    GLUT_DIR		:=$(ME_TOOLS_DIR)/glut
+endif
+
+# Include paths
+
+ME_INC_PATH		:=$(strip \
+			    $(foreach module,\
+				$(MST_MODULES) $(MCD_MODULES) \
+				$(MDT_MODULES) $(UTIL_MODULES),\
+				$($(module)_MODULE_DIR)/include) \
+				$(GLUT_DIR))
+ME_INC_PATH		:=$(ME_INC_PATH) $(INC_DIR) \
+				$(ME_SRC_PATH) $(INCLUDE_PATH)
+
+
+#####################################################################
+#
+# Definitions and defaults
+#
+
+#
+# Floating point precision: SINGLE or DOUBLE
+#
+ifeq "$(PLATFORM)" "irix"
+    DEFAULT_PRECISION		:=DOUBLE
+    NON_DEFAULT_PRECISION	:=SINGLE
+else
+    DEFAULT_PRECISION		:=SINGLE
+    NON_DEFAULT_PRECISION	:=DOUBLE
+endif
+
+ifeq "$(DEF_PRECISION)" ""
+    DEF_PRECISION		:=$(DEFAULT_PRECISION)
+endif
+
+ifneq '$(INNER)' '1'
+    ifneq '$(DEF_PRECISION)' '$(DEFAULT_PRECISION)'
+	ifneq  '$(DEF_PRECISION)' '$(NON_DEFAULT_PRECISION)'
+	    # unknown, so fall back to default
+	    DEF_PRECISION	=$(DEFAULT_PRECISION)
+	endif
+    endif
+endif
+
+# ps2 and ngc do not have a double precision build,
+# so add suffix only if target platform not one of those
+ifneq '$(PLATFORM)' 'ps2'
+    ifneq '$(PLATFORM)' 'ngc'
+	ifeq "$(DEF_PRECISION)" "DOUBLE"
+	    DIR_MODIFIER	:=$(DIR_MODIFIER)_double
+	else
+	    DIR_MODIFIER	:=$(DIR_MODIFIER)_single
+	endif
+    endif
+endif
+
+
+ifeq '$(PLATFORM)' 'win32'
+    # Calling conventions (where appropriate): STDCALL, FASTCALL, CDECL
+
+    DEFAULT_CALL_CONVENTION	:=CDECL
+
+    ifeq "$(DEF_CALL_CONVENTION)" ""
+	DEF_CALL_CONVENTION	:=$(DEFAULT_CALL_CONVENTION)
+    endif
+
+    ifneq '$(INNER)' '1'
+	ifneq '$(DEF_CALL_CONVENTION)' '$(DEFAULT_CALL_CONVENTION)'
+	    ifneq '$(DEF_CALL_CONVENTION)' 'FASTCALL'
+		ifneq '$(DEF_CALL_CONVENTION)' 'STDCALL'
+		    DEF_CALL_CONVENTION=$(DEFAULT_CALL_CONVENTION)
+		endif
+	    endif
+	endif
+    endif
+
+    ifeq '$(DEF_CALL_CONVENTION)' 'FASTCALL'
+	DIR_MODIFIER		:=$(DIR_MODIFIER)_fastcall
+    else
+	ifeq '$(DEF_CALL_CONVENTION)' 'STDCALL'
+	    DIR_MODIFIER	:=$(DIR_MODIFIER)_stdcall
+	else
+	    # No modification
+	endif
+    endif
+
+endif
+
+
+ifeq '$(PLATFORM)' 'win32'
+    # C runtime (where appropriate): STATIC, STATICMT, DLLMT
+
+    DEFAULT_C_LIBRARY		:=DLLMT
+
+    ifeq "$(DEF_C_LIBRARY)" ""
+	DEF_C_LIBRARY		:=$(DEFAULT_C_LIBRARY)
+    endif
+
+    ifneq '$(INNER)' '1'
+	ifneq '$(DEF_C_LIBRARY)' '$(DEFAULT_C_LIBRARY)'
+	    ifneq '$(DEF_C_LIBRARY)' 'STATICMT'
+		ifneq '$(DEF_C_LIBRARY)' 'STATIC'
+		    # unknown, so fall back to default
+		    DEF_C_LIBRARY=$(DEFAULT_C_LIBRARY)
+		endif
+	    endif
+	endif
+    endif
+
+    ifeq '$(DEF_C_LIBRARY)' 'STATICMT'
+	DIR_MODIFIER		:=$(DIR_MODIFIER)_libcmt
+    else
+	ifeq '$(DEF_C_LIBRARY)' 'STATIC'
+	    DIR_MODIFIER	:=$(DIR_MODIFIER)_libc
+	else
+	    DIR_MODIFIER	:=$(DIR_MODIFIER)_msvcrt
+	endif
+    endif
+endif
+
+ifeq '$(PLATFORM)' 'xbox'
+    # Calling conventions (where appropriate): STDCALL, FASTCALL, CDECL
+    DEFAULT_CALL_CONVENTION	:=CDECL
+
+    ifeq "$(DEF_CALL_CONVENTION)" ""
+	DEF_CALL_CONVENTION     :=$(DEFAULT_CALL_CONVENTION)
+    endif
+
+    ifneq '$(INNER)' '1'
+	ifneq '$(DEF_CALL_CONVENTION)' '$(DEFAULT_CALL_CONVENTION)'
+	    ifneq '$(DEF_CALL_CONVENTION)' 'FASTCALL'
+		ifneq '$(DEF_CALL_CONVENTION)' 'STDCALL'
+		    DEF_CALL_CONVENTION=$(DEFAULT_CALL_CONVENTION)
+		endif
+	    endif
+	endif
+    endif
+
+    ifeq '$(DEF_CALL_CONVENTION)' 'FASTCALL'
+	DIR_MODIFIER		:=$(DIR_MODIFIER)_fastcall
+    else
+	ifeq '$(DEF_CALL_CONVENTION)' 'STDCALL'
+	    DIR_MODIFIER	:=$(DIR_MODIFIER)_stdcall
+	else
+	    # No modification
+	endif
+    endif
+endif
+
+ifeq '$(PLATFORM)' 'xbox'
+    # C runtime (where appropriate): STATIC, STATICMT, DLLMT
+    DEFAULT_C_LIBRARY		:=STATICMT
+
+    ifeq "$(DEF_C_LIBRARY)" ""
+	DEF_C_LIBRARY           :=$(DEFAULT_C_LIBRARY)
+    endif
+
+    ifneq '$(INNER)' '1'
+	ifneq '$(DEF_C_LIBRARY)' '$(DEFAULT_C_LIBRARY)'
+	    ifneq '$(DEF_C_LIBRARY)' 'STATICMT'
+		ifneq '$(DEF_C_LIBRARY)' 'STATIC'
+		    # unknown, so fall back to default
+		    DEF_C_LIBRARY=$(DEFAULT_C_LIBRARY)
+		endif
+	    endif
+	endif
+    endif
+
+    ifeq '$(DEF_C_LIBRARY)' 'STATICMT'
+	DIR_MODIFIER		:=$(DIR_MODIFIER)_libcmt
+    else
+	ifeq '$(DEF_C_LIBRARY)' 'STATIC'
+	    DIR_MODIFIER        :=$(DIR_MODIFIER)_libc
+	else
+	    DIR_MODIFIER        :=$(DIR_MODIFIER)_msvcrt
+      endif
+    endif
+endif
+
+# Toggle to enable execution verifications (asserts): _MECHECK or not
+
+DEFAULT_CHECK		:=
+
+ifeq "$(DEF_CHECK)" ""
+    DEF_CHECK		:=$(DEFAULT_CHECK)
+endif
+
+ifneq '$(INNER)' '1'
+    ifneq '$(DEF_CHECK)' '$(DEFAULT_CHECK)'
+	ifneq  '$(DEF_CHECK)' '_MECHECK'
+	    # unknown, so fall back to default
+	    DEF_CHECK	 =$(DEFAULT_CHECK)
+	endif
+    endif
+endif
+
+ifeq  '$(DEF_CHECK)' '_MECHECK'
+    DIR_MODIFIER	:=$(DIR_MODIFIER)_check
+else
+    # No modifier
+endif
+
+#
+# Toggle to disable runtime performance profiling: _ME_NOPROFILING or not
+#
+DEFAULT_PROFILING	:=
+ifeq "$(DEF_PROFILING)" ""
+DEF_PROFILING		:=$(DEFAULT_PROFILING)
+endif
+
+ifneq '$(INNER)' '1'
+    ifneq '$(DEF_PROFILING)' '$(DEFAULT_PROFILING)'
+	ifneq  '$(DEF_PROFILING)' '_ME_NOPROFILING'
+	    # unknown, so fall back to default
+	    DEF_PROFILING=$(DEFAULT_PROFILING)
+	endif
+    endif
+endif
+
+ifeq  '$(DEF_PROFILING)' '_ME_NOPROFILING'
+    DIR_MODIFIER	:=$(DIR_MODIFIER)_noprof
+else
+    # No modifier
+endif
+
+#####################################################################
+#
+# Include platform-specific definitions
+#
+DEFINITION_FILE :=makefile.defs.$(PLATFORM)
+include $(MAKESYS_DIR)/$(DEFINITION_FILE)
+
+CPP		=$(ME_COMPILE)
+CC		=$(ME_COMPILE_C)
+CXX		=$(ME_COMPILE_CXX)
+AR		=$(ME_LIBRARY)
+AS		=$(ME_ASSEMBLE)
+EAC		=$(firstword $(ME_EAC) eac-unspecified)
+
+
+ifeq '$(S_LIB)' '.a'
+    LIB_PREFIX	:=-l
+    LIB_SUFFIX	:=
+else
+    LIB_PREFIX	:=
+    LIB_SUFFIX	:=.lib
+endif
+
+#======================================= Useful stuff we don't want to lose
+
+ifeq 'pigs_can_fly' 'yes'
+#
+# Take a path, and construct all the containing subdirs in traversal order.
+# Will miscalculate when dealing with paths that have spaces in 'em, though...
+#
+#  for I :=1 to # of constituent directories
+#    sum for all I the value of:
+#      create a list of constituents with I entries
+#
+NUMBER_LIST	:=1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16
+SPLIT_PATH	:=$(subst /, !,$(J_PATH))
+LEAD_UP_PATHS	:=$(foreach LEN, \
+                      $(wordlist 1, $(words $(SPLIT_PATH)), $(NUMBER_LIST)), \
+			$(subst $S!,/, $(wordlist 1, $(LEN), $(SPLIT_PATH))))
+endif

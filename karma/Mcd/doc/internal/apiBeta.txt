@@ -1,0 +1,384 @@
+
+Collision API proposal 
+======================
+
+Immediate mode collision data structures
+----------------------------------------
+
+// Contains all the data for a collision model
+
+typedef struct 
+{
+  MeMatrix4 *   transform;   // pointer to transform
+  MeVector3 *   linearVelocity; // 
+  MeVector3 *   angularVelocity; //
+  int           gType;       // geometry type
+  McdGeometry * gData;       // pointer to geometry info
+  McdSpace *    space;       // pointer to far field
+  int           spaceRef;    // ID within farfield
+  void *        simBody;     // pointer to simulation body
+  int           index;       // unique int
+} McdModel;
+
+
+// contains the parameterisation data for the request. testFlags has things
+// like FACE_NORMALS_FIRST, EDGE_TRIGGERED_CALLBACKS,
+// PARTICLES_GENERATE_CONTACTS etc
+
+typedef struct {
+   int          testFlags;   // flags for request
+   int          maxContacts; // max number of contacts
+   McdCallback  callback;    // called on actual intersection
+} McdRequest
+
+
+// contains all the persistent data associated with a pair of models
+// judged by the farfield to be coarsely intersecting
+
+typedef struct {
+   McdModel *   model1;
+   McdModel *   model2;
+   void *       cachedData;  // for GJK or mesh/mesh
+   void *       simData;     // for sim data associated with pair
+   int          past;        // whether objects _were_ colliding previously
+   void *       userData;
+   McdRequest  *request
+} McdModelPair;
+
+
+ -- for output from vanilla primitive tests
+
+typedef struct
+{
+  MeVector3 position;
+  MeVector3 normal;
+  MeReal separation;             
+  MeI16 dims;    
+  union { 
+    struct { int element1; int element2; } elements;  /* mesh triangles */
+    struct { void *ptr, int tag} aux;  /* RW mesh / triangle */
+  };
+} McdContact;
+
+
+typedef struct
+{
+  McdModelPair *pair;             /**< models pair */
+  McdContact *contacts;           /**< array of contacts */
+  int contactCount;               /**< number of contacts returned */
+  int touch;                      /**< 1 if contact, else 0 */
+  MeVector3 normal;		  /**< average contact normal */
+  MeReal time;                    /**< approximate time of impact */
+  void *aux;			  /**< auxiliary data */
+				  /*for specific interactions. for eg trace for mesh-mesh */
+} McdIntersectResult;
+
+ -- for output from particle primitive tests
+
+typedef struct
+{
+  MeVector3 position;
+  MeVector3 normal;
+  MeReal separation;             
+  int particleID;
+} McdParticleContact;
+
+typedef struct
+{
+  McdModelPair *pair;             /**< models pair */
+  McdParticleContact *contacts;   /**< array of contacts */
+  int contactCount;               /**< number of contacts returned */
+  int touch;                      /**< 1 if contact, else 0 */
+  MeVector3 normal;               /**< average contact normal */
+} McdParticleIntersectResult;
+
+
+Far field functions
+-------------------
+
+int  McdSpaceInsertModel(McdSpace *space, McdModel *model);
+void McdSpaceRemoveModel(McdSpace *space, int spaceID);
+
+// freeze/unfreeze the model in space (frozen/frozen pairs generate no
+// output)
+
+void McdSpaceSetDynamic(McdSpace *space, int spaceID, bool state);
+
+
+// to update all models:
+void McdUpdateSpace(McdSpace *space);  
+
+// or to update just an island of them:
+void McdSpaceUpdateModels(McdSpace*, McdModel *, int modelCount );
+
+// either way, we then get all the pairs:
+
+int McdSpaceGetPairs( PairContainer* );
+
+Intersect Functions
+-------------------
+
+All intersect functions have a trio of signatures the signature
+
+McdBoxBoxIntersectHello(McdModelPair*);
+McdBoxBoxIntersect(McdModelPair*, McdIntersectResult*);
+McdBoxBoxIntersectGoodbye(McdModelPair*);
+
+where the intersect function takes the appropriate form of
+intersection result.
+
+The far field functions generate lists of McdModelPairs, which contain
+all the persistent data associated with a pair. The model pairs are
+fed into the primitive tests using the following protocol, which is
+also used by the user to call primitive tests.
+
+Before the first intersect test is called, the user parameterises the
+ModelPair flags, maxContacts, and callback fields of the request
+struct. He then calls the hello entry point for this pair, based on
+its geometry types. Among other things, hello arranges the models
+pointers in the order required by the intersect tests.
+
+Subsequently the intersect function can be called many times on the
+model pair as the transformation matrices change.
+
+After intersect has been called for the last time, goodbye() should be
+called on the pair.
+
+If the user wishes to alter the parameterisation of the pair (contact
+count or flags) he should call the goodbye function, and then the
+hello function.
+
+Remaining issues:
+i) should we have dynamic numbering of geometries?
+
+
+======================================================================
+
+
+Collision Retained Mode
+-----------------------
+
+Contact Dispatcher for list of pairs:
+
+Create contacts for a list of model pairs:
+MeBool contactOverflow = 
+McdIntersectEach( McdModelPairContainer* pairs, 
+		  McdModelPairContainerIterator* pairsIter,
+		  McdIntersectResult** resultArray, int resultArraySize,
+		  McdContact* contactArray, int contactArraySize )
+
+The user can set one callback for the retained mode loop, which is
+executed for each pair coming out of the far field for the first time
+(i.e. at "hello" time.) This callback is set by default to fill in a
+default Request struct for the pair, which will typically say "default
+number of contacts, default flag values, no callback." (where there
+are API calls to set these defaults). In the case where the user wants
+to set the number of callbacks on a per pair basis, he should set this
+callback to point to some function of his choosing, and we provide a
+utility function in collision which he can use to get the old
+table-driven behaviour.
+
+McdIntersectSetRequestCallback( McdRequestCallbackFn );
+and maybe
+McdIntersectSetDefaultRequest( McdIntersectRequest ); ???
+to set the one default request for intersect calls
+
+Or use:
+
+MCD_ARRAY_DECLARE(McdIntersectResult):
+struct McdIntersetResultArray { 
+	McdIntersectResult *a;
+	int count;
+	int maxCount;
+}
+similar for McdContactArray.
+
+
+
+--------------------------
+
+TOD support:
+
+void McdModelSetCurrentPosition(McdModel *b, MeVector3 *p, MeQuaternion
+*q);
+void McdModelSetFuturePosition(McdModel *b, MeVector3 *p, MeQuaternion
+*q);
+
+OR
+
+void McdModelSetTransformPtr(McdModel, MeMatrix4)
+void McdModelSetLinearVelocityPtr(McdModel, MeVector3)
+void McdModelSetAngularVelocityPtr(McdModel, MeVector3)
+(my current thinking)
+
+This cannot be decided until implementation of some of the TOD pairs.
+
+
+NEW DISPATCHER for TOD:
+
+McdGetSafeTime(McdModelPair*, McdSafeTimeResult*);
+McdGetSafeTimeList(McdModelPairContainer*, McdSafeTimeResult*, int* maxCount, int count);
+
+EITHER
+
+struct McdSafeTimeResult {
+  McdModelID model1;
+  McdModelID model2;
+  float time;
+  int touch; /* if touching at all in this timestep */
+}
+have a different output type for this dispatcher
+
+OR
+
+typedef struct
+{
+    McdModelID model1;           /**< one of the collision models */
+    McdModelID model2;           /**< the other collision model */
+    McdContact *contacts;        /**< array of contacts to be filled */
+    int maxContactCount;         /**< size of array */
+    int contactCount;            /**< number of contacts returned in array */
+    int touch;                   /**< 1 if objects are in contact, 0 otherwise */
+    MeReal time;		 /**< TOD or time at which contacts were generated (TOI) */
+    MeVector3 normal;            /**< average normal of contacts returned */
+} McdIntersectResult;
+
+
+ie use McdIntersectResult as output type in case it is more efficient to reuse
+the same struct (not a union).
+This could be because
+1 - contacts might be generated anyway in some situations
+2 - it is easier for Karma.
+
+
+For each geometry type:
+McdModelGetSVAABB(model, MeVector3 minCorner, MeVector3 maxCorner ) 
+compute swept volume AABB virtual function for use in the farfield.
+
+------------------------
+NEW DISPATCHER for ParticleSystem - model
+
+typedef struct {
+    int mParticleCount;
+    int mParticleMaxCount;
+    MeReal mMaxRadius;
+    MeReal *mRadius;
+    MeVec3* mPositionBase;
+
+    MeVec3* mDirectionBase;
+    OR
+    MeVec3* mFuturePositionBase;
+
+    int mPositionStride;  // how many bytes from one position to the next
+    int mRadiusStride;  // how many bytes from one radius to the next (0=1 radius)
+
+    Hash mSpacePartition; // internal data structure
+} McdParticleSystem;
+
+
+int McdPSIntersect(McdModelPair, McdPSIntersectResult*);
+
+lighter than a regular contact.
+typedef struct {
+  MeVector3 position;
+  MeVector3 normal;
+  int particle;
+  int element; // of model - for example triangle in a mesh.
+} McdPSContact;
+
+
+typedef struct
+{
+  McdModelID model;
+  McdModelID particleSystem;
+  int touch; // number of particles touching
+  McdPSContact* contacts;
+  int maxContactCount;
+  int contactCount;
+  MeVector3 normal; // average normal
+} McdPSIntersectResult;
+
+typedef struct
+{
+  MeBool generateContacts;
+  MeBool computeAverageNormal;
+} McdPSIntersectRequest;
+
+--------------------------
+Particle-Particle collision function (no dispatcher needed)
+Uses the same data structures as PSIntersect
+
+typedef struct {
+  int particle1;
+  int particle2;
+  MeVector3 direction;
+  MeReal distanceSquared; // needed?
+} McdPSPSContact;
+
+typedef struct
+{
+  McdModelID particleSystem1;
+  McdModelID particleSystem2;
+  MeI32 touch;
+  McdPSPSContact* contacts;
+  int maxContactCount;
+  int contactCount;
+} McdPSPSIntersectResult;
+
+McdPSPSIntersect(McdModelPair, McdPSPSIntersectResult* );
+OR
+we could have a usercallback to deal with PSPS colllision per particle pair
+if this is deemed too mich data.
+
+
+----------------------
+Utilities: 
+
+McdUpdateAllSpaces
+McdCollectAllSpacePairs - get pairs from all spaces into 1 container
+
+
+Pair filter (by type): (used to be the pairHandler)
+  need somewhere to split up pairs by type of result or ID,
+  since various users want to look at various pairs.
+  ID more flexible since it allows user to specify which pairs he
+  is interested in.
+  unless this is handled by the meta dispatcher and Karma
+  would then just look at the type.
+
+  McdSplitPairs(McdPairContainer input, McdPairContainer BBoutput,
+                McdPairContainer BPsoutput, McdPairContainer PsPsoutput,
+                McdPairContainer SensorOuput);
+
+  but doing this with knowledge of the FF output linked lists is
+  slighly more efficient than doing it on the McdPairContainer
+  which would mean:
+   McdXXXGetPairs(space, McdPairContainer input, McdPairContainer BBoutput,
+                McdPairContainer BPsoutput, McdPairContainer PsPsoutput,
+                McdPairContainer SensorOuput);
+
+
+--------------------------
+Mdt changes (w.r.t. James' text):
+
+MdtBodySetCollisionModel(MdtBody*, McdModel*)
+should probably not compute the MOI and set it on the body.
+The reason is that this is not always desired, and its computation
+can be costly (particularly for convex or meshes - which we are _not_ doing
+for beta BTW).
+So IMO another explicit call is needed, for example:
+MdtBodySetMassPropertiesFromModel(...) which call the collision-built-in
+functionality for this.
+
+--------------------------
+
+OTHER REMAINING ISSUES:
+
+TOD:
+  some TOD functions compute enough data to justify reusing for contact
+  generation. Need to figure out caching, etc...
+
+  A pseudocode description of at least some of the algorithms for TOD
+  solution so that we know what exactly would be useful.
+
+-----------------------------

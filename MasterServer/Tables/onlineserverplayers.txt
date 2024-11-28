@@ -1,0 +1,18 @@
+create table onlineserverplayers
+(
+	id int not null auto_increment,
+
+	serverid int not null,
+	playernum int not null,
+	playername varchar(66) not null,
+	ping int not null,
+	score int not null,
+
+	/* extra stuff */
+	cdkeyid int not null,					/* clients cd key */
+	ip varchar(15) not null,				/* clients IP */
+
+	primary key(id),
+	index idx_onlineserverplayers_serverid (serverid),
+	index idx_onlineserverplayers_playername(playername)
+);
