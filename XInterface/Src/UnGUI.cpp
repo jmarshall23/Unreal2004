@@ -818,7 +818,7 @@ void UGUILabel::Draw(UCanvas* Canvas)
 	UBOOL bRenderShadow = ((ShadowOffsetX != 0) || (ShadowOffsetY != 0));
 	UBOOL bRenderHilight = ((HilightOffsetX != 0) || (HilightOffsetY != 0));
 
-	if (!bMultiline)
+	if (!bMultiLine)
 	{
 		if (Style==NULL)
 		{	
@@ -3125,7 +3125,7 @@ void UGUIToolTip::PreDraw( UCanvas* Canvas )
 
 	if ( Lines.Num() == 0 )
 	{
-		if ( bMultiline )
+		if ( bMultiLine )
 			Canvas->WrapStringToArray(*Text, &Lines, (Canvas->SizeX * MaxWidth) - (Style->BorderOffsets[0] + Style->BorderOffsets[2]), Style->Fonts[5+(MenuOwner->MenuState*FontScale)]->eventGetFont(Canvas->SizeX));
 		else new(Lines) FString(Text);
 	}

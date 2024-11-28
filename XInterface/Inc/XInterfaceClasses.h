@@ -709,24 +709,6 @@ public:
 	void DrawNumericWidget( UCanvas* Canvas, FNumericWidget* Widget, FDigitSet* D );
 };
 
-
-class XINTERFACE_API UPropertyManagerBase : public UObject
-{
-public:
-    class UGUIController* Parent GCC_PACK(4);
-    DECLARE_CLASS(UPropertyManagerBase,UObject,0,XInterface)
-	virtual void SetParent( UGUIController* InParent ) {}
-	virtual void SetCurrent( UObject** InCurrent )     {}
-	virtual void SetWindow( void* InWindow )           {}
-
-	virtual void Show(UBOOL bVisible) {         }
-	virtual UBOOL IsVisible()         {return 0;}
-
-	virtual void* GetSnoop() {return NULL;}
-	virtual void* GetHook()  {return NULL;}
-	virtual void* GetWindow(){return NULL;}
-};
-
 enum EAnimationType
 {
     AT_Position             =0,
@@ -1813,6 +1795,100 @@ public:
 };
 
 
+class XINTERFACE_API UGUIImage : public UGUIComponent
+{
+public:
+    class UMaterial* Image GCC_PACK(4);
+    class UMaterial* DropShadow;
+    FColor ImageColor;
+    BYTE ImageStyle;
+    BYTE ImageRenderStyle;
+    BYTE ImageAlign;
+    INT X1 GCC_PACK(4);
+    INT Y1;
+    INT X2;
+    INT Y2;
+    INT DropShadowX;
+    INT DropShadowY;
+    FLOAT BorderOffsets[4];
+    FLOAT X3;
+    FLOAT Y3;
+    DECLARE_CLASS(UGUIImage,UGUIComponent,0,XInterface)
+		void UpdateBounds();
+		void Draw(UCanvas* Canvas);
+};
+
+
+class XINTERFACE_API UGUISectionBackground : public UGUIImage
+{
+public:
+    class UGUIStyles* CaptionStyle GCC_PACK(4);
+    FStringNoInit CaptionStyleName;
+    INT AltCaptionOffset[4];
+    BYTE AltCaptionAlign;
+    BITFIELD bAltCaption:1 GCC_PACK(4);
+    BITFIELD bRemapStack:1;
+    BITFIELD bFillClient:1;
+    TArrayNoInit<class UGUIComponent*> AlignStack GCC_PACK(4);
+    class UMaterial* HeaderTop;
+    class UMaterial* HeaderBar;
+    class UMaterial* HeaderBase;
+    FStringNoInit Caption;
+    FLOAT ColPadding;
+    FLOAT LeftPadding;
+    FLOAT RightPadding;
+    FLOAT TopPadding;
+    FLOAT BottomPadding;
+    FLOAT ImageOffset[4];
+    INT NumColumns;
+    INT MaxPerColumn;
+    DECLARE_CLASS(UGUISectionBackground,UGUIImage,0,XInterface)
+        void AutoPosition( TArray<UGUIComponent*>& Components, float PosL, float PosT, float PosR, float PosB, INT Col = 1, float ColSpace = 0.f );
+        void PreDraw(UCanvas* Canvas);
+        void Draw(UCanvas* Canvas);     // Should be overridden in a subclass
+};
+
+struct XINTERFACE_API FAnimInfo
+{
+    FLOAT cX GCC_PACK(4);
+    FLOAT cY;
+    FLOAT Scale;
+    FLOAT FadeTime;
+    FLOAT Alpha;
+    FLOAT TargetAlpha;
+    FLOAT ResetDelay;
+    FLOAT TravelTime;
+};
+
+
+struct UCoolImage_eventResetItem_Parms
+{
+    INT i;
+};
+class XINTERFACE_API UCoolImage : public UGUIComponent
+{
+public:
+    class UMaterial* Image GCC_PACK(4);
+    TArrayNoInit<FAnimInfo> Anims;
+    INT NoAnims;
+    FLOAT MaxScale;
+    FLOAT MinScale;
+    FLOAT MinFadeTime;
+    FLOAT MaxFadeTime;
+    FLOAT MinResetDelay;
+    FLOAT MaxResetDelay;
+    INT FullAlpha;
+    void eventResetItem(INT i)
+    {
+        UCoolImage_eventResetItem_Parms Parms;
+        Parms.i=i;
+        ProcessEvent(FindFunctionChecked(XINTERFACE_ResetItem),&Parms);
+    }
+    DECLARE_CLASS(UCoolImage,UGUIComponent,0,XInterface)
+		void Draw(UCanvas* Canvas);
+};
+
+
 struct UGUIMultiComponent_eventRemoveComponent_Parms
 {
     class UGUIComponent* Comp;
@@ -1982,110 +2058,27 @@ public:
 };
 
 
-struct UGUIPanel_eventOnPostDraw_Parms
-{
-    class UCanvas* Canvas;
-    BITFIELD ReturnValue;
-};
-class XINTERFACE_API UGUIPanel : public UGUIMultiComponent
+class XINTERFACE_API UGUIBorder : public UGUIMultiComponent
 {
 public:
-    class UMaterial* Background GCC_PACK(4);
-    FScriptDelegate __OnPostDraw__Delegate;
-    BITFIELD delegateOnPostDraw(class UCanvas* Canvas)
-    {
-        UGUIPanel_eventOnPostDraw_Parms Parms;
-        Parms.ReturnValue=0;
-        Parms.Canvas=Canvas;
-        ProcessDelegate(XINTERFACE_OnPostDraw,&__OnPostDraw__Delegate,&Parms);
-        return Parms.ReturnValue;
-    }
-    DECLARE_CLASS(UGUIPanel,UGUIMultiComponent,0,XInterface)
-		void Draw(UCanvas* Canvas);
-		UBOOL PerformHitTest(INT MouseX, INT MouseY);
-
+    FStringNoInit Caption GCC_PACK(4);
+    BYTE Justification;
+    INT TextIndent GCC_PACK(4);
+    DECLARE_CLASS(UGUIBorder,UGUIMultiComponent,0,XInterface)
+	void Draw(UCanvas* Canvas);
 };
 
-enum EGUISplitterType
-{
-    SPLIT_Vertical          =0,
-    SPLIT_Horizontal        =1,
-    SPLIT_MAX               =2,
-};
 
-struct UGUISplitter_eventOnReleaseSplitter_Parms
-{
-    class UGUIComponent* Sender;
-    FLOAT NewPosition;
-};
-class XINTERFACE_API UGUISplitter : public UGUIPanel
+class XINTERFACE_API UGUITitleBar : public UGUIBorder
 {
 public:
-    BYTE SplitOrientation GCC_PACK(4);
-    FLOAT SplitPosition GCC_PACK(4);
-    BITFIELD bFixedSplitter:1 GCC_PACK(4);
-    BITFIELD bDrawSplitter:1;
-    FLOAT SplitAreaSize GCC_PACK(4);
-    FStringNoInit DefaultPanels[2];
-    class UGUIComponent* Panels[2];
-    FLOAT MaxPercentage;
-    FScriptDelegate __OnReleaseSplitter__Delegate;
-    DECLARE_FUNCTION(execSplitterUpdatePositions);
-    void delegateOnReleaseSplitter(class UGUIComponent* Sender, FLOAT NewPosition)
-    {
-        UGUISplitter_eventOnReleaseSplitter_Parms Parms;
-        Parms.Sender=Sender;
-        Parms.NewPosition=NewPosition;
-        ProcessDelegate(XINTERFACE_OnReleaseSplitter,&__OnReleaseSplitter__Delegate,&Parms);
-    }
-    DECLARE_CLASS(UGUISplitter,UGUIPanel,0,XInterface)
-		void PreDraw(UCanvas* Canvas);
-		void Draw(UCanvas* Canvas);
-		UBOOL MouseMove(INT XDelta, INT YDelta);
-		UBOOL MousePressed(UBOOL IsRepeat);
-        UBOOL MouseReleased();
-		UBOOL MouseHover();
-		void SplitterUpdatePositions();
-};
-
-
-class XINTERFACE_API UGUITabPanel : public UGUIPanel
-{
-public:
-    FStringNoInit PanelCaption GCC_PACK(4);
-    BITFIELD bFillHeight:1 GCC_PACK(4);
-    FLOAT FadeInTime GCC_PACK(4);
-    class UGUITabButton* MyButton;
-    DECLARE_CLASS(UGUITabPanel,UGUIPanel,0,XInterface)
-    NO_DEFAULT_CONSTRUCTOR(UGUITabPanel)
-};
-
-
-class XINTERFACE_API UGUIMenuOption : public UGUIMultiComponent
-{
-public:
-    BITFIELD bIgnoreChange:1 GCC_PACK(4);
-    BITFIELD bValueReadOnly:1;
-    BITFIELD bAutoSizeCaption:1;
-    BITFIELD bHeightFromComponent:1;
-    BITFIELD bFlipped:1;
-    BITFIELD bSquare:1;
-    BITFIELD bVerticalLayout:1;
-    BYTE LabelJustification GCC_PACK(4);
-    BYTE ComponentJustification;
-    FLOAT CaptionWidth GCC_PACK(4);
-    FLOAT ComponentWidth;
-    FStringNoInit Caption;
-    FStringNoInit ComponentClassName;
-    FStringNoInit LabelFont;
-    FStringNoInit LabelStyleName;
-    FColor LabelColor;
-    class UGUILabel* MyLabel;
-    class UGUIComponent* MyComponent;
-    DECLARE_CLASS(UGUIMenuOption,UGUIMultiComponent,0,XInterface)
-        void PreDraw(UCanvas* Canvas);
-        UBOOL MousePressed(UBOOL IsRepeat);
-        UBOOL MouseReleased();
+    class UGUITabControl* DockedTabs GCC_PACK(4);
+    BYTE DockAlign;
+    BITFIELD bUseTextHeight:1 GCC_PACK(4);
+    BITFIELD bDockTop:1;
+    class UMaterial* Effect GCC_PACK(4);
+    DECLARE_CLASS(UGUITitleBar,UGUIBorder,0,XInterface)
+	void PreDraw(UCanvas* Canvas);
 };
 
 
@@ -2122,6 +2115,38 @@ public:
     DECLARE_CLASS(UGUIComboBox,UGUIMultiComponent,0,XInterface)
         void PreDraw(UCanvas* Canvas);
 
+};
+
+
+class XINTERFACE_API UGUIFloatEdit : public UGUIMultiComponent
+{
+public:
+    class UGUIEditBox* MyEditBox GCC_PACK(4);
+    class UGUISpinnerButton* MySpinner;
+    FStringNoInit Value;
+    BITFIELD bLeftJustified:1 GCC_PACK(4);
+    FLOAT MinValue GCC_PACK(4);
+    FLOAT MaxValue;
+    FLOAT Step;
+    BITFIELD bReadOnly:1 GCC_PACK(4);
+    DECLARE_CLASS(UGUIFloatEdit,UGUIMultiComponent,0,XInterface)
+		void PreDraw(UCanvas* Canvas);
+};
+
+
+class XINTERFACE_API UGUINumericEdit : public UGUIMultiComponent
+{
+public:
+    class UGUIEditBox* MyEditBox GCC_PACK(4);
+    class UGUISpinnerButton* MySpinner;
+    FStringNoInit Value;
+    BITFIELD bLeftJustified:1 GCC_PACK(4);
+    INT MinValue GCC_PACK(4);
+    INT MaxValue;
+    INT Step;
+    BITFIELD bReadOnly:1 GCC_PACK(4);
+    DECLARE_CLASS(UGUINumericEdit,UGUIMultiComponent,0,XInterface)
+		void PreDraw(UCanvas* Canvas);
 };
 
 
@@ -2178,103 +2203,102 @@ public:
 };
 
 
-class XINTERFACE_API UGUIFloatEdit : public UGUIMultiComponent
+class XINTERFACE_API UGUIListBoxBase : public UGUIMultiComponent
 {
 public:
-    class UGUIEditBox* MyEditBox GCC_PACK(4);
-    class UGUISpinnerButton* MySpinner;
-    FStringNoInit Value;
-    BITFIELD bLeftJustified:1 GCC_PACK(4);
-    FLOAT MinValue GCC_PACK(4);
-    FLOAT MaxValue;
-    FLOAT Step;
-    BITFIELD bReadOnly:1 GCC_PACK(4);
-    DECLARE_CLASS(UGUIFloatEdit,UGUIMultiComponent,0,XInterface)
-		void PreDraw(UCanvas* Canvas);
+    FStringNoInit SelectedStyleName GCC_PACK(4);
+    FStringNoInit SectionStyleName;
+    FStringNoInit OutlineStyleName;
+    FStringNoInit DefaultListClass;
+    class UGUIScrollBarBase* MyScrollBar;
+    class UGUIListBase* MyList;
+    BITFIELD bVisibleWhenEmpty:1 GCC_PACK(4);
+    BITFIELD bSorted:1;
+    BITFIELD bInitializeList:1;
+    DECLARE_CLASS(UGUIListBoxBase,UGUIMultiComponent,0,XInterface)
+    void PreDraw(UCanvas* Canvas);
+    void Draw(UCanvas* Canvas);                             // Handle drawing of the component natively
 };
 
 
-class XINTERFACE_API UGUINumericEdit : public UGUIMultiComponent
+class XINTERFACE_API UGUIListBox : public UGUIListBoxBase
 {
 public:
-    class UGUIEditBox* MyEditBox GCC_PACK(4);
-    class UGUISpinnerButton* MySpinner;
-    FStringNoInit Value;
-    BITFIELD bLeftJustified:1 GCC_PACK(4);
-    INT MinValue GCC_PACK(4);
-    INT MaxValue;
-    INT Step;
-    BITFIELD bReadOnly:1 GCC_PACK(4);
-    DECLARE_CLASS(UGUINumericEdit,UGUIMultiComponent,0,XInterface)
-		void PreDraw(UCanvas* Canvas);
+    class UGUIList* List GCC_PACK(4);
+    DECLARE_CLASS(UGUIListBox,UGUIListBoxBase,0,XInterface)
+    NO_DEFAULT_CONSTRUCTOR(UGUIListBox)
 };
 
 
-struct UGUITabControl_eventMakeTabActive_Parms
-{
-    class UGUITabButton* Who;
-};
-class XINTERFACE_API UGUITabControl : public UGUIMultiComponent
+class XINTERFACE_API UGUIMultiColumnListBox : public UGUIListBoxBase
 {
 public:
-    BITFIELD bFillSpace:1 GCC_PACK(4);
-    BITFIELD bDockPanels:1;
-    BITFIELD bDrawTabAbove:1;
-    BITFIELD bFillBackground:1;
-    FColor FillColor GCC_PACK(4);
-    FLOAT FadeInTime;
-    FLOAT TabHeight;
-    FStringNoInit BackgroundStyleName;
-    class UMaterial* BackgroundImage;
-    TArrayNoInit<class UGUITabButton*> TabStack;
-    class UGUITabButton* ActiveTab;
-    class UGUITabButton* PendingTab;
-    class UGUIStyles* BackgroundStyle;
-    class UGUIBorder* MyFooter;
-    void eventMakeTabActive(class UGUITabButton* Who)
-    {
-        UGUITabControl_eventMakeTabActive_Parms Parms;
-        Parms.Who=Who;
-        ProcessEvent(FindFunctionChecked(XINTERFACE_MakeTabActive),&Parms);
-    }
-    DECLARE_CLASS(UGUITabControl,UGUIMultiComponent,0,XInterface)
-        void PreDraw(UCanvas* Canvas);
-        void Draw(UCanvas* Canvas);
-
-        UGUIComponent* UnderCursor(FLOAT MouseX, FLOAT MouseY);
-        UBOOL SpecialHit( UBOOL bForce );
-        UBOOL MousePressed(UBOOL IsRepeat);                 // The Mouse was pressed
-        UBOOL MouseReleased();                              // The Mouse was released
-
-		UBOOL IsFocusedOn( const UGUIComponent* Comp ) const;
-
-		#ifdef UCONST_Counter
-	    virtual void ResetCounter();
-	    #endif
-};
-
-
-class XINTERFACE_API UGUIBorder : public UGUIMultiComponent
-{
-public:
-    FStringNoInit Caption GCC_PACK(4);
-    BYTE Justification;
-    INT TextIndent GCC_PACK(4);
-    DECLARE_CLASS(UGUIBorder,UGUIMultiComponent,0,XInterface)
+    class UGUIMultiColumnListHeader* Header GCC_PACK(4);
+    BITFIELD bDisplayHeader:1 GCC_PACK(4);
+    class UGUIMultiColumnList* List GCC_PACK(4);
+    TArrayNoInit<FLOAT> HeaderColumnPerc;
+    TArrayNoInit<FString> ColumnHeadings;
+    BITFIELD bFullHeightStyle:1 GCC_PACK(4);
+    DECLARE_CLASS(UGUIMultiColumnListBox,UGUIListBoxBase,0,XInterface)
+	void PreDraw(UCanvas* Canvas);
 	void Draw(UCanvas* Canvas);
 };
 
 
-class XINTERFACE_API UGUITitleBar : public UGUIBorder
+class XINTERFACE_API UGUIScrollTextBox : public UGUIListBoxBase
 {
 public:
-    class UGUITabControl* DockedTabs GCC_PACK(4);
-    BYTE DockAlign;
-    BITFIELD bUseTextHeight:1 GCC_PACK(4);
-    BITFIELD bDockTop:1;
-    class UMaterial* Effect GCC_PACK(4);
-    DECLARE_CLASS(UGUITitleBar,UGUIBorder,0,XInterface)
+    class UGUIScrollText* MyScrollText GCC_PACK(4);
+    BITFIELD bRepeat:1 GCC_PACK(4);
+    BITFIELD bNoTeletype:1;
+    BITFIELD bStripColors:1;
+    FLOAT InitialDelay GCC_PACK(4);
+    FLOAT CharDelay;
+    FLOAT EOLDelay;
+    FLOAT RepeatDelay;
+    BYTE TextAlign;
+    FStringNoInit Separator GCC_PACK(4);
+    FStringNoInit ESC;
+    FStringNoInit COMMA;
+    DECLARE_CLASS(UGUIScrollTextBox,UGUIListBoxBase,0,XInterface)
+    NO_DEFAULT_CONSTRUCTOR(UGUIScrollTextBox)
+};
+
+
+class XINTERFACE_API UGUITreeListBox : public UGUIListBoxBase
+{
+public:
+    class UGUITreeList* List GCC_PACK(4);
+    DECLARE_CLASS(UGUITreeListBox,UGUIListBoxBase,0,XInterface)
 	void PreDraw(UCanvas* Canvas);
+};
+
+
+class XINTERFACE_API UGUIMenuOption : public UGUIMultiComponent
+{
+public:
+    BITFIELD bIgnoreChange:1 GCC_PACK(4);
+    BITFIELD bValueReadOnly:1;
+    BITFIELD bAutoSizeCaption:1;
+    BITFIELD bHeightFromComponent:1;
+    BITFIELD bFlipped:1;
+    BITFIELD bSquare:1;
+    BITFIELD bVerticalLayout:1;
+    BYTE LabelJustification GCC_PACK(4);
+    BYTE ComponentJustification;
+    FLOAT CaptionWidth GCC_PACK(4);
+    FLOAT ComponentWidth;
+    FStringNoInit Caption;
+    FStringNoInit ComponentClassName;
+    FStringNoInit LabelFont;
+    FStringNoInit LabelStyleName;
+    FColor LabelColor;
+    class UGUILabel* MyLabel;
+    class UGUIComponent* MyComponent;
+    DECLARE_CLASS(UGUIMenuOption,UGUIMultiComponent,0,XInterface)
+        void PreDraw(UCanvas* Canvas);
+        UBOOL MousePressed(UBOOL IsRepeat);
+        UBOOL MouseReleased();
 };
 
 
@@ -2372,74 +2396,126 @@ public:
 };
 
 
-class XINTERFACE_API UGUIListBoxBase : public UGUIMultiComponent
+struct UGUIPanel_eventOnPostDraw_Parms
+{
+    class UCanvas* Canvas;
+    BITFIELD ReturnValue;
+};
+class XINTERFACE_API UGUIPanel : public UGUIMultiComponent
 {
 public:
-    FStringNoInit SelectedStyleName GCC_PACK(4);
-    FStringNoInit SectionStyleName;
-    FStringNoInit OutlineStyleName;
-    FStringNoInit DefaultListClass;
-    class UGUIScrollBarBase* MyScrollBar;
-    class UGUIListBase* MyList;
-    BITFIELD bVisibleWhenEmpty:1 GCC_PACK(4);
-    BITFIELD bSorted:1;
-    BITFIELD bInitializeList:1;
-    DECLARE_CLASS(UGUIListBoxBase,UGUIMultiComponent,0,XInterface)
-    void PreDraw(UCanvas* Canvas);
-    void Draw(UCanvas* Canvas);                             // Handle drawing of the component natively
+    class UMaterial* Background GCC_PACK(4);
+    FScriptDelegate __OnPostDraw__Delegate;
+    BITFIELD delegateOnPostDraw(class UCanvas* Canvas)
+    {
+        UGUIPanel_eventOnPostDraw_Parms Parms;
+        Parms.ReturnValue=0;
+        Parms.Canvas=Canvas;
+        ProcessDelegate(XINTERFACE_OnPostDraw,&__OnPostDraw__Delegate,&Parms);
+        return Parms.ReturnValue;
+    }
+    DECLARE_CLASS(UGUIPanel,UGUIMultiComponent,0,XInterface)
+		void Draw(UCanvas* Canvas);
+		UBOOL PerformHitTest(INT MouseX, INT MouseY);
+
+};
+
+enum EGUISplitterType
+{
+    SPLIT_Vertical          =0,
+    SPLIT_Horizontal        =1,
+    SPLIT_MAX               =2,
+};
+
+struct UGUISplitter_eventOnReleaseSplitter_Parms
+{
+    class UGUIComponent* Sender;
+    FLOAT NewPosition;
+};
+class XINTERFACE_API UGUISplitter : public UGUIPanel
+{
+public:
+    BYTE SplitOrientation GCC_PACK(4);
+    FLOAT SplitPosition GCC_PACK(4);
+    BITFIELD bFixedSplitter:1 GCC_PACK(4);
+    BITFIELD bDrawSplitter:1;
+    FLOAT SplitAreaSize GCC_PACK(4);
+    FStringNoInit DefaultPanels[2];
+    class UGUIComponent* Panels[2];
+    FLOAT MaxPercentage;
+    FScriptDelegate __OnReleaseSplitter__Delegate;
+    DECLARE_FUNCTION(execSplitterUpdatePositions);
+    void delegateOnReleaseSplitter(class UGUIComponent* Sender, FLOAT NewPosition)
+    {
+        UGUISplitter_eventOnReleaseSplitter_Parms Parms;
+        Parms.Sender=Sender;
+        Parms.NewPosition=NewPosition;
+        ProcessDelegate(XINTERFACE_OnReleaseSplitter,&__OnReleaseSplitter__Delegate,&Parms);
+    }
+    DECLARE_CLASS(UGUISplitter,UGUIPanel,0,XInterface)
+		void PreDraw(UCanvas* Canvas);
+		void Draw(UCanvas* Canvas);
+		UBOOL MouseMove(INT XDelta, INT YDelta);
+		UBOOL MousePressed(UBOOL IsRepeat);
+        UBOOL MouseReleased();
+		UBOOL MouseHover();
+		void SplitterUpdatePositions();
 };
 
 
-class XINTERFACE_API UGUITreeListBox : public UGUIListBoxBase
+class XINTERFACE_API UGUITabPanel : public UGUIPanel
 {
 public:
-    class UGUITreeList* List GCC_PACK(4);
-    DECLARE_CLASS(UGUITreeListBox,UGUIListBoxBase,0,XInterface)
-	void PreDraw(UCanvas* Canvas);
+    FStringNoInit PanelCaption GCC_PACK(4);
+    BITFIELD bFillHeight:1 GCC_PACK(4);
+    FLOAT FadeInTime GCC_PACK(4);
+    class UGUITabButton* MyButton;
+    DECLARE_CLASS(UGUITabPanel,UGUIPanel,0,XInterface)
+    NO_DEFAULT_CONSTRUCTOR(UGUITabPanel)
 };
 
 
-class XINTERFACE_API UGUIMultiColumnListBox : public UGUIListBoxBase
+struct UGUITabControl_eventMakeTabActive_Parms
 {
-public:
-    class UGUIMultiColumnListHeader* Header GCC_PACK(4);
-    BITFIELD bDisplayHeader:1 GCC_PACK(4);
-    class UGUIMultiColumnList* List GCC_PACK(4);
-    TArrayNoInit<FLOAT> HeaderColumnPerc;
-    TArrayNoInit<FString> ColumnHeadings;
-    BITFIELD bFullHeightStyle:1 GCC_PACK(4);
-    DECLARE_CLASS(UGUIMultiColumnListBox,UGUIListBoxBase,0,XInterface)
-	void PreDraw(UCanvas* Canvas);
-	void Draw(UCanvas* Canvas);
+    class UGUITabButton* Who;
 };
-
-
-class XINTERFACE_API UGUIScrollTextBox : public UGUIListBoxBase
+class XINTERFACE_API UGUITabControl : public UGUIMultiComponent
 {
 public:
-    class UGUIScrollText* MyScrollText GCC_PACK(4);
-    BITFIELD bRepeat:1 GCC_PACK(4);
-    BITFIELD bNoTeletype:1;
-    BITFIELD bStripColors:1;
-    FLOAT InitialDelay GCC_PACK(4);
-    FLOAT CharDelay;
-    FLOAT EOLDelay;
-    FLOAT RepeatDelay;
-    BYTE TextAlign;
-    FStringNoInit Separator GCC_PACK(4);
-    FStringNoInit ESC;
-    FStringNoInit COMMA;
-    DECLARE_CLASS(UGUIScrollTextBox,UGUIListBoxBase,0,XInterface)
-    NO_DEFAULT_CONSTRUCTOR(UGUIScrollTextBox)
-};
+    BITFIELD bFillSpace:1 GCC_PACK(4);
+    BITFIELD bDockPanels:1;
+    BITFIELD bDrawTabAbove:1;
+    BITFIELD bFillBackground:1;
+    FColor FillColor GCC_PACK(4);
+    FLOAT FadeInTime;
+    FLOAT TabHeight;
+    FStringNoInit BackgroundStyleName;
+    class UMaterial* BackgroundImage;
+    TArrayNoInit<class UGUITabButton*> TabStack;
+    class UGUITabButton* ActiveTab;
+    class UGUITabButton* PendingTab;
+    class UGUIStyles* BackgroundStyle;
+    class UGUIBorder* MyFooter;
+    void eventMakeTabActive(class UGUITabButton* Who)
+    {
+        UGUITabControl_eventMakeTabActive_Parms Parms;
+        Parms.Who=Who;
+        ProcessEvent(FindFunctionChecked(XINTERFACE_MakeTabActive),&Parms);
+    }
+    DECLARE_CLASS(UGUITabControl,UGUIMultiComponent,0,XInterface)
+        void PreDraw(UCanvas* Canvas);
+        void Draw(UCanvas* Canvas);
 
+        UGUIComponent* UnderCursor(FLOAT MouseX, FLOAT MouseY);
+        UBOOL SpecialHit( UBOOL bForce );
+        UBOOL MousePressed(UBOOL IsRepeat);                 // The Mouse was pressed
+        UBOOL MouseReleased();                              // The Mouse was released
 
-class XINTERFACE_API UGUIListBox : public UGUIListBoxBase
-{
-public:
-    class UGUIList* List GCC_PACK(4);
-    DECLARE_CLASS(UGUIListBox,UGUIListBoxBase,0,XInterface)
-    NO_DEFAULT_CONSTRUCTOR(UGUIListBox)
+		UBOOL IsFocusedOn( const UGUIComponent* Comp ) const;
+
+		#ifdef UCONST_Counter
+	    virtual void ResetCounter();
+	    #endif
 };
 
 struct XINTERFACE_API FPaddingPercent
@@ -2468,16 +2544,6 @@ public:
 };
 
 
-class XINTERFACE_API UStateButton : public UGUIButton
-{
-public:
-    class UMaterial* Images[5] GCC_PACK(4);
-    BYTE ImageStyle;
-    DECLARE_CLASS(UStateButton,UGUIButton,0,XInterface)
-	void Draw(UCanvas* Canvas);
-};
-
-
 class XINTERFACE_API UGUIGFXButton : public UGUIButton
 {
 public:
@@ -2488,6 +2554,16 @@ public:
     BITFIELD bClientBound:1;
     BITFIELD bChecked:1;
     DECLARE_CLASS(UGUIGFXButton,UGUIButton,0,XInterface)
+		void Draw(UCanvas* Canvas);
+};
+
+
+class XINTERFACE_API UGUICheckBoxButton : public UGUIGFXButton
+{
+public:
+    class UMaterial* CheckedOverlay[10] GCC_PACK(4);
+    BITFIELD bAllOverlay:1 GCC_PACK(4);
+    DECLARE_CLASS(UGUICheckBoxButton,UGUIGFXButton,0,XInterface)
 		void Draw(UCanvas* Canvas);
 };
 
@@ -2506,16 +2582,6 @@ public:
     BITFIELD bIncreaseButton:1 GCC_PACK(4);
     DECLARE_CLASS(UGUIScrollButtonBase,UGUIGFXButton,0,XInterface)
     NO_DEFAULT_CONSTRUCTOR(UGUIScrollButtonBase)
-};
-
-
-class XINTERFACE_API UGUICheckBoxButton : public UGUIGFXButton
-{
-public:
-    class UMaterial* CheckedOverlay[10] GCC_PACK(4);
-    BITFIELD bAllOverlay:1 GCC_PACK(4);
-    DECLARE_CLASS(UGUICheckBoxButton,UGUIGFXButton,0,XInterface)
-		void Draw(UCanvas* Canvas);
 };
 
 
@@ -2607,455 +2673,13 @@ public:
 };
 
 
-struct UGUIToolTip_eventGetHeight_Parms
-{
-    class UCanvas* C;
-    FLOAT ReturnValue;
-};
-struct UGUIToolTip_eventGetWidth_Parms
-{
-    class UCanvas* C;
-    FLOAT ReturnValue;
-};
-struct UGUIToolTip_eventGetTop_Parms
-{
-    class UCanvas* C;
-    FLOAT ReturnValue;
-};
-struct UGUIToolTip_eventGetLeft_Parms
-{
-    class UCanvas* C;
-    FLOAT ReturnValue;
-};
-struct UGUIToolTip_eventUpdatePosition_Parms
-{
-    class UCanvas* C;
-};
-struct UGUIToolTip_eventHideToolTip_Parms
-{
-};
-struct UGUIToolTip_eventShowToolTip_Parms
-{
-};
-struct UGUIToolTip_eventTick_Parms
-{
-    FLOAT RealSeconds;
-};
-struct UGUIToolTip_eventLeaveArea_Parms
-{
-    BITFIELD ReturnValue;
-};
-struct UGUIToolTip_eventEnterArea_Parms
-{
-    class UGUIToolTip* ReturnValue;
-};
-class XINTERFACE_API UGUIToolTip : public UGUIComponent
+class XINTERFACE_API UStateButton : public UGUIButton
 {
 public:
-    BITFIELD bResetPosition:1 GCC_PACK(4);
-    BITFIELD bTrackMouse:1;
-    BITFIELD bMultiline:1;
-    BITFIELD bTrackInput:1;
-    FStringNoInit Text GCC_PACK(4);
-    TArrayNoInit<FString> Lines;
-    FLOAT StartTime;
-    FLOAT CurrentTime;
-    FLOAT MaxWidth;
-    FLOAT InitialDelay;
-    FLOAT ExpirationSeconds;
-    FScriptDelegate __EnterArea__Delegate;
-    FScriptDelegate __LeaveArea__Delegate;
-    FScriptDelegate __Tick__Delegate;
-    FScriptDelegate __ShowToolTip__Delegate;
-    FScriptDelegate __HideToolTip__Delegate;
-    FScriptDelegate __GetLeft__Delegate;
-    FScriptDelegate __GetTop__Delegate;
-    FScriptDelegate __GetWidth__Delegate;
-    FScriptDelegate __GetHeight__Delegate;
-    DECLARE_FUNCTION(execSetTip);
-    FLOAT delegateGetHeight(class UCanvas* C)
-    {
-        UGUIToolTip_eventGetHeight_Parms Parms;
-        Parms.ReturnValue=0;
-        Parms.C=C;
-        ProcessDelegate(XINTERFACE_GetHeight,&__GetHeight__Delegate,&Parms);
-        return Parms.ReturnValue;
-    }
-    FLOAT delegateGetWidth(class UCanvas* C)
-    {
-        UGUIToolTip_eventGetWidth_Parms Parms;
-        Parms.ReturnValue=0;
-        Parms.C=C;
-        ProcessDelegate(XINTERFACE_GetWidth,&__GetWidth__Delegate,&Parms);
-        return Parms.ReturnValue;
-    }
-    FLOAT delegateGetTop(class UCanvas* C)
-    {
-        UGUIToolTip_eventGetTop_Parms Parms;
-        Parms.ReturnValue=0;
-        Parms.C=C;
-        ProcessDelegate(XINTERFACE_GetTop,&__GetTop__Delegate,&Parms);
-        return Parms.ReturnValue;
-    }
-    FLOAT delegateGetLeft(class UCanvas* C)
-    {
-        UGUIToolTip_eventGetLeft_Parms Parms;
-        Parms.ReturnValue=0;
-        Parms.C=C;
-        ProcessDelegate(XINTERFACE_GetLeft,&__GetLeft__Delegate,&Parms);
-        return Parms.ReturnValue;
-    }
-    void eventUpdatePosition(class UCanvas* C)
-    {
-        UGUIToolTip_eventUpdatePosition_Parms Parms;
-        Parms.C=C;
-        ProcessEvent(FindFunctionChecked(XINTERFACE_UpdatePosition),&Parms);
-    }
-    void delegateHideToolTip()
-    {
-        ProcessDelegate(XINTERFACE_HideToolTip,&__HideToolTip__Delegate,NULL);
-    }
-    void delegateShowToolTip()
-    {
-        ProcessDelegate(XINTERFACE_ShowToolTip,&__ShowToolTip__Delegate,NULL);
-    }
-    void delegateTick(FLOAT RealSeconds)
-    {
-        UGUIToolTip_eventTick_Parms Parms;
-        if(IsProbing(NAME_Tick)) {
-        Parms.RealSeconds=RealSeconds;
-        ProcessDelegate(XINTERFACE_Tick,&__Tick__Delegate,&Parms);
-        }
-    }
-    BITFIELD delegateLeaveArea()
-    {
-        UGUIToolTip_eventLeaveArea_Parms Parms;
-        Parms.ReturnValue=0;
-        ProcessDelegate(XINTERFACE_LeaveArea,&__LeaveArea__Delegate,&Parms);
-        return Parms.ReturnValue;
-    }
-    class UGUIToolTip* delegateEnterArea()
-    {
-        UGUIToolTip_eventEnterArea_Parms Parms;
-        Parms.ReturnValue=0;
-        ProcessDelegate(XINTERFACE_EnterArea,&__EnterArea__Delegate,&Parms);
-        return Parms.ReturnValue;
-    }
-    DECLARE_CLASS(UGUIToolTip,UGUIComponent,0|CLASS_Config,XInterface)
-	void PreDraw( UCanvas* C );
-	void Draw( UCanvas* C );
-	void SetTip( FString& NewTip );
-};
-
-
-struct UGUIContextMenu_eventOnContextHitTest_Parms
-{
-    FLOAT MouseX;
-    FLOAT MouseY;
-    BITFIELD ReturnValue;
-};
-struct UGUIContextMenu_eventOnSelect_Parms
-{
-    class UGUIContextMenu* Sender;
-    INT ClickIndex;
-};
-struct UGUIContextMenu_eventOnClose_Parms
-{
-    class UGUIContextMenu* Sender;
-    BITFIELD ReturnValue;
-};
-struct UGUIContextMenu_eventOnOpen_Parms
-{
-    class UGUIContextMenu* Sender;
-    BITFIELD ReturnValue;
-};
-class XINTERFACE_API UGUIContextMenu : public UGUIComponent
-{
-public:
-    TArrayNoInit<FString> ContextItems GCC_PACK(4);
-    INT ItemIndex;
-    FStringNoInit SelectionStyleName;
-    class UGUIStyles* SelectionStyle;
-    INT ItemHeight;
-    FScriptDelegate __OnOpen__Delegate;
-    FScriptDelegate __OnClose__Delegate;
-    FScriptDelegate __OnSelect__Delegate;
-    FScriptDelegate __OnContextHitTest__Delegate;
-    BITFIELD delegateOnContextHitTest(FLOAT MouseX, FLOAT MouseY)
-    {
-        UGUIContextMenu_eventOnContextHitTest_Parms Parms;
-        Parms.ReturnValue=0;
-        Parms.MouseX=MouseX;
-        Parms.MouseY=MouseY;
-        ProcessDelegate(XINTERFACE_OnContextHitTest,&__OnContextHitTest__Delegate,&Parms);
-        return Parms.ReturnValue;
-    }
-    void delegateOnSelect(class UGUIContextMenu* Sender, INT ClickIndex)
-    {
-        UGUIContextMenu_eventOnSelect_Parms Parms;
-        Parms.Sender=Sender;
-        Parms.ClickIndex=ClickIndex;
-        ProcessDelegate(XINTERFACE_OnSelect,&__OnSelect__Delegate,&Parms);
-    }
-    BITFIELD delegateOnClose(class UGUIContextMenu* Sender)
-    {
-        UGUIContextMenu_eventOnClose_Parms Parms;
-        Parms.ReturnValue=0;
-        Parms.Sender=Sender;
-        ProcessDelegate(XINTERFACE_OnClose,&__OnClose__Delegate,&Parms);
-        return Parms.ReturnValue;
-    }
-    BITFIELD delegateOnOpen(class UGUIContextMenu* Sender)
-    {
-        UGUIContextMenu_eventOnOpen_Parms Parms;
-        Parms.ReturnValue=0;
-        Parms.Sender=Sender;
-        ProcessDelegate(XINTERFACE_OnOpen,&__OnOpen__Delegate,&Parms);
-        return Parms.ReturnValue;
-    }
-    DECLARE_CLASS(UGUIContextMenu,UGUIComponent,0,XInterface)
-    virtual void  PreDraw(UCanvas *Canvas);
-    virtual void  Draw(UCanvas* Canvas);
-    virtual void  UpdateIndex(INT MouseX, INT MouseY);    // Check to see if a mouse press affects the control
-
-    virtual UBOOL Close();
-    virtual UBOOL KeyEvent(BYTE& iKey, BYTE& State, FLOAT Delta);   // Handle key events
-};
-
-
-class XINTERFACE_API UGUIProgressBar : public UGUIComponent
-{
-public:
-    class UMaterial* BarBack GCC_PACK(4);
-    class UMaterial* BarTop;
-    FColor BarColor;
-    FLOAT Low;
-    FLOAT High;
-    FLOAT Value;
-    FLOAT CaptionWidth;
-    BYTE CaptionAlign;
-    BYTE ValueRightAlign;
-    FStringNoInit Caption GCC_PACK(4);
-    FStringNoInit FontName;
-    FStringNoInit ValueFontName;
-    FLOAT GraphicMargin;
-    FLOAT ValueRightWidth;
-    BITFIELD bShowLow:1 GCC_PACK(4);
-    BITFIELD bShowHigh:1;
-    BITFIELD bShowValue:1;
-    INT NumDecimals GCC_PACK(4);
-    BYTE BarDirection;
-    DECLARE_CLASS(UGUIProgressBar,UGUIComponent,0,XInterface)
-	void Draw(UCanvas* Canvas);
-};
-
-struct XINTERFACE_API FAnimInfo
-{
-    FLOAT cX GCC_PACK(4);
-    FLOAT cY;
-    FLOAT Scale;
-    FLOAT FadeTime;
-    FLOAT Alpha;
-    FLOAT TargetAlpha;
-    FLOAT ResetDelay;
-    FLOAT TravelTime;
-};
-
-
-struct UCoolImage_eventResetItem_Parms
-{
-    INT i;
-};
-class XINTERFACE_API UCoolImage : public UGUIComponent
-{
-public:
-    class UMaterial* Image GCC_PACK(4);
-    TArrayNoInit<FAnimInfo> Anims;
-    INT NoAnims;
-    FLOAT MaxScale;
-    FLOAT MinScale;
-    FLOAT MinFadeTime;
-    FLOAT MaxFadeTime;
-    FLOAT MinResetDelay;
-    FLOAT MaxResetDelay;
-    INT FullAlpha;
-    void eventResetItem(INT i)
-    {
-        UCoolImage_eventResetItem_Parms Parms;
-        Parms.i=i;
-        ProcessEvent(FindFunctionChecked(XINTERFACE_ResetItem),&Parms);
-    }
-    DECLARE_CLASS(UCoolImage,UGUIComponent,0,XInterface)
-		void Draw(UCanvas* Canvas);
-};
-
-
-class XINTERFACE_API UGUIImage : public UGUIComponent
-{
-public:
-    class UMaterial* Image GCC_PACK(4);
-    class UMaterial* DropShadow;
-    FColor ImageColor;
+    class UMaterial* Images[5] GCC_PACK(4);
     BYTE ImageStyle;
-    BYTE ImageRenderStyle;
-    BYTE ImageAlign;
-    INT X1 GCC_PACK(4);
-    INT Y1;
-    INT X2;
-    INT Y2;
-    INT DropShadowX;
-    INT DropShadowY;
-    FLOAT BorderOffsets[4];
-    FLOAT X3;
-    FLOAT Y3;
-    DECLARE_CLASS(UGUIImage,UGUIComponent,0,XInterface)
-		void UpdateBounds();
-		void Draw(UCanvas* Canvas);
-};
-
-
-class XINTERFACE_API UGUISectionBackground : public UGUIImage
-{
-public:
-    class UGUIStyles* CaptionStyle GCC_PACK(4);
-    FStringNoInit CaptionStyleName;
-    INT AltCaptionOffset[4];
-    BYTE AltCaptionAlign;
-    BITFIELD bAltCaption:1 GCC_PACK(4);
-    BITFIELD bRemapStack:1;
-    BITFIELD bFillClient:1;
-    TArrayNoInit<class UGUIComponent*> AlignStack GCC_PACK(4);
-    class UMaterial* HeaderTop;
-    class UMaterial* HeaderBar;
-    class UMaterial* HeaderBase;
-    FStringNoInit Caption;
-    FLOAT ColPadding;
-    FLOAT LeftPadding;
-    FLOAT RightPadding;
-    FLOAT TopPadding;
-    FLOAT BottomPadding;
-    FLOAT ImageOffset[4];
-    INT NumColumns;
-    INT MaxPerColumn;
-    DECLARE_CLASS(UGUISectionBackground,UGUIImage,0,XInterface)
-        void AutoPosition( TArray<UGUIComponent*>& Components, float PosL, float PosT, float PosR, float PosB, INT Col = 1, float ColSpace = 0.f );
-        void PreDraw(UCanvas* Canvas);
-        void Draw(UCanvas* Canvas);     // Should be overridden in a subclass
-};
-
-
-struct UGUISlider_eventGetMarkerPosition_Parms
-{
-    FLOAT ReturnValue;
-};
-struct UGUISlider_eventOnDrawCaption_Parms
-{
-    FString ReturnValue;
-};
-struct UGUISlider_eventOnPreDrawCaption_Parms
-{
-    FLOAT X;
-    FLOAT Y;
-    FLOAT XL;
-    FLOAT YL;
-    BYTE Justification;
-    BITFIELD ReturnValue;
-};
-class XINTERFACE_API UGUISlider : public UGUIComponent
-{
-public:
-    FLOAT MinValue GCC_PACK(4);
-    FLOAT MaxValue;
-    FLOAT Value;
-    FLOAT MarkerWidth;
-    BITFIELD bIntSlider:1 GCC_PACK(4);
-    BITFIELD bShowMarker:1;
-    BITFIELD bShowCaption:1;
-    BITFIELD bDrawPercentSign:1;
-    BITFIELD bReadOnly:1;
-    BITFIELD bShowValueTooltip:1;
-    class UMaterial* FillImage GCC_PACK(4);
-    FStringNoInit CaptionStyleName;
-    FStringNoInit BarStyleName;
-    class UGUIStyles* CaptionStyle;
-    class UGUIStyles* BarStyle;
-    FScriptDelegate __OnPreDrawCaption__Delegate;
-    FScriptDelegate __OnDrawCaption__Delegate;
-    FLOAT eventGetMarkerPosition()
-    {
-        UGUISlider_eventGetMarkerPosition_Parms Parms;
-        Parms.ReturnValue=0;
-        ProcessEvent(FindFunctionChecked(XINTERFACE_GetMarkerPosition),&Parms);
-        return Parms.ReturnValue;
-    }
-    FString delegateOnDrawCaption()
-    {
-        UGUISlider_eventOnDrawCaption_Parms Parms;
-        ProcessDelegate(XINTERFACE_OnDrawCaption,&__OnDrawCaption__Delegate,&Parms);
-        return Parms.ReturnValue;
-    }
-    BITFIELD delegateOnPreDrawCaption(FLOAT& X, FLOAT& Y, FLOAT& XL, FLOAT& YL, BYTE& Justification)
-    {
-        UGUISlider_eventOnPreDrawCaption_Parms Parms;
-        Parms.ReturnValue=0;
-        Parms.X=X;
-        Parms.Y=Y;
-        Parms.XL=XL;
-        Parms.YL=YL;
-        Parms.Justification=Justification;
-        ProcessDelegate(XINTERFACE_OnPreDrawCaption,&__OnPreDrawCaption__Delegate,&Parms);
-        X=Parms.X;
-        Y=Parms.Y;
-        XL=Parms.XL;
-        YL=Parms.YL;
-        Justification=Parms.Justification;
-        return Parms.ReturnValue;
-    }
-    DECLARE_CLASS(UGUISlider,UGUIComponent,0,XInterface)
-        void Draw(UCanvas* Canvas);
-};
-
-
-struct UGUIScrollZoneBase_eventOnScrollZoneClick_Parms
-{
-    FLOAT Delta;
-};
-class XINTERFACE_API UGUIScrollZoneBase : public UGUIComponent
-{
-public:
-    FScriptDelegate __OnScrollZoneClick__Delegate GCC_PACK(4);
-    void delegateOnScrollZoneClick(FLOAT Delta)
-    {
-        UGUIScrollZoneBase_eventOnScrollZoneClick_Parms Parms;
-        Parms.Delta=Delta;
-        ProcessDelegate(XINTERFACE_OnScrollZoneClick,&__OnScrollZoneClick__Delegate,&Parms);
-    }
-    DECLARE_CLASS(UGUIScrollZoneBase,UGUIComponent,0,XInterface)
-		void Draw(UCanvas* Canvas);
-};
-
-
-class XINTERFACE_API UGUILabel : public UGUIComponent
-{
-public:
-    FStringNoInit Caption GCC_PACK(4);
-    BYTE TextAlign;
-    FColor TextColor GCC_PACK(4);
-    FColor FocusedTextColor;
-    BYTE TextStyle;
-    FStringNoInit TextFont GCC_PACK(4);
-    BITFIELD bTransparent:1 GCC_PACK(4);
-    BITFIELD bMultiline:1;
-    BYTE VertAlign GCC_PACK(4);
-    FColor BackColor GCC_PACK(4);
-    FColor ShadowColor;
-    FLOAT ShadowOffsetX;
-    FLOAT ShadowOffsetY;
-    FColor HilightColor;
-    FLOAT HilightOffsetX;
-    FLOAT HilightOffsetY;
-    DECLARE_CLASS(UGUILabel,UGUIComponent,0,XInterface)
-        void Draw(UCanvas* Canvas);
+    DECLARE_CLASS(UStateButton,UGUIButton,0,XInterface)
+	void Draw(UCanvas* Canvas);
 };
 
 
@@ -3185,6 +2809,67 @@ public:
 };
 
 
+class XINTERFACE_API UGUICircularList : public UGUIListBase
+{
+public:
+    BITFIELD bCenterInBounds:1 GCC_PACK(4);
+    BITFIELD bFillBounds:1;
+    BITFIELD bIgnoreBackClick:1;
+    BITFIELD bAllowSelectEmpty:1;
+    INT FixedItemsPerPage GCC_PACK(4);
+    BITFIELD bWrapItems:1 GCC_PACK(4);
+    DECLARE_CLASS(UGUICircularList,UGUIListBase,0,XInterface)
+	void Draw(UCanvas* Canvas);
+};
+
+
+class XINTERFACE_API UGUICharacterList : public UGUICircularList
+{
+public:
+    TArrayNoInit<FPlayerRecord> PlayerList GCC_PACK(4);
+    BITFIELD bLocked:1 GCC_PACK(4);
+    class UMaterial* DefaultPortrait GCC_PACK(4);
+    TArrayNoInit<FPlayerRecord> SelectedElements;
+    DECLARE_CLASS(UGUICharacterList,UGUICircularList,0,XInterface)
+	void PreDraw(UCanvas* Canvas);
+protected:
+	void DrawItem(UCanvas* Canvas, INT Item, FLOAT X, FLOAT Y, FLOAT XL, FLOAT YL, UBOOL bSelected, UBOOL bPending);
+public:
+};
+
+
+struct UGUICircularImageList_eventSwap_Parms
+{
+    INT IndexA;
+    INT IndexB;
+};
+class XINTERFACE_API UGUICircularImageList : public UGUICircularList
+{
+public:
+    TArrayNoInit<FGUIListElem> Elements GCC_PACK(4);
+    void eventSwap(INT IndexA, INT IndexB)
+    {
+        UGUICircularImageList_eventSwap_Parms Parms;
+        Parms.IndexA=IndexA;
+        Parms.IndexB=IndexB;
+        ProcessEvent(FindFunctionChecked(XINTERFACE_Swap),&Parms);
+    }
+    DECLARE_CLASS(UGUICircularImageList,UGUICircularList,0,XInterface)
+	void PreDraw(UCanvas* Canvas);
+protected:
+	void DrawItem(UCanvas* Canvas, INT Item, FLOAT X, FLOAT Y, FLOAT W, FLOAT HT, UBOOL bSelected, UBOOL bPending);
+public:
+};
+
+
+class XINTERFACE_API UGUIHorzList : public UGUIListBase
+{
+public:
+    DECLARE_CLASS(UGUIHorzList,UGUIListBase,0,XInterface)
+	void Draw(UCanvas* Canvas);
+};
+
+
 struct UGUIVertList_eventGetItemHeight_Parms
 {
     class UCanvas* C;
@@ -3205,145 +2890,6 @@ public:
     DECLARE_CLASS(UGUIVertList,UGUIListBase,0,XInterface)
 	void PreDraw(UCanvas* Canvas);
 	void Draw(UCanvas* Canvas);
-};
-
-
-struct UGUIVertImageList_eventSwap_Parms
-{
-    INT IndexA;
-    INT IndexB;
-};
-class XINTERFACE_API UGUIVertImageList : public UGUIVertList
-{
-public:
-    BYTE CellStyle GCC_PACK(4);
-    FLOAT ImageScale GCC_PACK(4);
-    INT NoVisibleRows;
-    INT NoVisibleCols;
-    INT HorzBorder;
-    INT VertBorder;
-    TArrayNoInit<FImageListElem> Elements;
-    TArrayNoInit<FImageListElem> SelectedElements;
-    class UMaterial* LockedMat;
-    void eventSwap(INT IndexA, INT IndexB)
-    {
-        UGUIVertImageList_eventSwap_Parms Parms;
-        Parms.IndexA=IndexA;
-        Parms.IndexB=IndexB;
-        ProcessEvent(FindFunctionChecked(XINTERFACE_Swap),&Parms);
-    }
-    DECLARE_CLASS(UGUIVertImageList,UGUIVertList,0,XInterface)
-	void PreDraw(UCanvas* Canvas);
-	void Draw(UCanvas* Canvas);
-	void DrawItem( UCanvas* Canvas, INT Item, FLOAT X, FLOAT Y, FLOAT XL, FLOAT YL, UBOOL bSelected, UBOOL bPending );
-};
-
-
-struct UGUIList_eventSwap_Parms
-{
-    INT IndexA;
-    INT IndexB;
-};
-struct UGUIList_eventCompareItem_Parms
-{
-    FGUIListElem ElemA;
-    FGUIListElem ElemB;
-    INT ReturnValue;
-};
-class XINTERFACE_API UGUIList : public UGUIVertList
-{
-public:
-    BYTE TextAlign GCC_PACK(4);
-    TArrayNoInit<FGUIListElem> Elements GCC_PACK(4);
-    TArrayNoInit<FGUIListElem> SelectedElements;
-    FColor OfficialColor;
-    FColor Official2004Color;
-    FColor BonusPackColor;
-    FScriptDelegate __CompareItem__Delegate;
-    DECLARE_FUNCTION(execSortList);
-    void eventSwap(INT IndexA, INT IndexB)
-    {
-        UGUIList_eventSwap_Parms Parms;
-        Parms.IndexA=IndexA;
-        Parms.IndexB=IndexB;
-        ProcessEvent(FindFunctionChecked(XINTERFACE_Swap),&Parms);
-    }
-    INT delegateCompareItem(FGUIListElem ElemA, FGUIListElem ElemB)
-    {
-        UGUIList_eventCompareItem_Parms Parms;
-        Parms.ReturnValue=0;
-        Parms.ElemA=ElemA;
-        Parms.ElemB=ElemB;
-        ProcessDelegate(XINTERFACE_CompareItem,&__CompareItem__Delegate,&Parms);
-        return Parms.ReturnValue;
-    }
-    DECLARE_CLASS(UGUIList,UGUIVertList,0,XInterface)
-protected:
-	virtual void DrawItem(UCanvas* Canvas, INT Item, FLOAT X, FLOAT Y, FLOAT W, FLOAT HT, UBOOL bSelected, UBOOL bPending);
-public:
-};
-
-
-class XINTERFACE_API UMultiSelectList : public UGUIList
-{
-public:
-    TArrayNoInit<FMultiSelectListElem> MElements GCC_PACK(4);
-    DECLARE_CLASS(UMultiSelectList,UGUIList,0,XInterface)
-	virtual void Draw(UCanvas* Canvas);
-protected:
-	virtual void DrawItem(UCanvas* Canvas, INT Item, FLOAT X, FLOAT Y, FLOAT W, FLOAT HT, UBOOL bSelected, UBOOL bPending);
-public:
-};
-
-enum eScrollState
-{
-    STS_None                =0,
-    STS_Initial             =1,
-    STS_Char                =2,
-    STS_EOL                 =3,
-    STS_Repeat              =4,
-    STS_MAX                 =5,
-};
-
-struct UGUIScrollText_eventOnEndOfLine_Parms
-{
-};
-class XINTERFACE_API UGUIScrollText : public UGUIList
-{
-public:
-    INT MaxHistory GCC_PACK(4);
-    FStringNoInit NewText;
-    FStringNoInit ClickedString;
-    FStringNoInit Content;
-    FStringNoInit Separator;
-    INT VisibleLines;
-    INT VisibleChars;
-    FLOAT oldWidth;
-    BYTE ScrollState;
-    BITFIELD bNewContent:1 GCC_PACK(4);
-    BITFIELD bStopped:1;
-    BITFIELD bReceivedNewContent:1;
-    BITFIELD bRepeat:1;
-    BITFIELD bNoTeletype:1;
-    BITFIELD bClickText:1;
-    FLOAT InitialDelay GCC_PACK(4);
-    FLOAT CharDelay;
-    FLOAT EOLDelay;
-    FLOAT RepeatDelay;
-    TArrayNoInit<FString> StringElements;
-    FScriptDelegate __OnEndOfLine__Delegate;
-    DECLARE_FUNCTION(execGetWordUnderCursor);
-    void delegateOnEndOfLine()
-    {
-        ProcessDelegate(XINTERFACE_OnEndOfLine,&__OnEndOfLine__Delegate,NULL);
-    }
-    DECLARE_CLASS(UGUIScrollText,UGUIList,0,XInterface)
-	UBOOL WrapURL( FString& Text ) const;
-	void PreDraw(UCanvas *Canvas);
-	void Draw(UCanvas* Canvas);
-protected:
-	void DrawItem(UCanvas* Canvas, INT Item, FLOAT X, FLOAT Y, FLOAT W, FLOAT HT, UBOOL bSelected, UBOOL bPending);
-public:
 };
 
 struct XINTERFACE_API FMultiColumnSortData
@@ -3419,6 +2965,202 @@ public:
     }
     DECLARE_CLASS(UGUIMultiColumnList,UGUIVertList,0,XInterface)
 	INT FindSortIndex( INT YourArrayIndex ) const;
+};
+
+
+struct UGUIList_eventSwap_Parms
+{
+    INT IndexA;
+    INT IndexB;
+};
+struct UGUIList_eventCompareItem_Parms
+{
+    FGUIListElem ElemA;
+    FGUIListElem ElemB;
+    INT ReturnValue;
+};
+class XINTERFACE_API UGUIList : public UGUIVertList
+{
+public:
+    BYTE TextAlign GCC_PACK(4);
+    TArrayNoInit<FGUIListElem> Elements GCC_PACK(4);
+    TArrayNoInit<FGUIListElem> SelectedElements;
+    FColor OfficialColor;
+    FColor Official2004Color;
+    FColor BonusPackColor;
+    FScriptDelegate __CompareItem__Delegate;
+    DECLARE_FUNCTION(execSortList);
+    void eventSwap(INT IndexA, INT IndexB)
+    {
+        UGUIList_eventSwap_Parms Parms;
+        Parms.IndexA=IndexA;
+        Parms.IndexB=IndexB;
+        ProcessEvent(FindFunctionChecked(XINTERFACE_Swap),&Parms);
+    }
+    INT delegateCompareItem(FGUIListElem ElemA, FGUIListElem ElemB)
+    {
+        UGUIList_eventCompareItem_Parms Parms;
+        Parms.ReturnValue=0;
+        Parms.ElemA=ElemA;
+        Parms.ElemB=ElemB;
+        ProcessDelegate(XINTERFACE_CompareItem,&__CompareItem__Delegate,&Parms);
+        return Parms.ReturnValue;
+    }
+    DECLARE_CLASS(UGUIList,UGUIVertList,0,XInterface)
+protected:
+	virtual void DrawItem(UCanvas* Canvas, INT Item, FLOAT X, FLOAT Y, FLOAT W, FLOAT HT, UBOOL bSelected, UBOOL bPending);
+public:
+};
+
+enum eScrollState
+{
+    STS_None                =0,
+    STS_Initial             =1,
+    STS_Char                =2,
+    STS_EOL                 =3,
+    STS_Repeat              =4,
+    STS_MAX                 =5,
+};
+
+struct UGUIScrollText_eventOnEndOfLine_Parms
+{
+};
+class XINTERFACE_API UGUIScrollText : public UGUIList
+{
+public:
+    INT MaxHistory GCC_PACK(4);
+    FStringNoInit NewText;
+    FStringNoInit ClickedString;
+    FStringNoInit Content;
+    FStringNoInit Separator;
+    INT VisibleLines;
+    INT VisibleChars;
+    FLOAT oldWidth;
+    BYTE ScrollState;
+    BITFIELD bNewContent:1 GCC_PACK(4);
+    BITFIELD bStopped:1;
+    BITFIELD bReceivedNewContent:1;
+    BITFIELD bRepeat:1;
+    BITFIELD bNoTeletype:1;
+    BITFIELD bClickText:1;
+    FLOAT InitialDelay GCC_PACK(4);
+    FLOAT CharDelay;
+    FLOAT EOLDelay;
+    FLOAT RepeatDelay;
+    TArrayNoInit<FString> StringElements;
+    FScriptDelegate __OnEndOfLine__Delegate;
+    DECLARE_FUNCTION(execGetWordUnderCursor);
+    void delegateOnEndOfLine()
+    {
+        ProcessDelegate(XINTERFACE_OnEndOfLine,&__OnEndOfLine__Delegate,NULL);
+    }
+    DECLARE_CLASS(UGUIScrollText,UGUIList,0,XInterface)
+	UBOOL WrapURL( FString& Text ) const;
+	void PreDraw(UCanvas *Canvas);
+	void Draw(UCanvas* Canvas);
+protected:
+	void DrawItem(UCanvas* Canvas, INT Item, FLOAT X, FLOAT Y, FLOAT W, FLOAT HT, UBOOL bSelected, UBOOL bPending);
+public:
+};
+
+
+class XINTERFACE_API UMultiSelectList : public UGUIList
+{
+public:
+    TArrayNoInit<FMultiSelectListElem> MElements GCC_PACK(4);
+    DECLARE_CLASS(UMultiSelectList,UGUIList,0,XInterface)
+	virtual void Draw(UCanvas* Canvas);
+protected:
+	virtual void DrawItem(UCanvas* Canvas, INT Item, FLOAT X, FLOAT Y, FLOAT W, FLOAT HT, UBOOL bSelected, UBOOL bPending);
+public:
+};
+
+
+struct UGUIMultiOptionList_eventCanFocusElement_Parms
+{
+    class UGUIMenuOption* elem;
+    BITFIELD ReturnValue;
+};
+struct UGUIMultiOptionList_eventValidIndex_Parms
+{
+    INT idx;
+    BITFIELD ReturnValue;
+};
+struct UGUIMultiOptionList_eventElementVisible_Parms
+{
+    INT idx;
+    BITFIELD ReturnValue;
+};
+struct UGUIMultiOptionList_eventOnCreateComponent_Parms
+{
+    class UGUIMenuOption* NewComp;
+    class UGUIMultiOptionList* Sender;
+};
+class XINTERFACE_API UGUIMultiOptionList : public UGUIVertList
+{
+public:
+    TArrayNoInit<class UGUIMenuOption*> Elements GCC_PACK(4);
+    FLOAT ItemScaling;
+    FLOAT ItemPadding;
+    FLOAT ColumnWidth;
+    INT NumColumns;
+    INT ItemsPerColumn;
+    BITFIELD bVerticalLayout:1 GCC_PACK(4);
+    FScriptDelegate __OnCreateComponent__Delegate GCC_PACK(4);
+    BITFIELD eventCanFocusElement(class UGUIMenuOption* elem)
+    {
+        UGUIMultiOptionList_eventCanFocusElement_Parms Parms;
+        Parms.ReturnValue=0;
+        Parms.elem=elem;
+        ProcessEvent(FindFunctionChecked(XINTERFACE_CanFocusElement),&Parms);
+        return Parms.ReturnValue;
+    }
+    BITFIELD eventValidIndex(INT idx)
+    {
+        UGUIMultiOptionList_eventValidIndex_Parms Parms;
+        Parms.ReturnValue=0;
+        Parms.idx=idx;
+        ProcessEvent(FindFunctionChecked(XINTERFACE_ValidIndex),&Parms);
+        return Parms.ReturnValue;
+    }
+    BITFIELD eventElementVisible(INT idx)
+    {
+        UGUIMultiOptionList_eventElementVisible_Parms Parms;
+        Parms.ReturnValue=0;
+        Parms.idx=idx;
+        ProcessEvent(FindFunctionChecked(XINTERFACE_ElementVisible),&Parms);
+        return Parms.ReturnValue;
+    }
+    void delegateOnCreateComponent(class UGUIMenuOption* NewComp, class UGUIMultiOptionList* Sender)
+    {
+        UGUIMultiOptionList_eventOnCreateComponent_Parms Parms;
+        Parms.NewComp=NewComp;
+        Parms.Sender=Sender;
+        ProcessDelegate(XINTERFACE_OnCreateComponent,&__OnCreateComponent__Delegate,&Parms);
+    }
+    DECLARE_CLASS(UGUIMultiOptionList,UGUIVertList,0,XInterface)
+protected:
+	void DrawItem(UCanvas* Canvas, INT Item, FLOAT X, FLOAT Y, FLOAT W, FLOAT HT, UBOOL bSelected, UBOOL bPending);
+public:
+	UBOOL MousePressed(UBOOL IsRepeat);
+	UBOOL MouseReleased();
+	void PreDraw(UCanvas* Canvas);
+	void Draw(UCanvas* Canvas);
+
+	UBOOL NativeKeyType(BYTE& iKey, TCHAR Unicode );
+	UBOOL NativeKeyEvent(BYTE& iKey, BYTE& State, FLOAT Delta );
+
+	void NativeInvalidate(UGUIComponent* Who);
+	UBOOL SpecialHit( UBOOL bForce );
+
+	UGUIComponent* GetFocused()              const;
+	UGUIComponent* UnderCursor( FLOAT MouseX, FLOAT MouseY );
+
+	INT CalculateIndex( UBOOL bRequireValidIndex = 0 );
+
+		#ifdef UCONST_Counter
+	    virtual void ResetCounter();
+	    #endif
 };
 
 
@@ -3528,152 +3270,152 @@ public:
 };
 
 
-struct UGUIMultiOptionList_eventCanFocusElement_Parms
-{
-    class UGUIMenuOption* elem;
-    BITFIELD ReturnValue;
-};
-struct UGUIMultiOptionList_eventValidIndex_Parms
-{
-    INT idx;
-    BITFIELD ReturnValue;
-};
-struct UGUIMultiOptionList_eventElementVisible_Parms
-{
-    INT idx;
-    BITFIELD ReturnValue;
-};
-struct UGUIMultiOptionList_eventOnCreateComponent_Parms
-{
-    class UGUIMenuOption* NewComp;
-    class UGUIMultiOptionList* Sender;
-};
-class XINTERFACE_API UGUIMultiOptionList : public UGUIVertList
-{
-public:
-    TArrayNoInit<class UGUIMenuOption*> Elements GCC_PACK(4);
-    FLOAT ItemScaling;
-    FLOAT ItemPadding;
-    FLOAT ColumnWidth;
-    INT NumColumns;
-    INT ItemsPerColumn;
-    BITFIELD bVerticalLayout:1 GCC_PACK(4);
-    FScriptDelegate __OnCreateComponent__Delegate GCC_PACK(4);
-    BITFIELD eventCanFocusElement(class UGUIMenuOption* elem)
-    {
-        UGUIMultiOptionList_eventCanFocusElement_Parms Parms;
-        Parms.ReturnValue=0;
-        Parms.elem=elem;
-        ProcessEvent(FindFunctionChecked(XINTERFACE_CanFocusElement),&Parms);
-        return Parms.ReturnValue;
-    }
-    BITFIELD eventValidIndex(INT idx)
-    {
-        UGUIMultiOptionList_eventValidIndex_Parms Parms;
-        Parms.ReturnValue=0;
-        Parms.idx=idx;
-        ProcessEvent(FindFunctionChecked(XINTERFACE_ValidIndex),&Parms);
-        return Parms.ReturnValue;
-    }
-    BITFIELD eventElementVisible(INT idx)
-    {
-        UGUIMultiOptionList_eventElementVisible_Parms Parms;
-        Parms.ReturnValue=0;
-        Parms.idx=idx;
-        ProcessEvent(FindFunctionChecked(XINTERFACE_ElementVisible),&Parms);
-        return Parms.ReturnValue;
-    }
-    void delegateOnCreateComponent(class UGUIMenuOption* NewComp, class UGUIMultiOptionList* Sender)
-    {
-        UGUIMultiOptionList_eventOnCreateComponent_Parms Parms;
-        Parms.NewComp=NewComp;
-        Parms.Sender=Sender;
-        ProcessDelegate(XINTERFACE_OnCreateComponent,&__OnCreateComponent__Delegate,&Parms);
-    }
-    DECLARE_CLASS(UGUIMultiOptionList,UGUIVertList,0,XInterface)
-protected:
-	void DrawItem(UCanvas* Canvas, INT Item, FLOAT X, FLOAT Y, FLOAT W, FLOAT HT, UBOOL bSelected, UBOOL bPending);
-public:
-	UBOOL MousePressed(UBOOL IsRepeat);
-	UBOOL MouseReleased();
-	void PreDraw(UCanvas* Canvas);
-	void Draw(UCanvas* Canvas);
-
-	UBOOL NativeKeyType(BYTE& iKey, TCHAR Unicode );
-	UBOOL NativeKeyEvent(BYTE& iKey, BYTE& State, FLOAT Delta );
-
-	void NativeInvalidate(UGUIComponent* Who);
-	UBOOL SpecialHit( UBOOL bForce );
-
-	UGUIComponent* GetFocused()              const;
-	UGUIComponent* UnderCursor( FLOAT MouseX, FLOAT MouseY );
-
-	INT CalculateIndex( UBOOL bRequireValidIndex = 0 );
-
-		#ifdef UCONST_Counter
-	    virtual void ResetCounter();
-	    #endif
-};
-
-
-class XINTERFACE_API UGUICircularList : public UGUIListBase
-{
-public:
-    BITFIELD bCenterInBounds:1 GCC_PACK(4);
-    BITFIELD bFillBounds:1;
-    BITFIELD bIgnoreBackClick:1;
-    BITFIELD bAllowSelectEmpty:1;
-    INT FixedItemsPerPage GCC_PACK(4);
-    BITFIELD bWrapItems:1 GCC_PACK(4);
-    DECLARE_CLASS(UGUICircularList,UGUIListBase,0,XInterface)
-	void Draw(UCanvas* Canvas);
-};
-
-
-struct UGUICircularImageList_eventSwap_Parms
+struct UGUIVertImageList_eventSwap_Parms
 {
     INT IndexA;
     INT IndexB;
 };
-class XINTERFACE_API UGUICircularImageList : public UGUICircularList
+class XINTERFACE_API UGUIVertImageList : public UGUIVertList
 {
 public:
-    TArrayNoInit<FGUIListElem> Elements GCC_PACK(4);
+    BYTE CellStyle GCC_PACK(4);
+    FLOAT ImageScale GCC_PACK(4);
+    INT NoVisibleRows;
+    INT NoVisibleCols;
+    INT HorzBorder;
+    INT VertBorder;
+    TArrayNoInit<FImageListElem> Elements;
+    TArrayNoInit<FImageListElem> SelectedElements;
+    class UMaterial* LockedMat;
     void eventSwap(INT IndexA, INT IndexB)
     {
-        UGUICircularImageList_eventSwap_Parms Parms;
+        UGUIVertImageList_eventSwap_Parms Parms;
         Parms.IndexA=IndexA;
         Parms.IndexB=IndexB;
         ProcessEvent(FindFunctionChecked(XINTERFACE_Swap),&Parms);
     }
-    DECLARE_CLASS(UGUICircularImageList,UGUICircularList,0,XInterface)
+    DECLARE_CLASS(UGUIVertImageList,UGUIVertList,0,XInterface)
 	void PreDraw(UCanvas* Canvas);
-protected:
-	void DrawItem(UCanvas* Canvas, INT Item, FLOAT X, FLOAT Y, FLOAT W, FLOAT HT, UBOOL bSelected, UBOOL bPending);
-public:
-};
-
-
-class XINTERFACE_API UGUICharacterList : public UGUICircularList
-{
-public:
-    TArrayNoInit<FPlayerRecord> PlayerList GCC_PACK(4);
-    BITFIELD bLocked:1 GCC_PACK(4);
-    class UMaterial* DefaultPortrait GCC_PACK(4);
-    TArrayNoInit<FPlayerRecord> SelectedElements;
-    DECLARE_CLASS(UGUICharacterList,UGUICircularList,0,XInterface)
-	void PreDraw(UCanvas* Canvas);
-protected:
-	void DrawItem(UCanvas* Canvas, INT Item, FLOAT X, FLOAT Y, FLOAT XL, FLOAT YL, UBOOL bSelected, UBOOL bPending);
-public:
-};
-
-
-class XINTERFACE_API UGUIHorzList : public UGUIListBase
-{
-public:
-    DECLARE_CLASS(UGUIHorzList,UGUIListBase,0,XInterface)
 	void Draw(UCanvas* Canvas);
+	void DrawItem( UCanvas* Canvas, INT Item, FLOAT X, FLOAT Y, FLOAT XL, FLOAT YL, UBOOL bSelected, UBOOL bPending );
+};
+
+
+struct UGUIContextMenu_eventOnContextHitTest_Parms
+{
+    FLOAT MouseX;
+    FLOAT MouseY;
+    BITFIELD ReturnValue;
+};
+struct UGUIContextMenu_eventOnSelect_Parms
+{
+    class UGUIContextMenu* Sender;
+    INT ClickIndex;
+};
+struct UGUIContextMenu_eventOnClose_Parms
+{
+    class UGUIContextMenu* Sender;
+    BITFIELD ReturnValue;
+};
+struct UGUIContextMenu_eventOnOpen_Parms
+{
+    class UGUIContextMenu* Sender;
+    BITFIELD ReturnValue;
+};
+class XINTERFACE_API UGUIContextMenu : public UGUIComponent
+{
+public:
+    TArrayNoInit<FString> ContextItems GCC_PACK(4);
+    INT ItemIndex;
+    FStringNoInit SelectionStyleName;
+    class UGUIStyles* SelectionStyle;
+    INT ItemHeight;
+    FScriptDelegate __OnOpen__Delegate;
+    FScriptDelegate __OnClose__Delegate;
+    FScriptDelegate __OnSelect__Delegate;
+    FScriptDelegate __OnContextHitTest__Delegate;
+    BITFIELD delegateOnContextHitTest(FLOAT MouseX, FLOAT MouseY)
+    {
+        UGUIContextMenu_eventOnContextHitTest_Parms Parms;
+        Parms.ReturnValue=0;
+        Parms.MouseX=MouseX;
+        Parms.MouseY=MouseY;
+        ProcessDelegate(XINTERFACE_OnContextHitTest,&__OnContextHitTest__Delegate,&Parms);
+        return Parms.ReturnValue;
+    }
+    void delegateOnSelect(class UGUIContextMenu* Sender, INT ClickIndex)
+    {
+        UGUIContextMenu_eventOnSelect_Parms Parms;
+        Parms.Sender=Sender;
+        Parms.ClickIndex=ClickIndex;
+        ProcessDelegate(XINTERFACE_OnSelect,&__OnSelect__Delegate,&Parms);
+    }
+    BITFIELD delegateOnClose(class UGUIContextMenu* Sender)
+    {
+        UGUIContextMenu_eventOnClose_Parms Parms;
+        Parms.ReturnValue=0;
+        Parms.Sender=Sender;
+        ProcessDelegate(XINTERFACE_OnClose,&__OnClose__Delegate,&Parms);
+        return Parms.ReturnValue;
+    }
+    BITFIELD delegateOnOpen(class UGUIContextMenu* Sender)
+    {
+        UGUIContextMenu_eventOnOpen_Parms Parms;
+        Parms.ReturnValue=0;
+        Parms.Sender=Sender;
+        ProcessDelegate(XINTERFACE_OnOpen,&__OnOpen__Delegate,&Parms);
+        return Parms.ReturnValue;
+    }
+    DECLARE_CLASS(UGUIContextMenu,UGUIComponent,0,XInterface)
+    virtual void  PreDraw(UCanvas *Canvas);
+    virtual void  Draw(UCanvas* Canvas);
+    virtual void  UpdateIndex(INT MouseX, INT MouseY);    // Check to see if a mouse press affects the control
+
+    virtual UBOOL Close();
+    virtual UBOOL KeyEvent(BYTE& iKey, BYTE& State, FLOAT Delta);   // Handle key events
+};
+
+
+struct UGUIScrollZoneBase_eventOnScrollZoneClick_Parms
+{
+    FLOAT Delta;
+};
+class XINTERFACE_API UGUIScrollZoneBase : public UGUIComponent
+{
+public:
+    FScriptDelegate __OnScrollZoneClick__Delegate GCC_PACK(4);
+    void delegateOnScrollZoneClick(FLOAT Delta)
+    {
+        UGUIScrollZoneBase_eventOnScrollZoneClick_Parms Parms;
+        Parms.Delta=Delta;
+        ProcessDelegate(XINTERFACE_OnScrollZoneClick,&__OnScrollZoneClick__Delegate,&Parms);
+    }
+    DECLARE_CLASS(UGUIScrollZoneBase,UGUIComponent,0,XInterface)
+		void Draw(UCanvas* Canvas);
+};
+
+
+class XINTERFACE_API UGUILabel : public UGUIComponent
+{
+public:
+    FStringNoInit Caption GCC_PACK(4);
+    BYTE TextAlign;
+    FColor TextColor GCC_PACK(4);
+    FColor FocusedTextColor;
+    BYTE TextStyle;
+    FStringNoInit TextFont GCC_PACK(4);
+    BITFIELD bTransparent:1 GCC_PACK(4);
+    BITFIELD bMultiLine:1;
+    BYTE VertAlign GCC_PACK(4);
+    FColor BackColor GCC_PACK(4);
+    FColor ShadowColor;
+    FLOAT ShadowOffsetX;
+    FLOAT ShadowOffsetY;
+    FColor HilightColor;
+    FLOAT HilightOffsetX;
+    FLOAT HilightOffsetY;
+    DECLARE_CLASS(UGUILabel,UGUIComponent,0,XInterface)
+        void Draw(UCanvas* Canvas);
 };
 
 
@@ -3692,6 +3434,275 @@ public:
 	UBOOL MouseHover();
 	void Draw(UCanvas* Canvas);
 	void PreDraw(UCanvas* Canvas);
+};
+
+
+class XINTERFACE_API UGUIProgressBar : public UGUIComponent
+{
+public:
+    class UMaterial* BarBack GCC_PACK(4);
+    class UMaterial* BarTop;
+    FColor BarColor;
+    FLOAT Low;
+    FLOAT High;
+    FLOAT Value;
+    FLOAT CaptionWidth;
+    BYTE CaptionAlign;
+    BYTE ValueRightAlign;
+    FStringNoInit Caption GCC_PACK(4);
+    FStringNoInit FontName;
+    FStringNoInit ValueFontName;
+    FLOAT GraphicMargin;
+    FLOAT ValueRightWidth;
+    BITFIELD bShowLow:1 GCC_PACK(4);
+    BITFIELD bShowHigh:1;
+    BITFIELD bShowValue:1;
+    INT NumDecimals GCC_PACK(4);
+    BYTE BarDirection;
+    DECLARE_CLASS(UGUIProgressBar,UGUIComponent,0,XInterface)
+	void Draw(UCanvas* Canvas);
+};
+
+
+struct UGUISlider_eventGetMarkerPosition_Parms
+{
+    FLOAT ReturnValue;
+};
+struct UGUISlider_eventOnDrawCaption_Parms
+{
+    FString ReturnValue;
+};
+struct UGUISlider_eventOnPreDrawCaption_Parms
+{
+    FLOAT X;
+    FLOAT Y;
+    FLOAT XL;
+    FLOAT YL;
+    BYTE Justification;
+    BITFIELD ReturnValue;
+};
+class XINTERFACE_API UGUISlider : public UGUIComponent
+{
+public:
+    FLOAT MinValue GCC_PACK(4);
+    FLOAT MaxValue;
+    FLOAT Value;
+    FLOAT MarkerWidth;
+    BITFIELD bIntSlider:1 GCC_PACK(4);
+    BITFIELD bShowMarker:1;
+    BITFIELD bShowCaption:1;
+    BITFIELD bDrawPercentSign:1;
+    BITFIELD bReadOnly:1;
+    BITFIELD bShowValueTooltip:1;
+    class UMaterial* FillImage GCC_PACK(4);
+    FStringNoInit CaptionStyleName;
+    FStringNoInit BarStyleName;
+    class UGUIStyles* CaptionStyle;
+    class UGUIStyles* BarStyle;
+    FScriptDelegate __OnPreDrawCaption__Delegate;
+    FScriptDelegate __OnDrawCaption__Delegate;
+    FLOAT eventGetMarkerPosition()
+    {
+        UGUISlider_eventGetMarkerPosition_Parms Parms;
+        Parms.ReturnValue=0;
+        ProcessEvent(FindFunctionChecked(XINTERFACE_GetMarkerPosition),&Parms);
+        return Parms.ReturnValue;
+    }
+    FString delegateOnDrawCaption()
+    {
+        UGUISlider_eventOnDrawCaption_Parms Parms;
+        ProcessDelegate(XINTERFACE_OnDrawCaption,&__OnDrawCaption__Delegate,&Parms);
+        return Parms.ReturnValue;
+    }
+    BITFIELD delegateOnPreDrawCaption(FLOAT& X, FLOAT& Y, FLOAT& XL, FLOAT& YL, BYTE& Justification)
+    {
+        UGUISlider_eventOnPreDrawCaption_Parms Parms;
+        Parms.ReturnValue=0;
+        Parms.X=X;
+        Parms.Y=Y;
+        Parms.XL=XL;
+        Parms.YL=YL;
+        Parms.Justification=Justification;
+        ProcessDelegate(XINTERFACE_OnPreDrawCaption,&__OnPreDrawCaption__Delegate,&Parms);
+        X=Parms.X;
+        Y=Parms.Y;
+        XL=Parms.XL;
+        YL=Parms.YL;
+        Justification=Parms.Justification;
+        return Parms.ReturnValue;
+    }
+    DECLARE_CLASS(UGUISlider,UGUIComponent,0,XInterface)
+        void Draw(UCanvas* Canvas);
+};
+
+
+struct UGUIToolTip_eventGetHeight_Parms
+{
+    class UCanvas* C;
+    FLOAT ReturnValue;
+};
+struct UGUIToolTip_eventGetWidth_Parms
+{
+    class UCanvas* C;
+    FLOAT ReturnValue;
+};
+struct UGUIToolTip_eventGetTop_Parms
+{
+    class UCanvas* C;
+    FLOAT ReturnValue;
+};
+struct UGUIToolTip_eventGetLeft_Parms
+{
+    class UCanvas* C;
+    FLOAT ReturnValue;
+};
+struct UGUIToolTip_eventUpdatePosition_Parms
+{
+    class UCanvas* C;
+};
+struct UGUIToolTip_eventHideToolTip_Parms
+{
+};
+struct UGUIToolTip_eventShowToolTip_Parms
+{
+};
+struct UGUIToolTip_eventTick_Parms
+{
+    FLOAT RealSeconds;
+};
+struct UGUIToolTip_eventLeaveArea_Parms
+{
+    BITFIELD ReturnValue;
+};
+struct UGUIToolTip_eventEnterArea_Parms
+{
+    class UGUIToolTip* ReturnValue;
+};
+class XINTERFACE_API UGUIToolTip : public UGUIComponent
+{
+public:
+    BITFIELD bResetPosition:1 GCC_PACK(4);
+    BITFIELD bTrackMouse:1;
+    BITFIELD bMultiLine:1;
+    BITFIELD bTrackInput:1;
+    FStringNoInit Text GCC_PACK(4);
+    TArrayNoInit<FString> Lines;
+    FLOAT StartTime;
+    FLOAT CurrentTime;
+    FLOAT MaxWidth;
+    FLOAT InitialDelay;
+    FLOAT ExpirationSeconds;
+    FScriptDelegate __EnterArea__Delegate;
+    FScriptDelegate __LeaveArea__Delegate;
+    FScriptDelegate __Tick__Delegate;
+    FScriptDelegate __ShowToolTip__Delegate;
+    FScriptDelegate __HideToolTip__Delegate;
+    FScriptDelegate __GetLeft__Delegate;
+    FScriptDelegate __GetTop__Delegate;
+    FScriptDelegate __GetWidth__Delegate;
+    FScriptDelegate __GetHeight__Delegate;
+    DECLARE_FUNCTION(execSetTip);
+    FLOAT delegateGetHeight(class UCanvas* C)
+    {
+        UGUIToolTip_eventGetHeight_Parms Parms;
+        Parms.ReturnValue=0;
+        Parms.C=C;
+        ProcessDelegate(XINTERFACE_GetHeight,&__GetHeight__Delegate,&Parms);
+        return Parms.ReturnValue;
+    }
+    FLOAT delegateGetWidth(class UCanvas* C)
+    {
+        UGUIToolTip_eventGetWidth_Parms Parms;
+        Parms.ReturnValue=0;
+        Parms.C=C;
+        ProcessDelegate(XINTERFACE_GetWidth,&__GetWidth__Delegate,&Parms);
+        return Parms.ReturnValue;
+    }
+    FLOAT delegateGetTop(class UCanvas* C)
+    {
+        UGUIToolTip_eventGetTop_Parms Parms;
+        Parms.ReturnValue=0;
+        Parms.C=C;
+        ProcessDelegate(XINTERFACE_GetTop,&__GetTop__Delegate,&Parms);
+        return Parms.ReturnValue;
+    }
+    FLOAT delegateGetLeft(class UCanvas* C)
+    {
+        UGUIToolTip_eventGetLeft_Parms Parms;
+        Parms.ReturnValue=0;
+        Parms.C=C;
+        ProcessDelegate(XINTERFACE_GetLeft,&__GetLeft__Delegate,&Parms);
+        return Parms.ReturnValue;
+    }
+    void eventUpdatePosition(class UCanvas* C)
+    {
+        UGUIToolTip_eventUpdatePosition_Parms Parms;
+        Parms.C=C;
+        ProcessEvent(FindFunctionChecked(XINTERFACE_UpdatePosition),&Parms);
+    }
+    void delegateHideToolTip()
+    {
+        ProcessDelegate(XINTERFACE_HideToolTip,&__HideToolTip__Delegate,NULL);
+    }
+    void delegateShowToolTip()
+    {
+        ProcessDelegate(XINTERFACE_ShowToolTip,&__ShowToolTip__Delegate,NULL);
+    }
+    void delegateTick(FLOAT RealSeconds)
+    {
+        UGUIToolTip_eventTick_Parms Parms;
+        if(IsProbing(NAME_Tick)) {
+        Parms.RealSeconds=RealSeconds;
+        ProcessDelegate(XINTERFACE_Tick,&__Tick__Delegate,&Parms);
+        }
+    }
+    BITFIELD delegateLeaveArea()
+    {
+        UGUIToolTip_eventLeaveArea_Parms Parms;
+        Parms.ReturnValue=0;
+        ProcessDelegate(XINTERFACE_LeaveArea,&__LeaveArea__Delegate,&Parms);
+        return Parms.ReturnValue;
+    }
+    class UGUIToolTip* delegateEnterArea()
+    {
+        UGUIToolTip_eventEnterArea_Parms Parms;
+        Parms.ReturnValue=0;
+        ProcessDelegate(XINTERFACE_EnterArea,&__EnterArea__Delegate,&Parms);
+        return Parms.ReturnValue;
+    }
+    DECLARE_CLASS(UGUIToolTip,UGUIComponent,0|CLASS_Config,XInterface)
+	void PreDraw( UCanvas* C );
+	void Draw( UCanvas* C );
+	void SetTip( FString& NewTip );
+};
+
+
+struct UGUIFont_eventGetFont_Parms
+{
+    INT XRes;
+    class UFont* ReturnValue;
+};
+class XINTERFACE_API UGUIFont : public UGUI
+{
+public:
+    FStringNoInit KeyName GCC_PACK(4);
+    BITFIELD bFixedSize:1 GCC_PACK(4);
+    BITFIELD bScaled:1;
+    INT NormalXRes GCC_PACK(4);
+    INT FallBackRes;
+    TArrayNoInit<FString> FontArrayNames;
+    TArrayNoInit<class UFont*> FontArrayFonts;
+    DECLARE_FUNCTION(execGetFont);
+    class UFont* eventGetFont(INT XRes)
+    {
+        UGUIFont_eventGetFont_Parms Parms;
+        Parms.ReturnValue=0;
+        Parms.XRes=XRes;
+        ProcessEvent(FindFunctionChecked(XINTERFACE_GetFont),&Parms);
+        return Parms.ReturnValue;
+    }
+    DECLARE_CLASS(UGUIFont,UGUI,0,XInterface)
+    NO_DEFAULT_CONSTRUCTOR(UGUIFont)
 };
 
 
@@ -3783,39 +3794,31 @@ public:
 };
 
 
-struct UGUIFont_eventGetFont_Parms
-{
-    INT XRes;
-    class UFont* ReturnValue;
-};
-class XINTERFACE_API UGUIFont : public UGUI
+class XINTERFACE_API UPropertyManagerBase : public UObject
 {
 public:
-    FStringNoInit KeyName GCC_PACK(4);
-    BITFIELD bFixedSize:1 GCC_PACK(4);
-    BITFIELD bScaled:1;
-    INT NormalXRes GCC_PACK(4);
-    INT FallBackRes;
-    TArrayNoInit<FString> FontArrayNames;
-    TArrayNoInit<class UFont*> FontArrayFonts;
-    DECLARE_FUNCTION(execGetFont);
-    class UFont* eventGetFont(INT XRes)
-    {
-        UGUIFont_eventGetFont_Parms Parms;
-        Parms.ReturnValue=0;
-        Parms.XRes=XRes;
-        ProcessEvent(FindFunctionChecked(XINTERFACE_GetFont),&Parms);
-        return Parms.ReturnValue;
-    }
-    DECLARE_CLASS(UGUIFont,UGUI,0,XInterface)
-    NO_DEFAULT_CONSTRUCTOR(UGUIFont)
+    class UGUIController* Parent GCC_PACK(4);
+    DECLARE_CLASS(UPropertyManagerBase,UObject,0,XInterface)
+	virtual void SetParent( UGUIController* InParent ) {}
+	virtual void SetCurrent( UObject** InCurrent )     {}
+	virtual void SetWindow( void* InWindow )           {}
+
+	virtual void Show(UBOOL bVisible) {         }
+	virtual UBOOL IsVisible()         {return 0;}
+
+	virtual void* GetSnoop() {return NULL;}
+	virtual void* GetHook()  {return NULL;}
+	virtual void* GetWindow(){return NULL;}
 };
 
 #endif
 
-AUTOGENERATE_FUNCTION(UGUIMultiComponent,-1,execFindComponentIndex);
-AUTOGENERATE_FUNCTION(UGUIMultiComponent,-1,execRemapComponents);
-AUTOGENERATE_FUNCTION(UGUIMultiComponent,-1,execInitializeControls);
+AUTOGENERATE_FUNCTION(UGUIMultiColumnList,-1,execAddedItem);
+AUTOGENERATE_FUNCTION(UGUIMultiColumnList,-1,execRemovedItem);
+AUTOGENERATE_FUNCTION(UGUIMultiColumnList,-1,execUpdatedItem);
+AUTOGENERATE_FUNCTION(UGUIMultiColumnList,-1,execSortList);
+AUTOGENERATE_FUNCTION(UGUIMultiColumnList,-1,execChangeSortOrder);
+AUTOGENERATE_FUNCTION(UGUIMultiColumnList,-1,execGetListIndex);
 AUTOGENERATE_FUNCTION(UGUIComponent,829,execSpecialHit);
 AUTOGENERATE_FUNCTION(UGUIComponent,828,execGetMenuPath);
 AUTOGENERATE_FUNCTION(UGUIComponent,827,execRelativeHeight);
@@ -3836,10 +3839,9 @@ AUTOGENERATE_FUNCTION(UGUI,-1,execGetModLogo);
 AUTOGENERATE_FUNCTION(UGUI,-1,execGetModValue);
 AUTOGENERATE_FUNCTION(UGUI,-1,execGetModList);
 AUTOGENERATE_FUNCTION(UGUI,-1,execProfile);
-AUTOGENERATE_FUNCTION(UGUIStyles,-1,execTextSize);
-AUTOGENERATE_FUNCTION(UGUIStyles,-1,execDrawText);
-AUTOGENERATE_FUNCTION(UGUIStyles,-1,execDraw);
-AUTOGENERATE_FUNCTION(UGUIFont,-1,execGetFont);
+AUTOGENERATE_FUNCTION(UGUIMultiComponent,-1,execFindComponentIndex);
+AUTOGENERATE_FUNCTION(UGUIMultiComponent,-1,execRemapComponents);
+AUTOGENERATE_FUNCTION(UGUIMultiComponent,-1,execInitializeControls);
 AUTOGENERATE_FUNCTION(UGUIController,-1,execGetMainMenuClass);
 AUTOGENERATE_FUNCTION(UGUIController,-1,execLaunchURL);
 AUTOGENERATE_FUNCTION(UGUIController,-1,execGetMapList);
@@ -3860,18 +3862,16 @@ AUTOGENERATE_FUNCTION(UGUIController,-1,execSetRenderDevice);
 AUTOGENERATE_FUNCTION(UGUIController,-1,execGetCurrentRes);
 AUTOGENERATE_FUNCTION(UGUIController,-1,execGetStyle);
 AUTOGENERATE_FUNCTION(UGUIController,-1,execGetMenuFont);
-AUTOGENERATE_FUNCTION(UGUIToolTip,-1,execSetTip);
-AUTOGENERATE_FUNCTION(UGUISplitter,-1,execSplitterUpdatePositions);
+AUTOGENERATE_FUNCTION(UGUIFont,-1,execGetFont);
 AUTOGENERATE_FUNCTION(UGUIList,-1,execSortList);
-AUTOGENERATE_FUNCTION(UGUIMultiColumnList,-1,execAddedItem);
-AUTOGENERATE_FUNCTION(UGUIMultiColumnList,-1,execRemovedItem);
-AUTOGENERATE_FUNCTION(UGUIMultiColumnList,-1,execUpdatedItem);
-AUTOGENERATE_FUNCTION(UGUIMultiColumnList,-1,execSortList);
-AUTOGENERATE_FUNCTION(UGUIMultiColumnList,-1,execChangeSortOrder);
-AUTOGENERATE_FUNCTION(UGUIMultiColumnList,-1,execGetListIndex);
+AUTOGENERATE_FUNCTION(UGUIScrollText,-1,execGetWordUnderCursor);
+AUTOGENERATE_FUNCTION(UGUISplitter,-1,execSplitterUpdatePositions);
+AUTOGENERATE_FUNCTION(UGUIStyles,-1,execTextSize);
+AUTOGENERATE_FUNCTION(UGUIStyles,-1,execDrawText);
+AUTOGENERATE_FUNCTION(UGUIStyles,-1,execDraw);
+AUTOGENERATE_FUNCTION(UGUIToolTip,-1,execSetTip);
 AUTOGENERATE_FUNCTION(UGUITreeList,-1,execSortList);
 AUTOGENERATE_FUNCTION(UGUITreeList,-1,execUpdateVisibleCount);
-AUTOGENERATE_FUNCTION(UGUIScrollText,-1,execGetWordUnderCursor);
 AUTOGENERATE_FUNCTION(AHudBase,-1,execDrawNumericWidget);
 AUTOGENERATE_FUNCTION(AHudBase,-1,execDrawSpriteWidget);
 
@@ -3886,147 +3886,150 @@ AUTOGENERATE_FUNCTION(AHudBase,-1,execDrawSpriteWidget);
 
 
 #ifdef NATIVE_DEFS_ONLY
-DECLARE_NATIVE_TYPE(XInterface,UPropertyManagerBase);
-DECLARE_NATIVE_TYPE(XInterface,UGUIMultiComponent);
+DECLARE_NATIVE_TYPE(XInterface,UGUIMultiColumnList);
+DECLARE_NATIVE_TYPE(XInterface,UGUIImage);
+DECLARE_NATIVE_TYPE(XInterface,UCoolImage);
 DECLARE_NATIVE_TYPE(XInterface,UGUIComponent);
 DECLARE_NATIVE_TYPE(XInterface,UGUI);
-DECLARE_NATIVE_TYPE(XInterface,UGUIStyles);
-DECLARE_NATIVE_TYPE(XInterface,UGUIFont);
-DECLARE_NATIVE_TYPE(XInterface,UGUIController);
-DECLARE_NATIVE_TYPE(XInterface,UStateButton);
+DECLARE_NATIVE_TYPE(XInterface,UGUIBorder);
+DECLARE_NATIVE_TYPE(XInterface,UGUIMultiComponent);
 DECLARE_NATIVE_TYPE(XInterface,UGUIButton);
-DECLARE_NATIVE_TYPE(XInterface,UGUIToolTip);
-DECLARE_NATIVE_TYPE(XInterface,UGUIContextMenu);
-DECLARE_NATIVE_TYPE(XInterface,UGUIProgressBar);
-DECLARE_NATIVE_TYPE(XInterface,UCoolImage);
-DECLARE_NATIVE_TYPE(XInterface,UGUISectionBackground);
-DECLARE_NATIVE_TYPE(XInterface,UGUIImage);
-DECLARE_NATIVE_TYPE(XInterface,UGUISlider);
-DECLARE_NATIVE_TYPE(XInterface,UGUISplitter);
-DECLARE_NATIVE_TYPE(XInterface,UGUIPanel);
-DECLARE_NATIVE_TYPE(XInterface,UGUIMenuOption);
-DECLARE_NATIVE_TYPE(XInterface,UGUIComboBox);
-DECLARE_NATIVE_TYPE(XInterface,UGUIGripButtonBase);
-DECLARE_NATIVE_TYPE(XInterface,UGUIGFXButton);
-DECLARE_NATIVE_TYPE(XInterface,UGUIScrollZoneBase);
-DECLARE_NATIVE_TYPE(XInterface,UGUIScrollButtonBase);
-DECLARE_NATIVE_TYPE(XInterface,UGUIScrollBarBase);
-DECLARE_NATIVE_TYPE(XInterface,UGUIFloatEdit);
-DECLARE_NATIVE_TYPE(XInterface,UGUINumericEdit);
-DECLARE_NATIVE_TYPE(XInterface,UGUIEditBox);
-DECLARE_NATIVE_TYPE(XInterface,UGUISpinnerButton);
+DECLARE_NATIVE_TYPE(XInterface,UGUICharacterList);
+DECLARE_NATIVE_TYPE(XInterface,UGUICircularList);
 DECLARE_NATIVE_TYPE(XInterface,UGUICheckBoxButton);
-DECLARE_NATIVE_TYPE(XInterface,UGUITabPanel);
+DECLARE_NATIVE_TYPE(XInterface,UGUIGFXButton);
+DECLARE_NATIVE_TYPE(XInterface,UGUICircularImageList);
+DECLARE_NATIVE_TYPE(XInterface,UGUIListBase);
+DECLARE_NATIVE_TYPE(XInterface,UGUIComboBox);
+DECLARE_NATIVE_TYPE(XInterface,UGUIContextMenu);
+DECLARE_NATIVE_TYPE(XInterface,UGUIController);
+DECLARE_NATIVE_TYPE(XInterface,UGUIEditBox);
+DECLARE_NATIVE_TYPE(XInterface,UGUIFloatEdit);
+DECLARE_NATIVE_TYPE(XInterface,UGUIFont);
+DECLARE_NATIVE_TYPE(XInterface,UGUINumericEdit);
+DECLARE_NATIVE_TYPE(XInterface,UGUIGripButtonBase);
+DECLARE_NATIVE_TYPE(XInterface,UGUITitleBar);
+DECLARE_NATIVE_TYPE(XInterface,UGUIHorzList);
+DECLARE_NATIVE_TYPE(XInterface,UGUIScrollBarBase);
+DECLARE_NATIVE_TYPE(XInterface,UGUIScrollButtonBase);
+DECLARE_NATIVE_TYPE(XInterface,UGUIScrollZoneBase);
+DECLARE_NATIVE_TYPE(XInterface,UGUILabel);
+DECLARE_NATIVE_TYPE(XInterface,UGUIList);
+DECLARE_NATIVE_TYPE(XInterface,UGUIVertList);
+DECLARE_NATIVE_TYPE(XInterface,UGUIListBox);
+DECLARE_NATIVE_TYPE(XInterface,UGUIListBoxBase);
+DECLARE_NATIVE_TYPE(XInterface,UGUIMenuOption);
+DECLARE_NATIVE_TYPE(XInterface,UGUIMultiColumnListBox);
+DECLARE_NATIVE_TYPE(XInterface,UGUIMultiColumnListHeader);
+DECLARE_NATIVE_TYPE(XInterface,UGUIMultiOptionList);
+DECLARE_NATIVE_TYPE(XInterface,UGUIPage);
+DECLARE_NATIVE_TYPE(XInterface,UGUIPanel);
+DECLARE_NATIVE_TYPE(XInterface,UGUIProgressBar);
+DECLARE_NATIVE_TYPE(XInterface,UGUIScrollText);
+DECLARE_NATIVE_TYPE(XInterface,UGUIScrollTextBox);
+DECLARE_NATIVE_TYPE(XInterface,UGUISectionBackground);
+DECLARE_NATIVE_TYPE(XInterface,UGUISlider);
+DECLARE_NATIVE_TYPE(XInterface,UGUISpinnerButton);
+DECLARE_NATIVE_TYPE(XInterface,UGUISplitter);
+DECLARE_NATIVE_TYPE(XInterface,UGUIStyles);
 DECLARE_NATIVE_TYPE(XInterface,UGUITabButton);
 DECLARE_NATIVE_TYPE(XInterface,UGUITabControl);
-DECLARE_NATIVE_TYPE(XInterface,UGUITitleBar);
-DECLARE_NATIVE_TYPE(XInterface,UGUIBorder);
-DECLARE_NATIVE_TYPE(XInterface,UGUILabel);
-DECLARE_NATIVE_TYPE(XInterface,UGUIPage);
-DECLARE_NATIVE_TYPE(XInterface,UGUIVertImageList);
-DECLARE_NATIVE_TYPE(XInterface,UGUIVertList);
-DECLARE_NATIVE_TYPE(XInterface,UGUIListBase);
-DECLARE_NATIVE_TYPE(XInterface,UGUICircularImageList);
-DECLARE_NATIVE_TYPE(XInterface,UGUICircularList);
-DECLARE_NATIVE_TYPE(XInterface,UMultiSelectList);
-DECLARE_NATIVE_TYPE(XInterface,UGUIList);
-DECLARE_NATIVE_TYPE(XInterface,UGUIMultiColumnListHeader);
-DECLARE_NATIVE_TYPE(XInterface,UGUICharacterList);
-DECLARE_NATIVE_TYPE(XInterface,UGUIHorzList);
-DECLARE_NATIVE_TYPE(XInterface,UGUIMultiColumnList);
+DECLARE_NATIVE_TYPE(XInterface,UGUITabPanel);
+DECLARE_NATIVE_TYPE(XInterface,UGUIToolTip);
 DECLARE_NATIVE_TYPE(XInterface,UGUITreeList);
-DECLARE_NATIVE_TYPE(XInterface,UGUIMultiOptionList);
-DECLARE_NATIVE_TYPE(XInterface,UGUIScrollText);
 DECLARE_NATIVE_TYPE(XInterface,UGUITreeListBox);
-DECLARE_NATIVE_TYPE(XInterface,UGUIListBoxBase);
-DECLARE_NATIVE_TYPE(XInterface,UGUIMultiColumnListBox);
-DECLARE_NATIVE_TYPE(XInterface,UGUIScrollTextBox);
-DECLARE_NATIVE_TYPE(XInterface,UGUIListBox);
+DECLARE_NATIVE_TYPE(XInterface,UGUIVertImageList);
 DECLARE_NATIVE_TYPE(XInterface,AHudBase);
+DECLARE_NATIVE_TYPE(XInterface,UMultiSelectList);
+DECLARE_NATIVE_TYPE(XInterface,UPropertyManagerBase);
+DECLARE_NATIVE_TYPE(XInterface,UStateButton);
 
 #define AUTO_INITIALIZE_REGISTRANTS_XINTERFACE \
-	UPropertyManagerBase::StaticClass(); \
-	UGUIMultiComponent::StaticClass(); \
-	GNativeLookupFuncs[Lookup++] = &FindXInterfaceUGUIMultiComponentNative; \
+	UGUIMultiColumnList::StaticClass(); \
+	GNativeLookupFuncs[Lookup++] = &FindXInterfaceUGUIMultiColumnListNative; \
+	UGUIImage::StaticClass(); \
+	UCoolImage::StaticClass(); \
 	UGUIComponent::StaticClass(); \
 	GNativeLookupFuncs[Lookup++] = &FindXInterfaceUGUIComponentNative; \
 	UGUI::StaticClass(); \
 	GNativeLookupFuncs[Lookup++] = &FindXInterfaceUGUINative; \
-	UGUIStyles::StaticClass(); \
-	GNativeLookupFuncs[Lookup++] = &FindXInterfaceUGUIStylesNative; \
-	UGUIFont::StaticClass(); \
-	GNativeLookupFuncs[Lookup++] = &FindXInterfaceUGUIFontNative; \
+	UGUIBorder::StaticClass(); \
+	UGUIMultiComponent::StaticClass(); \
+	GNativeLookupFuncs[Lookup++] = &FindXInterfaceUGUIMultiComponentNative; \
+	UGUIButton::StaticClass(); \
+	UGUICharacterList::StaticClass(); \
+	UGUICircularList::StaticClass(); \
+	UGUICheckBoxButton::StaticClass(); \
+	UGUIGFXButton::StaticClass(); \
+	UGUICircularImageList::StaticClass(); \
+	UGUIListBase::StaticClass(); \
+	UGUIComboBox::StaticClass(); \
+	UGUIContextMenu::StaticClass(); \
 	UGUIController::StaticClass(); \
 	GNativeLookupFuncs[Lookup++] = &FindXInterfaceUGUIControllerNative; \
-	UStateButton::StaticClass(); \
-	UGUIButton::StaticClass(); \
-	UGUIToolTip::StaticClass(); \
-	GNativeLookupFuncs[Lookup++] = &FindXInterfaceUGUIToolTipNative; \
-	UGUIContextMenu::StaticClass(); \
-	UGUIProgressBar::StaticClass(); \
-	UCoolImage::StaticClass(); \
-	UGUISectionBackground::StaticClass(); \
-	UGUIImage::StaticClass(); \
-	UGUISlider::StaticClass(); \
-	UGUISplitter::StaticClass(); \
-	GNativeLookupFuncs[Lookup++] = &FindXInterfaceUGUISplitterNative; \
-	UGUIPanel::StaticClass(); \
-	UGUIMenuOption::StaticClass(); \
-	UGUIComboBox::StaticClass(); \
-	UGUIGripButtonBase::StaticClass(); \
-	UGUIGFXButton::StaticClass(); \
-	UGUIScrollZoneBase::StaticClass(); \
-	UGUIScrollButtonBase::StaticClass(); \
-	UGUIScrollBarBase::StaticClass(); \
-	UGUIFloatEdit::StaticClass(); \
-	UGUINumericEdit::StaticClass(); \
 	UGUIEditBox::StaticClass(); \
-	UGUISpinnerButton::StaticClass(); \
-	UGUICheckBoxButton::StaticClass(); \
-	UGUITabPanel::StaticClass(); \
-	UGUITabButton::StaticClass(); \
-	UGUITabControl::StaticClass(); \
+	UGUIFloatEdit::StaticClass(); \
+	UGUIFont::StaticClass(); \
+	GNativeLookupFuncs[Lookup++] = &FindXInterfaceUGUIFontNative; \
+	UGUINumericEdit::StaticClass(); \
+	UGUIGripButtonBase::StaticClass(); \
 	UGUITitleBar::StaticClass(); \
-	UGUIBorder::StaticClass(); \
+	UGUIHorzList::StaticClass(); \
+	UGUIScrollBarBase::StaticClass(); \
+	UGUIScrollButtonBase::StaticClass(); \
+	UGUIScrollZoneBase::StaticClass(); \
 	UGUILabel::StaticClass(); \
-	UGUIPage::StaticClass(); \
-	UGUIVertImageList::StaticClass(); \
-	UGUIVertList::StaticClass(); \
-	UGUIListBase::StaticClass(); \
-	UGUICircularImageList::StaticClass(); \
-	UGUICircularList::StaticClass(); \
-	UMultiSelectList::StaticClass(); \
 	UGUIList::StaticClass(); \
 	GNativeLookupFuncs[Lookup++] = &FindXInterfaceUGUIListNative; \
+	UGUIVertList::StaticClass(); \
+	UGUIListBox::StaticClass(); \
+	UGUIListBoxBase::StaticClass(); \
+	UGUIMenuOption::StaticClass(); \
+	UGUIMultiColumnListBox::StaticClass(); \
 	UGUIMultiColumnListHeader::StaticClass(); \
-	UGUICharacterList::StaticClass(); \
-	UGUIHorzList::StaticClass(); \
-	UGUIMultiColumnList::StaticClass(); \
-	GNativeLookupFuncs[Lookup++] = &FindXInterfaceUGUIMultiColumnListNative; \
-	UGUITreeList::StaticClass(); \
-	GNativeLookupFuncs[Lookup++] = &FindXInterfaceUGUITreeListNative; \
 	UGUIMultiOptionList::StaticClass(); \
+	UGUIPage::StaticClass(); \
+	UGUIPanel::StaticClass(); \
+	UGUIProgressBar::StaticClass(); \
 	UGUIScrollText::StaticClass(); \
 	GNativeLookupFuncs[Lookup++] = &FindXInterfaceUGUIScrollTextNative; \
-	UGUITreeListBox::StaticClass(); \
-	UGUIListBoxBase::StaticClass(); \
-	UGUIMultiColumnListBox::StaticClass(); \
 	UGUIScrollTextBox::StaticClass(); \
-	UGUIListBox::StaticClass(); \
+	UGUISectionBackground::StaticClass(); \
+	UGUISlider::StaticClass(); \
+	UGUISpinnerButton::StaticClass(); \
+	UGUISplitter::StaticClass(); \
+	GNativeLookupFuncs[Lookup++] = &FindXInterfaceUGUISplitterNative; \
+	UGUIStyles::StaticClass(); \
+	GNativeLookupFuncs[Lookup++] = &FindXInterfaceUGUIStylesNative; \
+	UGUITabButton::StaticClass(); \
+	UGUITabControl::StaticClass(); \
+	UGUITabPanel::StaticClass(); \
+	UGUIToolTip::StaticClass(); \
+	GNativeLookupFuncs[Lookup++] = &FindXInterfaceUGUIToolTipNative; \
+	UGUITreeList::StaticClass(); \
+	GNativeLookupFuncs[Lookup++] = &FindXInterfaceUGUITreeListNative; \
+	UGUITreeListBox::StaticClass(); \
+	UGUIVertImageList::StaticClass(); \
 	AHudBase::StaticClass(); \
 	GNativeLookupFuncs[Lookup++] = &FindXInterfaceAHudBaseNative; \
+	UMultiSelectList::StaticClass(); \
+	UPropertyManagerBase::StaticClass(); \
+	UStateButton::StaticClass(); \
 
 #endif // NATIVE_DEFS_ONLY
 
 #ifdef NATIVES_ONLY
-NATIVE_INFO(UGUIMultiComponent) GXInterfaceUGUIMultiComponentNatives[] = 
+NATIVE_INFO(UGUIMultiColumnList) GXInterfaceUGUIMultiColumnListNatives[] = 
 { 
-	MAP_NATIVE(UGUIMultiComponent,execFindComponentIndex)
-	MAP_NATIVE(UGUIMultiComponent,execRemapComponents)
-	MAP_NATIVE(UGUIMultiComponent,execInitializeControls)
+	MAP_NATIVE(UGUIMultiColumnList,execAddedItem)
+	MAP_NATIVE(UGUIMultiColumnList,execRemovedItem)
+	MAP_NATIVE(UGUIMultiColumnList,execUpdatedItem)
+	MAP_NATIVE(UGUIMultiColumnList,execSortList)
+	MAP_NATIVE(UGUIMultiColumnList,execChangeSortOrder)
+	MAP_NATIVE(UGUIMultiColumnList,execGetListIndex)
 	{NULL,NULL}
 };
-IMPLEMENT_NATIVE_HANDLER(XInterface,UGUIMultiComponent);
+IMPLEMENT_NATIVE_HANDLER(XInterface,UGUIMultiColumnList);
 
 NATIVE_INFO(UGUIComponent) GXInterfaceUGUIComponentNatives[] = 
 { 
@@ -4060,21 +4063,14 @@ NATIVE_INFO(UGUI) GXInterfaceUGUINatives[] =
 };
 IMPLEMENT_NATIVE_HANDLER(XInterface,UGUI);
 
-NATIVE_INFO(UGUIStyles) GXInterfaceUGUIStylesNatives[] = 
+NATIVE_INFO(UGUIMultiComponent) GXInterfaceUGUIMultiComponentNatives[] = 
 { 
-	MAP_NATIVE(UGUIStyles,execTextSize)
-	MAP_NATIVE(UGUIStyles,execDrawText)
-	MAP_NATIVE(UGUIStyles,execDraw)
+	MAP_NATIVE(UGUIMultiComponent,execFindComponentIndex)
+	MAP_NATIVE(UGUIMultiComponent,execRemapComponents)
+	MAP_NATIVE(UGUIMultiComponent,execInitializeControls)
 	{NULL,NULL}
 };
-IMPLEMENT_NATIVE_HANDLER(XInterface,UGUIStyles);
-
-NATIVE_INFO(UGUIFont) GXInterfaceUGUIFontNatives[] = 
-{ 
-	MAP_NATIVE(UGUIFont,execGetFont)
-	{NULL,NULL}
-};
-IMPLEMENT_NATIVE_HANDLER(XInterface,UGUIFont);
+IMPLEMENT_NATIVE_HANDLER(XInterface,UGUIMultiComponent);
 
 NATIVE_INFO(UGUIController) GXInterfaceUGUIControllerNatives[] = 
 { 
@@ -4102,19 +4098,12 @@ NATIVE_INFO(UGUIController) GXInterfaceUGUIControllerNatives[] =
 };
 IMPLEMENT_NATIVE_HANDLER(XInterface,UGUIController);
 
-NATIVE_INFO(UGUIToolTip) GXInterfaceUGUIToolTipNatives[] = 
+NATIVE_INFO(UGUIFont) GXInterfaceUGUIFontNatives[] = 
 { 
-	MAP_NATIVE(UGUIToolTip,execSetTip)
+	MAP_NATIVE(UGUIFont,execGetFont)
 	{NULL,NULL}
 };
-IMPLEMENT_NATIVE_HANDLER(XInterface,UGUIToolTip);
-
-NATIVE_INFO(UGUISplitter) GXInterfaceUGUISplitterNatives[] = 
-{ 
-	MAP_NATIVE(UGUISplitter,execSplitterUpdatePositions)
-	{NULL,NULL}
-};
-IMPLEMENT_NATIVE_HANDLER(XInterface,UGUISplitter);
+IMPLEMENT_NATIVE_HANDLER(XInterface,UGUIFont);
 
 NATIVE_INFO(UGUIList) GXInterfaceUGUIListNatives[] = 
 { 
@@ -4123,17 +4112,35 @@ NATIVE_INFO(UGUIList) GXInterfaceUGUIListNatives[] =
 };
 IMPLEMENT_NATIVE_HANDLER(XInterface,UGUIList);
 
-NATIVE_INFO(UGUIMultiColumnList) GXInterfaceUGUIMultiColumnListNatives[] = 
+NATIVE_INFO(UGUIScrollText) GXInterfaceUGUIScrollTextNatives[] = 
 { 
-	MAP_NATIVE(UGUIMultiColumnList,execAddedItem)
-	MAP_NATIVE(UGUIMultiColumnList,execRemovedItem)
-	MAP_NATIVE(UGUIMultiColumnList,execUpdatedItem)
-	MAP_NATIVE(UGUIMultiColumnList,execSortList)
-	MAP_NATIVE(UGUIMultiColumnList,execChangeSortOrder)
-	MAP_NATIVE(UGUIMultiColumnList,execGetListIndex)
+	MAP_NATIVE(UGUIScrollText,execGetWordUnderCursor)
 	{NULL,NULL}
 };
-IMPLEMENT_NATIVE_HANDLER(XInterface,UGUIMultiColumnList);
+IMPLEMENT_NATIVE_HANDLER(XInterface,UGUIScrollText);
+
+NATIVE_INFO(UGUISplitter) GXInterfaceUGUISplitterNatives[] = 
+{ 
+	MAP_NATIVE(UGUISplitter,execSplitterUpdatePositions)
+	{NULL,NULL}
+};
+IMPLEMENT_NATIVE_HANDLER(XInterface,UGUISplitter);
+
+NATIVE_INFO(UGUIStyles) GXInterfaceUGUIStylesNatives[] = 
+{ 
+	MAP_NATIVE(UGUIStyles,execTextSize)
+	MAP_NATIVE(UGUIStyles,execDrawText)
+	MAP_NATIVE(UGUIStyles,execDraw)
+	{NULL,NULL}
+};
+IMPLEMENT_NATIVE_HANDLER(XInterface,UGUIStyles);
+
+NATIVE_INFO(UGUIToolTip) GXInterfaceUGUIToolTipNatives[] = 
+{ 
+	MAP_NATIVE(UGUIToolTip,execSetTip)
+	{NULL,NULL}
+};
+IMPLEMENT_NATIVE_HANDLER(XInterface,UGUIToolTip);
 
 NATIVE_INFO(UGUITreeList) GXInterfaceUGUITreeListNatives[] = 
 { 
@@ -4142,13 +4149,6 @@ NATIVE_INFO(UGUITreeList) GXInterfaceUGUITreeListNatives[] =
 	{NULL,NULL}
 };
 IMPLEMENT_NATIVE_HANDLER(XInterface,UGUITreeList);
-
-NATIVE_INFO(UGUIScrollText) GXInterfaceUGUIScrollTextNatives[] = 
-{ 
-	MAP_NATIVE(UGUIScrollText,execGetWordUnderCursor)
-	{NULL,NULL}
-};
-IMPLEMENT_NATIVE_HANDLER(XInterface,UGUIScrollText);
 
 NATIVE_INFO(AHudBase) GXInterfaceAHudBaseNatives[] = 
 { 
@@ -4161,61 +4161,61 @@ IMPLEMENT_NATIVE_HANDLER(XInterface,AHudBase);
 #endif // NATIVES_ONLY
 
 #ifdef VERIFY_CLASS_SIZES
-VERIFY_CLASS_SIZE_NODIE(UPropertyManagerBase)
-VERIFY_CLASS_SIZE_NODIE(UGUIMultiComponent)
+VERIFY_CLASS_SIZE_NODIE(UGUIMultiColumnList)
+VERIFY_CLASS_SIZE_NODIE(UGUIImage)
+VERIFY_CLASS_SIZE_NODIE(UCoolImage)
 VERIFY_CLASS_SIZE_NODIE(UGUIComponent)
 VERIFY_CLASS_SIZE_NODIE(UGUI)
-VERIFY_CLASS_SIZE_NODIE(UGUIStyles)
-VERIFY_CLASS_SIZE_NODIE(UGUIFont)
-VERIFY_CLASS_SIZE_NODIE(UGUIController)
-VERIFY_CLASS_SIZE_NODIE(UStateButton)
+VERIFY_CLASS_SIZE_NODIE(UGUIBorder)
+VERIFY_CLASS_SIZE_NODIE(UGUIMultiComponent)
 VERIFY_CLASS_SIZE_NODIE(UGUIButton)
-VERIFY_CLASS_SIZE_NODIE(UGUIToolTip)
-VERIFY_CLASS_SIZE_NODIE(UGUIContextMenu)
-VERIFY_CLASS_SIZE_NODIE(UGUIProgressBar)
-VERIFY_CLASS_SIZE_NODIE(UCoolImage)
-VERIFY_CLASS_SIZE_NODIE(UGUISectionBackground)
-VERIFY_CLASS_SIZE_NODIE(UGUIImage)
-VERIFY_CLASS_SIZE_NODIE(UGUISlider)
-VERIFY_CLASS_SIZE_NODIE(UGUISplitter)
-VERIFY_CLASS_SIZE_NODIE(UGUIPanel)
-VERIFY_CLASS_SIZE_NODIE(UGUIMenuOption)
-VERIFY_CLASS_SIZE_NODIE(UGUIComboBox)
-VERIFY_CLASS_SIZE_NODIE(UGUIGripButtonBase)
-VERIFY_CLASS_SIZE_NODIE(UGUIGFXButton)
-VERIFY_CLASS_SIZE_NODIE(UGUIScrollZoneBase)
-VERIFY_CLASS_SIZE_NODIE(UGUIScrollButtonBase)
-VERIFY_CLASS_SIZE_NODIE(UGUIScrollBarBase)
-VERIFY_CLASS_SIZE_NODIE(UGUIFloatEdit)
-VERIFY_CLASS_SIZE_NODIE(UGUINumericEdit)
-VERIFY_CLASS_SIZE_NODIE(UGUIEditBox)
-VERIFY_CLASS_SIZE_NODIE(UGUISpinnerButton)
+VERIFY_CLASS_SIZE_NODIE(UGUICharacterList)
+VERIFY_CLASS_SIZE_NODIE(UGUICircularList)
 VERIFY_CLASS_SIZE_NODIE(UGUICheckBoxButton)
-VERIFY_CLASS_SIZE_NODIE(UGUITabPanel)
+VERIFY_CLASS_SIZE_NODIE(UGUIGFXButton)
+VERIFY_CLASS_SIZE_NODIE(UGUICircularImageList)
+VERIFY_CLASS_SIZE_NODIE(UGUIListBase)
+VERIFY_CLASS_SIZE_NODIE(UGUIComboBox)
+VERIFY_CLASS_SIZE_NODIE(UGUIContextMenu)
+VERIFY_CLASS_SIZE_NODIE(UGUIController)
+VERIFY_CLASS_SIZE_NODIE(UGUIEditBox)
+VERIFY_CLASS_SIZE_NODIE(UGUIFloatEdit)
+VERIFY_CLASS_SIZE_NODIE(UGUIFont)
+VERIFY_CLASS_SIZE_NODIE(UGUINumericEdit)
+VERIFY_CLASS_SIZE_NODIE(UGUIGripButtonBase)
+VERIFY_CLASS_SIZE_NODIE(UGUITitleBar)
+VERIFY_CLASS_SIZE_NODIE(UGUIHorzList)
+VERIFY_CLASS_SIZE_NODIE(UGUIScrollBarBase)
+VERIFY_CLASS_SIZE_NODIE(UGUIScrollButtonBase)
+VERIFY_CLASS_SIZE_NODIE(UGUIScrollZoneBase)
+VERIFY_CLASS_SIZE_NODIE(UGUILabel)
+VERIFY_CLASS_SIZE_NODIE(UGUIList)
+VERIFY_CLASS_SIZE_NODIE(UGUIVertList)
+VERIFY_CLASS_SIZE_NODIE(UGUIListBox)
+VERIFY_CLASS_SIZE_NODIE(UGUIListBoxBase)
+VERIFY_CLASS_SIZE_NODIE(UGUIMenuOption)
+VERIFY_CLASS_SIZE_NODIE(UGUIMultiColumnListBox)
+VERIFY_CLASS_SIZE_NODIE(UGUIMultiColumnListHeader)
+VERIFY_CLASS_SIZE_NODIE(UGUIMultiOptionList)
+VERIFY_CLASS_SIZE_NODIE(UGUIPage)
+VERIFY_CLASS_SIZE_NODIE(UGUIPanel)
+VERIFY_CLASS_SIZE_NODIE(UGUIProgressBar)
+VERIFY_CLASS_SIZE_NODIE(UGUIScrollText)
+VERIFY_CLASS_SIZE_NODIE(UGUIScrollTextBox)
+VERIFY_CLASS_SIZE_NODIE(UGUISectionBackground)
+VERIFY_CLASS_SIZE_NODIE(UGUISlider)
+VERIFY_CLASS_SIZE_NODIE(UGUISpinnerButton)
+VERIFY_CLASS_SIZE_NODIE(UGUISplitter)
+VERIFY_CLASS_SIZE_NODIE(UGUIStyles)
 VERIFY_CLASS_SIZE_NODIE(UGUITabButton)
 VERIFY_CLASS_SIZE_NODIE(UGUITabControl)
-VERIFY_CLASS_SIZE_NODIE(UGUITitleBar)
-VERIFY_CLASS_SIZE_NODIE(UGUIBorder)
-VERIFY_CLASS_SIZE_NODIE(UGUILabel)
-VERIFY_CLASS_SIZE_NODIE(UGUIPage)
-VERIFY_CLASS_SIZE_NODIE(UGUIVertImageList)
-VERIFY_CLASS_SIZE_NODIE(UGUIVertList)
-VERIFY_CLASS_SIZE_NODIE(UGUIListBase)
-VERIFY_CLASS_SIZE_NODIE(UGUICircularImageList)
-VERIFY_CLASS_SIZE_NODIE(UGUICircularList)
-VERIFY_CLASS_SIZE_NODIE(UMultiSelectList)
-VERIFY_CLASS_SIZE_NODIE(UGUIList)
-VERIFY_CLASS_SIZE_NODIE(UGUIMultiColumnListHeader)
-VERIFY_CLASS_SIZE_NODIE(UGUICharacterList)
-VERIFY_CLASS_SIZE_NODIE(UGUIHorzList)
-VERIFY_CLASS_SIZE_NODIE(UGUIMultiColumnList)
+VERIFY_CLASS_SIZE_NODIE(UGUITabPanel)
+VERIFY_CLASS_SIZE_NODIE(UGUIToolTip)
 VERIFY_CLASS_SIZE_NODIE(UGUITreeList)
-VERIFY_CLASS_SIZE_NODIE(UGUIMultiOptionList)
-VERIFY_CLASS_SIZE_NODIE(UGUIScrollText)
 VERIFY_CLASS_SIZE_NODIE(UGUITreeListBox)
-VERIFY_CLASS_SIZE_NODIE(UGUIListBoxBase)
-VERIFY_CLASS_SIZE_NODIE(UGUIMultiColumnListBox)
-VERIFY_CLASS_SIZE_NODIE(UGUIScrollTextBox)
-VERIFY_CLASS_SIZE_NODIE(UGUIListBox)
+VERIFY_CLASS_SIZE_NODIE(UGUIVertImageList)
 VERIFY_CLASS_SIZE_NODIE(AHudBase)
+VERIFY_CLASS_SIZE_NODIE(UMultiSelectList)
+VERIFY_CLASS_SIZE_NODIE(UPropertyManagerBase)
+VERIFY_CLASS_SIZE_NODIE(UStateButton)
 #endif // VERIFY_CLASS_SIZES
