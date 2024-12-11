@@ -1,5 +1,37 @@
-﻿Build started 11/27/2024 6:25:20 PM.
+﻿Build started 11/27/2024 7:20:18 PM.
+     1>Project "C:\Projects\Unreal2004\D3D9Drv\Src\D3D9Drv.vcxproj" on node 8 (build target(s)).
+     1>InitializeBuildStatus:
+         Touching "..\Debug\D3D9Drv.unsuccessfulbuild".
+       ClCompile:
+         All outputs are up-to-date.
+         All outputs are up-to-date.
+       ManifestResourceCompile:
+         All outputs are up-to-date.
+     1>C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\Microsoft.CppBuild.targets(990,5): warning MSB8012: TargetPath(C:\Projects\Unreal2004\D3D9Drv\Src\..\Debug\D3D9Drv.dll) does not match the Linker's OutputFile property value (C:\Projects\Unreal2004\System\D3D9Drv.dll). This may cause your project to build incorrectly. To correct this, please make sure that $(OutDir), $(TargetName) and $(TargetExt) property values match the value specified in %(Link.OutputFile).
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"..\..\System\D3D9Drv.dll" /INCREMENTAL /NOLOGO /LIBPATH:..\..\Core\Debug /LIBPATH:..\..\Engine\Debug ..\..\DirectX9\Lib\DxGuid.lib ..\..\DirectX9\Lib\d3d9.lib ..\..\DirectX9\Lib\d3dx9.lib Core.lib Engine.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /NODEFAULTLIB:LIBCD /NODEFAULTLIB:LIBCMTD /NODEFAULTLIB:MSVCRTD /NODEFAULTLIB:LIBC /NODEFAULTLIB:LIBCMT /NODEFAULTLIB:LIBCI /MANIFEST /ManifestFile:"..\Debug\D3D9Drv.dll.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"..\Debug\D3D9Drv.pdb" /MAP:"..\..\DebugFiles\D3D9Drv.map" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"..\Debug\D3D9Drv.lib" /MACHINE:X86 /DLL ..\Debug\D3D9Drv.dll.embed.manifest.res
+         ..\Debug\D3D9Drv.obj
+         ..\Debug\D3D9MaterialState.obj
+         ..\Debug\D3D9RenderDevice.obj
+         ..\Debug\D3D9RenderInterface.obj
+         ..\Debug\D3D9RenderState.obj
+         ..\Debug\D3D9Resource.obj
+         ..\Debug\xD3D9Helper.obj
+         ..\Debug\xD3D9RenderInterface.obj /MACHINE:I386 /IGNORE:4089 
+            Creating library ..\Debug\D3D9Drv.lib and object ..\Debug\D3D9Drv.exp
+       Manifest:
+         C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\bin\mt.exe /nologo /verbose /out:"..\Debug\D3D9Drv.dll.embed.manifest" /manifest ..\Debug\D3D9Drv.dll.intermediate.manifest
+         All outputs are up-to-date.
+       LinkEmbedManifest:
+         All outputs are up-to-date.
+         D3D9Drv.vcxproj -> C:\Projects\Unreal2004\D3D9Drv\Src\..\Debug\D3D9Drv.dll
+       BscMake:
+         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\bscmake.exe /nologo /o"..\Debug\D3D9Drv.bsc" ..\Debug\D3D9Drv.sbr ..\Debug\D3D9MaterialState.sbr ..\Debug\D3D9RenderDevice.sbr ..\Debug\D3D9RenderInterface.sbr ..\Debug\D3D9RenderState.sbr ..\Debug\D3D9Resource.sbr ..\Debug\xD3D9Helper.sbr ..\Debug\xD3D9RenderInterface.sbr
+       FinalizeBuildStatus:
+         Deleting file "..\Debug\D3D9Drv.unsuccessfulbuild".
+         Touching "..\Debug\D3D9Drv.lastbuildstate".
+     1>Done Building Project "C:\Projects\Unreal2004\D3D9Drv\Src\D3D9Drv.vcxproj" (build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:00.00
+Time Elapsed 00:00:02.80

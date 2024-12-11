@@ -1,5 +1,44 @@
-﻿Build started 11/27/2024 6:25:21 PM.
+﻿Build started 11/27/2024 7:20:18 PM.
+     1>Project "C:\Projects\Unreal2004\Setup\Src\Setup.vcxproj" on node 4 (build target(s)).
+     1>InitializeBuildStatus:
+         Touching "..\Debug\Setup.unsuccessfulbuild".
+       ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I..\..\Core\Inc /I..\..\Window\Inc /I..\Inc /I. /I..\..\DirectX8\Inc\ /I..\..\metoolkit\include /ZI /nologo /W4 /WX- /Od /Oy- /D _WINDOWS /D _DEBUG /D _WIN32_IE=0x0200 /D DEBUG /D WIN32 /D UNICODE /D DO_GUARD=1 /D DO_GUARD_SLOW=0 /D DO_CHECK=1 /D DO_CHECK_SLOW=1 /D DO_STAT=1 /D DO_STAT_SLOW=0 /D DO_CLOCK=1 /D DO_CLOCK_SLOW=0 /D _VC80_UPGRADE=0x0710 /D _UNICODE /D UNICODE /GF /Gm /EHsc /MD /Zp4 /GS- /fp:precise /Zc:wchar_t /Zc:forScope /Fo"..\Debug\\" /Fd"..\Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt Setup.cpp USetupDefinition.cpp USetupDefinitionWindows.cpp
+         USetupDefinitionWindows.cpp
+     1>c:\program files (x86)\microsoft sdks\windows\v7.0a\include\winnt.h(290): error C2146: syntax error : missing ';' before identifier 'PVOID64'
+     1>c:\program files (x86)\microsoft sdks\windows\v7.0a\include\winnt.h(290): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+     1>c:\program files (x86)\microsoft sdks\windows\v7.0a\include\winnt.h(8992): error C2146: syntax error : missing ';' before identifier 'Buffer'
+     1>c:\program files (x86)\microsoft sdks\windows\v7.0a\include\winnt.h(8992): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+     1>c:\program files (x86)\microsoft sdks\windows\v7.0a\include\winnt.h(8992): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+     1>c:\projects\unreal2004\setup\src\usetupdefinitionwindows.cpp(618): error C3867: 'WDialog::EndDialogTrue': function call missing argument list; use '&WDialog::EndDialogTrue' to create a pointer to member
+     1>c:\projects\unreal2004\setup\src\usetupdefinitionwindows.cpp(619): error C3867: 'WDialog::EndDialogFalse': function call missing argument list; use '&WDialog::EndDialogFalse' to create a pointer to member
+         USetupDefinition.cpp
+     1>c:\projects\unreal2004\setup\src\usetupdefinition.cpp(478): error C3867: 'USetupDefinition::ProcessPreCopy': function call missing argument list; use '&USetupDefinition::ProcessPreCopy' to create a pointer to member
+     1>c:\projects\unreal2004\setup\src\usetupdefinition.cpp(479): error C3867: 'USetupDefinition::ProcessCopy': function call missing argument list; use '&USetupDefinition::ProcessCopy' to create a pointer to member
+     1>c:\projects\unreal2004\setup\src\usetupdefinition.cpp(480): error C3867: 'USetupDefinition::ProcessExtra': function call missing argument list; use '&USetupDefinition::ProcessExtra' to create a pointer to member
+     1>c:\projects\unreal2004\setup\src\usetupdefinition.cpp(481): error C3867: 'USetupDefinition::ProcessPostCopy': function call missing argument list; use '&USetupDefinition::ProcessPostCopy' to create a pointer to member
+     1>c:\projects\unreal2004\setup\src\usetupdefinition.cpp(510): error C3867: 'USetupDefinition::ProcessUninstallCountTotal': function call missing argument list; use '&USetupDefinition::ProcessUninstallCountTotal' to create a pointer to member
+     1>c:\projects\unreal2004\setup\src\usetupdefinition.cpp(511): error C3867: 'USetupDefinition::ProcessUninstallRemove': function call missing argument list; use '&USetupDefinition::ProcessUninstallRemove' to create a pointer to member
+         Setup.cpp
+     1>c:\program files (x86)\microsoft sdks\windows\v7.0a\include\winnt.h(290): error C2146: syntax error : missing ';' before identifier 'PVOID64'
+     1>c:\program files (x86)\microsoft sdks\windows\v7.0a\include\winnt.h(290): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+     1>c:\program files (x86)\microsoft sdks\windows\v7.0a\include\winnt.h(8992): error C2146: syntax error : missing ';' before identifier 'Buffer'
+     1>c:\program files (x86)\microsoft sdks\windows\v7.0a\include\winnt.h(8992): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+     1>c:\program files (x86)\microsoft sdks\windows\v7.0a\include\winnt.h(8992): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+     1>c:\projects\unreal2004\setup\src\setup.cpp(648): error C3867: 'WFilerPageCdFolder::OnReset': function call missing argument list; use '&WFilerPageCdFolder::OnReset' to create a pointer to member
+     1>c:\projects\unreal2004\setup\src\setup.cpp(667): error C3867: 'USetupDefinition::ProcessVerifyCd': function call missing argument list; use '&USetupDefinition::ProcessVerifyCd' to create a pointer to member
+     1>c:\projects\unreal2004\setup\src\setup.cpp(691): error C3867: 'USetupDefinition::ProcessCheckRef': function call missing argument list; use '&USetupDefinition::ProcessCheckRef' to create a pointer to member
+     1>c:\projects\unreal2004\setup\src\setup.cpp(839): error C3867: 'WFilerPageFolder::OnReset': function call missing argument list; use '&WFilerPageFolder::OnReset' to create a pointer to member
+     1>c:\projects\unreal2004\setup\src\setup.cpp(906): error C3867: 'WFilerPageFolder::OnChange': function call missing argument list; use '&WFilerPageFolder::OnChange' to create a pointer to member
+     1>c:\projects\unreal2004\setup\src\setup.cpp(1122): error C3867: 'WFilerPageWelcome::OnUserChangeLanguage': function call missing argument list; use '&WFilerPageWelcome::OnUserChangeLanguage' to create a pointer to member
+     1>c:\projects\unreal2004\setup\src\setup.cpp(1393): error C3867: 'WFilerPageAutoPlay::OnPlay': function call missing argument list; use '&WFilerPageAutoPlay::OnPlay' to create a pointer to member
+     1>c:\projects\unreal2004\setup\src\setup.cpp(1394): error C3867: 'WFilerPageAutoPlay::OnReleaseNotes': function call missing argument list; use '&WFilerPageAutoPlay::OnReleaseNotes' to create a pointer to member
+     1>c:\projects\unreal2004\setup\src\setup.cpp(1395): error C3867: 'WFilerPageAutoPlay::OnWeb': function call missing argument list; use '&WFilerPageAutoPlay::OnWeb' to create a pointer to member
+     1>c:\projects\unreal2004\setup\src\setup.cpp(1396): error C3867: 'WFilerPageAutoPlay::OnInstall': function call missing argument list; use '&WFilerPageAutoPlay::OnInstall' to create a pointer to member
+     1>c:\projects\unreal2004\setup\src\setup.cpp(1397): error C3867: 'WFilerPageAutoPlay::OnUninstall': function call missing argument list; use '&WFilerPageAutoPlay::OnUninstall' to create a pointer to member
+         Generating Code...
+     1>Done Building Project "C:\Projects\Unreal2004\Setup\Src\Setup.vcxproj" (build target(s)) -- FAILED.
 
-Build succeeded.
+Build FAILED.
 
-Time Elapsed 00:00:00.00
+Time Elapsed 00:00:02.18

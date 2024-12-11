@@ -199,6 +199,267 @@ public:
 	virtual void PostNetReceive();
 };
 
+struct ONSLAUGHT_API FCopterState
+{
+    FVector ChassisPosition GCC_PACK(4);
+    FQuat ChassisQuaternion;
+    FVector ChassisLinVel;
+    FVector ChassisAngVel;
+    BYTE ServerThrust;
+    BYTE ServerStrafe;
+    BYTE ServerRise;
+    INT ServerViewPitch GCC_PACK(4);
+    INT ServerViewYaw;
+};
+
+
+class ONSLAUGHT_API AONSChopperCraft : public AONSVehicle
+{
+public:
+    FLOAT UprightStiffness GCC_PACK(4);
+    FLOAT UprightDamping;
+    FLOAT MaxThrustForce;
+    FLOAT LongDamping;
+    FLOAT MaxStrafeForce;
+    FLOAT LatDamping;
+    FLOAT MaxRiseForce;
+    FLOAT UpDamping;
+    FLOAT TurnTorqueFactor;
+    FLOAT TurnTorqueMax;
+    FLOAT TurnDamping;
+    FLOAT MaxYawRate;
+    FLOAT PitchTorqueFactor;
+    FLOAT PitchTorqueMax;
+    FLOAT PitchDamping;
+    FLOAT RollTorqueTurnFactor;
+    FLOAT RollTorqueStrafeFactor;
+    FLOAT RollTorqueMax;
+    FLOAT RollDamping;
+    FLOAT StopThreshold;
+    FLOAT MaxRandForce;
+    FLOAT RandForceInterval;
+    FLOAT CopterMPH;
+    FLOAT TargetHeading;
+    FLOAT TargetPitch;
+    BITFIELD bHeadingInitialized:1 GCC_PACK(4);
+    FLOAT OutputThrust GCC_PACK(4);
+    FLOAT OutputStrafe;
+    FLOAT OutputRise;
+    FVector RandForce;
+    FVector RandTorque;
+    FLOAT AccumulatedTime;
+    FCopterState CopState;
+    FCopterState OldCopState;
+    FKRigidBodyState ChassisState;
+    BITFIELD bNewCopterState:1 GCC_PACK(4);
+    DECLARE_CLASS(AONSChopperCraft,AONSVehicle,0|CLASS_Config|CLASS_NativeReplication,Onslaught)
+	INT* GetOptimizedRepList(BYTE* Recent, FPropertyRetirement* Retire, INT* Ptr, UPackageMap* Map, UActorChannel* Channel);
+
+#ifdef WITH_KARMA
+	// Actor interface.
+	virtual UBOOL Tick(FLOAT DeltaTime, enum ELevelTick TickType);
+	virtual void PostNetReceive();
+
+	// SVehicle interface.
+	virtual void UpdateVehicle(FLOAT DeltaTime);
+
+	// SHover interface.
+	virtual void PackState();
+#endif
+};
+
+struct ONSLAUGHT_API FHoverCraftState
+{
+    FVector ChassisPosition GCC_PACK(4);
+    FQuat ChassisQuaternion;
+    FVector ChassisLinVel;
+    FVector ChassisAngVel;
+    BYTE ServerThrust;
+    BYTE ServerStrafe;
+    INT ServerViewPitch GCC_PACK(4);
+    INT ServerViewYaw;
+};
+
+
+class ONSLAUGHT_API AONSHoverCraft : public AONSVehicle
+{
+public:
+    TArrayNoInit<FVector> ThrusterOffsets GCC_PACK(4);
+    FLOAT HoverSoftness;
+    FLOAT HoverPenScale;
+    FLOAT HoverCheckDist;
+    FLOAT UprightStiffness;
+    FLOAT UprightDamping;
+    FLOAT MaxThrustForce;
+    FLOAT LongDamping;
+    FLOAT MaxStrafeForce;
+    FLOAT LatDamping;
+    FLOAT MaxRiseForce;
+    FLOAT UpDamping;
+    FLOAT TurnTorqueFactor;
+    FLOAT TurnTorqueMax;
+    FLOAT TurnDamping;
+    FLOAT MaxYawRate;
+    FLOAT PitchTorqueFactor;
+    FLOAT PitchTorqueMax;
+    FLOAT PitchDamping;
+    FLOAT RollTorqueTurnFactor;
+    FLOAT RollTorqueStrafeFactor;
+    FLOAT RollTorqueMax;
+    FLOAT RollDamping;
+    FLOAT StopThreshold;
+    FLOAT MaxRandForce;
+    FLOAT RandForceInterval;
+    FLOAT HoverMPH;
+    FLOAT TargetHeading;
+    FLOAT TargetPitch;
+    BITFIELD bHeadingInitialized:1 GCC_PACK(4);
+    FLOAT OutputThrust GCC_PACK(4);
+    FLOAT OutputStrafe;
+    class APawn* OldDriver;
+    FHoverCraftState HoverState;
+    FHoverCraftState OldHoverState;
+    FKRigidBodyState ChassisState;
+    BITFIELD bNewHoverState:1 GCC_PACK(4);
+    DECLARE_CLASS(AONSHoverCraft,AONSVehicle,0|CLASS_Config|CLASS_NativeReplication,Onslaught)
+	INT* GetOptimizedRepList(BYTE* Recent, FPropertyRetirement* Retire, INT* Ptr, UPackageMap* Map, UActorChannel* Channel);
+
+#ifdef WITH_KARMA
+	// Actor interface.
+	virtual UBOOL Tick(FLOAT DeltaTime, enum ELevelTick TickType);
+	virtual void PostNetReceive();
+	virtual UBOOL KRepulsorsShouldHit(AActor* Actor);
+
+	// SVehicle interface.
+	virtual void UpdateVehicle(FLOAT DeltaTime);
+
+	// SHover interface.
+	virtual void PackState();
+#endif
+};
+
+struct ONSLAUGHT_API FTreadCraftState
+{
+    FVector ChassisPosition GCC_PACK(4);
+    FQuat ChassisQuaternion;
+    FVector ChassisLinVel;
+    FVector ChassisAngVel;
+    BYTE ServerThrust;
+    BYTE ServerTurn;
+    INT ServerViewPitch GCC_PACK(4);
+    INT ServerViewYaw;
+};
+
+
+class ONSLAUGHT_API AONSTreadCraft : public AONSVehicle
+{
+public:
+    TArrayNoInit<FVector> ThrusterOffsets GCC_PACK(4);
+    FLOAT HoverSoftness;
+    FLOAT HoverPenScale;
+    FLOAT HoverCheckDist;
+    FLOAT UprightStiffness;
+    FLOAT UprightDamping;
+    FLOAT MaxThrust;
+    FLOAT MaxSteerTorque;
+    FLOAT ForwardDampFactor;
+    FLOAT TurnDampFactor;
+    FLOAT LateralDampFactor;
+    FLOAT ParkingDampFactor;
+    FLOAT SteerDampFactor;
+    FLOAT PitchTorqueFactor;
+    FLOAT PitchDampFactor;
+    FLOAT BankTorqueFactor;
+    FLOAT BankDampFactor;
+    FLOAT InvertSteeringThrottleThreshold;
+    class UMaterial* MPHMeterMaterial;
+    FLOAT MPHMeterPosX;
+    FLOAT MPHMeterPosY;
+    FLOAT MPHMeterScale;
+    FLOAT MPHMeterSizeY;
+    FLOAT BikeMPH;
+    FLOAT OutputThrust;
+    FLOAT OutputTurn;
+    FTreadCraftState TreadState;
+    FTreadCraftState OldTreadState;
+    FKRigidBodyState ChassisState;
+    BITFIELD bNewTreadState:1 GCC_PACK(4);
+    DECLARE_CLASS(AONSTreadCraft,AONSVehicle,0|CLASS_Config|CLASS_NativeReplication,Onslaught)
+	INT* GetOptimizedRepList(BYTE* Recent, FPropertyRetirement* Retire, INT* Ptr, UPackageMap* Map, UActorChannel* Channel);
+
+#ifdef WITH_KARMA
+	// Actor interface.
+	virtual UBOOL Tick(FLOAT DeltaTime, enum ELevelTick TickType);
+	virtual void PostNetReceive();
+
+	// SVehicle interface.
+	virtual void UpdateVehicle(FLOAT DeltaTime);
+
+	// SHover interface.
+	virtual void PackState();
+#endif
+};
+
+struct ONSLAUGHT_API FPlaneStateStruct
+{
+    FKRBVec ChassisPosition GCC_PACK(4);
+    FQuat ChassisQuaternion;
+    FKRBVec ChassisLinVel;
+    FKRBVec ChassisAngVel;
+    FLOAT ServerThrust;
+    FLOAT ServerStrafe;
+    FLOAT ServerRise;
+    INT ServerViewPitch;
+    INT ServerViewYaw;
+};
+
+
+class ONSLAUGHT_API AONSPlaneCraft : public AONSVehicle
+{
+public:
+    FInterpCurve LiftCoefficientCurve GCC_PACK(4);
+    FInterpCurve DragCoefficientCurve;
+    FLOAT AirFactor;
+    FLOAT MaxThrust;
+    FLOAT ThrustAcceleration;
+    BITFIELD bHoverOnGround:1 GCC_PACK(4);
+    FLOAT COMHeight GCC_PACK(4);
+    FInterpCurve HoverForceCurve;
+    FLOAT CameraSwingRatio;
+    FLOAT CameraDistance;
+    TArrayNoInit<FVector> ThrusterOffsets;
+    FLOAT HoverSoftness;
+    FLOAT HoverPenScale;
+    FLOAT HoverCheckDist;
+    FLOAT OutputThrust;
+    FLOAT OutputStrafe;
+    FLOAT OutputRise;
+    FLOAT CurrentThrust;
+    FLOAT AccumulatedTime;
+    FLOAT LastCamTime;
+    FRotator LastCamRot;
+    FLOAT PitchTorque;
+    FLOAT BankTorque;
+    FPlaneStateStruct PlaneState;
+    FPlaneStateStruct OldPlaneState;
+    FKRigidBodyState ChassisState;
+    BITFIELD bNewPlaneState:1 GCC_PACK(4);
+    DECLARE_CLASS(AONSPlaneCraft,AONSVehicle,0|CLASS_Config|CLASS_NativeReplication,Onslaught)
+	INT* GetOptimizedRepList(BYTE* Recent, FPropertyRetirement* Retire, INT* Ptr, UPackageMap* Map, UActorChannel* Channel);
+
+#ifdef WITH_KARMA
+	// Actor interface.
+	virtual UBOOL Tick(FLOAT DeltaTime, enum ELevelTick TickType);
+	virtual void PostNetReceive();
+
+	// SVehicle interface.
+	virtual void UpdateVehicle(FLOAT DeltaTime);
+
+	// SHover interface.
+	virtual void PackState();
+#endif
+};
+
 struct ONSLAUGHT_API FSCarState
 {
     FVector ChassisPosition GCC_PACK(4);
@@ -364,267 +625,6 @@ public:
 #endif
 };
 
-struct ONSLAUGHT_API FTreadCraftState
-{
-    FVector ChassisPosition GCC_PACK(4);
-    FQuat ChassisQuaternion;
-    FVector ChassisLinVel;
-    FVector ChassisAngVel;
-    BYTE ServerThrust;
-    BYTE ServerTurn;
-    INT ServerViewPitch GCC_PACK(4);
-    INT ServerViewYaw;
-};
-
-
-class ONSLAUGHT_API AONSTreadCraft : public AONSVehicle
-{
-public:
-    TArrayNoInit<FVector> ThrusterOffsets GCC_PACK(4);
-    FLOAT HoverSoftness;
-    FLOAT HoverPenScale;
-    FLOAT HoverCheckDist;
-    FLOAT UprightStiffness;
-    FLOAT UprightDamping;
-    FLOAT MaxThrust;
-    FLOAT MaxSteerTorque;
-    FLOAT ForwardDampFactor;
-    FLOAT TurnDampFactor;
-    FLOAT LateralDampFactor;
-    FLOAT ParkingDampFactor;
-    FLOAT SteerDampFactor;
-    FLOAT PitchTorqueFactor;
-    FLOAT PitchDampFactor;
-    FLOAT BankTorqueFactor;
-    FLOAT BankDampFactor;
-    FLOAT InvertSteeringThrottleThreshold;
-    class UMaterial* MPHMeterMaterial;
-    FLOAT MPHMeterPosX;
-    FLOAT MPHMeterPosY;
-    FLOAT MPHMeterScale;
-    FLOAT MPHMeterSizeY;
-    FLOAT BikeMPH;
-    FLOAT OutputThrust;
-    FLOAT OutputTurn;
-    FTreadCraftState TreadState;
-    FTreadCraftState OldTreadState;
-    FKRigidBodyState ChassisState;
-    BITFIELD bNewTreadState:1 GCC_PACK(4);
-    DECLARE_CLASS(AONSTreadCraft,AONSVehicle,0|CLASS_Config|CLASS_NativeReplication,Onslaught)
-	INT* GetOptimizedRepList(BYTE* Recent, FPropertyRetirement* Retire, INT* Ptr, UPackageMap* Map, UActorChannel* Channel);
-
-#ifdef WITH_KARMA
-	// Actor interface.
-	virtual UBOOL Tick(FLOAT DeltaTime, enum ELevelTick TickType);
-	virtual void PostNetReceive();
-
-	// SVehicle interface.
-	virtual void UpdateVehicle(FLOAT DeltaTime);
-
-	// SHover interface.
-	virtual void PackState();
-#endif
-};
-
-struct ONSLAUGHT_API FPlaneStateStruct
-{
-    FKRBVec ChassisPosition GCC_PACK(4);
-    FQuat ChassisQuaternion;
-    FKRBVec ChassisLinVel;
-    FKRBVec ChassisAngVel;
-    FLOAT ServerThrust;
-    FLOAT ServerStrafe;
-    FLOAT ServerRise;
-    INT ServerViewPitch;
-    INT ServerViewYaw;
-};
-
-
-class ONSLAUGHT_API AONSPlaneCraft : public AONSVehicle
-{
-public:
-    FInterpCurve LiftCoefficientCurve GCC_PACK(4);
-    FInterpCurve DragCoefficientCurve;
-    FLOAT AirFactor;
-    FLOAT MaxThrust;
-    FLOAT ThrustAcceleration;
-    BITFIELD bHoverOnGround:1 GCC_PACK(4);
-    FLOAT COMHeight GCC_PACK(4);
-    FInterpCurve HoverForceCurve;
-    FLOAT CameraSwingRatio;
-    FLOAT CameraDistance;
-    TArrayNoInit<FVector> ThrusterOffsets;
-    FLOAT HoverSoftness;
-    FLOAT HoverPenScale;
-    FLOAT HoverCheckDist;
-    FLOAT OutputThrust;
-    FLOAT OutputStrafe;
-    FLOAT OutputRise;
-    FLOAT CurrentThrust;
-    FLOAT AccumulatedTime;
-    FLOAT LastCamTime;
-    FRotator LastCamRot;
-    FLOAT PitchTorque;
-    FLOAT BankTorque;
-    FPlaneStateStruct PlaneState;
-    FPlaneStateStruct OldPlaneState;
-    FKRigidBodyState ChassisState;
-    BITFIELD bNewPlaneState:1 GCC_PACK(4);
-    DECLARE_CLASS(AONSPlaneCraft,AONSVehicle,0|CLASS_Config|CLASS_NativeReplication,Onslaught)
-	INT* GetOptimizedRepList(BYTE* Recent, FPropertyRetirement* Retire, INT* Ptr, UPackageMap* Map, UActorChannel* Channel);
-
-#ifdef WITH_KARMA
-	// Actor interface.
-	virtual UBOOL Tick(FLOAT DeltaTime, enum ELevelTick TickType);
-	virtual void PostNetReceive();
-
-	// SVehicle interface.
-	virtual void UpdateVehicle(FLOAT DeltaTime);
-
-	// SHover interface.
-	virtual void PackState();
-#endif
-};
-
-struct ONSLAUGHT_API FHoverCraftState
-{
-    FVector ChassisPosition GCC_PACK(4);
-    FQuat ChassisQuaternion;
-    FVector ChassisLinVel;
-    FVector ChassisAngVel;
-    BYTE ServerThrust;
-    BYTE ServerStrafe;
-    INT ServerViewPitch GCC_PACK(4);
-    INT ServerViewYaw;
-};
-
-
-class ONSLAUGHT_API AONSHoverCraft : public AONSVehicle
-{
-public:
-    TArrayNoInit<FVector> ThrusterOffsets GCC_PACK(4);
-    FLOAT HoverSoftness;
-    FLOAT HoverPenScale;
-    FLOAT HoverCheckDist;
-    FLOAT UprightStiffness;
-    FLOAT UprightDamping;
-    FLOAT MaxThrustForce;
-    FLOAT LongDamping;
-    FLOAT MaxStrafeForce;
-    FLOAT LatDamping;
-    FLOAT MaxRiseForce;
-    FLOAT UpDamping;
-    FLOAT TurnTorqueFactor;
-    FLOAT TurnTorqueMax;
-    FLOAT TurnDamping;
-    FLOAT MaxYawRate;
-    FLOAT PitchTorqueFactor;
-    FLOAT PitchTorqueMax;
-    FLOAT PitchDamping;
-    FLOAT RollTorqueTurnFactor;
-    FLOAT RollTorqueStrafeFactor;
-    FLOAT RollTorqueMax;
-    FLOAT RollDamping;
-    FLOAT StopThreshold;
-    FLOAT MaxRandForce;
-    FLOAT RandForceInterval;
-    FLOAT HoverMPH;
-    FLOAT TargetHeading;
-    FLOAT TargetPitch;
-    BITFIELD bHeadingInitialized:1 GCC_PACK(4);
-    FLOAT OutputThrust GCC_PACK(4);
-    FLOAT OutputStrafe;
-    class APawn* OldDriver;
-    FHoverCraftState HoverState;
-    FHoverCraftState OldHoverState;
-    FKRigidBodyState ChassisState;
-    BITFIELD bNewHoverState:1 GCC_PACK(4);
-    DECLARE_CLASS(AONSHoverCraft,AONSVehicle,0|CLASS_Config|CLASS_NativeReplication,Onslaught)
-	INT* GetOptimizedRepList(BYTE* Recent, FPropertyRetirement* Retire, INT* Ptr, UPackageMap* Map, UActorChannel* Channel);
-
-#ifdef WITH_KARMA
-	// Actor interface.
-	virtual UBOOL Tick(FLOAT DeltaTime, enum ELevelTick TickType);
-	virtual void PostNetReceive();
-	virtual UBOOL KRepulsorsShouldHit(AActor* Actor);
-
-	// SVehicle interface.
-	virtual void UpdateVehicle(FLOAT DeltaTime);
-
-	// SHover interface.
-	virtual void PackState();
-#endif
-};
-
-struct ONSLAUGHT_API FCopterState
-{
-    FVector ChassisPosition GCC_PACK(4);
-    FQuat ChassisQuaternion;
-    FVector ChassisLinVel;
-    FVector ChassisAngVel;
-    BYTE ServerThrust;
-    BYTE ServerStrafe;
-    BYTE ServerRise;
-    INT ServerViewPitch GCC_PACK(4);
-    INT ServerViewYaw;
-};
-
-
-class ONSLAUGHT_API AONSChopperCraft : public AONSVehicle
-{
-public:
-    FLOAT UprightStiffness GCC_PACK(4);
-    FLOAT UprightDamping;
-    FLOAT MaxThrustForce;
-    FLOAT LongDamping;
-    FLOAT MaxStrafeForce;
-    FLOAT LatDamping;
-    FLOAT MaxRiseForce;
-    FLOAT UpDamping;
-    FLOAT TurnTorqueFactor;
-    FLOAT TurnTorqueMax;
-    FLOAT TurnDamping;
-    FLOAT MaxYawRate;
-    FLOAT PitchTorqueFactor;
-    FLOAT PitchTorqueMax;
-    FLOAT PitchDamping;
-    FLOAT RollTorqueTurnFactor;
-    FLOAT RollTorqueStrafeFactor;
-    FLOAT RollTorqueMax;
-    FLOAT RollDamping;
-    FLOAT StopThreshold;
-    FLOAT MaxRandForce;
-    FLOAT RandForceInterval;
-    FLOAT CopterMPH;
-    FLOAT TargetHeading;
-    FLOAT TargetPitch;
-    BITFIELD bHeadingInitialized:1 GCC_PACK(4);
-    FLOAT OutputThrust GCC_PACK(4);
-    FLOAT OutputStrafe;
-    FLOAT OutputRise;
-    FVector RandForce;
-    FVector RandTorque;
-    FLOAT AccumulatedTime;
-    FCopterState CopState;
-    FCopterState OldCopState;
-    FKRigidBodyState ChassisState;
-    BITFIELD bNewCopterState:1 GCC_PACK(4);
-    DECLARE_CLASS(AONSChopperCraft,AONSVehicle,0|CLASS_Config|CLASS_NativeReplication,Onslaught)
-	INT* GetOptimizedRepList(BYTE* Recent, FPropertyRetirement* Retire, INT* Ptr, UPackageMap* Map, UActorChannel* Channel);
-
-#ifdef WITH_KARMA
-	// Actor interface.
-	virtual UBOOL Tick(FLOAT DeltaTime, enum ELevelTick TickType);
-	virtual void PostNetReceive();
-
-	// SVehicle interface.
-	virtual void UpdateVehicle(FLOAT DeltaTime);
-
-	// SHover interface.
-	virtual void PackState();
-#endif
-};
-
 #define UCONST_FilterFrames 5
 
 class ONSLAUGHT_API AONSWeaponPawn : public AVehicle
@@ -667,21 +667,23 @@ public:
 };
 
 
-struct AONSWeaponAmbientEmitter_eventSetEmitterStatus_Parms
+struct AONSDamagedEffect_eventUpdateDamagedEffect_Parms
 {
-    BITFIELD bEnabled;
+    BITFIELD bFlame;
+    FLOAT VelMag;
 };
-class ONSLAUGHT_API AONSWeaponAmbientEmitter : public AEmitter
+class ONSLAUGHT_API AONSDamagedEffect : public AEmitter
 {
 public:
-    void eventSetEmitterStatus(BITFIELD bEnabled)
+    void eventUpdateDamagedEffect(BITFIELD bFlame, FLOAT VelMag)
     {
-        AONSWeaponAmbientEmitter_eventSetEmitterStatus_Parms Parms;
-        Parms.bEnabled=((bEnabled) ? FIRST_BITFIELD : 0);
-        ProcessEvent(FindFunctionChecked(ONSLAUGHT_SetEmitterStatus),&Parms);
+        AONSDamagedEffect_eventUpdateDamagedEffect_Parms Parms;
+        Parms.bFlame=((bFlame) ? FIRST_BITFIELD : 0);
+        Parms.VelMag=VelMag;
+        ProcessEvent(FindFunctionChecked(ONSLAUGHT_UpdateDamagedEffect),&Parms);
     }
-    DECLARE_CLASS(AONSWeaponAmbientEmitter,AEmitter,0,Onslaught)
-    NO_DEFAULT_CONSTRUCTOR(AONSWeaponAmbientEmitter)
+    DECLARE_CLASS(AONSDamagedEffect,AEmitter,0,Onslaught)
+    NO_DEFAULT_CONSTRUCTOR(AONSDamagedEffect)
 };
 
 
@@ -712,23 +714,21 @@ public:
 };
 
 
-struct AONSDamagedEffect_eventUpdateDamagedEffect_Parms
+struct AONSWeaponAmbientEmitter_eventSetEmitterStatus_Parms
 {
-    BITFIELD bFlame;
-    FLOAT VelMag;
+    BITFIELD bEnabled;
 };
-class ONSLAUGHT_API AONSDamagedEffect : public AEmitter
+class ONSLAUGHT_API AONSWeaponAmbientEmitter : public AEmitter
 {
 public:
-    void eventUpdateDamagedEffect(BITFIELD bFlame, FLOAT VelMag)
+    void eventSetEmitterStatus(BITFIELD bEnabled)
     {
-        AONSDamagedEffect_eventUpdateDamagedEffect_Parms Parms;
-        Parms.bFlame=((bFlame) ? FIRST_BITFIELD : 0);
-        Parms.VelMag=VelMag;
-        ProcessEvent(FindFunctionChecked(ONSLAUGHT_UpdateDamagedEffect),&Parms);
+        AONSWeaponAmbientEmitter_eventSetEmitterStatus_Parms Parms;
+        Parms.bEnabled=((bEnabled) ? FIRST_BITFIELD : 0);
+        ProcessEvent(FindFunctionChecked(ONSLAUGHT_SetEmitterStatus),&Parms);
     }
-    DECLARE_CLASS(AONSDamagedEffect,AEmitter,0,Onslaught)
-    NO_DEFAULT_CONSTRUCTOR(AONSDamagedEffect)
+    DECLARE_CLASS(AONSWeaponAmbientEmitter,AEmitter,0,Onslaught)
+    NO_DEFAULT_CONSTRUCTOR(AONSWeaponAmbientEmitter)
 };
 
 
@@ -964,39 +964,39 @@ AUTOGENERATE_FUNCTION(AONSWeapon,-1,execLimitPitch);
 
 
 #ifdef NATIVE_DEFS_ONLY
-DECLARE_NATIVE_TYPE(Onslaught,AONSWheeledCraft);
-DECLARE_NATIVE_TYPE(Onslaught,AONSVehicle);
-DECLARE_NATIVE_TYPE(Onslaught,AONSRVWebProjectileLeader);
-DECLARE_NATIVE_TYPE(Onslaught,AONSRVWebProjectile);
-DECLARE_NATIVE_TYPE(Onslaught,AONSWeaponAmbientEmitter);
-DECLARE_NATIVE_TYPE(Onslaught,AONSWeaponPawn);
-DECLARE_NATIVE_TYPE(Onslaught,AONSWeapon);
-DECLARE_NATIVE_TYPE(Onslaught,AONSImpactSparks);
-DECLARE_NATIVE_TYPE(Onslaught,AONSHeadlightCorona);
-DECLARE_NATIVE_TYPE(Onslaught,AONSHeadlightProjector);
-DECLARE_NATIVE_TYPE(Onslaught,AONSDamagedEffect);
-DECLARE_NATIVE_TYPE(Onslaught,AONSTreadCraft);
-DECLARE_NATIVE_TYPE(Onslaught,AONSPlaneCraft);
-DECLARE_NATIVE_TYPE(Onslaught,AONSHoverCraft);
 DECLARE_NATIVE_TYPE(Onslaught,AONSChopperCraft);
+DECLARE_NATIVE_TYPE(Onslaught,AONSWeapon);
+DECLARE_NATIVE_TYPE(Onslaught,AONSHeadlightCorona);
+DECLARE_NATIVE_TYPE(Onslaught,AONSVehicle);
+DECLARE_NATIVE_TYPE(Onslaught,AONSDamagedEffect);
+DECLARE_NATIVE_TYPE(Onslaught,AONSHeadlightProjector);
+DECLARE_NATIVE_TYPE(Onslaught,AONSHoverCraft);
+DECLARE_NATIVE_TYPE(Onslaught,AONSTreadCraft);
+DECLARE_NATIVE_TYPE(Onslaught,AONSImpactSparks);
+DECLARE_NATIVE_TYPE(Onslaught,AONSPlaneCraft);
+DECLARE_NATIVE_TYPE(Onslaught,AONSWheeledCraft);
+DECLARE_NATIVE_TYPE(Onslaught,AONSWeaponPawn);
+DECLARE_NATIVE_TYPE(Onslaught,AONSWeaponAmbientEmitter);
+DECLARE_NATIVE_TYPE(Onslaught,AONSRVWebProjectile);
+DECLARE_NATIVE_TYPE(Onslaught,AONSRVWebProjectileLeader);
 
 #define AUTO_INITIALIZE_REGISTRANTS_ONSLAUGHT \
-	AONSWheeledCraft::StaticClass(); \
-	AONSVehicle::StaticClass(); \
-	AONSRVWebProjectileLeader::StaticClass(); \
-	AONSRVWebProjectile::StaticClass(); \
-	AONSWeaponAmbientEmitter::StaticClass(); \
-	AONSWeaponPawn::StaticClass(); \
+	AONSChopperCraft::StaticClass(); \
 	AONSWeapon::StaticClass(); \
 	GNativeLookupFuncs[Lookup++] = &FindOnslaughtAONSWeaponNative; \
-	AONSImpactSparks::StaticClass(); \
 	AONSHeadlightCorona::StaticClass(); \
-	AONSHeadlightProjector::StaticClass(); \
+	AONSVehicle::StaticClass(); \
 	AONSDamagedEffect::StaticClass(); \
-	AONSTreadCraft::StaticClass(); \
-	AONSPlaneCraft::StaticClass(); \
+	AONSHeadlightProjector::StaticClass(); \
 	AONSHoverCraft::StaticClass(); \
-	AONSChopperCraft::StaticClass(); \
+	AONSTreadCraft::StaticClass(); \
+	AONSImpactSparks::StaticClass(); \
+	AONSPlaneCraft::StaticClass(); \
+	AONSWheeledCraft::StaticClass(); \
+	AONSWeaponPawn::StaticClass(); \
+	AONSWeaponAmbientEmitter::StaticClass(); \
+	AONSRVWebProjectile::StaticClass(); \
+	AONSRVWebProjectileLeader::StaticClass(); \
 
 #endif // NATIVE_DEFS_ONLY
 
@@ -1011,19 +1011,19 @@ IMPLEMENT_NATIVE_HANDLER(Onslaught,AONSWeapon);
 #endif // NATIVES_ONLY
 
 #ifdef VERIFY_CLASS_SIZES
-VERIFY_CLASS_SIZE_NODIE(AONSWheeledCraft)
-VERIFY_CLASS_SIZE_NODIE(AONSVehicle)
-VERIFY_CLASS_SIZE_NODIE(AONSRVWebProjectileLeader)
-VERIFY_CLASS_SIZE_NODIE(AONSRVWebProjectile)
-VERIFY_CLASS_SIZE_NODIE(AONSWeaponAmbientEmitter)
-VERIFY_CLASS_SIZE_NODIE(AONSWeaponPawn)
-VERIFY_CLASS_SIZE_NODIE(AONSWeapon)
-VERIFY_CLASS_SIZE_NODIE(AONSImpactSparks)
-VERIFY_CLASS_SIZE_NODIE(AONSHeadlightCorona)
-VERIFY_CLASS_SIZE_NODIE(AONSHeadlightProjector)
-VERIFY_CLASS_SIZE_NODIE(AONSDamagedEffect)
-VERIFY_CLASS_SIZE_NODIE(AONSTreadCraft)
-VERIFY_CLASS_SIZE_NODIE(AONSPlaneCraft)
-VERIFY_CLASS_SIZE_NODIE(AONSHoverCraft)
 VERIFY_CLASS_SIZE_NODIE(AONSChopperCraft)
+VERIFY_CLASS_SIZE_NODIE(AONSWeapon)
+VERIFY_CLASS_SIZE_NODIE(AONSHeadlightCorona)
+VERIFY_CLASS_SIZE_NODIE(AONSVehicle)
+VERIFY_CLASS_SIZE_NODIE(AONSDamagedEffect)
+VERIFY_CLASS_SIZE_NODIE(AONSHeadlightProjector)
+VERIFY_CLASS_SIZE_NODIE(AONSHoverCraft)
+VERIFY_CLASS_SIZE_NODIE(AONSTreadCraft)
+VERIFY_CLASS_SIZE_NODIE(AONSImpactSparks)
+VERIFY_CLASS_SIZE_NODIE(AONSPlaneCraft)
+VERIFY_CLASS_SIZE_NODIE(AONSWheeledCraft)
+VERIFY_CLASS_SIZE_NODIE(AONSWeaponPawn)
+VERIFY_CLASS_SIZE_NODIE(AONSWeaponAmbientEmitter)
+VERIFY_CLASS_SIZE_NODIE(AONSRVWebProjectile)
+VERIFY_CLASS_SIZE_NODIE(AONSRVWebProjectileLeader)
 #endif // VERIFY_CLASS_SIZES

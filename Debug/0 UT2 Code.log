@@ -1,9 +1,12 @@
-﻿Build started 11/27/2024 6:25:20 PM.
-     1>Project "C:\Projects\Unreal2004\0 UT2 Code.vcxproj" on node 2 (clean target(s)).
-     1>CoreClean:
-         if exist system\*.u del System\*.u
-     1>Done Building Project "C:\Projects\Unreal2004\0 UT2 Code.vcxproj" (clean target(s)).
+﻿Build started 11/27/2024 7:20:21 PM.
+     1>Project "C:\Projects\Unreal2004\0 UT2 Code.vcxproj" on node 14 (build target(s)).
+     1>Build:
+         System\UccDepend.exe System\Default.ini -debug
+         'System\UccDepend.exe' is not recognized as an internal or external command,
+         operable program or batch file.
+     1>C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\Microsoft.MakeFile.Targets(38,5): error MSB3073: The command "System\UccDepend.exe System\Default.ini -debug" exited with code 9009.
+     1>Done Building Project "C:\Projects\Unreal2004\0 UT2 Code.vcxproj" (build target(s)) -- FAILED.
 
-Build succeeded.
+Build FAILED.
 
-Time Elapsed 00:00:00.13
+Time Elapsed 00:00:00.11

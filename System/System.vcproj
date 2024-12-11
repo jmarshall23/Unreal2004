@@ -193,7 +193,7 @@
 					>
 				</File>
 				<File
-					RelativePath="D3DDrv.int"
+					RelativePath="D3D9Drv.int"
 					>
 				</File>
 				<File
@@ -313,7 +313,7 @@
 					>
 				</File>
 				<File
-					RelativePath="D3DDrv.frt"
+					RelativePath="D3D9Drv.frt"
 					>
 				</File>
 				<File
@@ -405,7 +405,7 @@
 					>
 				</File>
 				<File
-					RelativePath="D3DDrv.est"
+					RelativePath="D3D9Drv.est"
 					>
 				</File>
 				<File
@@ -505,7 +505,7 @@
 					>
 				</File>
 				<File
-					RelativePath="D3DDrv.det"
+					RelativePath="D3D9Drv.det"
 					>
 				</File>
 				<File
@@ -597,7 +597,7 @@
 					>
 				</File>
 				<File
-					RelativePath="D3DDrv.itt"
+					RelativePath="D3D9Drv.itt"
 					>
 				</File>
 				<File

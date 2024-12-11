@@ -1,5 +1,78 @@
-﻿Build started 11/27/2024 6:25:21 PM.
+﻿Build started 11/27/2024 7:14:41 PM.
+     1>Project "C:\Projects\Unreal2004\Editor\Src\Editor.vcxproj" on node 6 (build target(s)).
+     1>InitializeBuildStatus:
+         Touching "..\Debug\Editor.unsuccessfulbuild".
+       ClCompile:
+         All outputs are up-to-date.
+         All outputs are up-to-date.
+       ManifestResourceCompile:
+         All outputs are up-to-date.
+     1>C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\Microsoft.CppBuild.targets(990,5): warning MSB8012: TargetPath(C:\Projects\Unreal2004\Editor\Src\..\Debug\Editor.dll) does not match the Linker's OutputFile property value (C:\Projects\Unreal2004\System\Editor.dll). This may cause your project to build incorrectly. To correct this, please make sure that $(OutDir), $(TargetName) and $(TargetExt) property values match the value specified in %(Link.OutputFile).
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"..\..\System\Editor.dll" /INCREMENTAL /NOLOGO /LIBPATH:..\..\Core\Debug /LIBPATH:..\..\Engine\Debug Core.lib Engine.lib ..\..\nvDXT\lib\nvDXTlib.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /NODEFAULTLIB:LIBCD /NODEFAULTLIB:LIBCMTD /NODEFAULTLIB:MSVCRTD /NODEFAULTLIB:LIBC /NODEFAULTLIB:LIBCMT /MANIFEST /ManifestFile:"..\Debug\Editor.dll.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"..\Debug\Editor.pdb" /MAP:"..\..\DebugFiles\Editor.map" /SUBSYSTEM:WINDOWS /TLBID:1 /BASE:"0x10200000" /DYNAMICBASE /NXCOMPAT /IMPLIB:"..\Debug\Editor.lib" /MACHINE:X86 /DLL ..\Debug\Editor.dll.embed.manifest.res
+         ..\Debug\Editor.obj
+         ..\Debug\TTFontImport.obj
+         ..\Debug\UAnalyzeBuild.obj
+         ..\Debug\UAnalyzeContentCommandlet.obj
+         ..\Debug\UBatchExportCommandlet.obj
+         ..\Debug\UBrushBuilder.obj
+         ..\Debug\UConformCommandlet.obj
+         ..\Debug\UContentCommandlets.obj
+         ..\Debug\UConvertMaterialCommandlet.obj
+         ..\Debug\UCutdownContentCommandlet.obj
+         ..\Debug\UDumpIntCommandlet.obj
+         ..\Debug\UDXTConvertCommandlet.obj
+         ..\Debug\UGroupRepairCommandlet.obj
+         ..\Debug\UMakeCommandlet.obj
+         ..\Debug\UMapConvertCommandlet.obj
+         ..\Debug\UMasterCommandlet.obj
+         ..\Debug\UnBsp.obj
+         ..\Debug\UnEdCnst.obj
+         ..\Debug\UnEdCsg.obj
+         ..\Debug\UnEdExp.obj
+         ..\Debug\UnEdFact.obj
+         ..\Debug\UnEditor.obj
+         ..\Debug\UnEdLevelStat.obj
+         ..\Debug\UnEdSrv.obj
+         ..\Debug\UnEdSrvExecImporters.obj
+         ..\Debug\UnEdTran.obj
+         ..\Debug\UnLightwaveImporter.obj
+         ..\Debug\UnMeshEd.obj
+         ..\Debug\UnMeshLP.obj
+         ..\Debug\UnParams.obj
+         ..\Debug\UnPrefab.obj
+         ..\Debug\UnScrCom.obj
+         ..\Debug\UnShadow.obj
+         ..\Debug\UnStaticMesh.obj
+         ..\Debug\UnTopics.obj
+         ..\Debug\UnVisi.obj
+         ..\Debug\UPkgCommandlet.obj
+         ..\Debug\UPS2ConvertCommandlet.obj
+         ..\Debug\URebuildCommandlet.obj
+         ..\Debug\USetNormalLODCommandlet.obj
+         ..\Debug\USoundLocCommandlet.obj
+         ..\Debug\UStripSourceCommandlet.obj
+         ..\Debug\USurfaceTypeCommandlet.obj
+         ..\Debug\UTextureInfoCommandlet.obj
+         ..\Debug\UTextureLODCommandlet.obj
+         ..\Debug\UTextureStripCommandlet.obj
+         ..\Debug\xEdInt.obj
+         ..\Debug\xObjExporters.obj
+         ..\Debug\xTextureConversions.obj
+         C:\Projects\Unreal2004\Engine\Debug\Engine.lib
+         C:\Projects\Unreal2004\Window\Debug\Window.lib /MACHINE:I386 
+            Creating library ..\Debug\Editor.lib and object ..\Debug\Editor.exp
+       Manifest:
+         C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\bin\mt.exe /nologo /verbose /out:"..\Debug\Editor.dll.embed.manifest" /manifest ..\Debug\Editor.dll.intermediate.manifest
+         All outputs are up-to-date.
+       LinkEmbedManifest:
+         All outputs are up-to-date.
+         Editor.vcxproj -> C:\Projects\Unreal2004\Editor\Src\..\Debug\Editor.dll
+       FinalizeBuildStatus:
+         Deleting file "..\Debug\Editor.unsuccessfulbuild".
+         Touching "..\Debug\Editor.lastbuildstate".
+     1>Done Building Project "C:\Projects\Unreal2004\Editor\Src\Editor.vcxproj" (build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:00.00
+Time Elapsed 00:00:01.24

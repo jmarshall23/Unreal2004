@@ -1,5 +1,59 @@
-﻿Build started 11/27/2024 6:25:21 PM.
+﻿Build started 11/27/2024 7:14:06 PM.
+     1>Project "C:\Projects\Unreal2004\Window\Src\Window.vcxproj" on node 4 (build target(s)).
+     1>InitializeBuildStatus:
+         Touching "..\Debug\Window.unsuccessfulbuild".
+       ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I. /I..\Inc /I..\..\Core\Inc /I..\..\Engine\Inc /I..\..\metoolkit\include /ZI /nologo /W4 /WX- /Od /Oy- /D "WINDOW_API=__declspec(dllexport)" /D _WINDOWS /D _DEBUG /D _WIN32_IE=0x0200 /D DEBUG /D WIN32 /D UNICODE /D DO_GUARD=1 /D DO_GUARD_SLOW=0 /D DO_CHECK=1 /D DO_CHECK_SLOW=1 /D DO_STAT=1 /D DO_STAT_SLOW=0 /D DO_CLOCK=1 /D DO_CLOCK_SLOW=0 /D _VC80_UPGRADE=0x0710 /D _WINDLL /D _UNICODE /D UNICODE /GF /Gm /EHsc /MD /Zp4 /GS- /fp:precise /Zc:wchar_t /Zc:forScope /Yc"window.h" /Fp"..\Debug\Window.pch" /Fo"..\Debug\\" /Fd"..\Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt Window.cpp
+         Window.cpp
+     1>c:\projects\unreal2004\engine\inc\uncdkey.h(85): warning C4996: '_i64tow': This function or variable may be unsafe. Consider using _i64tow_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 10.0\vc\include\stdlib.h(685) : see declaration of '_i64tow'
+         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I. /I..\Inc /I..\..\Core\Inc /I..\..\Engine\Inc /I..\..\metoolkit\include /ZI /nologo /W4 /WX- /Od /Oy- /D "WINDOW_API=__declspec(dllexport)" /D _WINDOWS /D _DEBUG /D _WIN32_IE=0x0200 /D DEBUG /D WIN32 /D UNICODE /D DO_GUARD=1 /D DO_GUARD_SLOW=0 /D DO_CHECK=1 /D DO_CHECK_SLOW=1 /D DO_STAT=1 /D DO_STAT_SLOW=0 /D DO_CLOCK=1 /D DO_CLOCK_SLOW=0 /D _VC80_UPGRADE=0x0710 /D _WINDLL /D _UNICODE /D UNICODE /GF /Gm /EHsc /MD /Zp4 /GS- /fp:precise /Zc:wchar_t /Zc:forScope /Yu"window.h" /Fp"..\Debug\Window.pch" /Fo"..\Debug\\" /Fd"..\Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt Controls.cpp Dialogs.cpp Properties.cpp Utils.cpp
+         Utils.cpp
+         Properties.cpp
+         Dialogs.cpp
+         Controls.cpp
+     1>c:\projects\unreal2004\window\src\controls.cpp(232): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 10.0\vc\include\string.h(105) : see declaration of 'strcpy'
+     1>c:\projects\unreal2004\window\src\controls.cpp(1598): warning C4996: 'strncpy': This function or variable may be unsafe. Consider using strncpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 10.0\vc\include\string.h(188) : see declaration of 'strncpy'
+     1>c:\projects\unreal2004\window\src\controls.cpp(1603): warning C4996: 'strncpy': This function or variable may be unsafe. Consider using strncpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 10.0\vc\include\string.h(188) : see declaration of 'strncpy'
+     1>c:\projects\unreal2004\window\src\controls.cpp(1613): warning C4996: 'strncat': This function or variable may be unsafe. Consider using strncat_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 10.0\vc\include\string.h(175) : see declaration of 'strncat'
+         Generating Code...
+       ResourceCompile:
+         C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\bin\rc.exe /D NDEBUG /D _VC80_UPGRADE=0x0710 /D _UNICODE /D UNICODE /l"0x0409" /IRes /nologo /fo"..\Debug\WindowRes.res" Res\WindowRes.rc 
+       ManifestResourceCompile:
+         C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\bin\rc.exe /nologo /fo"..\Debug\Window.dll.embed.manifest.res" ..\Debug\Window_manifest.rc 
+     1>C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\Microsoft.CppBuild.targets(990,5): warning MSB8012: TargetPath(C:\Projects\Unreal2004\Window\Src\..\Debug\Window.dll) does not match the Linker's OutputFile property value (C:\Projects\Unreal2004\System\Window.dll). This may cause your project to build incorrectly. To correct this, please make sure that $(OutDir), $(TargetName) and $(TargetExt) property values match the value specified in %(Link.OutputFile).
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"..\..\System\Window.dll" /INCREMENTAL /NOLOGO /LIBPATH:..\..\Core\Debug /LIBPATH:..\..\Engine\Debug comctl32.lib Core.lib Engine.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /NODEFAULTLIB:LIBCD /NODEFAULTLIB:LIBCMTD /NODEFAULTLIB:MSVCRTD /NODEFAULTLIB:LIBC /NODEFAULTLIB:LIBCMT /MANIFEST /ManifestFile:"..\Debug\Window.dll.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"..\Debug\Window.pdb" /MAP:"..\..\DebugFiles\Window.map" /SUBSYSTEM:WINDOWS /TLBID:1 /BASE:"0x11000000" /DYNAMICBASE /NXCOMPAT /IMPLIB:"..\Debug\Window.lib" /MACHINE:X86 /DLL ..\Debug\WindowRes.res
+         ..\Debug\Window.dll.embed.manifest.res
+         ..\Debug\Controls.obj
+         ..\Debug\Dialogs.obj
+         ..\Debug\Properties.obj
+         ..\Debug\Utils.obj
+         ..\Debug\Window.obj
+         C:\Projects\Unreal2004\Engine\Debug\Engine.lib /MACHINE:I386 
+            Creating library ..\Debug\Window.lib and object ..\Debug\Window.exp
+       Manifest:
+         C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\bin\mt.exe /nologo /verbose /out:"..\Debug\Window.dll.embed.manifest" /manifest ..\Debug\Window.dll.intermediate.manifest
+         C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\bin\rc.exe /nologo /fo"..\Debug\Window.dll.embed.manifest.res" ..\Debug\Window_manifest.rc 
+       LinkEmbedManifest:
+         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"..\..\System\Window.dll" /INCREMENTAL /NOLOGO /LIBPATH:..\..\Core\Debug /LIBPATH:..\..\Engine\Debug comctl32.lib Core.lib Engine.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /NODEFAULTLIB:LIBCD /NODEFAULTLIB:LIBCMTD /NODEFAULTLIB:MSVCRTD /NODEFAULTLIB:LIBC /NODEFAULTLIB:LIBCMT /MANIFEST /ManifestFile:"..\Debug\Window.dll.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"..\Debug\Window.pdb" /MAP:"..\..\DebugFiles\Window.map" /SUBSYSTEM:WINDOWS /TLBID:1 /BASE:"0x11000000" /DYNAMICBASE /NXCOMPAT /IMPLIB:"..\Debug\Window.lib" /MACHINE:X86 /DLL ..\Debug\WindowRes.res
+         ..\Debug\Window.dll.embed.manifest.res
+         ..\Debug\Controls.obj
+         ..\Debug\Dialogs.obj
+         ..\Debug\Properties.obj
+         ..\Debug\Utils.obj
+         ..\Debug\Window.obj
+         C:\Projects\Unreal2004\Engine\Debug\Engine.lib /MACHINE:I386 
+         Window.vcxproj -> C:\Projects\Unreal2004\Window\Src\..\Debug\Window.dll
+       FinalizeBuildStatus:
+         Deleting file "..\Debug\Window.unsuccessfulbuild".
+         Touching "..\Debug\Window.lastbuildstate".
+     1>Done Building Project "C:\Projects\Unreal2004\Window\Src\Window.vcxproj" (build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:00.00
+Time Elapsed 00:00:04.34

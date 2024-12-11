@@ -1,12 +1,12 @@
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.12.35521.163 d17.12
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "0 UT2 Code", "0 UT2 Code.vcxproj", "{012F6AE2-4287-43AE-9B20-F70E1260F077}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ALAudio", "ALAudio\Src\ALAudio.vcxproj", "{1A04010C-3F69-4890-B4E1-79D0CE6A35D4}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Core", "Core\Src\Core.vcxproj", "{2C15D588-1CD2-48D9-A08B-05D27C3273DD}"
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "D3DDrv", "D3DDrv\Src\D3DDrv.vcxproj", "{0943CD8E-EED4-43CE-B4AF-E9C3D753769F}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Editor", "Editor\Src\Editor.vcxproj", "{F96152CE-8D09-4F16-A1A1-A0AA006BF618}"
 EndProject
@@ -183,25 +183,6 @@ Global
 		{2C15D588-1CD2-48D9-A08B-05D27C3273DD}.SystemFiles|Win32.Build.0 = Release|Win32
 		{2C15D588-1CD2-48D9-A08B-05D27C3273DD}.UnrealScript|Win32.ActiveCfg = Release|Win32
 		{2C15D588-1CD2-48D9-A08B-05D27C3273DD}.UnrealScript|Win32.Build.0 = Release|Win32
-		{0943CD8E-EED4-43CE-B4AF-E9C3D753769F}.Debug_AMD64|Win32.ActiveCfg = Debug_AMD64|Win32
-		{0943CD8E-EED4-43CE-B4AF-E9C3D753769F}.Debug|Win32.ActiveCfg = Debug|Win32
-		{0943CD8E-EED4-43CE-B4AF-E9C3D753769F}.Debug|Win32.Build.0 = Debug|Win32
-		{0943CD8E-EED4-43CE-B4AF-E9C3D753769F}.DebugDLL|Win32.ActiveCfg = Debug_AMD64|Win32
-		{0943CD8E-EED4-43CE-B4AF-E9C3D753769F}.DebugSlow|Win32.ActiveCfg = DebugSlow|Win32
-		{0943CD8E-EED4-43CE-B4AF-E9C3D753769F}.DebugSlow|Win32.Build.0 = DebugSlow|Win32
-		{0943CD8E-EED4-43CE-B4AF-E9C3D753769F}.Profiling|Win32.ActiveCfg = Profiling|Win32
-		{0943CD8E-EED4-43CE-B4AF-E9C3D753769F}.Profiling|Win32.Build.0 = Profiling|Win32
-		{0943CD8E-EED4-43CE-B4AF-E9C3D753769F}.Release_UedDLL|Win32.ActiveCfg = Release|Win32
-		{0943CD8E-EED4-43CE-B4AF-E9C3D753769F}.Release_UedDLL|Win32.Build.0 = Release|Win32
-		{0943CD8E-EED4-43CE-B4AF-E9C3D753769F}.Release|Win32.ActiveCfg = Release|Win32
-		{0943CD8E-EED4-43CE-B4AF-E9C3D753769F}.Release|Win32.Build.0 = Release|Win32
-		{0943CD8E-EED4-43CE-B4AF-E9C3D753769F}.ReleaseDLL|Win32.ActiveCfg = ReleaseFast|Win32
-		{0943CD8E-EED4-43CE-B4AF-E9C3D753769F}.ReleaseFast|Win32.ActiveCfg = ReleaseFast|Win32
-		{0943CD8E-EED4-43CE-B4AF-E9C3D753769F}.ReleaseFast|Win32.Build.0 = ReleaseFast|Win32
-		{0943CD8E-EED4-43CE-B4AF-E9C3D753769F}.SystemFiles|Win32.ActiveCfg = Debug|Win32
-		{0943CD8E-EED4-43CE-B4AF-E9C3D753769F}.SystemFiles|Win32.Build.0 = Debug|Win32
-		{0943CD8E-EED4-43CE-B4AF-E9C3D753769F}.UnrealScript|Win32.ActiveCfg = Debug|Win32
-		{0943CD8E-EED4-43CE-B4AF-E9C3D753769F}.UnrealScript|Win32.Build.0 = Debug|Win32
 		{F96152CE-8D09-4F16-A1A1-A0AA006BF618}.Debug_AMD64|Win32.ActiveCfg = Debug_AMD64|Win32
 		{F96152CE-8D09-4F16-A1A1-A0AA006BF618}.Debug_AMD64|Win32.Build.0 = Debug_AMD64|Win32
 		{F96152CE-8D09-4F16-A1A1-A0AA006BF618}.Debug|Win32.ActiveCfg = Debug|Win32

@@ -394,7 +394,7 @@ copy c:\ut2003\System\BonusPack.u c:\UT2003Server\System\BonusPack.u
 copy c:\ut2003\System\Core.dll c:\UT2003Server\System\Core.dll
 copy c:\ut2003\System\Core.int c:\UT2003Server\System\Core.int
 copy c:\ut2003\System\Core.u c:\UT2003Server\System\Core.u
-copy c:\ut2003\System\D3DDrv.int c:\UT2003Server\System\D3DDrv.int
+copy c:\ut2003\System\D3D9Drv.int c:\UT2003Server\System\D3D9Drv.int
 copy c:\ut2003\System\Default.ini c:\UT2003Server\System\Default.ini
 copy c:\ut2003\System\DefUser.ini c:\UT2003Server\System\DefUser.ini
 copy c:\ut2003\System\Editor.dll c:\UT2003Server\System\Editor.dll

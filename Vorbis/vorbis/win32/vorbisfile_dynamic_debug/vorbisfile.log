@@ -1,5 +1,29 @@
-﻿Build started 11/27/2024 6:25:21 PM.
+﻿Build started 11/27/2024 7:14:02 PM.
+     1>Project "C:\Projects\Unreal2004\Vorbis\vorbis\win32\vorbisfile.vcxproj" on node 2 (build target(s)).
+     1>InitializeBuildStatus:
+         Touching "VorbisFile_Dynamic_Debug\vorbisfile.unsuccessfulbuild".
+       ClCompile:
+         All outputs are up-to-date.
+       ManifestResourceCompile:
+         All outputs are up-to-date.
+     1>C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\Microsoft.CppBuild.targets(990,5): warning MSB8012: TargetPath(C:\Projects\Unreal2004\Vorbis\vorbis\win32\VorbisFile_Dynamic_Debug\vorbisfile.dll) does not match the Linker's OutputFile property value (C:\Projects\Unreal2004\System\vorbisfile.dll). This may cause your project to build incorrectly. To correct this, please make sure that $(OutDir), $(TargetName) and $(TargetExt) property values match the value specified in %(Link.OutputFile).
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"..\..\..\System\vorbisfile.dll" /INCREMENTAL /NOLOGO odbc32.lib odbccp32.lib ..\..\ogg\win32\dynamic_debug\ogg_d.lib vorbis_dynamic_debug\vorbis_d.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /NODEFAULTLIB:LIBCD /NODEFAULTLIB:LIBCMTD /NODEFAULTLIB:MSVCRTD /NODEFAULTLIB:LIBC /NODEFAULTLIB:LIBCMT /DEF:"vorbisfile.def" /MANIFEST /ManifestFile:"VorbisFile_Dynamic_Debug\vorbisfile.dll.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"C:\Projects\Unreal2004\\DebugFiles\vorbisfile_d.pdb" /MAP:"C:\Projects\Unreal2004\\DebugFiles\vorbisfile.map" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"VorbisFile_Dynamic_Debug\vorbisfile_d.lib" /MACHINE:X86 /DLL VorbisFile_Dynamic_Debug\vorbisfile.dll.embed.manifest.res
+         VorbisFile_Dynamic_Debug\vorbisfile.obj
+         C:\Projects\Unreal2004\Vorbis\ogg\win32\Dynamic_Debug\ogg_d.lib
+         C:\Projects\Unreal2004\Vorbis\vorbis\win32\Vorbis_Dynamic_Debug\vorbis_d.lib /MACHINE:I386 
+            Creating library VorbisFile_Dynamic_Debug\vorbisfile_d.lib and object VorbisFile_Dynamic_Debug\vorbisfile_d.exp
+       Manifest:
+         C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\bin\mt.exe /nologo /verbose /out:"VorbisFile_Dynamic_Debug\vorbisfile.dll.embed.manifest" /manifest VorbisFile_Dynamic_Debug\vorbisfile.dll.intermediate.manifest
+         All outputs are up-to-date.
+       LinkEmbedManifest:
+         All outputs are up-to-date.
+         vorbisfile.vcxproj -> C:\Projects\Unreal2004\Vorbis\vorbis\win32\VorbisFile_Dynamic_Debug\vorbisfile.dll
+       FinalizeBuildStatus:
+         Deleting file "VorbisFile_Dynamic_Debug\vorbisfile.unsuccessfulbuild".
+         Touching "VorbisFile_Dynamic_Debug\vorbisfile.lastbuildstate".
+     1>Done Building Project "C:\Projects\Unreal2004\Vorbis\vorbis\win32\vorbisfile.vcxproj" (build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:00.00
+Time Elapsed 00:00:00.38

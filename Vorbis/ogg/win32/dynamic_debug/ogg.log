@@ -1,5 +1,30 @@
-﻿Build started 11/27/2024 6:25:21 PM.
+﻿Build started 11/27/2024 7:14:00 PM.
+     1>Project "C:\Projects\Unreal2004\Vorbis\ogg\win32\ogg.vcxproj" on node 2 (build target(s)).
+     1>InitializeBuildStatus:
+         Touching "Dynamic_Debug\ogg.unsuccessfulbuild".
+       ClCompile:
+         All outputs are up-to-date.
+       ManifestResourceCompile:
+         All outputs are up-to-date.
+     1>C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\Microsoft.CppBuild.targets(990,5): warning MSB8012: TargetPath(C:\Projects\Unreal2004\Vorbis\ogg\win32\Dynamic_Debug\ogg.dll) does not match the Linker's OutputFile property value (C:\Projects\Unreal2004\System\ogg.dll). This may cause your project to build incorrectly. To correct this, please make sure that $(OutDir), $(TargetName) and $(TargetExt) property values match the value specified in %(Link.OutputFile).
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"..\..\..\System\ogg.dll" /INCREMENTAL /NOLOGO odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /NODEFAULTLIB:LIBCD /NODEFAULTLIB:LIBCMTD /NODEFAULTLIB:MSVCRTD /NODEFAULTLIB:LIBC /NODEFAULTLIB:LIBCMT /DEF:"ogg.def" /MANIFEST /ManifestFile:"Dynamic_Debug\ogg.dll.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"C:\Projects\Unreal2004\\DebugFiles\ogg_d.pdb" /MAP:"C:\Projects\Unreal2004\\DebugFiles\ogg.map" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"Dynamic_Debug\ogg_d.lib" /MACHINE:X86 /DLL Dynamic_Debug\ogg.dll.embed.manifest.res
+         Dynamic_Debug\bitwise.obj
+         Dynamic_Debug\framing.obj /MACHINE:I386 
+            Creating library Dynamic_Debug\ogg_d.lib and object Dynamic_Debug\ogg_d.exp
+       Manifest:
+         C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\bin\mt.exe /nologo /verbose /out:"Dynamic_Debug\ogg.dll.embed.manifest" /manifest Dynamic_Debug\ogg.dll.intermediate.manifest
+         All outputs are up-to-date.
+       LinkEmbedManifest:
+         All outputs are up-to-date.
+         ogg.vcxproj -> C:\Projects\Unreal2004\Vorbis\ogg\win32\Dynamic_Debug\ogg.dll
+       BscMake:
+         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\bscmake.exe /nologo /o"Dynamic_Debug\ogg.bsc" Dynamic_Debug\bitwise.sbr Dynamic_Debug\framing.sbr
+       FinalizeBuildStatus:
+         Deleting file "Dynamic_Debug\ogg.unsuccessfulbuild".
+         Touching "Dynamic_Debug\ogg.lastbuildstate".
+     1>Done Building Project "C:\Projects\Unreal2004\Vorbis\ogg\win32\ogg.vcxproj" (build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:00.00
+Time Elapsed 00:00:00.67

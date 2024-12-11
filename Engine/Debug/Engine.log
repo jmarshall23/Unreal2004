@@ -1,5 +1,26 @@
-﻿Build started 11/27/2024 6:25:21 PM.
+﻿Build started 11/29/2024 11:53:10 AM.
+     1>Project "C:\Projects\Unreal2004\Engine\Src\Engine.vcxproj" on node 2 (build target(s)).
+     1>InitializeBuildStatus:
+         Creating "..\Debug\Engine.unsuccessfulbuild" because "AlwaysCreate" was specified.
+       ClCompile:
+         All outputs are up-to-date.
+         All outputs are up-to-date.
+         All outputs are up-to-date.
+         All outputs are up-to-date.
+       ManifestResourceCompile:
+         All outputs are up-to-date.
+     1>C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\Microsoft.CppBuild.targets(990,5): warning MSB8012: TargetPath(C:\Projects\Unreal2004\Engine\Src\..\Debug\Engine.dll) does not match the Linker's OutputFile property value (C:\Projects\Unreal2004\System\Engine.dll). This may cause your project to build incorrectly. To correct this, please make sure that $(OutDir), $(TargetName) and $(TargetExt) property values match the value specified in %(Link.OutputFile).
+       Link:
+         All outputs are up-to-date.
+       Manifest:
+         All outputs are up-to-date.
+       BscMake:
+         All outputs are up-to-date.
+       FinalizeBuildStatus:
+         Deleting file "..\Debug\Engine.unsuccessfulbuild".
+         Touching "..\Debug\Engine.lastbuildstate".
+     1>Done Building Project "C:\Projects\Unreal2004\Engine\Src\Engine.vcxproj" (build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:00.00
+Time Elapsed 00:00:00.22

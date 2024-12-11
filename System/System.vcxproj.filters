@@ -100,7 +100,7 @@
     <None Include="Core.int">
       <Filter>Localization\INT</Filter>
     </None>
-    <None Include="D3DDrv.int">
+    <None Include="D3D9Drv.int">
       <Filter>Localization\INT</Filter>
     </None>
     <None Include="Editor.int">
@@ -187,7 +187,7 @@
     <None Include="Core.frt">
       <Filter>Localization\frt</Filter>
     </None>
-    <None Include="D3DDrv.frt">
+    <None Include="D3D9Drv.frt">
       <Filter>Localization\frt</Filter>
     </None>
     <None Include="Editor.frt">
@@ -253,7 +253,7 @@
     <None Include="Core.est">
       <Filter>Localization\est</Filter>
     </None>
-    <None Include="D3DDrv.est">
+    <None Include="D3D9Drv.est">
       <Filter>Localization\est</Filter>
     </None>
     <None Include="Editor.est">
@@ -325,7 +325,7 @@
     <None Include="Core.det">
       <Filter>Localization\det</Filter>
     </None>
-    <None Include="D3DDrv.det">
+    <None Include="D3D9Drv.det">
       <Filter>Localization\det</Filter>
     </None>
     <None Include="Editor.det">
@@ -391,7 +391,7 @@
     <None Include="Core.itt">
       <Filter>Localization\itt</Filter>
     </None>
-    <None Include="D3DDrv.itt">
+    <None Include="D3D9Drv.itt">
       <Filter>Localization\itt</Filter>
     </None>
     <None Include="Editor.itt">

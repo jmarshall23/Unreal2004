@@ -1,5 +1,16 @@
-﻿Build started 11/27/2024 6:25:20 PM.
+﻿Build started 11/27/2024 7:20:18 PM.
+     1>Project "C:\Projects\Unreal2004\GUI2K4\GUI2K4.vcxproj" on node 4 (build target(s)).
+     1>InitializeBuildStatus:
+         Touching "Debug\GUI2K4.unsuccessfulbuild".
+       ManifestResourceCompile:
+         All outputs are up-to-date.
+     1>C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\Microsoft.CppBuild.targets(990,5): warning MSB8012: TargetPath(C:\Projects\Unreal2004\GUI2K4\Debug\GUI2K4.dll) does not match the Linker's OutputFile property value (C:\Projects\Unreal2004\System\GUI2K4.dll). This may cause your project to build incorrectly. To correct this, please make sure that $(OutDir), $(TargetName) and $(TargetExt) property values match the value specified in %(Link.OutputFile).
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"..\System\GUI2K4.dll" /INCREMENTAL /NOLOGO /LIBPATH:..\Core\Debug /LIBPATH:..\Engine\Debug /LIBPATH:..\XGame\Debug /LIBPATH:..\IpDrv\Debug Core.lib Engine.lib XGame.lib IpDrv.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /NODEFAULTLIB:LIBCD /NODEFAULTLIB:LIBCMTD /NODEFAULTLIB:MSVCRTD /NODEFAULTLIB:LIBC /NODEFAULTLIB:LIBCMT /MANIFEST /ManifestFile:"Debug\GUI2K4.dll.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"Debug\GUI2K4.pdb" /MAP:"..\DebugFiles\GUI2K4.map" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"Debug\GUI2K4.lib" /MACHINE:X86 /DLL Debug\GUI2K4.dll.embed.manifest.res /MACHINE:I386 
+     1>LINK : error LNK2001: unresolved external symbol __DllMainCRTStartup@12
+     1>..\System\GUI2K4.dll : fatal error LNK1120: 1 unresolved externals
+     1>Done Building Project "C:\Projects\Unreal2004\GUI2K4\GUI2K4.vcxproj" (build target(s)) -- FAILED.
 
-Build succeeded.
+Build FAILED.
 
-Time Elapsed 00:00:00.00
+Time Elapsed 00:00:00.17

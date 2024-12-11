@@ -1,5 +1,77 @@
-﻿Build started 11/27/2024 6:25:21 PM.
+﻿Build started 11/27/2024 7:20:19 PM.
+     1>Project "C:\Projects\Unreal2004\UccDepend\UccDepend.vcxproj" on node 16 (build target(s)).
+     1>InitializeBuildStatus:
+         Touching "Debug\UccDepend.unsuccessfulbuild".
+       ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I..\..\metoolkit\include /ZI /nologo /W3 /WX /Od /Oy- /D _CONSOLE /D _DEBUG /D WIN32 /D DO_GUARD=1 /D DO_GUARD_SLOW=0 /D DO_CHECK=1 /D DO_CHECK_SLOW=1 /D DO_STAT=1 /D DO_STAT_SLOW=0 /D DO_CLOCK=1 /D DO_CLOCK_SLOW=0 /D _VC80_UPGRADE=0x0710 /D _MBCS /GF /Gm /EHsc /MD /Zp4 /GS- /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt Source\UccDepend.cpp
+         UccDepend.cpp
+     1>c:\projects\unreal2004\uccdepend\source\uccdepend.cpp(33): error C2220: warning treated as error - no 'object' file generated
+     1>c:\projects\unreal2004\uccdepend\source\uccdepend.cpp(33): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 10.0\vc\include\string.h(105) : see declaration of 'strcpy'
+     1>c:\projects\unreal2004\uccdepend\source\uccdepend.cpp(34): warning C4996: 'strcat': This function or variable may be unsafe. Consider using strcat_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 10.0\vc\include\string.h(110) : see declaration of 'strcat'
+     1>c:\projects\unreal2004\uccdepend\source\uccdepend.cpp(35): warning C4996: 'strcat': This function or variable may be unsafe. Consider using strcat_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 10.0\vc\include\string.h(110) : see declaration of 'strcat'
+     1>c:\projects\unreal2004\uccdepend\source\uccdepend.cpp(89): warning C4996: 'stricmp': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _stricmp. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 10.0\vc\include\string.h(246) : see declaration of 'stricmp'
+     1>c:\projects\unreal2004\uccdepend\source\uccdepend.cpp(96): warning C4996: 'stricmp': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _stricmp. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 10.0\vc\include\string.h(246) : see declaration of 'stricmp'
+     1>c:\projects\unreal2004\uccdepend\source\uccdepend.cpp(113): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 10.0\vc\include\string.h(105) : see declaration of 'strcpy'
+     1>c:\projects\unreal2004\uccdepend\source\uccdepend.cpp(114): warning C4996: 'strcat': This function or variable may be unsafe. Consider using strcat_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 10.0\vc\include\string.h(110) : see declaration of 'strcat'
+     1>c:\projects\unreal2004\uccdepend\source\uccdepend.cpp(115): warning C4996: 'strcat': This function or variable may be unsafe. Consider using strcat_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 10.0\vc\include\string.h(110) : see declaration of 'strcat'
+     1>c:\projects\unreal2004\uccdepend\source\uccdepend.cpp(133): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 10.0\vc\include\string.h(105) : see declaration of 'strcpy'
+     1>c:\projects\unreal2004\uccdepend\source\uccdepend.cpp(134): warning C4996: 'strcat': This function or variable may be unsafe. Consider using strcat_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 10.0\vc\include\string.h(110) : see declaration of 'strcat'
+     1>c:\projects\unreal2004\uccdepend\source\uccdepend.cpp(186): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 10.0\vc\include\string.h(105) : see declaration of 'strcpy'
+     1>c:\projects\unreal2004\uccdepend\source\uccdepend.cpp(187): warning C4996: 'strcat': This function or variable may be unsafe. Consider using strcat_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 10.0\vc\include\string.h(110) : see declaration of 'strcat'
+     1>c:\projects\unreal2004\uccdepend\source\uccdepend.cpp(188): warning C4996: 'strcat': This function or variable may be unsafe. Consider using strcat_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 10.0\vc\include\string.h(110) : see declaration of 'strcat'
+     1>c:\projects\unreal2004\uccdepend\source\uccdepend.cpp(199): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 10.0\vc\include\string.h(105) : see declaration of 'strcpy'
+     1>c:\projects\unreal2004\uccdepend\source\uccdepend.cpp(200): warning C4996: 'strcat': This function or variable may be unsafe. Consider using strcat_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 10.0\vc\include\string.h(110) : see declaration of 'strcat'
+     1>c:\projects\unreal2004\uccdepend\source\uccdepend.cpp(201): warning C4996: 'strcat': This function or variable may be unsafe. Consider using strcat_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 10.0\vc\include\string.h(110) : see declaration of 'strcat'
+     1>c:\projects\unreal2004\uccdepend\source\uccdepend.cpp(202): warning C4996: 'strcat': This function or variable may be unsafe. Consider using strcat_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 10.0\vc\include\string.h(110) : see declaration of 'strcat'
+     1>c:\projects\unreal2004\uccdepend\source\uccdepend.cpp(230): warning C4996: 'getcwd': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _getcwd. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 10.0\vc\include\direct.h(117) : see declaration of 'getcwd'
+     1>c:\projects\unreal2004\uccdepend\source\uccdepend.cpp(241): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 10.0\vc\include\stdio.h(234) : see declaration of 'fopen'
+     1>c:\projects\unreal2004\uccdepend\source\uccdepend.cpp(243): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 10.0\vc\include\string.h(105) : see declaration of 'strcpy'
+     1>c:\projects\unreal2004\uccdepend\source\uccdepend.cpp(250): warning C4996: 'stricmp': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _stricmp. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 10.0\vc\include\string.h(246) : see declaration of 'stricmp'
+     1>c:\projects\unreal2004\uccdepend\source\uccdepend.cpp(253): warning C4996: 'stricmp': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _stricmp. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 10.0\vc\include\string.h(246) : see declaration of 'stricmp'
+     1>c:\projects\unreal2004\uccdepend\source\uccdepend.cpp(258): warning C4996: '_strlwr': This function or variable may be unsafe. Consider using _strlwr_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 10.0\vc\include\string.h(164) : see declaration of '_strlwr'
+     1>c:\projects\unreal2004\uccdepend\source\uccdepend.cpp(261): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 10.0\vc\include\stdio.h(234) : see declaration of 'fopen'
+     1>c:\projects\unreal2004\uccdepend\source\uccdepend.cpp(263): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 10.0\vc\include\string.h(105) : see declaration of 'strcpy'
+     1>c:\projects\unreal2004\uccdepend\source\uccdepend.cpp(265): warning C4996: 'stricmp': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _stricmp. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 10.0\vc\include\string.h(246) : see declaration of 'stricmp'
+     1>c:\projects\unreal2004\uccdepend\source\uccdepend.cpp(267): warning C4996: 'strcat': This function or variable may be unsafe. Consider using strcat_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 10.0\vc\include\string.h(110) : see declaration of 'strcat'
+     1>c:\projects\unreal2004\uccdepend\source\uccdepend.cpp(268): warning C4996: 'strcat': This function or variable may be unsafe. Consider using strcat_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 10.0\vc\include\string.h(110) : see declaration of 'strcat'
+     1>c:\projects\unreal2004\uccdepend\source\uccdepend.cpp(281): warning C4996: 'chdir': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _chdir. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 10.0\vc\include\direct.h(123) : see declaration of 'chdir'
+     1>c:\projects\unreal2004\uccdepend\source\uccdepend.cpp(282): warning C4996: 'getcwd': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _getcwd. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 10.0\vc\include\direct.h(117) : see declaration of 'getcwd'
+     1>c:\projects\unreal2004\uccdepend\source\uccdepend.cpp(286): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 10.0\vc\include\stdio.h(234) : see declaration of 'fopen'
+     1>c:\projects\unreal2004\uccdepend\source\uccdepend.cpp(311): warning C4996: 'strnicmp': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _strnicmp. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 10.0\vc\include\string.h(248) : see declaration of 'strnicmp'
+     1>Done Building Project "C:\Projects\Unreal2004\UccDepend\UccDepend.vcxproj" (build target(s)) -- FAILED.
 
-Build succeeded.
+Build FAILED.
 
-Time Elapsed 00:00:00.00
+Time Elapsed 00:00:00.33

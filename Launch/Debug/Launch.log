@@ -1,5 +1,42 @@
-﻿Build started 11/27/2024 6:25:21 PM.
+﻿Build started 11/27/2024 7:24:40 PM.
+     1>Project "C:\Projects\Unreal2004\Launch\Src\Launch.vcxproj" on node 2 (build target(s)).
+     1>InitializeBuildStatus:
+         Creating "..\Debug\Launch.unsuccessfulbuild" because "AlwaysCreate" was specified.
+       ClCompile:
+         All outputs are up-to-date.
+         All outputs are up-to-date.
+       ResourceCompile:
+         All outputs are up-to-date.
+       ManifestResourceCompile:
+         All outputs are up-to-date.
+     1>C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\Microsoft.CppBuild.targets(990,5): warning MSB8012: TargetPath(C:\Projects\Unreal2004\Launch\Src\..\Debug\Launch.exe) does not match the Linker's OutputFile property value (C:\Projects\Unreal2004\System\UT2004.exe). This may cause your project to build incorrectly. To correct this, please make sure that $(OutDir), $(TargetName) and $(TargetExt) property values match the value specified in %(Link.OutputFile).
+     1>C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\Microsoft.CppBuild.targets(992,5): warning MSB8012: TargetName(Launch) does not match the Linker's OutputFile property value (UT2004). This may cause your project to build incorrectly. To correct this, please make sure that $(OutDir), $(TargetName) and $(TargetExt) property values match the value specified in %(Link.OutputFile).
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"..\..\System\UT2004.exe" /INCREMENTAL /NOLOGO /LIBPATH:..\..\Core\Debug /LIBPATH:..\..\Engine\Debug /LIBPATH:..\..\Window\Debug /LIBPATH:..\..\zlib\Debug Dbghelp.lib Comdlg32.lib Core.lib Engine.lib Window.lib ..\..\DirectX8\Lib\DxGuid.lib ..\..\DirectX8\Lib\d3d8.lib ..\..\DirectX8\Lib\d3dx8.lib ..\..\DirectX8\Lib\ddraw.lib wbemuuid.lib comsupp.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /NODEFAULTLIB:LIBCD /NODEFAULTLIB:LIBCMTD /NODEFAULTLIB:MSVCRTD /NODEFAULTLIB:LIBC /NODEFAULTLIB:LIBCMT /MANIFEST /ManifestFile:"..\Debug\Launch.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"..\Debug\UT2.pdb" /MAP:"..\..\DebugFiles\UT2003.map" /SUBSYSTEM:WINDOWS /STACK:"8388608" /TLBID:1 /BASE:"0x10900000" /DYNAMICBASE /NXCOMPAT /IMPLIB:"..\Debug\Launch.lib" /MACHINE:X86 ..\Debug\LaunchRes.res
+         ..\Debug\Launch.exe.embed.manifest.res
+         ..\Debug\Helper.obj
+         ..\Debug\Launch.obj
+         C:\Projects\Unreal2004\ALAudio\Debug\ALAudio.lib
+         C:\Projects\Unreal2004\Editor\Debug\Editor.lib
+         C:\Projects\Unreal2004\Fire\Debug\Fire.lib
+         C:\Projects\Unreal2004\IpDrv\Debug\IpDrv.lib
+         C:\Projects\Unreal2004\UWeb\Debug\UWeb.lib
+         C:\Projects\Unreal2004\WinDrv\Debug\WinDrv.lib
+         C:\Projects\Unreal2004\XInterface\Debug\XInterface.lib
+         C:\Projects\Unreal2004\zlib\Debug\zlib.lib /MACHINE:I386 
+       Manifest:
+         C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\bin\mt.exe /nologo /verbose /out:"..\Debug\Launch.exe.embed.manifest" /manifest ..\Debug\Launch.exe.intermediate.manifest
+         All outputs are up-to-date.
+       LinkEmbedManifest:
+         All outputs are up-to-date.
+         Launch.vcxproj -> C:\Projects\Unreal2004\Launch\Src\..\Debug\Launch.exe
+       BscMake:
+         All outputs are up-to-date.
+       FinalizeBuildStatus:
+         Deleting file "..\Debug\Launch.unsuccessfulbuild".
+         Touching "..\Debug\Launch.lastbuildstate".
+     1>Done Building Project "C:\Projects\Unreal2004\Launch\Src\Launch.vcxproj" (build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:00.00
+Time Elapsed 00:00:00.54

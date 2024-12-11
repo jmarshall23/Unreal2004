@@ -30,40 +30,6 @@ public:
     #include "AAimedAttachment.h"
 };
 
-
-class XGAME_API USpeciesType : public UObject
-{
-public:
-    FStringNoInit MaleVoice GCC_PACK(4);
-    FStringNoInit FemaleVoice;
-    FStringNoInit GibGroup;
-    FStringNoInit MaleRagSkelName;
-    FStringNoInit FemaleRagSkelName;
-    FStringNoInit FemaleSkeleton;
-    FStringNoInit MaleSkeleton;
-    FStringNoInit MaleSoundGroup;
-    FStringNoInit FemaleSoundGroup;
-    FStringNoInit PawnClassName;
-    FStringNoInit SpeciesName;
-    INT RaceNum;
-    INT DMTeam;
-    FName TauntAnims[16];
-    FStringNoInit TauntAnimNames[16];
-    FLOAT AirControl;
-    FLOAT GroundSpeed;
-    FLOAT WaterSpeed;
-    FLOAT JumpZ;
-    FLOAT ReceivedDamageScaling;
-    FLOAT DamageScaling;
-    FLOAT AccelRate;
-    FLOAT WalkingPct;
-    FLOAT CrouchedPct;
-    FLOAT DodgeSpeedFactor;
-    FLOAT DodgeSpeedZ;
-    DECLARE_CLASS(USpeciesType,UObject,0,XGame)
-    NO_DEFAULT_CONSTRUCTOR(USpeciesType)
-};
-
 struct XGAME_API FPlayerRecord
 {
     FString DefaultName GCC_PACK(4);
@@ -134,6 +100,40 @@ public:
     NO_DEFAULT_CONSTRUCTOR(UDecoText)
 };
 
+
+class XGAME_API USpeciesType : public UObject
+{
+public:
+    FStringNoInit MaleVoice GCC_PACK(4);
+    FStringNoInit FemaleVoice;
+    FStringNoInit GibGroup;
+    FStringNoInit MaleRagSkelName;
+    FStringNoInit FemaleRagSkelName;
+    FStringNoInit FemaleSkeleton;
+    FStringNoInit MaleSkeleton;
+    FStringNoInit MaleSoundGroup;
+    FStringNoInit FemaleSoundGroup;
+    FStringNoInit PawnClassName;
+    FStringNoInit SpeciesName;
+    INT RaceNum;
+    INT DMTeam;
+    FName TauntAnims[16];
+    FStringNoInit TauntAnimNames[16];
+    FLOAT AirControl;
+    FLOAT GroundSpeed;
+    FLOAT WaterSpeed;
+    FLOAT JumpZ;
+    FLOAT ReceivedDamageScaling;
+    FLOAT DamageScaling;
+    FLOAT AccelRate;
+    FLOAT WalkingPct;
+    FLOAT CrouchedPct;
+    FLOAT DodgeSpeedFactor;
+    FLOAT DodgeSpeedZ;
+    DECLARE_CLASS(USpeciesType,UObject,0,XGame)
+    NO_DEFAULT_CONSTRUCTOR(USpeciesType)
+};
+
 #endif
 
 AUTOGENERATE_FUNCTION(UxUtil,-1,execLoadDecoText);
@@ -152,19 +152,19 @@ AUTOGENERATE_FUNCTION(UxUtil,562,execGetPlayerList);
 
 
 #ifdef NATIVE_DEFS_ONLY
-DECLARE_NATIVE_TYPE(XGame,USpeciesType);
 DECLARE_NATIVE_TYPE(XGame,AAimedAttachment);
 DECLARE_NATIVE_TYPE(XGame,UCachePlayers);
 DECLARE_NATIVE_TYPE(XGame,UxUtil);
 DECLARE_NATIVE_TYPE(XGame,UDecoText);
+DECLARE_NATIVE_TYPE(XGame,USpeciesType);
 
 #define AUTO_INITIALIZE_REGISTRANTS_XGAME \
-	USpeciesType::StaticClass(); \
 	AAimedAttachment::StaticClass(); \
 	UCachePlayers::StaticClass(); \
 	UxUtil::StaticClass(); \
 	GNativeLookupFuncs[Lookup++] = &FindXGameUxUtilNative; \
 	UDecoText::StaticClass(); \
+	USpeciesType::StaticClass(); \
 
 #endif // NATIVE_DEFS_ONLY
 
@@ -182,9 +182,9 @@ IMPLEMENT_NATIVE_HANDLER(XGame,UxUtil);
 #endif // NATIVES_ONLY
 
 #ifdef VERIFY_CLASS_SIZES
-VERIFY_CLASS_SIZE_NODIE(USpeciesType)
 VERIFY_CLASS_SIZE_NODIE(AAimedAttachment)
 VERIFY_CLASS_SIZE_NODIE(UCachePlayers)
 VERIFY_CLASS_SIZE_NODIE(UxUtil)
 VERIFY_CLASS_SIZE_NODIE(UDecoText)
+VERIFY_CLASS_SIZE_NODIE(USpeciesType)
 #endif // VERIFY_CLASS_SIZES

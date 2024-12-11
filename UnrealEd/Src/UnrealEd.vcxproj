@@ -1089,10 +1089,6 @@
       <Project>{1a04010c-3f69-4890-b4e1-79d0ce6a35d4}</Project>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
-    <ProjectReference Include="..\..\D3DDrv\Src\D3DDrv.vcxproj">
-      <Project>{0943cd8e-eed4-43ce-b4af-e9c3d753769f}</Project>
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-    </ProjectReference>
     <ProjectReference Include="..\..\Editor\Src\Editor.vcxproj">
       <Project>{f96152ce-8d09-4f16-a1a1-a0aa006bf618}</Project>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>

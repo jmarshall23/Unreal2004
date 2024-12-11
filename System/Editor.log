@@ -1,16 +1,16 @@
-Log: Log file open, 11/20/24 11:13:42
+Log: Log file open, 12/10/24 17:55:56
 Init: Name subsystem initialized
 Init: Detected: Microsoft Windows NT 6.2 (Build: 9200)
 Init: Version: 3186 (127.29)
-Init: Compiled: Nov 20 2024 10:14:56
+Init: Compiled: Nov 27 2024 19:13:27
 Init: Command line: 
 Init: Character set: Unicode
 Init: Base directory: C:\projects\Unreal2004\System\
 Init: Ini:UT2004.ini   UserIni:User.ini
 Init: Object subsystem initialized
-Log: 	nvldumd.dll/NVIDIA GeForce RTX 4070 Ti SUPER
-Log: 	nvldumd.dll/NVIDIA GeForce RTX 4070 Ti SUPER
-Log: Startup time: 6.080000 seconds
+Log: 	nvldumd.dll/NVIDIA GeForce RTX 4090
+Log: 	nvldumd.dll/NVIDIA GeForce RTX 4090
+Log: Startup time: 1.801000 seconds
 Cmd: MODE MAPEXT=ut2
 Log: Opened viewport
 Log: Enter SetRes: 386x55 Fullscreen 0
@@ -56,10 +56,13 @@ Log: Enter SetRes: 44x23 Fullscreen 0
 Log: Using back-buffer format 22(32-bit)
 Log: Using depth-buffer format 75(32-bit)
 Log: xD3DHelper::Init (QuadEmulation)
+Log: 	nvldumd.dll/NVIDIA GeForce RTX 4090
+Log: 	nvldumd.dll/NVIDIA GeForce RTX 4090
 Log: Enter SetRes: 44x23 Fullscreen 0
 Log: Using back-buffer format 22(32-bit)
 Log: Using depth-buffer format 75(32-bit)
-Log: xD3DHelper::Init (QuadEmulation)
+Log: Creating device
+Log: xD3D9Helper::Init (QuadEmulation)
 Log: Opened viewport
 Log: Enter SetRes: 320x200 Fullscreen 0
 Log: Using back-buffer format 22(32-bit)
@@ -73,10 +76,13 @@ Log: Enter SetRes: 44x23 Fullscreen 0
 Log: Using back-buffer format 22(32-bit)
 Log: Using depth-buffer format 75(32-bit)
 Log: xD3DHelper::Init (QuadEmulation)
+Log: 	nvldumd.dll/NVIDIA GeForce RTX 4090
+Log: 	nvldumd.dll/NVIDIA GeForce RTX 4090
 Log: Enter SetRes: 44x23 Fullscreen 0
 Log: Using back-buffer format 22(32-bit)
 Log: Using depth-buffer format 75(32-bit)
-Log: xD3DHelper::Init (QuadEmulation)
+Log: Creating device
+Log: xD3D9Helper::Init (QuadEmulation)
 Log: Opened viewport
 Log: Enter SetRes: 320x200 Fullscreen 0
 Log: Using back-buffer format 22(32-bit)
@@ -90,10 +96,13 @@ Log: Enter SetRes: 44x23 Fullscreen 0
 Log: Using back-buffer format 22(32-bit)
 Log: Using depth-buffer format 75(32-bit)
 Log: xD3DHelper::Init (QuadEmulation)
+Log: 	nvldumd.dll/NVIDIA GeForce RTX 4090
+Log: 	nvldumd.dll/NVIDIA GeForce RTX 4090
 Log: Enter SetRes: 44x23 Fullscreen 0
 Log: Using back-buffer format 22(32-bit)
 Log: Using depth-buffer format 75(32-bit)
-Log: xD3DHelper::Init (QuadEmulation)
+Log: Creating device
+Log: xD3D9Helper::Init (QuadEmulation)
 Log: Opened viewport
 Log: Enter SetRes: 320x200 Fullscreen 0
 Log: Using back-buffer format 22(32-bit)
@@ -107,26 +116,37 @@ Log: Enter SetRes: 44x23 Fullscreen 0
 Log: Using back-buffer format 22(32-bit)
 Log: Using depth-buffer format 75(32-bit)
 Log: xD3DHelper::Init (QuadEmulation)
+Log: 	nvldumd.dll/NVIDIA GeForce RTX 4090
+Log: 	nvldumd.dll/NVIDIA GeForce RTX 4090
 Log: Enter SetRes: 44x23 Fullscreen 0
 Log: Using back-buffer format 22(32-bit)
 Log: Using depth-buffer format 75(32-bit)
-Log: xD3DHelper::Init (QuadEmulation)
+Log: Creating device
+Log: xD3D9Helper::Init (QuadEmulation)
+Log: Allocating 65536 byte dynamic vertex buffer.
 Log: Enter SetRes: 71x0 Fullscreen 0
 Log: Using back-buffer format 22(32-bit)
 Log: Using depth-buffer format 75(32-bit)
-Log: xD3DHelper::Init (QuadEmulation)
+Log: Creating device
+Log: xD3D9Helper::Init (QuadEmulation)
+Log: Allocating 65536 byte dynamic vertex buffer.
 Log: Enter SetRes: 35x0 Fullscreen 0
 Log: Using back-buffer format 22(32-bit)
 Log: Using depth-buffer format 75(32-bit)
-Log: xD3DHelper::Init (QuadEmulation)
+Log: Creating device
+Log: xD3D9Helper::Init (QuadEmulation)
+Log: Allocating 65536 byte dynamic vertex buffer.
 Log: Enter SetRes: 71x0 Fullscreen 0
 Log: Using back-buffer format 22(32-bit)
 Log: Using depth-buffer format 75(32-bit)
-Log: xD3DHelper::Init (QuadEmulation)
+Log: Creating device
+Log: xD3D9Helper::Init (QuadEmulation)
+Log: Allocating 65536 byte dynamic vertex buffer.
 Log: Enter SetRes: 35x0 Fullscreen 0
 Log: Using back-buffer format 22(32-bit)
 Log: Using depth-buffer format 75(32-bit)
-Log: xD3DHelper::Init (QuadEmulation)
+Log: Creating device
+Log: xD3D9Helper::Init (QuadEmulation)
 Log: Opened viewport
 Log: Enter SetRes: 256x256 Fullscreen 0
 Log: Using back-buffer format 22(32-bit)
@@ -183,18 +203,24 @@ Log: Enter SetRes: 320x200 Fullscreen 0
 Log: Using back-buffer format 22(32-bit)
 Log: Using depth-buffer format 75(32-bit)
 Log: xD3DHelper::Init (QuadEmulation)
+Log: 	nvldumd.dll/NVIDIA GeForce RTX 4090
+Log: 	nvldumd.dll/NVIDIA GeForce RTX 4090
 Log: Enter SetRes: 320x200 Fullscreen 0
 Log: Using back-buffer format 22(32-bit)
 Log: Using depth-buffer format 75(32-bit)
-Log: xD3DHelper::Init (QuadEmulation)
+Log: Creating device
+Log: xD3D9Helper::Init (QuadEmulation)
 Log: Enter SetRes: 0x0 Fullscreen 0
 Log: Using back-buffer format 22(32-bit)
 Log: Using depth-buffer format 75(32-bit)
-Log: xD3DHelper::Init (QuadEmulation)
+Log: Creating device
+Log: xD3D9Helper::Init (QuadEmulation)
 Log: Enter SetRes: 883x425 Fullscreen 0
 Log: Using back-buffer format 22(32-bit)
 Log: Using depth-buffer format 75(32-bit)
-Log: xD3DHelper::Init (QuadEmulation)
+Log: Creating device
+Log: xD3D9Helper::Init (QuadEmulation)
+Log: Allocating 65536 byte dynamic vertex buffer.
 Log: Opened viewport
 Log: Enter SetRes: 320x200 Fullscreen 0
 Log: Using back-buffer format 22(32-bit)
@@ -234,64 +260,44 @@ Cmd: CAMERA UPDATE FLAGS=1073742464 MISC2=0 REN=17 NAME=TextureBrowser PACKAGE="
 Log: Enter SetRes: 355x149 Fullscreen 0
 Log: Using back-buffer format 22(32-bit)
 Log: Using depth-buffer format 75(32-bit)
-Log: xD3DHelper::Init (QuadEmulation)
+Log: Creating device
+Log: xD3D9Helper::Init (QuadEmulation)
 Log: Enter SetRes: 188x149 Fullscreen 0
 Log: Using back-buffer format 22(32-bit)
 Log: Using depth-buffer format 75(32-bit)
-Log: xD3DHelper::Init (QuadEmulation)
+Log: Creating device
+Log: xD3D9Helper::Init (QuadEmulation)
 Log: Enter SetRes: 355x149 Fullscreen 0
 Log: Using back-buffer format 22(32-bit)
 Log: Using depth-buffer format 75(32-bit)
-Log: xD3DHelper::Init (QuadEmulation)
+Log: Creating device
+Log: xD3D9Helper::Init (QuadEmulation)
 Log: Enter SetRes: 188x149 Fullscreen 0
 Log: Using back-buffer format 22(32-bit)
 Log: Using depth-buffer format 75(32-bit)
-Log: xD3DHelper::Init (QuadEmulation)
+Log: Creating device
+Log: xD3D9Helper::Init (QuadEmulation)
+Log: Allocating 65536 byte dynamic vertex buffer.
 Log: Enter SetRes: 1613x613 Fullscreen 0
 Log: Using back-buffer format 22(32-bit)
 Log: Using depth-buffer format 75(32-bit)
-Log: xD3DHelper::Init (QuadEmulation)
+Log: Creating device
+Log: xD3D9Helper::Init (QuadEmulation)
+Log: Allocating 65536 byte dynamic vertex buffer.
 Log: Enter SetRes: 866x613 Fullscreen 0
 Log: Using back-buffer format 22(32-bit)
 Log: Using depth-buffer format 75(32-bit)
-Log: xD3DHelper::Init (QuadEmulation)
+Log: Creating device
+Log: xD3D9Helper::Init (QuadEmulation)
+Log: Allocating 65536 byte dynamic vertex buffer.
 Log: Enter SetRes: 1613x613 Fullscreen 0
 Log: Using back-buffer format 22(32-bit)
 Log: Using depth-buffer format 75(32-bit)
-Log: xD3DHelper::Init (QuadEmulation)
+Log: Creating device
+Log: xD3D9Helper::Init (QuadEmulation)
+Log: Allocating 65536 byte dynamic vertex buffer.
 Log: Enter SetRes: 866x613 Fullscreen 0
 Log: Using back-buffer format 22(32-bit)
 Log: Using depth-buffer format 75(32-bit)
-Log: xD3DHelper::Init (QuadEmulation)
-Log: Enter SetRes: 71x0 Fullscreen 0
-Log: Using back-buffer format 22(32-bit)
-Log: Using depth-buffer format 75(32-bit)
-Log: xD3DHelper::Init (QuadEmulation)
-Log: Enter SetRes: 35x0 Fullscreen 0
-Log: Using back-buffer format 22(32-bit)
-Log: Using depth-buffer format 75(32-bit)
-Log: xD3DHelper::Init (QuadEmulation)
-Log: Enter SetRes: 71x0 Fullscreen 0
-Log: Using back-buffer format 22(32-bit)
-Log: Using depth-buffer format 75(32-bit)
-Log: xD3DHelper::Init (QuadEmulation)
-Log: Enter SetRes: 35x0 Fullscreen 0
-Log: Using back-buffer format 22(32-bit)
-Log: Using depth-buffer format 75(32-bit)
-Log: xD3DHelper::Init (QuadEmulation)
-Log: Enter SetRes: 1613x613 Fullscreen 0
-Log: Using back-buffer format 22(32-bit)
-Log: Using depth-buffer format 75(32-bit)
-Log: xD3DHelper::Init (QuadEmulation)
-Log: Enter SetRes: 866x613 Fullscreen 0
-Log: Using back-buffer format 22(32-bit)
-Log: Using depth-buffer format 75(32-bit)
-Log: xD3DHelper::Init (QuadEmulation)
-Log: Enter SetRes: 1613x613 Fullscreen 0
-Log: Using back-buffer format 22(32-bit)
-Log: Using depth-buffer format 75(32-bit)
-Log: xD3DHelper::Init (QuadEmulation)
-Log: Enter SetRes: 866x613 Fullscreen 0
-Log: Using back-buffer format 22(32-bit)
-Log: Using depth-buffer format 75(32-bit)
-Log: xD3DHelper::Init (Qua
+Log: Creating device
+Log: xD3D9Helper::Init (QuadE

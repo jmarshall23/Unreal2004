@@ -1,5 +1,14 @@
-﻿Build started 11/27/2024 6:25:20 PM.
+﻿Build started 11/27/2024 7:20:18 PM.
+     1>Project "C:\Projects\Unreal2004\xVoting\xVoting.vcxproj" on node 9 (build target(s)).
+     1>InitializeBuildStatus:
+         Touching "Debug\xVoting.unsuccessfulbuild".
+       ManifestResourceCompile:
+         All outputs are up-to-date.
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Projects\Unreal2004\Debug\xVoting.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /ManifestFile:"Debug\xVoting.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"C:\Projects\Unreal2004\Debug\xVoting.pdb" /ASSEMBLYDEBUG /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Projects\Unreal2004\Debug\xVoting.lib" /MACHINE:X86 Debug\xVoting.exe.embed.manifest.res
+     1>LINK : fatal error LNK1561: entry point must be defined
+     1>Done Building Project "C:\Projects\Unreal2004\xVoting\xVoting.vcxproj" (build target(s)) -- FAILED.
 
-Build succeeded.
+Build FAILED.
 
-Time Elapsed 00:00:00.00
+Time Elapsed 00:00:00.12
