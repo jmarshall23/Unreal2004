@@ -648,34 +648,6 @@ UBOOL UD3D9RenderDevice::SetRes(UViewport* Viewport,INT NewX,INT NewY,UBOOL Full
 	{
 		ForceReset = 0;
 
-		// Enumerate device display modes.
-		guard(EnumDisplayModes);
-
-		DisplayModes.Empty( Direct3D9->GetAdapterModeCount(BestAdapter, D3DFMT_X8R8G8B8) + 
-			                Direct3D9->GetAdapterModeCount(BestAdapter, D3DFMT_R5G6B5) );
-
-		//32-bit modes
-		for(DWORD Index = 0;Index < Direct3D9->GetAdapterModeCount(BestAdapter, D3DFMT_X8R8G8B8);Index++)
-		{
-			D3DDISPLAYMODE	DisplayMode;
-
-			Direct3D9->EnumAdapterModes(BestAdapter, D3DFMT_X8R8G8B8, Index,&DisplayMode);
-
-			DisplayModes.AddItem(DisplayMode);
-		}
-
-		//16-bit modes
-		for(DWORD Index = 0;Index < Direct3D9->GetAdapterModeCount(BestAdapter, D3DFMT_R5G6B5);Index++)
-		{
-			D3DDISPLAYMODE	DisplayMode;
-
-			Direct3D9->EnumAdapterModes(BestAdapter, D3DFMT_R5G6B5, Index, &DisplayMode);
-
-			DisplayModes.AddItem(DisplayMode);
-		}
-
-		unguard;
-
 		// See if the window is full screen.
 		INT FullScreenWidth	 = Max(NewX, 1);
 		INT FullScreenHeight = Max(NewY, 1);
@@ -684,6 +656,34 @@ UBOOL UD3D9RenderDevice::SetRes(UViewport* Viewport,INT NewX,INT NewY,UBOOL Full
 
 		if(Fullscreen)
 		{
+			// Enumerate device display modes.
+			guard(EnumDisplayModes);
+			
+			DisplayModes.Empty( Direct3D9->GetAdapterModeCount(BestAdapter, D3DFMT_X8R8G8B8) + 
+				                Direct3D9->GetAdapterModeCount(BestAdapter, D3DFMT_R5G6B5) );
+			
+			//32-bit modes
+			for(DWORD Index = 0;Index < Direct3D9->GetAdapterModeCount(BestAdapter, D3DFMT_X8R8G8B8);Index++)
+			{
+				D3DDISPLAYMODE	DisplayMode;
+			
+				Direct3D9->EnumAdapterModes(BestAdapter, D3DFMT_X8R8G8B8, Index,&DisplayMode);
+			
+				DisplayModes.AddItem(DisplayMode);
+			}
+			
+			//16-bit modes
+			for(DWORD Index = 0;Index < Direct3D9->GetAdapterModeCount(BestAdapter, D3DFMT_R5G6B5);Index++)
+			{
+				D3DDISPLAYMODE	DisplayMode;
+			
+				Direct3D9->EnumAdapterModes(BestAdapter, D3DFMT_R5G6B5, Index, &DisplayMode);
+			
+				DisplayModes.AddItem(DisplayMode);
+			}
+			
+			unguard;
+
 			if(DisplayModes.Num()==0 )
 				return UnSetRes(TEXT("No fullscreen display modes found"),0,1);
 
@@ -840,26 +840,33 @@ UBOOL UD3D9RenderDevice::SetRes(UViewport* Viewport,INT NewX,INT NewY,UBOOL Full
 		unguard;
 		unguard;
 
-		if( Direct3DDevice9 != NULL )
-		{
+		if (Direct3DDevice9 != NULL) {
 			guard(ResetDevice);
+
 #ifndef _XBOX
-			// Present a black screen while precaching.
-			if( 0 )//!GIsEditor )
-			{
-				Direct3DDevice9->Clear( 0, NULL, D3DCLEAR_TARGET, 0, 0, 0 );
-				Direct3DDevice9->Present( NULL, NULL, NULL, NULL );
+			// Present a black screen while precaching (uncomment if needed).
+			if (!GIsEditor) {
+				Direct3DDevice9->Clear(0, NULL, D3DCLEAR_TARGET, 0, 0, 0);
+				Direct3DDevice9->Present(NULL, NULL, NULL, NULL);
 			}
 #endif
 
-			xHelper.Shutdown(); // sjs
+			// Shutdown resources dependent on the device
+			xHelper.Shutdown();
 
-			// Recreate for the game and use Reset for the Editor.
-			//if( !GIsEditor || (GIsEditor && FAILED(Direct3DDevice9->Reset(&PresentParms))) )
-			//if( FAILED(Direct3DDevice9->Reset(&PresentParms)) )			
-			{
+			// Attempt to reset the device
+			HRESULT hr = Direct3DDevice9->Reset(&PresentParms);
+			if (FAILED(hr)) {
+				// Log the error if Reset fails
+			//	Log("Direct3DDevice9 Reset failed with HRESULT: 0x%08X", hr);
+
+				// Release the device as Reset failed
 				Direct3DDevice9->Release();
 				Direct3DDevice9 = NULL;
+			}
+			else {
+				// Reset succeeded, recreate resources if necessary
+			//	Log("Direct3DDevice9 Reset succeeded.");
 			}
 
 			unguard;
